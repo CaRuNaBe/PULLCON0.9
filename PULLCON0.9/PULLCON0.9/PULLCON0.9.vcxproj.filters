@@ -15,7 +15,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\ApplicationMain.h" />
-    <ClInclude Include="source\ModeGame.h" />
+    <ClInclude Include="source\ApplicationMain.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ModeGame.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

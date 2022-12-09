@@ -34,6 +34,24 @@ bool ApplicationMain::Update() {
 
 bool ApplicationMain::Draw() {
 	base::Draw();
+	// 3DŠî–{İ’è
+	SetUseZBuffer3D(TRUE);
+	SetWriteZBuffer3D(TRUE);
+	SetUseBackCulling(TRUE);
+
+	VECTOR vLightDir = VGet(-0.5f, -0.5f, 0.5f);
+	SetGlobalAmbientLight(GetColorF(0.f, 0.f, 0.f, 0.f));
+	ChangeLightTypeDir(vLightDir);
+
+	// 0,0,0‚ğ’†S‚Éü‚ğˆø‚­
+	{
+		float linelength = 1000.f;
+		VECTOR v = { 0, 0, 0 };
+		DrawLine3D(VAdd(v, VGet(-linelength, 0, 0)), VAdd(v, VGet(linelength, 0, 0)), GetColor(255, 0, 0));
+		DrawLine3D(VAdd(v, VGet(0, -linelength, 0)), VAdd(v, VGet(0, linelength, 0)), GetColor(0, 255, 0));
+		DrawLine3D(VAdd(v, VGet(0, 0, -linelength)), VAdd(v, VGet(0, 0, linelength)), GetColor(0, 0, 255));
+	}
+
 	return true;
 }
 
