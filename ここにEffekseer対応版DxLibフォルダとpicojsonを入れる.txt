@@ -1,0 +1,1 @@
+AppFrame/Game フォルダがあるところにDxLib(Effekseer対応版)を置きます
