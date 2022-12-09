@@ -16,11 +16,6 @@ bool ModeGame::Initialize()
 	{
 		return false;
 	}
-
-	/// <summary>
-	/// /
-	/// </summary>
-	/// <returns></returns>
 	return true;
 }
 
