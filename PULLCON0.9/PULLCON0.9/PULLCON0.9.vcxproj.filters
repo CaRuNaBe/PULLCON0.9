@@ -13,12 +13,18 @@
     <ClCompile Include="source\ModeGame.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\Player.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="source\ModeGame.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h">
       <Filter>source</Filter>
     </ClInclude>
   </ItemGroup>
