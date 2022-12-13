@@ -26,6 +26,7 @@ protected:
 	Camera	_cam;
 
 	int _handle;
+	int _handleSkySphere;
 
 
 }; 

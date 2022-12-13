@@ -1,6 +1,6 @@
 #pragma once
 #include<DxLib.h>
-
+#include<memory>
 class InputManager
 {
 public:
@@ -16,8 +16,8 @@ public:
 	const bool XinputEveryOtherKey( int button , const int FrequencyFrame );
 	const unsigned char GetLeftTrigger();
 	const unsigned char GetRightTrigger();
-	const short GetLstickX();
-	const short GetLstickY();
+	 short GetLstickX();
+	 short GetLstickY();
 	const short GetRstickX();
 	const short GetRstickY();
 	const bool GetKeyXinput( const int button );
