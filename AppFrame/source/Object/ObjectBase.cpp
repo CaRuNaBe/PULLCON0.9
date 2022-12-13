@@ -21,9 +21,13 @@ void ObjectBase::Init()
 	_dead = false;
 }
 
-void ObjectBase::Update(ApplicationBase& game)
-{}
+bool ObjectBase::Update(ApplicationBase& game)
+{
+	return true;
+}
 
-void ObjectBase::Draw(ApplicationBase& game)
-{}
+bool ObjectBase::Draw(ApplicationBase& game)
+{
+	return true;
+}
 
