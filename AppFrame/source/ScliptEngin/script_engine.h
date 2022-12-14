@@ -62,19 +62,18 @@ private:
 
 	bool InitializeStrings ();
 
-	void PreParsing ();
+	void PreParsing (ApplicationBase& game);
 	void Parsing ();
-	void UpdateMessage ();
-	void Hide_Message ();
+	void UpdateMessage (ApplicationBase& game);
+	void Hide_Message (ApplicationBase& game);
 	void feed_draw ();
-	void Speak_skip ();
-	void Script_skip ();
+	void Script_skip (ApplicationBase& game);
 	bool CalculateMessageArea ( const std::string& message , Rect& area , int& right_goal );
 
 
-	void PlayUpdate ();;
+	void PlayUpdate (ApplicationBase& game);;
 	void TimeWait ();
-	void ClickWait ();
+	void ClickWait (ApplicationBase& game);
 	void CrfiUpdate ();
 	void CrfoUpdate ();
 
@@ -101,7 +100,7 @@ private:
 
 
 
-	void DrawImage () const;
+	void DrawImage (ApplicationBase& game) const;
 	void DrawMessageWindow () const;
 	void DrawMessage () const;
 	void DrawFeedin ()const;

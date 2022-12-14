@@ -193,7 +193,7 @@ bool ScriptEngine::InitializeStrings()
 		return false;
 	}
 	is_Click_on = false;
-	message_string_color = _game._CrText;
+	message_string_color = GetColor(0,0,0);
 
 	return true;
 }
@@ -239,7 +239,7 @@ void ScriptEngine::Update(ApplicationBase& game)
 	switch(state)
 	{
 		case ScriptState::PREPARSING:
-			PreParsing();
+			PreParsing(game);
 			break;
 
 		case ScriptState::PARSING:
@@ -252,7 +252,7 @@ void ScriptEngine::Update(ApplicationBase& game)
 			break;
 
 		case ScriptState::PLAY_ANIME:
-			PlayUpdate();
+			PlayUpdate(game);
 			break;
 
 		case ScriptState::CRFEEDOUT:
@@ -266,11 +266,11 @@ void ScriptEngine::Update(ApplicationBase& game)
 			break;
 
 		case ScriptState::CLICK_WAIT:
-			ClickWait();
+			ClickWait(game);
 			is_update_message = true;
 			break;
 		case ScriptState::SCRIPT_END:
-			_game.isEndsclipt = true;
+			game.GetScliptFlagManager()->SetisEndsclipt(true);
 			break;
 	}
 
@@ -279,14 +279,14 @@ void ScriptEngine::Update(ApplicationBase& game)
 	if(is_Skip_ok)
 	{
 		Speak_skip();
-		Script_skip();
-		Hide_Message();
+		Script_skip(game);
+		Hide_Message(game);
 	}
 
 
 	if(is_update_message)
 	{
-		UpdateMessage();
+		UpdateMessage(game);
 	}
 }
 
@@ -294,7 +294,7 @@ void ScriptEngine::Update(ApplicationBase& game)
 //! @fn void ScriptEngine::UpdateMessage()
 //! @brief 文字列を 1 文字づつ表示させる処理
 //!
-void ScriptEngine::UpdateMessage()
+void ScriptEngine::UpdateMessage(ApplicationBase& game)
 {
 	is_click_wait_visible = false;
 
@@ -304,7 +304,7 @@ void ScriptEngine::UpdateMessage()
 		const auto right_goal = message->GetRightGoal();
 
 		// クリックされたら全メッセージを表示
-		if(_game._trg & PAD_INPUT_A || is_Click_on)
+		if(game.Getinput().GetTrg(PAD_INPUT_A) || is_Click_on)
 		{
 			message->UpdateAreaRight(right_goal);
 			continue;
@@ -334,7 +334,7 @@ void ScriptEngine::UpdateMessage()
  * 予め全て処理してリスト化します。
  *¥return void
  */
-void ScriptEngine::PreParsing()
+void ScriptEngine::PreParsing(ApplicationBase& game)
 {
 	funcs_type comand_funcs;
 	comand_funcs.insert(std::make_pair(COMMAND_I,&ScriptEngine::OnCommandImage));
@@ -353,7 +353,7 @@ void ScriptEngine::PreParsing()
 
 	if(now_line >= max_line)
 	{
-		_game.isLoadend = true;
+		game.GetScliptFlagManager()->SetisLoadend(true); 
 		now_line = 0;
 		is_Skip_ok = true;
 		state = ScriptState::PARSING;
@@ -480,39 +480,13 @@ void  ScriptEngine::feed_draw()
 };
 
 /**
- *¥fn void script_engine.cpp::Speakskip.
- *¥brief 会話をスキップする
- *¥return void
- */
-void  ScriptEngine::Speak_skip()
-{
-	if(_game._key & PAD_INPUT_A)
-	{
-		Speak_skip_count++;
-		if(0 == Speak_skip_count % SPEAK_SKIP)
-		{
-			is_Click_on = true;
-		}
-		else
-		{
-			is_Click_on = false;
-		}
-	}
-	else
-	{
-		is_Click_on = false;
-		Speak_skip_count = 0;
-	}
-};
-
-/**
  *¥fn void script_engine.cpp::Scriptskip.
  *¥brief スクリプト自体をスキップする
  *¥return void
  */
-void ScriptEngine::Script_skip()
+void ScriptEngine::Script_skip(ApplicationBase& game)
 {
-	if(_game._key & PAD_INPUT_X)
+	if(game.Getinput().GetKey(PAD_INPUT_X))
 	{
 		Script_skip_count++;
 		if(Script_skip_count > SCRIPT_SKIP_TIME)
@@ -539,14 +513,14 @@ void ScriptEngine::Script_skip()
  *¥brief
  *¥return void
  */
-void ScriptEngine::Hide_Message()
+void ScriptEngine::Hide_Message(ApplicationBase& game)
 {
-	if((_game._trg & PAD_INPUT_B) && is_hide)
+	if((game.Getinput().GetTrg(PAD_INPUT_B)) && is_hide)
 	{
 		is_hide = false;
 		Hide_point = 255;
 	}
-	else if((_game._trg & PAD_INPUT_B) && !is_hide)
+	else if((game.Getinput().GetTrg(PAD_INPUT_B)) && !is_hide)
 	{
 		is_hide = true;
 		Hide_point = 0;
@@ -603,7 +577,7 @@ void ScriptEngine::CrfoUpdate()
 //! @fn void ScriptEngine::ClickWait()
 //! @brief クリック待ち処理
 //!
-void ScriptEngine::ClickWait()
+void ScriptEngine::ClickWait(ApplicationBase& game)
 {
 	if(is_message_output)
 	{
@@ -611,12 +585,10 @@ void ScriptEngine::ClickWait()
 	}
 	if(is_finishdraw)
 	{
-		if(_game._trg & PAD_INPUT_A || is_Click_on)
+		if(game.Getinput().GetTrg(PAD_INPUT_A)|| is_Click_on)
 		{
-
-
 			is_finishdraw = false;
-			PlaySoundMem(_game._se["yes"],DX_PLAYTYPE_BACK);
+			//PlaySoundMem(_game._se["yes"],DX_PLAYTYPE_BACK);
 			state = ScriptState::PARSING;
 		}
 	}
@@ -650,14 +622,14 @@ void ScriptEngine::TimeWait()
  *@fn void ScriptEngine::Playprocess ().
  * @brief アニメ再生中処理
  */
-void ScriptEngine::PlayUpdate()
+void ScriptEngine::PlayUpdate(ApplicationBase& game)
 {
 	Anime_count++;
 	if(Anime_count > ANIME_SKIP_OK_TIME)
 	{
 		is_amime_skip = true;
 	}
-	if(is_amime_skip && (_game._trg & PAD_INPUT_A || (GetMovieStateToGraph(movie_play->GetMvHandle()) == 0)))
+	if(is_amime_skip && (game.Getinput().GetTrg(PAD_INPUT_A) || (GetMovieStateToGraph(movie_play->GetMvHandle()) == 0)))
 	{
 		is_amime_skip = false;
 		Anime_count = 0;
@@ -1147,7 +1119,7 @@ bool ScriptEngine::OnCommandCrfo(unsigned int line,const std::vector<std::string
  */
 void ScriptEngine::Draw(ApplicationBase& game) const
 {
-	DrawImage();//イラスト描画
+	DrawImage(game);//イラスト描画
 	DrawFeedin();//フェードイン時描画
 	DrawFeedout();
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA,Hide_point);
@@ -1162,16 +1134,16 @@ void ScriptEngine::Draw(ApplicationBase& game) const
  *¥brief "di""do" コマンドによる画像描画
  *¥return void
  */
-void ScriptEngine::DrawImage() const
+void ScriptEngine::DrawImage(ApplicationBase& game) const
 {
-	if(_game.isBlackbackground)//必要に応じてスクリプトの後ろに映っているモノを隠す描画
+	if(game.GetScliptFlagManager()->GetisBlackbackground())//必要に応じてスクリプトの後ろに映っているモノを隠す描画
 	{
 		if(state == ScriptState::CRFEEDIN || !(drawout_list.empty()))
 		{
 		}
 		else
 		{
-			DrawBox(BASICS_X,BASICS_Y,SCREEN_W,SCREEN_H,_game._CrBrack,TRUE);
+			DrawBox(BASICS_X,BASICS_Y,SCREEN_W,SCREEN_H,GetColor(0,0,0),TRUE);
 		}
 	}
 	for(auto&& drawin : drawin_list)//現れる描画
@@ -1218,9 +1190,6 @@ void ScriptEngine::DrawMessage() const
 		}
 		else
 		{
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA,_base._Modealpha);
-			DrawGraph(CLICK_WAIT_X,CLICK_WAIT_Y,_game._cgicon,TRUE);
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND,0);
 		}
 	}
 }
@@ -1237,7 +1206,6 @@ void ScriptEngine::DrawMessageWindow() const
 	}
 	else
 	{
-		DrawGraph(MSG_WINDOW_LEFT,MSG_WINDOW_TOP,_game._cgTextbox,TRUE);
 	}
 }
 
