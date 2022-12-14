@@ -155,11 +155,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\ActorBase.cpp" />
     <ClCompile Include="source\ApplicationMain.cpp" />
     <ClCompile Include="source\ModeGame.cpp" />
     <ClCompile Include="source\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\ActorBase.h" />
     <ClInclude Include="source\ApplicationMain.h" />
     <ClInclude Include="source\ModeGame.h" />
     <ClInclude Include="source\Player.h" />
