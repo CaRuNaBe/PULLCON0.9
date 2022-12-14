@@ -5,27 +5,39 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="source\mode">
+      <UniqueIdentifier>{e5cfc242-9caf-43d8-b855-d515320f206f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object">
+      <UniqueIdentifier>{eeb7738d-37a2-4075-99e8-a493dad62396}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ApplicationMain.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\ModeTitle.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
     <ClCompile Include="source\ModeGame.cpp">
-      <Filter>source</Filter>
+      <Filter>source\mode</Filter>
     </ClCompile>
     <ClCompile Include="source\Player.cpp">
-      <Filter>source</Filter>
+      <Filter>source\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="source\ModeTitle.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
     <ClInclude Include="source\ModeGame.h">
-      <Filter>source</Filter>
+      <Filter>source\mode</Filter>
     </ClInclude>
     <ClInclude Include="source\Player.h">
-      <Filter>source</Filter>
+      <Filter>source\object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
