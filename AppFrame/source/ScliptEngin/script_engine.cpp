@@ -137,24 +137,18 @@ namespace
 	constexpr auto SCRIPT_SKIP_TIME = 200;
 	constexpr auto ANIME_SKIP_OK_TIME = 120;
 
-		// 一度計算したら固定値な物
-	int screen_width = SCREEN_W;
-	int screen_height = SCREEN_H;
-
-	int screen_center_x = screen_width / 2;
-	int screen_center_y = screen_height / 2;
 
 	unsigned int message_string_color = 0;
 }
 
-ScriptEngine::ScriptEngine(std::string storyname)
+ScriptEngine::ScriptEngine(std::string storyname,ApplicationBase& game)
 {
 	movie_play.reset();
 	scripts_data.reset();
 	scripts_data = std::make_unique<ScriptsData>();
 	scripts_data->LoadJson(storyname);
 	max_line = scripts_data->GetScriptNum();
-	InitializeStrings();
+	InitializeStrings(game);
 	state = ScriptState::PREPARSING;
 	feedcount = 0.0;
 	_Alpha = 0;
@@ -182,16 +176,12 @@ ScriptEngine::~ScriptEngine()
 //! @brief スクリプトエンジン用文字列描画の初期化
 //! @return 処理の成否
 //!
-bool ScriptEngine::InitializeStrings()
+bool ScriptEngine::InitializeStrings(ApplicationBase& game)
 {
 	SetFontSize(FONT_SIZE);
 
 	auto screen_depth = 0;
 
-	if(GetScreenState(&screen_width,&screen_height,&screen_depth) != 0)
-	{
-		return false;
-	}
 	is_Click_on = false;
 	message_string_color = GetColor(0,0,0);
 
@@ -278,7 +268,7 @@ void ScriptEngine::Update(ApplicationBase& game)
 
 	if(is_Skip_ok)
 	{
-		Speak_skip();
+		//Speak_skip();
 		Script_skip(game);
 		Hide_Message(game);
 	}
@@ -353,7 +343,7 @@ void ScriptEngine::PreParsing(ApplicationBase& game)
 
 	if(now_line >= max_line)
 	{
-		game.GetScliptFlagManager()->SetisLoadend(true); 
+		game.GetScliptFlagManager()->SetisLoadend(true);
 		now_line = 0;
 		is_Skip_ok = true;
 		state = ScriptState::PARSING;
@@ -585,7 +575,7 @@ void ScriptEngine::ClickWait(ApplicationBase& game)
 	}
 	if(is_finishdraw)
 	{
-		if(game.Getinput().GetTrg(PAD_INPUT_A)|| is_Click_on)
+		if(game.Getinput().GetTrg(PAD_INPUT_A) || is_Click_on)
 		{
 			is_finishdraw = false;
 			//PlaySoundMem(_game._se["yes"],DX_PLAYTYPE_BACK);
@@ -831,16 +821,7 @@ bool ScriptEngine::OnCommandMusicstop(unsigned int line,const std::vector<std::s
 //!
 bool ScriptEngine::OnCommandClick(unsigned int line,const std::vector<std::string>& scripts)
 {
-	if(_game._trg & PAD_INPUT_A)
-	{
-		PlaySoundMem(_game._se["yes"],DX_PLAYTYPE_BACK);
-		image_list.clear();
-		state = ScriptState::PARSING;
-	}
-	else
-	{
-		state = ScriptState::CLICK_WAIT;
-	}
+	state = ScriptState::CLICK_WAIT;
 	return true;
 }
 
@@ -874,11 +855,6 @@ bool ScriptEngine::OnCommandWait(unsigned int line,const std::vector<std::string
  */
 bool ScriptEngine::OnCommandScliptend(unsigned int line,const std::vector<std::string>& scripts)
 {
-	_game.isEndsclipt = true;
-	for(auto&& se : se_list)
-	{
-		StopSoundMem(se->GetHandle());
-	}
 	state = ScriptState::SCRIPT_END;
 	return true;
 }
@@ -1120,13 +1096,13 @@ bool ScriptEngine::OnCommandCrfo(unsigned int line,const std::vector<std::string
 void ScriptEngine::Draw(ApplicationBase& game) const
 {
 	DrawImage(game);//イラスト描画
-	DrawFeedin();//フェードイン時描画
-	DrawFeedout();
+	DrawFeedin(game);//フェードイン時描画
+	DrawFeedout(game);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA,Hide_point);
-	DrawMessageWindow();
-	DrawMessage();
+	DrawMessageWindow(game);
+	DrawMessage(game);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND,0);
-	DrawAnime();
+	DrawAnime(game);
 }
 
 /**
@@ -1143,7 +1119,7 @@ void ScriptEngine::DrawImage(ApplicationBase& game) const
 		}
 		else
 		{
-			DrawBox(BASICS_X,BASICS_Y,SCREEN_W,SCREEN_H,GetColor(0,0,0),TRUE);
+			DrawBox(BASICS_X,BASICS_Y,game.DispSizeW(),game.DispSizeH(),GetColor(0,0,0),TRUE);
 		}
 	}
 	for(auto&& drawin : drawin_list)//現れる描画
@@ -1166,9 +1142,8 @@ void ScriptEngine::DrawImage(ApplicationBase& game) const
  *¥brief "m" コマンドによる文字列描画
  *¥return void
  */
-void ScriptEngine::DrawMessage() const
+void ScriptEngine::DrawMessage(ApplicationBase& game) const
 {
-
 	for(auto&& message : message_list)
 	{
 		auto LINE_POSITION_RIGHT = LINE_POSITION_LEFT + ((static_cast<int>(message->Whospeak().size())) / 2 * FONT_SIZE);
@@ -1180,7 +1155,7 @@ void ScriptEngine::DrawMessage() const
 		DrawString(area.left,area.top,message->GetMessageA().c_str(),message_string_color);
 	}
 	// 表示エリアを全画面に戻す
-	SetDrawArea(0,0,screen_width,screen_height);
+	SetDrawArea(0,0,game.DispSizeW(),game.DispSizeH());
 
 	//
 	if(is_click_wait_visible)
@@ -1199,7 +1174,7 @@ void ScriptEngine::DrawMessage() const
  *¥brief メッセージウィンドウの描画
  *¥return void
  */
-void ScriptEngine::DrawMessageWindow() const
+void ScriptEngine::DrawMessageWindow(ApplicationBase& game) const
 {
 	if((message_list.empty()))
 	{
@@ -1214,12 +1189,12 @@ void ScriptEngine::DrawMessageWindow() const
  *¥brief "fi" コマンドによる描画
  *¥return void
  */
-void ScriptEngine::DrawFeedin()const
+void ScriptEngine::DrawFeedin(ApplicationBase& game)const
 {
 	for(auto&& crfi : crfi_list)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA,static_cast<int>(_Alpha));
-		DrawBox(BASICS_X,BASICS_Y,SCREEN_W,SCREEN_H,GetColor(crfi->GetRed(),crfi->GetGreen(),crfi->GetBlue()),TRUE);
+		DrawBox(BASICS_X,BASICS_Y,game.DispSizeW(),game.DispSizeH(),GetColor(crfi->GetRed(),crfi->GetGreen(),crfi->GetBlue()),TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND,0);
 	}
 }
@@ -1229,14 +1204,14 @@ void ScriptEngine::DrawFeedin()const
  *¥brief "fo" コマンドによる描画
  *¥return void
  */
-void ScriptEngine::DrawFeedout()const
+void ScriptEngine::DrawFeedout(ApplicationBase& game)const
 {
 	for(auto&& crfo : crfo_list)
 	{
 		auto color = GetColor(crfo->GetRed(),crfo->GetGreen(),crfo->GetBlue());
 		auto a = static_cast<int>(_Alpha);
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA,a);
-		DrawBox(BASICS_X,BASICS_Y,SCREEN_W,SCREEN_H,color,TRUE);
+		DrawBox(BASICS_X,BASICS_Y,game.DispSizeW(),game.DispSizeH(),color,TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND,0);
 	}
 }
@@ -1246,7 +1221,7 @@ void ScriptEngine::DrawFeedout()const
  *¥brief "ve" コマンドによる描画
  *¥return void
  */
-void ScriptEngine::DrawAnime()const
+void ScriptEngine::DrawAnime(ApplicationBase& game)const
 {
 	if(state == ScriptState::PLAY_ANIME)
 	{

@@ -3,7 +3,7 @@
 
 ModeSclipt::ModeSclipt(ApplicationBase& game,int layer,std::string storyname)
 	: ModeBase(game,layer)
-	,script(storyname)
+	,script(storyname,game)
 {}
 
 ModeSclipt::~ModeSclipt()

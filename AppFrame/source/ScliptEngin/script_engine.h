@@ -33,7 +33,7 @@ class ModeBase;
 class ScriptEngine
 {
 public:
-	ScriptEngine ( std::string storyname);
+	ScriptEngine ( std::string storyname,ApplicationBase& game);
 	ScriptEngine ( const ScriptEngine& ) = default;
 	ScriptEngine ( ScriptEngine&& ) noexcept = default;
 
@@ -60,7 +60,7 @@ private:
 		SCRIPT_END
 	};
 
-	bool InitializeStrings ();
+	bool InitializeStrings (ApplicationBase& game);
 
 	void PreParsing (ApplicationBase& game);
 	void Parsing ();
@@ -101,11 +101,11 @@ private:
 
 
 	void DrawImage (ApplicationBase& game) const;
-	void DrawMessageWindow () const;
-	void DrawMessage () const;
-	void DrawFeedin ()const;
-	void DrawFeedout ()const;
-	void DrawAnime ()const;
+	void DrawMessageWindow (ApplicationBase& game) const;
+	void DrawMessage (ApplicationBase& game) const;
+	void DrawFeedin (ApplicationBase& game)const;
+	void DrawFeedout (ApplicationBase& game)const;
+	void DrawAnime (ApplicationBase& game)const;
 
 	std::unique_ptr<ScriptsData> scripts_data;
 	std::unique_ptr<CommandMovieplay>movie_play;

@@ -22,9 +22,6 @@
     <ClCompile Include="source\ModeGame.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\Player.cpp">
-      <Filter>source\object</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
@@ -35,9 +32,6 @@
     </ClInclude>
     <ClInclude Include="source\ModeGame.h">
       <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Player.h">
-      <Filter>source\object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
