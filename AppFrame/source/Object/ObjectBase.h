@@ -27,6 +27,10 @@ public:
 	{
 		return isUpdateSkip;
 	}
+	void SetUpdateSkip(bool UpdateSkip)
+	{
+		isUpdateSkip = UpdateSkip;
+	}
 	bool GetDrawSkip()
 	{
 		return isDrawSkip;

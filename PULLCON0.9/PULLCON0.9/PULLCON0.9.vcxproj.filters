@@ -22,6 +22,15 @@
     <ClCompile Include="source\ModeGame.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
+    <ClCompile Include="source\ModePause.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ModeGameResult.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ModeGameOver.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
@@ -31,6 +40,15 @@
       <Filter>source\mode</Filter>
     </ClInclude>
     <ClInclude Include="source\ModeGame.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ModePause.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ModeGameResult.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ModeGameOver.h">
       <Filter>source\mode</Filter>
     </ClInclude>
   </ItemGroup>

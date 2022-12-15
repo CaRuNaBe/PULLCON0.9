@@ -155,11 +155,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\ModeGameOver.cpp" />
+    <ClCompile Include="source\ModeGameResult.cpp" />
+    <ClCompile Include="source\ModePause.cpp" />
     <ClCompile Include="source\ModeTitle.cpp" />
     <ClCompile Include="source\ApplicationMain.cpp" />
     <ClCompile Include="source\ModeGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\ModeGameOver.h" />
+    <ClInclude Include="source\ModeGameResult.h" />
+    <ClInclude Include="source\ModePause.h" />
     <ClInclude Include="source\ModeTitle.h" />
     <ClInclude Include="source\ApplicationMain.h" />
     <ClInclude Include="source\ModeGame.h" />
