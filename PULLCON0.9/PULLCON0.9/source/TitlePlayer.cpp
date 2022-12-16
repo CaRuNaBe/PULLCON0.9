@@ -37,15 +37,14 @@ bool TitlePlayer::Update(ApplicationBase& game)
 
 	// キー入力を判定して、主人公を移動させる
 	// Vector2を利用して斜め移動でも問題ないように
-	Vector2 dir = {game.Getinput().GetRstickX(),-(game.Getinput().GetRstickY())};		// 方向を指定
+	Vector2 dir = {game.Getinput().GetLstickX(),-(game.Getinput().GetLstickY())};		// 方向を指定
 
 	if(dir.x != 0 || dir.y != 0)
 	{
 		dir.Normalize();	// 方向をノーマライズ
 	}
 	dir *= _spd;		// ノーマライズした方向に速度をかける
-	_pos += dir;		// 位置を動かす
-
+	_pos += dir;		// 位置を動かす  
 	// 画面の外に出ないようにする
 	if(_pos.x < 0)
 	{
