@@ -55,9 +55,6 @@ InputManager::InputManager()
 	_gRel = 0;
 	Speak_skip_count = 0;
 	is_Click_on = false;
-	GetJoypadXInputState(DX_INPUT_PAD1, &_gxTrg);
-	GetJoypadXInputState(DX_INPUT_PAD1, &_gxRel);
-	GetJoypadXInputState(DX_INPUT_PAD1, &_gxKey);
 }
 
 InputManager::~InputManager()
@@ -66,7 +63,6 @@ InputManager::~InputManager()
 bool InputManager::Update()
 {
 	auto xkeyold = _gxKey;
-	XINPUT_STATE input;
 	GetJoypadXInputState(DX_INPUT_PAD1, &_gxKey);
 	_gxTrg = (_gxKey ^ xkeyold) & _gxKey;	// キーのトリガ情報生成（押した瞬間しか反応しないキー情報）
 	_gxRel = (_gxKey ^ xkeyold) & ~_gxKey;	// キーのリリース情報生成（離した瞬間しか反応しないキー情報）

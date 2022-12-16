@@ -11,8 +11,8 @@ public:
 	virtual ~ObjectBase();
 
 	virtual void	Init();
-	virtual void	Update(ApplicationBase& game);
-	virtual void	Draw(ApplicationBase& game);
+	virtual bool	Update(ApplicationBase& game);
+	virtual bool	Draw(ApplicationBase& game);
 
 	virtual bool	IsDead()
 	{
@@ -26,6 +26,10 @@ public:
 	bool GetUpdateSkip()
 	{
 		return isUpdateSkip;
+	}
+	void SetUpdateSkip(bool UpdateSkip)
+	{
+		isUpdateSkip = UpdateSkip;
 	}
 	bool GetDrawSkip()
 	{

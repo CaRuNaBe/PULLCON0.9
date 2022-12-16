@@ -29,7 +29,7 @@ bool ApplicationBase::Initialize(HINSTANCE hInstance) {
 
 	// モードサーバの初期化
 	_serverMode = std::make_shared<ModeServer>(*this);
-
+	_flagManager = std::make_shared<ScliptFlagManager>();
 	return true;
 }
 
