@@ -1,10 +1,11 @@
 #include "ModeTitle.h"
 #include "ApplicationMain.h"
-
+#include "TitlePlayer.h"
 ModeTitle::ModeTitle(ApplicationBase& game,int layer)
 	:base(game,layer)
 {
-
+	auto player = std::make_shared<TitlePlayer>();
+	_objectServer.Add(player);
 };
 
 ModeTitle::~ModeTitle()

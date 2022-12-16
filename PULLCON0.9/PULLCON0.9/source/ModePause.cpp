@@ -4,7 +4,6 @@
 ModePause::ModePause(ApplicationBase& game,int layer)
 	:base(game,layer)
 {
-
 };
 
 ModePause::~ModePause()
