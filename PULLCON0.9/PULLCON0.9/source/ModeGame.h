@@ -1,6 +1,6 @@
 #pragma once
 #include "appframe.h"
-
+using namespace math;
 
 // カメラ
 class Camera {
@@ -25,7 +25,7 @@ protected:
 	// カメラ
 	Camera	_cam;
 
-	VECTOR	_vPos;					// 位置
+	vector4	_vPos;					// 位置
 	int _handle;
 	int _handleSkySphere;
 

@@ -42,22 +42,41 @@ namespace math {
 		return sqrt (x * x + y * y + z * z);
 	}
 
+	//ê≥ãKâª
 	void vector4::normalized ()
 	{
 		auto len = lenght ();
-
-		x /= len;
-		y /= len;
-		z /= len;
+		// åÎç∑ñ¢ñûÇ»ÇÁÉ[ÉçÇ∆Ç›Ç»Ç∑ÅB
+		if(std::abs(len) < std::numeric_limits<float>::epsilon())
+		{
+			x = 0.0f;
+			y = 0.0f;
+			z = 0.0f;
+		} else
+		{
+			x /= len;
+			y /= len;
+			z /= len;
+		}
 	}
-
-	const vector4 vector4::normalize () const
+	const vector4 vector4::Getnormalize () const
 	{
 		auto len = lenght ();
-		auto nx = x / len;
-		auto ny = y / len;
-		auto nz = z / len;
-
+		auto nx = 0.0f;
+		auto ny = 0.0f;
+		auto nz = 0.0f;
+		// åÎç∑ñ¢ñûÇ»ÇÁÉ[ÉçÇ∆Ç›Ç»Ç∑ÅB
+		if(std::abs(len) < std::numeric_limits<float>::epsilon())
+		{
+			 nx = 0.0f;
+			 ny = 0.0f;
+			 nz = 0.0f;
+		} else
+		{
+			 nx = x / len;
+			 ny = y / len;
+			 nz = z / len;
+		}
 		return vector4 (nx, ny, nz);
 	}
 

@@ -1,5 +1,6 @@
 #pragma once
-
+#include <limits>
+#include<cmath>
 namespace math {
 	class matrix44;
 
@@ -56,15 +57,16 @@ namespace math {
 			return w;
 		}
 
+
 		const float lenght() const;
 
 		void normalized();
-		const vector4 normalize() const;
+		const vector4 Getnormalize() const;
 
 		const float dot(const vector4& rhs) const;
 		const vector4 cross(const vector4& rhs) const;
 
-	private:
+
 		float x;
 		float y;
 		float z;
