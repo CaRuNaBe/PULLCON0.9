@@ -15,8 +15,8 @@ public:
 	virtual Type GetType() = 0;
 
 	virtual void Init();
-	virtual void Update(ApplicationBase& game);
-	virtual void Draw(ApplicationBase& game);
+	virtual bool Update(ApplicationBase& game);
+	virtual bool Draw(ApplicationBase& game);
 
 public:
 	math::vector4 _vPos;

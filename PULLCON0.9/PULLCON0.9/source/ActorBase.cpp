@@ -5,7 +5,7 @@
 ActorBase::ActorBase() 
 	:base()
 {
-
+	Init();
 }
 
 ActorBase::~ActorBase() {
@@ -18,12 +18,12 @@ void ActorBase::Init() {
 
 }
 
-void ActorBase::Update(ApplicationBase& game) {
+bool ActorBase::Update(ApplicationBase& game) {
 	base::Update(game);
-
+	return true;
 }
 
-void ActorBase::Draw(ApplicationBase& game) {
+bool ActorBase::Draw(ApplicationBase& game) {
 	base::Draw(game);
-
+	return true;
 }

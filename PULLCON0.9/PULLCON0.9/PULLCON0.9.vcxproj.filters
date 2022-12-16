@@ -16,9 +16,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\ApplicationMain.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="source\ModeTitle.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
@@ -40,14 +37,14 @@
     <ClCompile Include="source\TitlePlayer.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
+    <ClCompile Include="source\ApplicationMain.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
     <ClCompile Include="source\ActorBase.cpp">
-      <Filter>source</Filter>
+      <Filter>source\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\ApplicationMain.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="source\ModeTitle.h">
       <Filter>source\mode</Filter>
     </ClInclude>
@@ -69,8 +66,11 @@
     <ClInclude Include="source\TitlePlayer.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
+    <ClInclude Include="source\ApplicationMain.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
     <ClInclude Include="source\ActorBase.h">
-      <Filter>source</Filter>
+      <Filter>source\object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
