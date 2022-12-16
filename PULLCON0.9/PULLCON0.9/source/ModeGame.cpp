@@ -8,6 +8,8 @@ ModeGame::ModeGame(ApplicationBase& game, int layer)
 {
 	_handle = MV1LoadModel("res/HelicopterBody.mv1");
 	_handleSkySphere = MV1LoadModel("res/SkySphere/skysphere.mv1");
+	// プレイヤー
+	_vPos = VGet(0, 0, 0);
 	// カメラの設定（わかりやすい位置に）
 	_cam._vPos = VGet(0, 200.f, -1000.f);
 	_cam._vTarget = VGet(0, 300.f, 0);
@@ -55,6 +57,25 @@ bool ModeGame::Update()
 	if(_game.Getinput().GetKey(PAD_INPUT_DOWN)) { _cam._vPos.y -= 5.f; }
 	if(_game.Getinput().GetKey(PAD_INPUT_UP)) { _cam._vPos.y += 5.f; }
 
+	// 移動方向を決める
+	VECTOR v = { 0,0,0 };
+	float mvSpeed = 10.f;
+	if(_game.Getinput().GetKey(PAD_INPUT_5)) { v.x = 1; }     // S
+	if(_game.Getinput().GetKey(PAD_INPUT_8)) { v.x = -1; }		// W
+	if(_game.Getinput().GetKey(PAD_INPUT_4)) { v.z = -1; }		// A
+	if(_game.Getinput().GetKey(PAD_INPUT_6)) { v.z = 1; }			// D
+	// vをrad分回転させる
+	length = 0.f;
+	if(VSize(v) > 0.f) { length = mvSpeed; }
+	float vrad = atan2(v.z, v.x);
+	v.x = cos(vrad + rad) * length;
+	v.z = sin(vrad + rad) * length;
+
+	if(_game.Getinput().GetKey(PAD_INPUT_1)) { v.y = 1; }     // S
+	if(_game.Getinput().GetKey(PAD_INPUT_2)) { v.y = -1; }     // S
+	
+	v.y *= mvSpeed;
+	_vPos = VAdd(_vPos, v);
 
 	return true;
 }
@@ -92,6 +113,8 @@ bool ModeGame::Draw()
 	MV1SetRotationXYZ(_handle, VGet(0.f, math::utility::PI, 0.f));
 	// モデルの拡大値
 	MV1SetScale(_handle, VGet(0.3f, 0.3f, 0.3f));
+	// 位置
+	MV1SetPosition(_handle, _vPos);
 	MV1DrawModel(_handle);
 	MV1DrawModel(_handleSkySphere);
 	return true;

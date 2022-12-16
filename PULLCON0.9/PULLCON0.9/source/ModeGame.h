@@ -25,6 +25,7 @@ protected:
 	// ƒJƒƒ‰
 	Camera	_cam;
 
+	VECTOR	_vPos;					// ˆÊ’u
 	int _handle;
 	int _handleSkySphere;
 

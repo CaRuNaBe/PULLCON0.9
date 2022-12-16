@@ -1,7 +1,6 @@
 #pragma once
 
-namespace math
-{
+namespace math {
 	class matrix44;
 
 	class vector4
@@ -9,9 +8,13 @@ namespace math
 	public:
 		// コンストラクタ
 		vector4();
-		vector4(const float x,const float y,const float z): x(x),y(y),z(z),w(1.0)
+		vector4(float x, float y, float z) : x(x), y(y), z(z), w(1.0)
 		{}
-		vector4(const float x,const float y,const float z,float w): x(x),y(y),z(z),w(w)
+		vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w)
+		{}
+		vector4(int x, int y, int z) : x(static_cast<float>(x)), y(static_cast<float>(y)), z(static_cast<float>(z)), w(1.0)
+		{}
+		vector4(int x, int y, int z, int w) : x(static_cast<float>(x)), y(static_cast<float>(y)), z(static_cast<float>(z)), w(static_cast<float>(w))
 		{}
 		vector4(const vector4&) = default; // コピー
 		vector4(vector4&&) = default; // ムーブ
@@ -31,10 +34,10 @@ namespace math
 		const vector4 operator *(const matrix44 rhs) const;
 
 		void set(const vector4& vector);
-		void set(const float x,const float y,const float z);
+		void set(const float x, const float y, const float z);
 
 		void add(const vector4& vector);
-		void add(const float x,const float y,const float z);
+		void add(const float x, const float y, const float z);
 
 		const float get_x() const
 		{
