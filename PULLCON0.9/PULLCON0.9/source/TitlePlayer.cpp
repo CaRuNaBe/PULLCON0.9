@@ -41,7 +41,7 @@ bool TitlePlayer::Update(ApplicationBase& game)
 
 	if(dir.x != 0 || dir.y != 0)
 	{
-		dir.Normalize();	// 方向をノーマライズ
+		dir.Normalized();	// 方向をノーマライズ
 	}
 	dir *= _spd;		// ノーマライズした方向に速度をかける
 	_pos += dir;		// 位置を動かす  

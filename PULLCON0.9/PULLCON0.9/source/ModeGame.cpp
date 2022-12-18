@@ -39,10 +39,10 @@ bool ModeGame::Update()
 	if(_game.Getinput().GetKeyXinput(XINPUT_BUTTON_B)) { diry += -1; }     // B
 	vector4 dir = { _game.Getinput().GetLstickX(),diry,_game.Getinput().GetLstickY() };
 
-	dir.normalized();
+	dir.Normalized();
 	auto spead = 5.0f;
 	dir = dir * spead;
-	_vPos.add(dir);
+	//_vPos.add(dir);
 
 	/*
 	// äpìxïœçX

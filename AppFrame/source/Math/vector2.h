@@ -3,100 +3,89 @@
 #include <limits>
 namespace math
 {
+	class Matrix3;
 	// 2Dベクトルクラス
 	class Vector2
 	{
 	public:
 		// x成分,y成分
-		float x,y;
-		
+		float x;
+		float y;
+
 		// コンストラクタ
 		Vector2() noexcept = default;
 
-		constexpr Vector2(float ax,float ay) noexcept
-			: x{ax}
-			,y{ay}
+		constexpr Vector2( float ax,float ay ) noexcept: x{ax},y{ay}
 		{}
-		
-		constexpr Vector2(int ax,int ay) noexcept
-			: x{static_cast<float>(ax)}
-			,y{static_cast<float>(ay)}
+
+		constexpr Vector2( int ax,int ay ) noexcept: x{static_cast<float>(ax)},y{static_cast<float>(ay)}
 		{}
-		
+
 		int IntX()
 		{
 			return static_cast<int>(x);
 		}
-		
+
 		int IntY()
 		{
 			return static_cast<int>(y);
 		}
-		
+
 		// ベクトルの加算 a + b ※外部関数
-		friend Vector2 operator+(const Vector2& a,const Vector2& b)
+		const Vector2 operator+( const Vector2& rhs )const
 		{
-			return {a.x + b.x, a.y + b.y};
+			return Vector2( x + rhs.x,y + rhs.y );
 		}
-		
 		// ベクトルの減算 a - b ※外部関数
-		friend Vector2 operator-(const Vector2& a,const Vector2& b)
+		const Vector2 operator-( const Vector2& rhs )const
 		{
-			return {a.x - b.x, a.y - b.y};
+			return Vector2( x - rhs.x,y - rhs.y );
 		}
-		
 		// ベクトルのスカラー倍 v * scalar ※外部関数
-		friend Vector2 operator*(const Vector2& v,float scalar)
+		const Vector2 operator*( float rhs )const
 		{
-			return {v.x * scalar, v.y * scalar};
+			return {x * rhs, y * rhs};
 		}
-		
-		// ベクトルのスカラー倍 scalar * v ※外部関数
-		friend Vector2 operator*(float scalar,const Vector2& v)
-		{
-			return {v.x * scalar, v.y * scalar};
-		}
-		
 		// ベクトルのスカラー割  v/scalar ※外部関数
-		friend Vector2 operator/(float scalar,const Vector2& v)
+		const Vector2 operator/( float rhs )const
 		{
-			return {v.x / scalar, v.y / scalar};
+			return {x / rhs, y / rhs};
 		}
-		
+
 		// ベクトル加算代入
-		Vector2& operator+=(const Vector2& right)
+		Vector2& operator+=( const Vector2& right )
 		{
 			x += right.x;
 			y += right.y;
 			return *this;
 		}
-		
+
 		// ベクトル減算代入
-		Vector2& operator-=(const Vector2& right)
+		Vector2& operator-=( const Vector2& right )
 		{
 			x -= right.x;
 			y -= right.y;
 			return *this;
 		}
-		
+
 		// ベクトルのスカラ乗算代入
-		Vector2& operator*=(float scalar)
+		Vector2& operator*=( float scalar )
 		{
 			x *= scalar;
 			y *= scalar;
 			return *this;
 		}
-		
+
 		// ベクトル比較
-		bool operator==(const Vector2& b) const
+		bool operator==( const Vector2& b ) const
 		{
-			if(x == b.x && y == b.y)
+			if ( x == b.x && y == b.y )
 			{
 				return true;
 			}
 			return false;
 		}
-		bool operator!=(const Vector2& b) const
+		bool operator!=( const Vector2& b ) const
 		{
 			return !(*this == b);
 		}
@@ -104,16 +93,16 @@ namespace math
 		// ベクトルの大きさ
 		float Length() const
 		{
-			return std::sqrt(x * x + y * y);
+			return std::sqrt( x * x + y * y );
 		}
-		
+
 		// ベクトルの正規化
-		void Normalize()
+		void Normalized()
 		{
 			auto length = Length();
 
 			// 誤差未満ならゼロとみなす。
-			if(std::abs(length) < std::numeric_limits<float>::epsilon())
+			if ( std::abs( length ) < std::numeric_limits<float>::epsilon() )
 			{
 				x = 0.0;
 				y = 0.0;
@@ -124,26 +113,38 @@ namespace math
 				y /= length;
 			}
 		}
-		static Vector2 Normalize(const Vector2& vec)
+		const Vector2 GetNormalize()const
 		{
-			auto temp = vec;
-			temp.Normalize();
-			return temp;
+			auto len = Length();
+			auto nx = 0.0f;
+			auto ny = 0.0f;
+			// 誤差未満ならゼロとみなす。
+			if ( std::abs( len ) < std::numeric_limits<float>::epsilon() )
+			{
+				nx = 0.0f;
+				ny = 0.0f;
+			}
+			else
+			{
+				nx = x / len;
+				ny = y / len;
+			}
+			return Vector2( nx,ny );
 		}
 
 		// ベクトルの内積(Dot product) a・b
-		static float Dot(const Vector2& a,const Vector2& b)
+		static float Dot( const Vector2& a,const Vector2& b )
 		{
 			return (a.x * b.x + a.y * b.y);
 		}
-		
+
 		// ベクトルの外積(Cross product) a×b
-		static float Cross(const Vector2& a,const Vector2& b)
+		static float Cross( const Vector2& a,const Vector2& b )
 		{
 			return (a.x * b.y - a.y * b.x);
 		}
-		
+
 		// ベクトルの行列変換
-		static Vector2 Transform(const Vector2& vec,const class Matrix3& mat,float w = 1.0f);
+		static Vector2 Transform( const Vector2& vec,const class Matrix3& mat,float w = 1.0f );
 	};
 }

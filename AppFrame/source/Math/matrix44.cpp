@@ -109,23 +109,23 @@ namespace math
 		auto axis_x = up.cross(axis_z);
 		auto axis_y = axis_z.cross(axis_x);
 
-		axis_x.normalized();
-		axis_y.normalized();
-		axis_z.normalized();
+		axis_x.Normalized();
+		axis_y.Normalized();
+		axis_z.Normalized();
 
-		row_column[0][0] = axis_x.get_x();
-		row_column[0][1] = axis_y.get_x();
-		row_column[0][2] = axis_z.get_x();
+		row_column[0][0] = axis_x.x;
+		row_column[0][1] = axis_y.x;
+		row_column[0][2] = axis_z.x;
 		row_column[0][3] = 0.0;
 
-		row_column[1][0] = axis_x.get_y();
-		row_column[1][1] = axis_y.get_y();
-		row_column[1][2] = axis_z.get_y();
+		row_column[1][0] = axis_x.y;
+		row_column[1][1] = axis_y.y;
+		row_column[1][2] = axis_z.y;
 		row_column[1][3] = 0.0;
 
-		row_column[2][0] = axis_x.get_z();
-		row_column[2][1] = axis_y.get_z();
-		row_column[2][2] = axis_z.get_z();
+		row_column[2][0] = axis_x.z;
+		row_column[2][1] = axis_y.z;
+		row_column[2][2] = axis_z.z;
 		row_column[2][3] = 0.0;
 
 		row_column[3][0] = -axis_x.dot(position);
@@ -188,9 +188,9 @@ namespace math
 	{
 		matrix_array result = row_column;
 
-		result[3][0] += rhs.get_x();
-		result[3][1] += rhs.get_y();
-		result[3][2] += rhs.get_z();
+		result[3][0] += rhs.x;
+		result[3][1] += rhs.y;
+		result[3][2] += rhs.z;
 
 		return matrix44(result);
 	}

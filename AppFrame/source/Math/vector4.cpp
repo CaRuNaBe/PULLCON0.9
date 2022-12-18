@@ -2,141 +2,141 @@
 #include "vector4.h"
 #include "matrix44.h"
 
-namespace math {
-	vector4::vector4 ()
+namespace math
+{
+	vector4::vector4()
 	{
 		x = 0.0; y = 0.0; z = 0.0; w = 1.0;
 	}
 
-	void vector4::set (const vector4& vector)
+	const float vector4::lenght() const
 	{
-		x = vector.get_x ();
-		y = vector.get_y ();
-		z = vector.get_z ();
-		w = vector.get_w ();
-	}
-
-	void vector4::set (const float x, const float y, const float z)
-	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
-	}
-
-	void vector4::add (const vector4& vector)
-	{
-		x += vector.get_x ();
-		y += vector.get_y ();
-		z += vector.get_z ();
-	}
-
-	void vector4::add (const float x, const float y, const float z)
-	{
-		this->x += x;
-		this->y += y;
-		this->z += z;
-	}
-
-	const float vector4::lenght () const
-	{
-		return sqrt (x * x + y * y + z * z);
+		return sqrt( x * x + y * y + z * z );
 	}
 
 	//正規化
-	void vector4::normalized ()
+	void vector4::Normalized()
 	{
-		auto len = lenght ();
+		auto len = lenght();
 		// 誤差未満ならゼロとみなす。
-		if(std::abs(len) < std::numeric_limits<float>::epsilon())
+		if ( std::abs( len ) < std::numeric_limits<float>::epsilon() )
 		{
 			x = 0.0f;
 			y = 0.0f;
 			z = 0.0f;
-		} else
+		}
+		else
 		{
 			x /= len;
 			y /= len;
 			z /= len;
 		}
 	}
-	const vector4 vector4::Getnormalize () const
+	const vector4 vector4::GetNormalize() const
 	{
-		auto len = lenght ();
+		auto len = lenght();
 		auto nx = 0.0f;
 		auto ny = 0.0f;
 		auto nz = 0.0f;
 		// 誤差未満ならゼロとみなす。
-		if(std::abs(len) < std::numeric_limits<float>::epsilon())
+		if ( std::abs( len ) < std::numeric_limits<float>::epsilon() )
 		{
-			 nx = 0.0f;
-			 ny = 0.0f;
-			 nz = 0.0f;
-		} else
-		{
-			 nx = x / len;
-			 ny = y / len;
-			 nz = z / len;
+			nx = 0.0f;
+			ny = 0.0f;
+			nz = 0.0f;
 		}
-		return vector4 (nx, ny, nz);
+		else
+		{
+			nx = x / len;
+			ny = y / len;
+			nz = z / len;
+		}
+		return vector4( nx,ny,nz );
 	}
 
-	const float vector4::dot (const vector4& rhs) const
+	const float vector4::dot( const vector4& rhs ) const
 	{
-		return x * rhs.get_x () + y * rhs.get_y () + z * rhs.get_z ();
+		return x * rhs.x + y * rhs.y + z * rhs.z;
 	}
 
-	const vector4 vector4::cross (const vector4& rhs) const
+	const vector4 vector4::cross( const vector4& rhs ) const
 	{
-		auto cx = y * rhs.get_z () - z * rhs.get_y ();
-		auto cy = z * rhs.get_x () - x * rhs.get_z ();
-		auto cz = x * rhs.get_y () - y * rhs.get_x ();
+		auto cx = y * rhs.z - z * rhs.y;
+		auto cy = z * rhs.x - x * rhs.z;
+		auto cz = x * rhs.y - y * rhs.x;
 
-		return vector4 (cx, cy, cz);
+		return vector4( cx,cy,cz );
 	}
 
-	const vector4 vector4::operator +(const vector4& rhs) const
+	const vector4 vector4::operator+( const vector4& rhs ) const
 	{
-		return vector4 (x + rhs.get_x (), y + rhs.get_y (), z + rhs.get_z ());
+		return vector4( x + rhs.x,y + rhs.y,z + rhs.z );
 	}
 
-	const vector4 vector4::operator -(const vector4& rhs) const
+	const vector4 vector4::operator-( const vector4& rhs ) const
 	{
-		return vector4 (x - rhs.get_x (), y - rhs.get_y (), z - rhs.get_z ());
+		return vector4( x - rhs.x,y - rhs.y,z - rhs.z );
 	}
 
-	const vector4 vector4::operator *(const float rhs) const
+	const vector4 vector4::operator*( const float rhs ) const
 	{
-		return vector4 (x * rhs, y * rhs, z * rhs);
+		return vector4( x * rhs,y * rhs,z * rhs );
 	}
 
-	const vector4 vector4::operator /(const float rhs) const
+	const vector4 vector4::operator/( const float rhs ) const
 	{
-		return vector4 (x / rhs, y / rhs, z / rhs);
+		return vector4( x / rhs,y / rhs,z / rhs );
+	}
+	// ベクトル加算代入
+	vector4& vector4::operator+=( const vector4& right )
+	{
+		x += right.x;
+		y += right.y;
+		z += right.z;
+		return *this;
+	};
+
+	// ベクトル減算代入
+	vector4& vector4::operator-=( const vector4& right )
+	{
+		x -= right.x;
+		y -= right.y;
+		z -= right.z;
+		return *this;
 	}
 
-	const vector4 vector4::operator *(const matrix44 rhs) const
+	// ベクトルのスカラ乗算代入
+	vector4& vector4::operator*=( float scalar )
 	{
-		auto mx = x * rhs.get_value (0, 0)
-			+ y * rhs.get_value (1, 0)
-			+ z * rhs.get_value (2, 0)
-			+ rhs.get_value (3, 0);
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+		return *this;
+	}
 
-		auto my = x * rhs.get_value (0, 1)
-			+ y * rhs.get_value (1, 1)
-			+ z * rhs.get_value (2, 1)
-			+ rhs.get_value (3, 1);
+	const vector4 vector4::operator *( const matrix44 rhs ) const
+	{
+		auto mx = x * rhs.get_value( 0,0 )
+			+ y * rhs.get_value( 1,0 )
+			+ z * rhs.get_value( 2,0 )
+			+ rhs.get_value( 3,0 );
 
-		auto mz = x * rhs.get_value (0, 2)
-			+ y * rhs.get_value (1, 2)
-			+ z * rhs.get_value (2, 2)
-			+ rhs.get_value (3, 2);
+		auto my = x * rhs.get_value( 0,1 )
+			+ y * rhs.get_value( 1,1 )
+			+ z * rhs.get_value( 2,1 )
+			+ rhs.get_value( 3,1 );
 
-		auto mw = x * rhs.get_value (0, 3)
-			+ y * rhs.get_value (1, 3)
-			+ z * rhs.get_value (2, 3)
-			+ rhs.get_value (3, 3);
+		auto mz = x * rhs.get_value( 0,2 )
+			+ y * rhs.get_value( 1,2 )
+			+ z * rhs.get_value( 2,2 )
+			+ rhs.get_value( 3,2 );
 
-		return vector4 (mx, my, mz, mw);
+		auto mw = x * rhs.get_value( 0,3 )
+			+ y * rhs.get_value( 1,3 )
+			+ z * rhs.get_value( 2,3 )
+			+ rhs.get_value( 3,3 );
+
+		return vector4( mx,my,mz,mw );
 	}
 
 } // math

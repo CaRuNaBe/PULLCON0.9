@@ -7,7 +7,7 @@ namespace math
 {
 	VECTOR ToDX(math::vector4& vector)
 	{
-		return VGet(static_cast<float>(vector.get_x()),static_cast<float>(vector.get_y()),static_cast<float>(vector.get_z()));
+		return VGet(static_cast<float>(vector.x),static_cast<float>(vector.y),static_cast<float>(vector.z));
 	}
 
 	math::vector4 ToMath(VECTOR& vector)
