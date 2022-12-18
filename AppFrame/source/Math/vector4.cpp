@@ -9,7 +9,7 @@ namespace math
 		x = 0.0; y = 0.0; z = 0.0; w = 1.0;
 	}
 
-	const float vector4::lenght() const
+	const float vector4::Lenght() const
 	{
 		return sqrt( x * x + y * y + z * z );
 	}
@@ -17,7 +17,7 @@ namespace math
 	//正規化
 	void vector4::Normalized()
 	{
-		auto len = lenght();
+		auto len = Lenght();
 		// 誤差未満ならゼロとみなす。
 		if ( std::abs( len ) < std::numeric_limits<float>::epsilon() )
 		{
@@ -34,7 +34,7 @@ namespace math
 	}
 	const vector4 vector4::GetNormalize() const
 	{
-		auto len = lenght();
+		auto len = Lenght();
 		auto nx = 0.0f;
 		auto ny = 0.0f;
 		auto nz = 0.0f;
@@ -54,12 +54,12 @@ namespace math
 		return vector4( nx,ny,nz );
 	}
 
-	const float vector4::dot( const vector4& rhs ) const
+	const float vector4::Dot( const vector4& rhs ) const
 	{
 		return x * rhs.x + y * rhs.y + z * rhs.z;
 	}
 
-	const vector4 vector4::cross( const vector4& rhs ) const
+	const vector4 vector4::Cross( const vector4& rhs ) const
 	{
 		auto cx = y * rhs.z - z * rhs.y;
 		auto cy = z * rhs.x - x * rhs.z;
@@ -95,7 +95,6 @@ namespace math
 		z += right.z;
 		return *this;
 	};
-
 	// ベクトル減算代入
 	vector4& vector4::operator-=( const vector4& right )
 	{
@@ -104,7 +103,6 @@ namespace math
 		z -= right.z;
 		return *this;
 	}
-
 	// ベクトルのスカラ乗算代入
 	vector4& vector4::operator*=( float scalar )
 	{

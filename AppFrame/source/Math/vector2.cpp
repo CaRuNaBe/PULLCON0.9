@@ -2,8 +2,121 @@
 #include "matrix33.h"
 namespace math
 {
+	// ベクトルの加算 a + b ※外部関数
+	const Vector2 Vector2::operator+( const Vector2& rhs )const
+	{
+		return Vector2( x + rhs.x,y + rhs.y );
+	}
+	// ベクトルの減算 a - b ※外部関数
+	const Vector2 Vector2::operator-( const Vector2& rhs )const
+	{
+		return Vector2( x - rhs.x,y - rhs.y );
+	}
+	// ベクトルのスカラー倍 v * scalar ※外部関数
+	const Vector2 Vector2::operator*( float rhs )const
+	{
+		return {x * rhs, y * rhs};
+	}
+	// ベクトルのスカラー割  v/scalar ※外部関数
+	const Vector2 Vector2::operator/( float rhs )const
+	{
+		return {x / rhs, y / rhs};
+	}
+
+	// ベクトル加算代入
+	Vector2& Vector2::operator+=( const Vector2& right )
+	{
+		x += right.x;
+		y += right.y;
+		return *this;
+	}
+
+	// ベクトル減算代入
+	Vector2& Vector2::operator-=( const Vector2& right )
+	{
+		x -= right.x;
+		y -= right.y;
+		return *this;
+	}
+
+	// ベクトルのスカラ乗算代入
+	Vector2& Vector2::operator*=( float scalar )
+	{
+		x *= scalar;
+		y *= scalar;
+		return *this;
+	}
+
+	// ベクトル比較
+	bool Vector2::operator==( const Vector2& b ) const
+	{
+		if ( x == b.x && y == b.y )
+		{
+			return true;
+		}
+		return false;
+	}
+	bool Vector2::operator!=( const Vector2& b ) const
+	{
+		return !(*this == b);
+	}
+
+	// ベクトルの大きさ
+	float Vector2::Length() const
+	{
+		return std::sqrt( x * x + y * y );
+	}
+
+	// ベクトルの正規化
+	void Vector2::Normalized()
+	{
+		auto length = Length();
+
+		// 誤差未満ならゼロとみなす。
+		if ( std::abs( length ) < std::numeric_limits<float>::epsilon() )
+		{
+			x = 0.0;
+			y = 0.0;
+		}
+		else
+		{
+			x /= length;
+			y /= length;
+		}
+	}
+	const Vector2 Vector2::GetNormalize()const
+	{
+		auto len = Length();
+		auto nx = 0.0f;
+		auto ny = 0.0f;
+		// 誤差未満ならゼロとみなす。
+		if ( std::abs( len ) < std::numeric_limits<float>::epsilon() )
+		{
+			nx = 0.0f;
+			ny = 0.0f;
+		}
+		else
+		{
+			nx = x / len;
+			ny = y / len;
+		}
+		return Vector2( nx,ny );
+	}
+
+	// ベクトルの内積(Dot product) a・b
+	float Vector2::Dot( const Vector2& multiplicator )const
+	{
+		return (x * multiplicator.x + y * multiplicator.y);
+	}
+
+	// ベクトルの外積(Cross product) a×b
+	float Vector2::Cross( const Vector2& multiplicator )const
+	{
+		return (x * multiplicator.y - y * multiplicator.x);
+	}
+
 	// ベクトルの行列変換
-	Vector2 Vector2::Transform(const Vector2& vec,const Matrix3& mat,float w)
+	Vector2 Vector2::Transform( const Vector2& vec,const Matrix3& mat,float w )
 	{
 		return {
 			vec.x * mat.m[0][0] + vec.y * mat.m[1][0] + w * mat.m[2][0],

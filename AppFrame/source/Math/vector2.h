@@ -14,7 +14,6 @@ namespace math
 
 		// コンストラクタ
 		Vector2() noexcept = default;
-
 		constexpr Vector2( float ax,float ay ) noexcept: x{ax},y{ay}
 		{}
 
@@ -32,118 +31,39 @@ namespace math
 		}
 
 		// ベクトルの加算 a + b ※外部関数
-		const Vector2 operator+( const Vector2& rhs )const
-		{
-			return Vector2( x + rhs.x,y + rhs.y );
-		}
+		const Vector2 operator+( const Vector2& rhs )const;
 		// ベクトルの減算 a - b ※外部関数
-		const Vector2 operator-( const Vector2& rhs )const
-		{
-			return Vector2( x - rhs.x,y - rhs.y );
-		}
+		const Vector2 operator-( const Vector2& rhs )const;
 		// ベクトルのスカラー倍 v * scalar ※外部関数
-		const Vector2 operator*( float rhs )const
-		{
-			return {x * rhs, y * rhs};
-		}
+		const Vector2 operator*( float rhs )const;
 		// ベクトルのスカラー割  v/scalar ※外部関数
-		const Vector2 operator/( float rhs )const
-		{
-			return {x / rhs, y / rhs};
-		}
+		const Vector2 operator/( float rhs )const;
 
 		// ベクトル加算代入
-		Vector2& operator+=( const Vector2& right )
-		{
-			x += right.x;
-			y += right.y;
-			return *this;
-		}
+		Vector2& operator+=( const Vector2& right );
 
 		// ベクトル減算代入
-		Vector2& operator-=( const Vector2& right )
-		{
-			x -= right.x;
-			y -= right.y;
-			return *this;
-		}
+		Vector2& operator-=( const Vector2& right );
 
 		// ベクトルのスカラ乗算代入
-		Vector2& operator*=( float scalar )
-		{
-			x *= scalar;
-			y *= scalar;
-			return *this;
-		}
+		Vector2& operator*=( float scalar );
 
 		// ベクトル比較
-		bool operator==( const Vector2& b ) const
-		{
-			if ( x == b.x && y == b.y )
-			{
-				return true;
-			}
-			return false;
-		}
-		bool operator!=( const Vector2& b ) const
-		{
-			return !(*this == b);
-		}
+		bool operator==( const Vector2& b ) const;
+		bool operator!=( const Vector2& b ) const;
 
 		// ベクトルの大きさ
-		float Length() const
-		{
-			return std::sqrt( x * x + y * y );
-		}
+		float Length() const;
 
 		// ベクトルの正規化
-		void Normalized()
-		{
-			auto length = Length();
-
-			// 誤差未満ならゼロとみなす。
-			if ( std::abs( length ) < std::numeric_limits<float>::epsilon() )
-			{
-				x = 0.0;
-				y = 0.0;
-			}
-			else
-			{
-				x /= length;
-				y /= length;
-			}
-		}
-		const Vector2 GetNormalize()const
-		{
-			auto len = Length();
-			auto nx = 0.0f;
-			auto ny = 0.0f;
-			// 誤差未満ならゼロとみなす。
-			if ( std::abs( len ) < std::numeric_limits<float>::epsilon() )
-			{
-				nx = 0.0f;
-				ny = 0.0f;
-			}
-			else
-			{
-				nx = x / len;
-				ny = y / len;
-			}
-			return Vector2( nx,ny );
-		}
+		void Normalized();
+		const Vector2 GetNormalize()const;
 
 		// ベクトルの内積(Dot product) a・b
-		static float Dot( const Vector2& a,const Vector2& b )
-		{
-			return (a.x * b.x + a.y * b.y);
-		}
+		float Dot( const Vector2& multiplicator )const;
 
 		// ベクトルの外積(Cross product) a×b
-		static float Cross( const Vector2& a,const Vector2& b )
-		{
-			return (a.x * b.y - a.y * b.x);
-		}
-
+		float Cross( const Vector2& multiplicator )const;
 		// ベクトルの行列変換
 		static Vector2 Transform( const Vector2& vec,const class Matrix3& mat,float w = 1.0f );
 	};

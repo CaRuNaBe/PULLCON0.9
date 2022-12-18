@@ -106,8 +106,8 @@ namespace math
 	void matrix44::look_at(const vector4& position,const vector4& target,const vector4& up)
 	{
 		auto axis_z = target - position;
-		auto axis_x = up.cross(axis_z);
-		auto axis_y = axis_z.cross(axis_x);
+		auto axis_x = up.Cross(axis_z);
+		auto axis_y = axis_z.Cross(axis_x);
 
 		axis_x.Normalized();
 		axis_y.Normalized();
@@ -128,9 +128,9 @@ namespace math
 		row_column[2][2] = axis_z.z;
 		row_column[2][3] = 0.0;
 
-		row_column[3][0] = -axis_x.dot(position);
-		row_column[3][1] = -axis_y.dot(position);
-		row_column[3][2] = -axis_z.dot(position);
+		row_column[3][0] = -axis_x.Dot(position);
+		row_column[3][1] = -axis_y.Dot(position);
+		row_column[3][2] = -axis_z.Dot(position);
 		row_column[3][3] = 1.0;
 	}
 

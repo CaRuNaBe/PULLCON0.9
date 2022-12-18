@@ -49,13 +49,13 @@ namespace math
 		// ベクトルの行列変換 オペレータ
 		const vector4 operator *( const matrix44 rhs ) const;
 		// ベクトルの大きさ
-		const float lenght() const;
+		const float Lenght() const;
 		// ベクトルの正規化
 		void Normalized();
 		const vector4 GetNormalize() const;
 		// ベクトルの内積(Dot product) a・b
-		const float dot( const vector4& rhs ) const;
+		const float Dot( const vector4& rhs ) const;
 		// ベクトルの外積(Cross product) a×b
-		const vector4 cross( const vector4& rhs ) const;
+		const vector4 Cross( const vector4& rhs ) const;
 	};
 } // math
