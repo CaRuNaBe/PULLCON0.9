@@ -18,8 +18,8 @@ void TitlePlayer::Init()
 	ActorBase2d::Init();
 
 	// ƒvƒŒƒCƒ„[î•ñ‚Ì‰Šú‰»
-	_size.x = 48;
-	_size.y = 48;
+	_size.x = 206;
+	_size.y = 175;
 	_colPos.x = 8;
 	_colPos.y = 8;
 	_colSize.x = 32;

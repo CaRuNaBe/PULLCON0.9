@@ -8,6 +8,7 @@ namespace math
 	class vector4
 	{
 	public:
+		/* ¬•ª */
 		float x;
 		float y;
 		float z;

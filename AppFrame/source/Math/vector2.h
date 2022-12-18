@@ -19,6 +19,8 @@ namespace math
 
 		constexpr Vector2( int ax,int ay ) noexcept: x{static_cast<float>(ax)},y{static_cast<float>(ay)}
 		{}
+		Vector2( const Vector2& ) = default; // コピー
+		Vector2( Vector2&& ) = default; // ムーブ
 
 		int IntX()
 		{
@@ -29,7 +31,8 @@ namespace math
 		{
 			return static_cast<int>(y);
 		}
-
+		Vector2& operator =( const Vector2& ) = default; // コピー
+		Vector2& operator =( Vector2&& ) = default; // ムーブ
 		// ベクトルの加算 a + b ※外部関数
 		const Vector2 operator+( const Vector2& rhs )const;
 		// ベクトルの減算 a - b ※外部関数
