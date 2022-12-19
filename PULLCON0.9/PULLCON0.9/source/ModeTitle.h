@@ -3,9 +3,9 @@
 #include "appframe.h"
 class ModeTitle:public ModeBase
 {
-	typedef ModeBase base;
+	using base = ModeBase;
 public:
-	ModeTitle(ApplicationBase& game,int layer);
+	ModeTitle( ApplicationBase& game,int layer );
 	virtual ~ModeTitle();
 	virtual bool Initialize();
 	virtual bool Update();
