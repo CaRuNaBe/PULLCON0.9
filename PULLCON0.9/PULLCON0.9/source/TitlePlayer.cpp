@@ -5,7 +5,7 @@
 TitlePlayer::TitlePlayer()
 	: ActorBase2d()
 {
-	_cg = ResourceServer::LoadGraph("res/title/ヘリ_タイトル.png");
+	_cg = ResourceServer::LoadGraph("res/title/cg_Heli.png");
 
 	Init();
 }
@@ -41,6 +41,7 @@ bool TitlePlayer::Update(ApplicationBase& game)
 	{
 		dir.Normalized();	// 方向をノーマライズ
 	}
+	
 	dir *= _spd;		// ノーマライズした方向に速度をかける
 	_pos += dir;		// 位置を動かす  
 
@@ -69,9 +70,7 @@ bool TitlePlayer::Update(ApplicationBase& game)
 bool TitlePlayer::Draw(ApplicationBase& game)
 {
 	ActorBase2d::Draw(game);
-
 	DrawGraph(_pos.IntX(),_pos.IntY(),_cg,TRUE);
-
 	DrawCollision();	// コリジョン描画
 	return true;
 }

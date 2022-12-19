@@ -43,6 +43,18 @@
     <ClCompile Include="source\ActorBase2d.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
+    <ClCompile Include="source\TitleLogo.cpp">
+      <Filter>source\object\title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CreditLogo.cpp">
+      <Filter>source\object\title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EndLogo.cpp">
+      <Filter>source\object\title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StartLogo.cpp">
+      <Filter>source\object\title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ModeTitle.h">
@@ -70,6 +82,19 @@
       <Filter>source\object</Filter>
     </ClInclude>
     <ClInclude Include="source\ActorBase2d.h">
+      <Filter>source\object\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\TitleLogo.h">
+      <Filter>source\object\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Player.h" />
+    <ClInclude Include="source\CreditLogo.h">
+      <Filter>source\object\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EndLogo.h">
+      <Filter>source\object\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\StartLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
   </ItemGroup>
