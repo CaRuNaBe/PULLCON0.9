@@ -31,9 +31,6 @@
     <ClCompile Include="source\ModeGameOver.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\ActorBase2d.cpp">
-      <Filter>source\object</Filter>
-    </ClCompile>
     <ClCompile Include="source\TitlePlayer.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
@@ -42,6 +39,9 @@
     </ClCompile>
     <ClCompile Include="source\ActorBase.cpp">
       <Filter>source\object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ActorBase2d.cpp">
+      <Filter>source\object\title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,9 +60,6 @@
     <ClInclude Include="source\ModeGameOver.h">
       <Filter>source\mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\ActorBase2d.h">
-      <Filter>source\object</Filter>
-    </ClInclude>
     <ClInclude Include="source\TitlePlayer.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
@@ -71,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="source\ActorBase.h">
       <Filter>source\object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ActorBase2d.h">
+      <Filter>source\object\title</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

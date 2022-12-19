@@ -18,14 +18,14 @@ void TitlePlayer::Init()
 	ActorBase2d::Init();
 
 	// プレイヤー情報の初期化
-	_size.x = 206;
-	_size.y = 175;
-	_colPos.x = 8;
-	_colPos.y = 8;
-	_colSize.x = 32;
-	_colSize.y = 32;
-	_pos.x = static_cast<float>(utility::get_random(0,1920));
-	_pos.y = static_cast<float>(utility::get_random(0,1000));
+	_pos.x = static_cast<float>(utility::get_random( 0,1920 ));
+	_pos.y = static_cast<float>(utility::get_random( 0,1000 ));
+	_size.x = 206.0f;
+	_size.y = 175.0f;
+	_colPos.x = 0.0f;
+	_colPos.y = 0.0f;
+	_colSize.x = 206.0f;
+	_colSize.y = 175.0f;
 	_spd = 8;
 
 }
@@ -33,8 +33,6 @@ void TitlePlayer::Init()
 bool TitlePlayer::Update(ApplicationBase& game)
 {
 	ActorBase2d::Update(game);
-
-
 	// キー入力を判定して、主人公を移動させる
 	// Vector2を利用して斜め移動でも問題ないように
 	Vector2 dir = {game.Getinput().GetLstickX(),-(game.Getinput().GetLstickY())};		// 方向を指定
@@ -45,6 +43,7 @@ bool TitlePlayer::Update(ApplicationBase& game)
 	}
 	dir *= _spd;		// ノーマライズした方向に速度をかける
 	_pos += dir;		// 位置を動かす  
+
 	// 画面の外に出ないようにする
 	if(_pos.x < 0)
 	{
@@ -62,9 +61,6 @@ bool TitlePlayer::Update(ApplicationBase& game)
 	{
 		_pos.y = game.DispSizeH() - _size.y;
 	}
-
-
-
 	UpdateCollision();	// コリジョン更新
 	return true;
 }
@@ -74,7 +70,7 @@ bool TitlePlayer::Draw(ApplicationBase& game)
 {
 	ActorBase2d::Draw(game);
 
-	DrawGraph(static_cast<int>(_pos.x),static_cast<int>(_pos.y),_cg,TRUE);
+	DrawGraph(_pos.IntX(),_pos.IntY(),_cg,TRUE);
 
 	DrawCollision();	// コリジョン描画
 	return true;

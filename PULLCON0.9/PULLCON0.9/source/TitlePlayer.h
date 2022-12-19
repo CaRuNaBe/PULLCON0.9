@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   TitlePlayer.h
+ * \brief  タイトル用プレイヤークラス
+ * 
+ * \author 阿部健太郎
+ * \date   December 2022
+ *********************************************************************/
 #pragma once
 #include "ActorBase2d.h"
 class TitlePlayer:public ActorBase2d
@@ -20,7 +27,7 @@ public:
 		return Type::KPLAYER;
 	}
 
-	void	Init();
+	void	Init();//初期化
 	bool	Update(ApplicationBase& game);
 	bool	Draw(ApplicationBase& game);
 
