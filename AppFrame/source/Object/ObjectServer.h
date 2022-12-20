@@ -3,12 +3,12 @@
 #include <vector>
 #include"ObjectBase.h"
 class ApplicationBase;
-class ObjectBase;
 class ModeBase;
-class ObjectServer
+
+template<class T> class ObjectServer
 {
 public:
-	using ObjectPtr = std::shared_ptr<ObjectBase >;
+	using ObjectPtr = std::shared_ptr<T >;
 	using TypeObjects = std::vector <ObjectPtr >;	// オブジェクトリストを定義
 	ObjectServer();
 	~ObjectServer();
@@ -20,7 +20,7 @@ public:
 
 	void	Clear();
 	void	Add( ObjectPtr object );
-	void	Del( ObjectBase& object );
+	void	Del( T& object );
 
 	bool	Update( ApplicationBase& game,ModeBase& mode );//更新
 	bool	Draw( ApplicationBase& game,ModeBase& mode );

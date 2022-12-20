@@ -180,7 +180,6 @@
     <ClInclude Include="source\ActorBase.h" />
     <ClInclude Include="source\ApplicationMain.h" />
     <ClInclude Include="source\ModeGame.h" />
-    <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\TitlePlayer.h" />
     <ClInclude Include="source\TitleLogo.h" />
     <ClInclude Include="source\StartLogo.h" />

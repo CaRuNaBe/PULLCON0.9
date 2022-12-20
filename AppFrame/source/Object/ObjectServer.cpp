@@ -2,53 +2,54 @@
 #include "ObjectBase.h"
 #include "ObjectServer.h"
 
-ObjectServer::ObjectServer()
-	:_updating(false)
+template<typename T>
+ObjectServer<T>::ObjectServer()
+	:_updating( false )
 {}
-
-ObjectServer::~ObjectServer()
+template<typename T>
+ObjectServer<T>::~ObjectServer()
 {
 	Clear();
 }
-
-void ObjectServer::Clear()
+template<typename T>
+void ObjectServer<T>::Clear()
 {
 	_vObjects.clear();
 }
-
-void	ObjectServer::Add(ObjectPtr object)
+template<typename T>
+void	ObjectServer<T>::Add( ObjectPtr object )
 {
-	if(_updating)
+	if ( _updating )
 	{
-		_vPendingObjects.push_back(object);
+		_vPendingObjects.push_back( object );
 	}
 	else
 	{
-		_vObjects.push_back(object);
+		_vObjects.push_back( object );
 	}
 }
-
-void	ObjectServer::AddPendingObjects()
+template<typename T>
+void	ObjectServer<T>::AddPendingObjects()
 {
 	// _vPendingObjects -> _vObjects に追加
-	_vObjects.insert(_vObjects.end(),make_move_iterator(_vPendingObjects.begin()),make_move_iterator(_vPendingObjects.end()));
+	_vObjects.insert( _vObjects.end(),make_move_iterator( _vPendingObjects.begin() ),make_move_iterator( _vPendingObjects.end() ) );
 	// _vPendingObjects をクリア
 	_vPendingObjects.clear();
 }
-
-void	ObjectServer::Del(ObjectBase& object)
+template<typename T>
+void	ObjectServer<T>::Del( T& object )
 {
 	object.Dead();
 }
-
-void	ObjectServer::DeleteObjects()
+template<typename T>
+void	ObjectServer<T>::DeleteObjects()
 {
 	// コンテナをイテレータで回す( eraseがイテレータを要求しているため )
-	for(auto ite = _vObjects.begin(); ite != _vObjects.end(); )
+	for ( auto ite = _vObjects.begin(); ite != _vObjects.end(); )
 	{
-		if((*ite)->IsDead())
+		if ( (*ite)->IsDead() )
 		{
-			ite = _vObjects.erase(ite);		// これでobjectそのものも削除される
+			ite = _vObjects.erase( ite );		// これでobjectそのものも削除される
 		}
 		else
 		{
@@ -56,33 +57,33 @@ void	ObjectServer::DeleteObjects()
 		}
 	}
 }
-
-bool	ObjectServer::Update(ApplicationBase& game,ModeBase& mode )
+template<typename T>
+bool	ObjectServer<T>::Update( ApplicationBase& game,ModeBase& mode )
 {
 	_updating = true;
-	for(auto&& object : _vObjects)
+	for ( auto&& object : _vObjects )
 	{
-		if(object->GetUpdateSkip())
+		if ( object->GetUpdateSkip() )
 		{
 			continue;
 		}
-		object->Update(game,mode);
+		object->Update( game,mode );
 	}
 	_updating = false;
 	AddPendingObjects();
 	DeleteObjects();	// 削除予約されたオブジェクトを削除する
 	return true;
 }
-
-bool	ObjectServer::Draw(ApplicationBase& game,ModeBase& mode )
+template<typename T>
+bool	ObjectServer<T>::Draw( ApplicationBase& game,ModeBase& mode )
 {
-	for(auto&& object : _vObjects)
+	for ( auto&& object : _vObjects )
 	{
-		if(object->GetDrawSkip())
+		if ( object->GetDrawSkip() )
 		{
 			continue;
 		}
-		object->Draw(game,mode);
+		object->Draw( game,mode );
 	}
 	return true;
 }

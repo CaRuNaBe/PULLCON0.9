@@ -87,7 +87,6 @@
     <ClInclude Include="source\TitleLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\CreditLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
