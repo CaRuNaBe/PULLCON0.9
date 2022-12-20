@@ -4,7 +4,7 @@
 #include"ObjectBase.h"
 class ApplicationBase;
 class ObjectBase;
-
+class ModeBase;
 class ObjectServer
 {
 public:
@@ -19,11 +19,11 @@ public:
 	}
 
 	void	Clear();
-	void	Add(ObjectPtr object);
-	void	Del(ObjectBase& object);
+	void	Add( ObjectPtr object );
+	void	Del( ObjectBase& object );
 
-	bool	Update(ApplicationBase& game);//更新
-	bool	Draw(ApplicationBase& game);
+	bool	Update( ApplicationBase& game,ModeBase& mode );//更新
+	bool	Draw( ApplicationBase& game,ModeBase& mode );
 
 
 

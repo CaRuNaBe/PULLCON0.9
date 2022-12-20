@@ -18,12 +18,12 @@ void ActorBase::Init() {
 
 }
 
-bool ActorBase::Update(ApplicationBase& game) {
-	base::Update(game);
+bool ActorBase::Update(ApplicationBase& game,ModeBase& mode ) {
+	base::Update(game,mode );
 	return true;
 }
 
-bool ActorBase::Draw(ApplicationBase& game) {
-	base::Draw(game);
+bool ActorBase::Draw(ApplicationBase& game,ModeBase& mode ) {
+	base::Draw(game,mode );
 	return true;
 }

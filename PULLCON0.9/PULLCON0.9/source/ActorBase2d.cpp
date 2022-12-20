@@ -1,6 +1,6 @@
 #include "ActorBase2d.h"
 
-ActorBase2d::ActorBase2d()
+ActorBase2d::ActorBase2d():base()
 {
 	Init();
 }
@@ -10,8 +10,8 @@ ActorBase2d::~ActorBase2d()
 
 void ActorBase2d::Init()
 {
+	base::Init();
 	// èÓïÒÇÃèâä˙âª
-	_dead = false;
 	_pos = {0,0};
 	_colPos = {0,0};
 	_colSize = {0,0};
@@ -19,8 +19,9 @@ void ActorBase2d::Init()
 	_spd = 0.0f;
 }
 
-bool ActorBase2d::Update(ApplicationBase& game)
+bool ActorBase2d::Update( ApplicationBase& game,ModeBase& mode )
 {
+	base::Update( game,mode );
 	_cnt++;
 	return true;
 }
@@ -31,25 +32,26 @@ void	ActorBase2d::UpdateCollision()
 	_collision.max = _pos + _colPos + _colSize;
 }
 
-bool	ActorBase2d::IsHitObject(ActorBase2d& object)
+bool	ActorBase2d::IsHitObject( ActorBase2d& object )
 {
 	// AABBÇ≈ìñÇΩÇËîªíË
-	if(Intersect(object.GetCollision(),_collision))
+	if ( Intersect( object.GetCollision(),_collision ) )
 	{
 		return true;
 	}
 	return false;
 }
 
-bool ActorBase2d::Draw(ApplicationBase& game)
+bool ActorBase2d::Draw( ApplicationBase& game,ModeBase& mode )
 {
+	base::Draw( game,mode );
 	return true;
 }
 
 void ActorBase2d::DrawCollision()
 {
 #if _DEBUG
-	_collision.Draw(rand() % 256,rand() % 256,rand() % 256);
+	_collision.Draw( rand() % 256,rand() % 256,rand() % 256 );
 #endif
 }
 

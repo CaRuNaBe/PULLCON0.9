@@ -2,7 +2,7 @@
 #include	"Math.h"
 #include "Dxlib.h"
 class ApplicationBase;
-
+class ModeBase;
 // ObjectBaseƒNƒ‰ƒX
 class ObjectBase
 {
@@ -11,8 +11,8 @@ public:
 	virtual ~ObjectBase();
 
 	virtual void	Init();
-	virtual bool	Update(ApplicationBase& game);
-	virtual bool	Draw(ApplicationBase& game);
+	virtual bool	Update(ApplicationBase& game,ModeBase& mode );
+	virtual bool	Draw(ApplicationBase& game,ModeBase& mode );
 
 	virtual bool	IsDead()
 	{

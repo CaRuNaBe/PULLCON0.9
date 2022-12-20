@@ -28,18 +28,18 @@ void TitleLogo::Init()
 
 }
 
-bool TitleLogo::Update( ApplicationBase& game )
+bool TitleLogo::Update( ApplicationBase& game,ModeBase& mode )
 {
-	ActorBase2d::Update( game );
+	ActorBase2d::Update( game,mode );
 	
 	UpdateCollision();	// コリジョン更新
 	return true;
 }
 
 
-bool TitleLogo::Draw( ApplicationBase& game )
+bool TitleLogo::Draw( ApplicationBase& game,ModeBase& mode )
 {
-	ActorBase2d::Draw( game );
+	ActorBase2d::Draw( game,mode );
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	DrawCollision();	// コリジョン描画
 	return true;

@@ -35,14 +35,14 @@ bool ModeTitle::Initialize()
 bool ModeTitle::Update()
 {
 	base::Update();
-	_objectServer.Update(_game);
+	_objectServer.Update(_game,*this);
 	return true;
 }
 
 bool ModeTitle::Draw()
 {
 	base::Draw();
-	_objectServer.Draw(_game);
+	_objectServer.Draw(_game,*this );
 	return true;
 }
 

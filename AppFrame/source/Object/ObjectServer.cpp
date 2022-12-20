@@ -57,7 +57,7 @@ void	ObjectServer::DeleteObjects()
 	}
 }
 
-bool	ObjectServer::Update(ApplicationBase& game)
+bool	ObjectServer::Update(ApplicationBase& game,ModeBase& mode )
 {
 	_updating = true;
 	for(auto&& object : _vObjects)
@@ -66,7 +66,7 @@ bool	ObjectServer::Update(ApplicationBase& game)
 		{
 			continue;
 		}
-		object->Update(game);
+		object->Update(game,mode);
 	}
 	_updating = false;
 	AddPendingObjects();
@@ -74,7 +74,7 @@ bool	ObjectServer::Update(ApplicationBase& game)
 	return true;
 }
 
-bool	ObjectServer::Draw(ApplicationBase& game)
+bool	ObjectServer::Draw(ApplicationBase& game,ModeBase& mode )
 {
 	for(auto&& object : _vObjects)
 	{
@@ -82,7 +82,7 @@ bool	ObjectServer::Draw(ApplicationBase& game)
 		{
 			continue;
 		}
-		object->Draw(game);
+		object->Draw(game,mode);
 	}
 	return true;
 }

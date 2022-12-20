@@ -12,8 +12,8 @@ public:
 	}
 
 	void	Init();//‰Šú‰»
-	bool	Update( ApplicationBase& game );
-	bool	Draw( ApplicationBase& game );
+	bool	Update( ApplicationBase& game,ModeBase& mode );
+	bool	Draw( ApplicationBase& game,ModeBase& mode );
 
 private:
 	int		_cg;		// ‰æ‘œ

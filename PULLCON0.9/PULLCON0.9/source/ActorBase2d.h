@@ -27,9 +27,9 @@ public:
 	virtual ~ActorBase2d();
 
 	virtual void	Init();/*èâä˙âª*/
-	virtual bool	Update(ApplicationBase& game);//
+	virtual bool	Update(ApplicationBase& game,ModeBase& mode );//
 	virtual void	UpdateCollision();
-	virtual bool	Draw(ApplicationBase& game);
+	virtual bool	Draw(ApplicationBase& game,ModeBase& mode );
 	virtual void	DrawCollision();
 
 	virtual AABB& GetCollision()

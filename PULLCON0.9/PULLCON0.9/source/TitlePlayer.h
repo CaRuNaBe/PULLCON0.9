@@ -1,12 +1,13 @@
 /*****************************************************************//**
  * \file   TitlePlayer.h
  * \brief  タイトル用プレイヤークラス
- * 
+ *
  * \author 阿部健太郎
  * \date   December 2022
  *********************************************************************/
 #pragma once
 #include "ActorBase2d.h"
+#include "ActorBase.h"
 class TitlePlayer:public ActorBase2d
 {
 	using Actor2d = ActorBase2d;
@@ -28,11 +29,11 @@ public:
 	}
 
 	void	Init();//初期化
-	bool	Update(ApplicationBase& game);
-	bool	Draw(ApplicationBase& game);
+	bool	Update( ApplicationBase& game,ModeBase& mode );
+	bool	Draw( ApplicationBase& game,ModeBase& mode );
 
 private:
 	int		_cg;		// 画像
-
+	bool isRight;//右向き描画の時true
 };
 
