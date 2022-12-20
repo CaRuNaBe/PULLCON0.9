@@ -39,6 +39,7 @@ public:
 	}
 protected:
 	ApplicationBase& _game;
+
 	bool	_dead;
 	bool _isModeSkip;
 	bool _isDrawSkip;

@@ -1,6 +1,7 @@
 #pragma once
 #include<memory>
 #include "appframe.h"
+class ActorBase2d;
 class ModeTitle:public ModeBase
 {
 	using base = ModeBase;
@@ -10,6 +11,10 @@ public:
 	virtual bool Initialize();
 	virtual bool Update();
 	virtual bool Draw();
+	ObjectServer<ActorBase2d> GetobjectServer()
+	{
+		return _objectServer;
+	}
 private:
-	ObjectServer<ObjectBase>_objectServer;
+	ObjectServer<ActorBase2d>_objectServer;
 };
