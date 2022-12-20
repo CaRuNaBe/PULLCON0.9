@@ -22,14 +22,12 @@ bool ModeGameResult::Initialize()
 bool ModeGameResult::Update()
 {
 	base::Update();
-	_objectServer.Update(_game,*this );
 	return true;
 }
 
 bool ModeGameResult::Draw()
 {
 	base::Draw();
-	_objectServer.Draw(_game,*this );
 	return true;
 }
 

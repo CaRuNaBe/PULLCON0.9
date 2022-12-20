@@ -1,14 +1,14 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include"ObjectBase.h"
 class ApplicationBase;
 class ModeBase;
-
+class ObjectBase;
 template<class T> class ObjectServer
 {
 public:
-	using ObjectPtr = std::shared_ptr<T >;
+	using ObjectPtr = std::shared_ptr<T>;
+	using ObjectBasePtr= std::shared_ptr<ObjectBase>;
 	using TypeObjects = std::vector <ObjectPtr >;	// オブジェクトリストを定義
 	ObjectServer();
 	~ObjectServer();
@@ -19,11 +19,11 @@ public:
 	}
 
 	void	Clear();
-	void	Add( ObjectPtr object );
-	void	Del( T& object );
+	void	Add( ObjectBasePtr object );
+	void	Del( ObjectBase& object );
 
 	bool	Update( ApplicationBase& game,ModeBase& mode );//更新
-	bool	Draw( ApplicationBase& game,ModeBase& mode );
+	bool	Draw( ApplicationBase& game,ModeBase& mode );//描画
 
 
 

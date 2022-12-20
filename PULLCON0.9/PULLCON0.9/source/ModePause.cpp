@@ -21,14 +21,12 @@ bool ModePause::Initialize()
 bool ModePause::Update()
 {
 	base::Update();
-	_objectServer.Update(_game,*this );
 	return true;
 }
 
 bool ModePause::Draw()
 {
 	base::Draw();
-	_objectServer.Draw(_game,*this );
 	return true;
 }
 

@@ -14,16 +14,6 @@ public:
 	virtual bool Update();  // çXêV
 	virtual bool Draw();	// ï`âÊ
 
-	virtual ObjectServer& GetObjectServer()
-	{
-		return _objectServer;
-	}
-
-	virtual ObjectServer::TypeObjects& GetObjects()
-	{
-		return _objectServer.GetObjects();
-	}
-
 	virtual bool	IsDead()
 	{
 		return _dead;
@@ -50,7 +40,6 @@ public:
 protected:
 	ApplicationBase& _game;
 	bool	_dead;
-	ObjectServer _objectServer;
 	bool _isModeSkip;
 	bool _isDrawSkip;
 	int _layer;

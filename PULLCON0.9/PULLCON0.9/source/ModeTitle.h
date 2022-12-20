@@ -11,5 +11,5 @@ public:
 	virtual bool Update();
 	virtual bool Draw();
 private:
-
+	ObjectServer<ObjectBase>_objectServer;
 };

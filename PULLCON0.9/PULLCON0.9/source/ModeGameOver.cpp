@@ -22,14 +22,12 @@ bool ModeGameOver::Initialize()
 bool ModeGameOver::Update()
 {
 	base::Update();
-	_objectServer.Update( _game,*this );
 	return true;
 }
 
 bool ModeGameOver::Draw()
 {
 	base::Draw();
-	_objectServer.Draw( _game,*this );
 	return true;
 }
 
