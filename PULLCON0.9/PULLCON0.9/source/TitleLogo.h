@@ -24,5 +24,6 @@ public:
 
 private:
 	int		_cg;		// ‰æ‘œ
+	EasingMode _easing;
 };
 

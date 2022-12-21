@@ -8,14 +8,14 @@ namespace math
 {
 	//!	イージング関数ラムダ式テーブル
 	//!
-	//!	@param t 経過時間
-	//!	@param b 開始値
-	//!	@param c 終了値
-	//!	@param d 持続時間
+	//!	@param t 経過時間1-1
+	//!	@param b 開始値100
+	//!	@param c 終了値400
+	//!	@param d 持続時間60
 	//!	@return  計算結果
 	//!
 	const EasingMap Easing::_modes = {
-		{ "Linear",[](float t, float b, float c, float d){return (c - b) * t / d + b;}},
+		{ "Linear",[](float t, float b, float c, float d){return (c - b) * t / d + b;}},//
 
 		{ "InQuad",[](float t, float b, float c, float d){t /= d;return (c - b) * t * t + b;}},
 

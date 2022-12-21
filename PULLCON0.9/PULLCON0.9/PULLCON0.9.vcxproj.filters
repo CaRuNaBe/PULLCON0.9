@@ -34,9 +34,6 @@
     <ClCompile Include="source\TitlePlayer.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\ApplicationMain.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
     <ClCompile Include="source\TitleLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
@@ -49,6 +46,7 @@
     <ClCompile Include="source\StartLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
+    <ClCompile Include="source\ApplicationMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ModeTitle.h">
@@ -69,9 +67,6 @@
     <ClInclude Include="source\TitlePlayer.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\ApplicationMain.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
     <ClInclude Include="source\TitleLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
@@ -84,5 +79,6 @@
     <ClInclude Include="source\StartLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
+    <ClInclude Include="source\ApplicationMain.h" />
   </ItemGroup>
 </Project>

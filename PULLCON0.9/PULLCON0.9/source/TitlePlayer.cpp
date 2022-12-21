@@ -24,7 +24,7 @@ void TitlePlayer::Init()
 	_colPos.x = 0.0f;
 	_colPos.y = 0.0f;
 	_colSize.x = 206.0f;
-	_colSize.y = 175.0f;
+	_colSize.y = 160.0f;
 	_spd = 8;
 	auto juge = static_cast<int>(utility::get_random( 0,1 ));
 	if ( juge % 2 == 0 )
@@ -80,6 +80,17 @@ bool TitlePlayer::Update( ApplicationBase& game,ModeBase& mode )
 	}
 	for(auto&& obje : mode.Get2DobjectServer().GetObjects())
 	{
+		if ( obje->GetType() == ActorBase2d::Type::KGAMESTARTLOGO )
+		{
+			if ( !isRight )
+			{
+				
+			}
+			if ( isRight )
+			{
+			
+			}
+		}
 	}
 	UpdateCollision();	// コリジョン更新
 	return true;
@@ -93,10 +104,17 @@ bool TitlePlayer::Draw( ApplicationBase& game,ModeBase& mode )
 	{
 		DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	}
-	if ( isRight )
+	else
 	{
 		DrawTurnGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	}
+#if _DEBUG
+	int x = 0,y = 0,size = 16;
+	SetFontSize( size );
+	//DrawFormatString( x,y,GetColor( 255,0,0 ),"Camera:" ); y += size;
+	//DrawFormatString( x,y,GetColor( 255,0,0 ),"  target = (%5.2f, %5.2f, %5.2f)",_cam._vTarget.x,_cam._vTarget.y,_cam._vTarget.z ); y += size;
+	DrawFormatString( x,y,GetColor( 255,0,0 ),"  pos    = (%5.2f, %5.2f)",_pos.x,_pos.y ); y += size;
+#endif
 	DrawCollision();	// コリジョン描画
 	return true;
 }
