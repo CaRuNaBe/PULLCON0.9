@@ -6,7 +6,7 @@
  * \date   December 2022
  *********************************************************************/
 #pragma once
-#include "ActorBase2d.h"
+#include "appframe.h"
 class StartLogo:public ActorBase2d
 {
 	using Actor2d = ActorBase2d;

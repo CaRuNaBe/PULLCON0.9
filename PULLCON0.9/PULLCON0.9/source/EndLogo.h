@@ -1,5 +1,5 @@
 #pragma once
-#include "ActorBase2d.h"
+#include "appframe.h"
 class EndLogo:public ActorBase2d
 {
 	using Actor2d = ActorBase2d;

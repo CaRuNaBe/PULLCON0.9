@@ -11,10 +11,7 @@ public:
 	virtual bool Initialize();
 	virtual bool Update();
 	virtual bool Draw();
-	ObjectServer<ActorBase2d> GetobjectServer()
-	{
-		return _objectServer;
-	}
+
 private:
-	ObjectServer<ActorBase2d>_objectServer;
+	
 };

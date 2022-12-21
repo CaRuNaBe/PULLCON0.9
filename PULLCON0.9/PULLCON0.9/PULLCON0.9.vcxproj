@@ -157,8 +157,6 @@
   <ItemGroup>
     <ClCompile Include="source\EndLogo.cpp" />
     <ClCompile Include="source\CreditLogo.cpp" />
-    <ClCompile Include="source\ActorBase.cpp" />
-    <ClCompile Include="source\ActorBase2d.cpp" />
     <ClCompile Include="source\ModeGameOver.cpp" />
     <ClCompile Include="source\ModeGameResult.cpp" />
     <ClCompile Include="source\ModePause.cpp" />
@@ -172,12 +170,10 @@
   <ItemGroup>
     <ClInclude Include="source\EndLogo.h" />
     <ClInclude Include="source\CreditLogo.h" />
-    <ClInclude Include="source\ActorBase2d.h" />
     <ClInclude Include="source\ModeGameOver.h" />
     <ClInclude Include="source\ModeGameResult.h" />
     <ClInclude Include="source\ModePause.h" />
     <ClInclude Include="source\ModeTitle.h" />
-    <ClInclude Include="source\ActorBase.h" />
     <ClInclude Include="source\ApplicationMain.h" />
     <ClInclude Include="source\ModeGame.h" />
     <ClInclude Include="source\TitlePlayer.h" />

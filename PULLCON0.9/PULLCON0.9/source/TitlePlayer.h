@@ -6,8 +6,7 @@
  * \date   December 2022
  *********************************************************************/
 #pragma once
-#include "ActorBase2d.h"
-#include "ActorBase.h"
+#include "appframe.h"
 class TitlePlayer:public ActorBase2d
 {
 	using Actor2d = ActorBase2d;

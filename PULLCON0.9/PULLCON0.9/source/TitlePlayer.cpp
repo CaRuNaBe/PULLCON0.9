@@ -78,7 +78,9 @@ bool TitlePlayer::Update( ApplicationBase& game,ModeBase& mode )
 	{
 		_pos.y = game.DispSizeH() - _size.y;
 	}
-
+	for(auto&& obje : mode.Get2DobjectServer().GetObjects())
+	{
+	}
 	UpdateCollision();	// コリジョン更新
 	return true;
 }

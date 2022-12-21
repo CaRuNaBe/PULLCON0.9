@@ -6,7 +6,8 @@
  * \author ˆ¢•”Œ’‘¾˜Y
  * \date   December 2022
  *********************************************************************/
-#include "appframe.h"
+#include "../Math/math.h"
+#include "ObjectBase.h"
 using namespace math;
 class ActorBase2d:public ObjectBase
 {

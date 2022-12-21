@@ -8,7 +8,6 @@
 #include "EndLogo.h"
 ModeTitle::ModeTitle(ApplicationBase& game,int layer)
 	:base(game,layer)
-	,_objectServer()
 {
 	auto titlelogo = std::make_shared<TitleLogo>();
 	_objectServer.Add( titlelogo );

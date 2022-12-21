@@ -6,7 +6,7 @@
  * \date   December 2022
  *********************************************************************/
 #pragma once
-#include "ActorBase2d.h"
+#include "appframe.h"
 class CreditLogo:
     public ActorBase2d
 {

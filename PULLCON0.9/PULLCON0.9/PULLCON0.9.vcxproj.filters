@@ -37,12 +37,6 @@
     <ClCompile Include="source\ApplicationMain.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\ActorBase.cpp">
-      <Filter>source\object</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ActorBase2d.cpp">
-      <Filter>source\object\title</Filter>
-    </ClCompile>
     <ClCompile Include="source\TitleLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
@@ -77,12 +71,6 @@
     </ClInclude>
     <ClInclude Include="source\ApplicationMain.h">
       <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ActorBase.h">
-      <Filter>source\object</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ActorBase2d.h">
-      <Filter>source\object\title</Filter>
     </ClInclude>
     <ClInclude Include="source\TitleLogo.h">
       <Filter>source\object\title</Filter>

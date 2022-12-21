@@ -7,4 +7,5 @@
 #include"ResourceServer/ResourceServer.h"
 #include"../../picojson/picojson.h"
 #include "../../AppFrame/source/Math/Math.h"
-#include"Object/ObjectBase.h"
+#include"../source/Object/ActorBase2d.h"
+

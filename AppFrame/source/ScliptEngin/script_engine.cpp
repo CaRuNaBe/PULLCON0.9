@@ -641,7 +641,7 @@ void ScriptEngine::PlayUpdate(ApplicationBase& game)
 //! これは左側から 1 文字づつ表示していく仕様の為です。
 //! 実際の右側の値は right_goal に格納します。
 //!
-bool ScriptEngine::CalculateMessageArea(const std::string& message,Rect& area,int& right_goal)
+bool ScriptEngine::CalculateMessageArea(const std::string& message,scliptmath::Rect& area,int& right_goal)
 {
 	if(message.empty())
 	{
@@ -914,7 +914,7 @@ bool ScriptEngine::OnCommandMessage(unsigned int line,const std::vector<std::str
 		return false;
 	}
 
-	Rect rect;
+	scliptmath::Rect rect;
 	int right_goal = 0;
 
 	if(!CalculateMessageArea(message->GetMessageA(),rect,right_goal))

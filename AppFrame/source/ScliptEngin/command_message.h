@@ -23,7 +23,7 @@ public:
 
 	bool Check () override;
 
-	inline void Initialize ( Rect&& area , const int goal )
+	inline void Initialize (scliptmath::Rect&& area , const int goal )
 	{
 		this->area = area;
 		right_goal = goal;
@@ -38,7 +38,7 @@ public:
 	{
 		return script [ 2 ];
 	}
-	inline const Rect& GetArea () const
+	inline const scliptmath::Rect& GetArea () const
 	{
 		return area;
 	}
@@ -53,6 +53,6 @@ public:
 	}
 
 private:
-	Rect area;
+	scliptmath::Rect area;
 	int right_goal;
 };

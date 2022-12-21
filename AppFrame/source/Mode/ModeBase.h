@@ -1,10 +1,8 @@
 #pragma once
-
-class ApplicationBase;
-
 #include	"../Object/ObjectServer.h"
 
-
+class ApplicationBase;
+class ActorBase2d;
 class ModeBase
 {
 public:
@@ -37,8 +35,13 @@ public:
 	{
 		return _layer;
 	}
+	ObjectServer<ActorBase2d> Get2DobjectServer()
+	{
+		return _objectServer;
+	}
 protected:
 	ApplicationBase& _game;
+	ObjectServer<ActorBase2d>_objectServer;
 
 	bool	_dead;
 	bool _isModeSkip;
