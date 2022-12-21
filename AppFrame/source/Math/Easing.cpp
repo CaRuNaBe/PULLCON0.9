@@ -8,10 +8,10 @@ namespace math
 {
 	//!	イージング関数ラムダ式テーブル
 	//!
-	//!	@param t 経過時間1-1
-	//!	@param b 開始値100
-	//!	@param c 終了値400
-	//!	@param d 持続時間60
+	//!	@param t 経過時間
+	//!	@param b 開始値
+	//!	@param c 終了値
+	//!	@param d 持続時間
 	//!	@return  計算結果
 	//!
 	const EasingMap Easing::_modes = {
