@@ -24,6 +24,7 @@ public:
 	};
 	virtual Type GetType() = 0;
 
+	//enum 
 	ActorBase2d();
 	virtual ~ActorBase2d();
 

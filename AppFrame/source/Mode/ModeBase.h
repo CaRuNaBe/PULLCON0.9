@@ -35,7 +35,7 @@ public:
 	{
 		return _layer;
 	}
-	ObjectServer<ActorBase2d> Get2DobjectServer()
+	ObjectServer<ActorBase2d>& Get2DobjectServer()
 	{
 		return _objectServer;
 	}

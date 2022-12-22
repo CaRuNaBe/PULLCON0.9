@@ -5,7 +5,8 @@
 TitlePlayer::TitlePlayer()
 	: ActorBase2d()
 {
-	_cg = ResourceServer::LoadGraph( "res/title/cg_Heli.png" );
+	cg_player = ResourceServer::LoadGraph( "res/title/cg_Heli.png" );
+	cg_ui = ResourceServer::LoadGraph( "res/title/ui_Push_Guide.png" );
 	Init();
 }
 
@@ -35,7 +36,7 @@ void TitlePlayer::Init()
 	{
 		isRight = false;
 	}
-
+	isUidraw = false;
 }
 
 bool TitlePlayer::Update( ApplicationBase& game,ModeBase& mode )
@@ -78,17 +79,32 @@ bool TitlePlayer::Update( ApplicationBase& game,ModeBase& mode )
 	{
 		_pos.y = game.DispSizeH() - _size.y;
 	}
-	for(auto&& obje : mode.Get2DobjectServer().GetObjects())
+	for ( auto&& obje : mode.Get2DobjectServer().GetObjects() )
 	{
-		if ( obje->GetType() == ActorBase2d::Type::KGAMESTARTLOGO )
+		if ( (obje->GetType() == ActorBase2d::Type::KGAMESTARTLOGO) || (obje->GetType() == ActorBase2d::Type::KCREDITLOGO) || (obje->GetType() == ActorBase2d::Type::KENDLOGO) )
 		{
-			if ( !isRight )
+			isUidraw = true;
+			if ( IsHitObject( *obje ) )
 			{
 				
+				/*
+				if ( !isRight )
+				{
+					if ( game.Getinput().GetKeyXinput( XINPUT_BUTTON_A ) )
+					{
+					}
+				}
+				if ( isRight )
+				{
+					if ( game.Getinput().GetKeyXinput( XINPUT_BUTTON_A ) )
+					{
+					}
+				}
+				*/
 			}
-			if ( isRight )
+			else
 			{
-			
+				isUidraw = false;
 			}
 		}
 	}
@@ -102,12 +118,36 @@ bool TitlePlayer::Draw( ApplicationBase& game,ModeBase& mode )
 	ActorBase2d::Draw( game,mode );
 	if ( !isRight )
 	{
-		DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
+		DrawGraph( _pos.IntX(),_pos.IntY(),cg_player,TRUE );
 	}
 	else
 	{
-		DrawTurnGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
+		DrawTurnGraph( _pos.IntX(),_pos.IntY(),cg_player,TRUE );
 	}
+	if ( isUidraw )
+	{
+		const Vector2 uisize = {150,150};
+		Vector2 uiposi = {(_pos.x)-(uisize.x),_pos.y};
+		
+		if ( uiposi.x < 0.0f)
+		{
+			uiposi.x = 0.0f;
+		}
+		if ( uiposi.x + uisize.x > game.DispSizeW() )
+		{
+			uiposi.x = static_cast <float>(game.DispSizeW()) - uiposi.x;
+		}
+		if ( uiposi.y < 0.0f )
+		{
+			uiposi.y = 0.0f;
+		}
+		if ( uiposi.y + uisize.y > static_cast <float>(game.DispSizeH()) )
+		{
+			uiposi.y = game.DispSizeH() - uisize.y;
+		}
+		DrawTurnGraph( uiposi.IntX(),uiposi.IntY(),cg_ui,TRUE );
+	}
+
 #if _DEBUG
 	int x = 0,y = 0,size = 16;
 	SetFontSize( size );

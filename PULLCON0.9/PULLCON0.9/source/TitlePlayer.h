@@ -32,7 +32,9 @@ public:
 	bool	Draw( ApplicationBase& game,ModeBase& mode );
 
 private:
-	int		_cg;		// 画像
+	int		cg_player;		// プレイヤー画像
+	int  cg_ui;//ui画像
 	bool isRight;//右向き描画の時true
+	bool isUidraw;
 };
 
