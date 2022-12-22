@@ -134,7 +134,9 @@
     <ClInclude Include="source\ScliptEngin\scripts_string.h">
       <Filter>source\ScliptEngin</Filter>
     </ClInclude>
-    <ClInclude Include="source\Object\ActorBase2d.h" />
+    <ClInclude Include="source\Object\ActorBase2d.h">
+      <Filter>source\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -238,7 +240,7 @@
       <Filter>source\ScliptEngin</Filter>
     </ClCompile>
     <ClCompile Include="source\Object\ActorBase2d.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

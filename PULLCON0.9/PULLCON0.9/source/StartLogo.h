@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   StartLogo.h
- * \brief  
+ * \brief  ゲームスタートロゴクラス
  * 
  * \author 阿部健太郎
  * \date   December 2022
@@ -10,6 +10,14 @@
 class StartLogo:public ActorBase2d
 {
 	using Actor2d = ActorBase2d;
+	/**
+	 * オブジェクトの状態.
+	 */
+	enum class State
+	{
+		IDLING,//待機
+		PULLED//引っ張られている
+	};
 public:
 	StartLogo();
 	~StartLogo();

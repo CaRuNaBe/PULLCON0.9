@@ -16,14 +16,10 @@ void StartLogo::Init()
 	ActorBase2d::Init();
 
 	// プレイヤー情報の初期化
-	_pos.x = 450.0f;
-	_pos.y = 900.0f;
-	_size.x = 156.0f;
-	_size.y = 466.0f;
-	_colPos.x = 0.0f;
-	_colPos.y = 0.0f;
-	_colSize.x = 156.0f;
-	_colSize.y = 466.0f;
+	_pos = {450.0f,900.0f};
+	_size = {156.0f,466.0f};
+	_colPos = {0.0f,0.0f};
+	_colSize = {156.0f,466.0f};
 	_spd = 0;
 
 }
@@ -31,7 +27,22 @@ void StartLogo::Init()
 bool StartLogo::Update( ApplicationBase& game,ModeBase& mode )
 {
 	ActorBase2d::Update( game,mode );
-	
+	//switch
+	for (auto&& obje: mode.Get2DobjectServer().GetObjects() )
+	{
+		if ( (obje->GetType() == ActorBase2d::Type::KPLAYER)  )
+		{
+			if ( IsHitObject( *obje ) )
+			{
+				if ( game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
+				{
+					_spd = utility::get_random(5.0f,20.0f);
+					_pos.y -= _spd;		// 位置を動かす  
+				}
+			}
+		}
+	}
+
 	UpdateCollision();	// コリジョン更新
 	return true;
 }

@@ -155,6 +155,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\EndGuid.cpp" />
+    <ClCompile Include="source\CreditGuid.cpp" />
     <ClCompile Include="source\EndLogo.cpp" />
     <ClCompile Include="source\CreditLogo.cpp" />
     <ClCompile Include="source\ModeGameOver.cpp" />
@@ -166,8 +168,11 @@
     <ClCompile Include="source\TitlePlayer.cpp" />
     <ClCompile Include="source\TitleLogo.cpp" />
     <ClCompile Include="source\StartLogo.cpp" />
+    <ClCompile Include="source\StartGuid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\EndGuid.h" />
+    <ClInclude Include="source\CreditGuid.h" />
     <ClInclude Include="source\EndLogo.h" />
     <ClInclude Include="source\CreditLogo.h" />
     <ClInclude Include="source\ModeGameOver.h" />
@@ -179,6 +184,7 @@
     <ClInclude Include="source\TitlePlayer.h" />
     <ClInclude Include="source\TitleLogo.h" />
     <ClInclude Include="source\StartLogo.h" />
+    <ClInclude Include="source\StartGuid.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,6 +11,14 @@ class CreditLogo:
     public ActorBase2d
 {
 	using Actor2d = ActorBase2d;
+		/**
+	 * オブジェクトの状態.
+	 */
+	enum class State
+	{
+		IDLING,//待機
+		PULLED//引っ張られている
+	};
 public:
 	CreditLogo();
 	~CreditLogo();

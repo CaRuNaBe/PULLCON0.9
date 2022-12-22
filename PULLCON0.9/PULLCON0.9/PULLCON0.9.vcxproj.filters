@@ -46,7 +46,18 @@
     <ClCompile Include="source\StartLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\ApplicationMain.cpp" />
+    <ClCompile Include="source\ApplicationMain.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StartGuid.cpp">
+      <Filter>source\object\title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\EndGuid.cpp">
+      <Filter>source\object\title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CreditGuid.cpp">
+      <Filter>source\object\title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ModeTitle.h">
@@ -79,6 +90,17 @@
     <ClInclude Include="source\StartLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\ApplicationMain.h" />
+    <ClInclude Include="source\ApplicationMain.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\StartGuid.h">
+      <Filter>source\object\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EndGuid.h">
+      <Filter>source\object\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CreditGuid.h">
+      <Filter>source\object\title</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
