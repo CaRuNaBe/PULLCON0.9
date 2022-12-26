@@ -17,9 +17,8 @@ public:
 	 */
 	enum class State
 	{
-		IDLING,//待機
-		MOVING,//移動
-		PULLING//引張中
+		MOVE,//動く
+		WAIT//待つ
 	};
 	/** コンストラクタ */
 	TitlePlayer();
@@ -40,5 +39,7 @@ private:
 	std::array<int,4> cg_ui;//ui画像
 	bool isRight;//右向き描画してる時true
 	bool isUidraw;//ボタン表示判定trueの時表示
+	int waitTime;
+	State PlayerState;
 };
 

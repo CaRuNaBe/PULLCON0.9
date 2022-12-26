@@ -36,7 +36,7 @@ bool StartLogo::Update( ApplicationBase& game,ModeBase& mode )
 			{
 				if ( game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
 				{
-					_spd = utility::get_random(5.0f,20.0f);
+					_spd = static_cast<float>(utility::get_random( 5,20 ));
 					_pos.y -= _spd;		// ˆÊ’u‚ð“®‚©‚·  
 				}
 			}

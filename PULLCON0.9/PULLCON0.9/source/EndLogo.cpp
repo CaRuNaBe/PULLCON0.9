@@ -28,7 +28,20 @@ void EndLogo::Init()
 bool EndLogo::Update( ApplicationBase& game,ModeBase& mode )
 {
 	ActorBase2d::Update( game,mode );
-	
+	for ( auto&& obje : mode.Get2DobjectServer().GetObjects() )
+	{
+		if ( (obje->GetType() == ActorBase2d::Type::KPLAYER) )
+		{
+			if ( IsHitObject( *obje ) )
+			{
+				if ( game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
+				{
+					_spd = static_cast<float>(utility::get_random( 5,20 ));
+					_pos.y -= _spd;		// 位置を動かす  
+				}
+			}
+		}
+	}
 	UpdateCollision();	// コリジョン更新
 	return true;
 }
