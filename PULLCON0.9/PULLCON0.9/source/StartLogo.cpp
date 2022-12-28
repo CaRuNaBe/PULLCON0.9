@@ -21,16 +21,14 @@ void StartLogo::Init()
 	_colPos = {0.0f,0.0f};
 	_colSize = {156.0f,466.0f};
 	_spd = 0;
-
 }
 
 bool StartLogo::Update( ApplicationBase& game,ModeBase& mode )
 {
 	ActorBase2d::Update( game,mode );
-	//switch
-	for (auto&& obje: mode.Get2DobjectServer().GetObjects() )
+	for ( auto&& obje : mode.Get2DobjectServer().GetObjects() )
 	{
-		if ( (obje->GetType() == ActorBase2d::Type::KPLAYER)  )
+		if ( (obje->GetType() == ActorBase2d::Type::KPLAYER) )
 		{
 			if ( IsHitObject( *obje ) )
 			{

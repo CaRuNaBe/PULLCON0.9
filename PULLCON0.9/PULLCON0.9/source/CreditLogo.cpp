@@ -14,14 +14,10 @@ CreditLogo::~CreditLogo()
 void CreditLogo::Init()
 {
 	ActorBase2d::Init();
-	_pos.x = 900.0f;
-	_pos.y = 900.0f;
-	_size.x = 156.0f;
-	_size.y = 466.0f;
-	_colPos.x = 0.0f;
-	_colPos.y = 0.0f;
-	_colSize.x = 156.0f;
-	_colSize.y = 466.0f;
+	_pos = {900.0f,900.0f};
+	_size = {156.0f,466.0f};
+	_colPos = {0.0f,0.0f};
+	_colSize = {156.0f,466.0f};
 	_spd = 0;
 }
 

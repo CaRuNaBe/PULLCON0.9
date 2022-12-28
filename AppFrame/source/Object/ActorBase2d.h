@@ -19,8 +19,11 @@ public:
 		KPLAYER,		// 1 プレイヤー
 		KTITLELOGO,	// 2 タイトルロゴ
 		KGAMESTARTLOGO,			// 3 ゲームスタートロゴ
-		KCREDITLOGO,	// 4 クレジットロゴ
-		KENDLOGO,		// 5 ゲーム終了ロゴ
+		KGAMESTARTGUID,// 4 ゲームスタートガイド
+		KCREDITLOGO,	// 5 クレジットロゴ
+		KCREDITGUID,//6 クレジットガイド
+		KENDLOGO,		// 7 ゲーム終了ロゴ
+		KENDGUID//8 ゲーム終了ガイド
 	};
 	virtual Type GetType() = 0;
 
