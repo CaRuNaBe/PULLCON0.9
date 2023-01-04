@@ -1,7 +1,7 @@
 
 #include "AppFrame.h"
 #include "ApplicationMain.h"
-#include "ModeTitle.h"
+#include "ModePause.h"
 #include "ModeGame.h"
 
 // é¿ëÃ
@@ -11,7 +11,7 @@ bool ApplicationMain::Initialize(HINSTANCE hInstance) {
 	if (!base::Initialize(hInstance)) { return false; }
 
 	// ÉÇÅ[ÉhÇÃìoò^
-	auto game = std::make_shared<ModeTitle>(*this,1);
+	auto game = std::make_shared<ModePause>(*this,1);
 	base::GetInstance()->GetModeServer()->Add(game);
 
 	return true;

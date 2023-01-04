@@ -3,9 +3,7 @@
 
 ModeGameOver::ModeGameOver( ApplicationBase& game,int layer )
 	:base( game,layer )
-{
-
-};
+{};
 
 ModeGameOver::~ModeGameOver()
 {};

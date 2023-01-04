@@ -13,6 +13,7 @@ void ActorBase2d::Init()
 	base::Init();
 	// î•ñ‚Ì‰Šú‰»
 	_pos = {0,0};
+	_size = {0,0};
 	_colPos = {0,0};
 	_colSize = {0,0};
 	_cnt = 0;

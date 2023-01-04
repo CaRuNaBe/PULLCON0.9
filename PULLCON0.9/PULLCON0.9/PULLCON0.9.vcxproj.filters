@@ -14,6 +14,9 @@
     <Filter Include="source\object\title">
       <UniqueIdentifier>{8f53cc26-d6a0-4078-949f-a8c926bd295b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\object\pause">
+      <UniqueIdentifier>{1c71afb1-6e1c-47a0-bd62-8e79da3a2943}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ModeTitle.cpp">
@@ -58,6 +61,18 @@
     <ClCompile Include="source\CreditGuid.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
+    <ClCompile Include="source\PauseLogo.cpp">
+      <Filter>source\object\pause</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DescriptionLogo.cpp">
+      <Filter>source\object\pause</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RestartLogo.cpp">
+      <Filter>source\object\pause</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ReturnTitleLogo.cpp">
+      <Filter>source\object\pause</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ModeTitle.h">
@@ -101,6 +116,18 @@
     </ClInclude>
     <ClInclude Include="source\CreditGuid.h">
       <Filter>source\object\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\PauseLogo.h">
+      <Filter>source\object\pause</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DescriptionLogo.h">
+      <Filter>source\object\pause</Filter>
+    </ClInclude>
+    <ClInclude Include="source\RestartLogo.h">
+      <Filter>source\object\pause</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ReturnTitleLogo.h">
+      <Filter>source\object\pause</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

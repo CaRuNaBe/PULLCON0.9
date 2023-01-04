@@ -14,16 +14,25 @@ class ActorBase2d:public ObjectBase
 	using base = ObjectBase;
 public:
 	enum class Type
-	{  // 種別の列挙型
-		KBASE,			// 0 アクター
-		KPLAYER,		// 1 プレイヤー
-		KTITLELOGO,	// 2 タイトルロゴ
-		KGAMESTARTLOGO,			// 3 ゲームスタートロゴ
-		KGAMESTARTGUID,// 4 ゲームスタートガイド
-		KCREDITLOGO,	// 5 クレジットロゴ
-		KCREDITGUID,//6 クレジットガイド
-		KENDLOGO,		// 7 ゲーム終了ロゴ
-		KENDGUID//8 ゲーム終了ガイド
+	{  
+		// 種別の列挙型
+		/** タイトル画面 */
+		KBASE,			     // 0 アクター
+		KPLAYER,		     // 1 プレイヤー
+		KTITLELOGO,	     // 2 タイトルロゴ
+		KGAMESTARTLOGO,	 // 3 ゲームスタートロゴ
+		KGAMESTARTGUID,  // 4 ゲームスタートガイド
+		KCREDITLOGO,	   // 5 クレジットロゴ
+		KCREDITGUID,     // 6 クレジットガイド
+		KENDLOGO,		     // 7 ゲーム終了ロゴ
+		KENDGUID,        // 8 ゲーム終了ガイド
+		/** ポーズ画面 */
+		KPAUSELOGO,      // 9 ポーズ画面の表示ロゴ
+		KDESCRIPTIONLOGO,// 10 ポーズ画面の操作説明ロゴ
+		KRESTARTLOGO,    // 11 ポーズ画面の再スタートロゴ
+		KRETURNTITLELOGO,    // 12 ポーズ画面のタイトルに戻るロゴ
+		/** リザルト画面 */
+		/** ゲームオーバー画面 */
 	};
 	virtual Type GetType() = 0;
 

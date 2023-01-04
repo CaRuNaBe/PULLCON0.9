@@ -155,6 +155,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\ReturnTitleLogo.cpp" />
+    <ClCompile Include="source\RestartLogo.cpp" />
+    <ClCompile Include="source\DescriptionLogo.cpp" />
+    <ClCompile Include="source\PauseLogo.cpp" />
     <ClCompile Include="source\EndGuid.cpp" />
     <ClCompile Include="source\CreditGuid.cpp" />
     <ClCompile Include="source\EndLogo.cpp" />
@@ -171,6 +175,10 @@
     <ClCompile Include="source\StartGuid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\ReturnTitleLogo.h" />
+    <ClInclude Include="source\RestartLogo.h" />
+    <ClInclude Include="source\DescriptionLogo.h" />
+    <ClInclude Include="source\PauseLogo.h" />
     <ClInclude Include="source\EndGuid.h" />
     <ClInclude Include="source\CreditGuid.h" />
     <ClInclude Include="source\EndLogo.h" />

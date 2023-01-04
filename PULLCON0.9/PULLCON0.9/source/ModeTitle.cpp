@@ -59,4 +59,3 @@ bool ModeTitle::Draw()
 	_objectServer.Draw(_game,*this );
 	return true;
 }
-

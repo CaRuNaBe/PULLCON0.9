@@ -1,0 +1,20 @@
+#pragma once
+#include "appframe.h"
+class DescriptionLogo:public ActorBase2d
+{
+	using Actor2d = ActorBase2d;
+public:
+	DescriptionLogo();
+	~DescriptionLogo();
+	virtual Type	GetType()//é©ï™Ç™âΩé“Ç©
+	{
+		return Type::KDESCRIPTIONLOGO;
+	}
+
+	void	Init();//èâä˙âª
+	bool	Update( ApplicationBase& game,ModeBase& mode );
+	bool	Draw( ApplicationBase& game,ModeBase& mode );
+private:
+	int FontHandle;
+};
+

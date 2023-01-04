@@ -1,7 +1,7 @@
 /*****************************************************************//**
  * \file   ModePause.h
  * \brief  ポーズ画面クラス
- * 
+ *
  * \author 阿部健太郎
  * \date   December 2022
  *********************************************************************/
@@ -9,9 +9,9 @@
 #include "appframe.h"
 class ModePause:public ModeBase
 {
-	typedef ModeBase base;
+	using base = ModeBase;
 public:
-	ModePause(ApplicationBase& game,int layer);
+	ModePause( ApplicationBase& game,int layer );
 	virtual ~ModePause();
 	virtual bool Initialize();
 	virtual bool Update();/*計算*/
