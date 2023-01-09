@@ -22,12 +22,10 @@ public:
 
 protected:
 
-	// ƒJƒƒ‰
-	Camera	_cam;
+	vector4 _vCursor;
 
-	vector4	_vPos;					// ˆÊ’u
-	int _handle;
 	int _handleSkySphere;
+	int _cg;
 
 
 }; 

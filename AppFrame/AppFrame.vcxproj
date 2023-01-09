@@ -176,6 +176,7 @@
     <ClInclude Include="source\Mode\ModeBase.h" />
     <ClInclude Include="source\Mode\ModeSclipt.h" />
     <ClInclude Include="source\Mode\ModeServer.h" />
+    <ClInclude Include="source\Object\ActorBase3D.h" />
     <ClInclude Include="source\Object\ActorBase2d.h" />
     <ClInclude Include="source\Object\ObjectBase.h" />
     <ClInclude Include="source\Object\ObjectServer.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="source\Mode\ModeBase.cpp" />
     <ClCompile Include="source\Mode\ModeSclipt.cpp" />
     <ClCompile Include="source\Mode\ModeServer.cpp" />
+    <ClCompile Include="source\Object\ActorBase3D.cpp" />
     <ClCompile Include="source\Object\ActorBase2d.cpp" />
     <ClCompile Include="source\Object\ObjectBase.cpp" />
     <ClCompile Include="source\Object\ObjectServer.cpp" />
