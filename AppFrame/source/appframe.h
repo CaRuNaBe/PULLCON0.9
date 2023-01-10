@@ -8,4 +8,4 @@
 #include"../../picojson/picojson.h"
 #include "../../AppFrame/source/Math/Math.h"
 #include"../source/Object/ActorBase2d.h"
-
+#include"../source/Object/ActorBase3D.h"

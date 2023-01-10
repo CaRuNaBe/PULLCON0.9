@@ -1,16 +1,16 @@
 
 #include "ActorBase3D.h"
 
-ActorBase::ActorBase()
+ActorBase3D::ActorBase3D()
 	:base() {
 	Init();
 }
 
-ActorBase::~ActorBase() {
+ActorBase3D::~ActorBase3D() {
 
 }
 
-void ActorBase::Init() {
+void ActorBase3D::Init() {
 	base::Init();
 	_vPos = { 0.f, 0.f ,0.f };
 	_vDir = { 0.f, 0.f ,0.f };
@@ -21,7 +21,7 @@ void ActorBase::Init() {
 
 }
 
-bool ActorBase::Update(ApplicationBase& game, ModeBase& mode) {
+bool ActorBase3D::Update(ApplicationBase& game, ModeBase& mode) {
 	base::Update(game, mode);
 
 	_cnt++;
@@ -31,7 +31,7 @@ bool ActorBase::Update(ApplicationBase& game, ModeBase& mode) {
 	return true;
 }
 
-bool ActorBase::Draw(ApplicationBase& game, ModeBase& mode) {
+bool ActorBase3D::Draw(ApplicationBase& game, ModeBase& mode) {
 	base::Draw(game, mode);
 	return true;
 }

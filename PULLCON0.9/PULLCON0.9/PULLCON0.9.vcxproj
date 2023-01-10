@@ -155,6 +155,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Bullet.cpp" />
+    <ClCompile Include="source\EnemyAAA.cpp" />
+    <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\ReturnTitleLogo.cpp" />
     <ClCompile Include="source\RestartLogo.cpp" />
     <ClCompile Include="source\DescriptionLogo.cpp" />
@@ -175,6 +178,9 @@
     <ClCompile Include="source\StartGuid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Bullet.h" />
+    <ClInclude Include="source\EnemyAAA.h" />
+    <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\ReturnTitleLogo.h" />
     <ClInclude Include="source\RestartLogo.h" />
     <ClInclude Include="source\DescriptionLogo.h" />

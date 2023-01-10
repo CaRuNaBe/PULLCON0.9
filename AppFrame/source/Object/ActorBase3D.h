@@ -3,13 +3,13 @@
 #include "../Math/math.h"
 #include "ObjectBase.h"
 using namespace math;
-class ActorBase : public ObjectBase {
+class ActorBase3D : public ObjectBase {
 	typedef ObjectBase base;
 public:
-	ActorBase();
-	virtual ~ActorBase();
+	ActorBase3D();
+	virtual ~ActorBase3D();
 
-	enum Type {  // 種別の列挙型
+	enum class Type {  // 種別の列挙型
 		kBase,     // 0 アクター
 		kPlayer,   // 1 プレイヤー
 		kBullet,   // 2 弾丸

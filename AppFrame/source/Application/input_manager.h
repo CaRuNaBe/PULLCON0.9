@@ -13,7 +13,7 @@ public:
 	const int GetKey( int button );
 	const int GetTrg( int button );
 	const int GetRel( int button );
-	const bool XinputEveryOtherKey( int button , const int FrequencyFrame );
+	const bool& XinputEveryOtherKey( int button , const int FrequencyFrame );
 	const unsigned char GetLeftTrigger();
 	const unsigned char GetRightTrigger();
 	short GetLstickX();
