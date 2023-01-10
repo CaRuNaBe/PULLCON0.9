@@ -3,7 +3,7 @@
 #include "ApplicationMain.h"
 #include "ModePause.h"
 #include "ModeGame.h"
-
+#include "ModeTitle.h"
 // ŽÀ‘Ì
 ApplicationMain				g_oApplicationMain;
 

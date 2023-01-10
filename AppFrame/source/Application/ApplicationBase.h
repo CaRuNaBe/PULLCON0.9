@@ -51,7 +51,7 @@ public:
 		return _flagManager;
 	}
 	//“ü—Íæ“¾
-	InputManager Getinput()
+	InputManager& Getinput()
 	{
 		return _input;
 	}

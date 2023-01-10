@@ -1,9 +1,26 @@
 #include "input_manager.h"
 namespace
 {
-	const XINPUT_STATE operator^( const XINPUT_STATE& left,const XINPUT_STATE& right )
+	const XINPUT_STATE InitializeXinput()
 	{
 		XINPUT_STATE input;
+		for ( int i = 0; i < 16; i++ )
+		{
+			input.Buttons[i] = 0;
+		}
+		input.LeftTrigger = 0;
+		input.RightTrigger = 0;
+		input.ThumbLX = 0;
+		input.ThumbLY = 0;
+		input.ThumbRX = 0;
+		input.ThumbRY = 0;
+
+		return input;
+	};
+
+	const XINPUT_STATE operator^( const XINPUT_STATE& left,const XINPUT_STATE& right )
+	{
+		XINPUT_STATE input = InitializeXinput();
 		for ( int i = 0; i < 16; i++ )
 		{
 			input.Buttons[i] = left.Buttons[i] ^ right.Buttons[i];
@@ -19,7 +36,7 @@ namespace
 
 	const XINPUT_STATE operator&( const XINPUT_STATE& left,const XINPUT_STATE& right )
 	{
-		XINPUT_STATE input;
+		XINPUT_STATE input = InitializeXinput();
 		for ( int i = 0; i < 16; i++ )
 		{
 			input.Buttons[i] = left.Buttons[i] & right.Buttons[i];
@@ -34,7 +51,7 @@ namespace
 
 	const XINPUT_STATE operator~( const XINPUT_STATE& right )
 	{
-		XINPUT_STATE input;
+		XINPUT_STATE input = InitializeXinput();
 		for ( int i = 0; i < 16; i++ )
 		{
 			input.Buttons[i] = ~right.Buttons[i];
@@ -54,9 +71,15 @@ InputManager::InputManager()
 	_gKey = 0;
 	_gTrg = 0;
 	_gRel = 0;
-	Speak_skip_count = 0;
-	is_Click_on = false;
-	
+	Key_skip_count = 0;
+	LeftTrigger_skip_count = 0;
+	RightTrigger_skip_count = 0;
+	is_Click_on_Key = false;
+	is_Click_on_R_Trigger = false;
+	is_Click_on_L_Trigger = false;
+	_gxKey = InitializeXinput();
+	_gxTrg = InitializeXinput();
+	_gxRel = InitializeXinput();
 }
 
 InputManager::~InputManager()
@@ -77,26 +100,26 @@ bool InputManager::Update()
 	return true;
 };
 
-const bool  InputManager::EveryOtherKey( const int button,const int FrequencyFrame )
+const bool& InputManager::EveryOtherKey( const int button,const int FrequencyFrame )
 {
 	if ( _gKey & button )
 	{
-		Speak_skip_count++;
-		if ( 0 == Speak_skip_count % FrequencyFrame )
+		Key_skip_count++;
+		if ( 0 == Key_skip_count % FrequencyFrame )
 		{
-			is_Click_on = true;
+			is_Click_on_Key = true;
 		}
 		else
 		{
-			is_Click_on = false;
+			is_Click_on_Key = false;
 		}
 	}
 	else
 	{
-		is_Click_on = false;
-		Speak_skip_count = 0;
+		is_Click_on_Key = false;
+		Key_skip_count = 0;
 	}
-	return is_Click_on;
+	return is_Click_on_Key;
 };
 const int InputManager::GetKey( int button )
 {
@@ -111,28 +134,77 @@ const int InputManager::GetRel( int button )
 	return _gRel & button;
 };
 
-const bool  InputManager::XinputEveryOtherKey( const int button,const int FrequencyFrame )
+const bool& InputManager::XinputEveryOtherKey( const int button,const int FrequencyFrame )
 {
 	if ( _gxKey.Buttons[button] >= 1 || _gxKey.LeftTrigger >= 10 || _gxKey.RightTrigger >= 10 )
 	{
-		Speak_skip_count++;
-		if ( 0 == Speak_skip_count % FrequencyFrame )
+		Key_skip_count++;
+		if ( 0 == Key_skip_count % FrequencyFrame )
 		{
-			is_Click_on = true;
+			is_Click_on_Key = true;
 		}
 		else
 		{
-			is_Click_on = false;
+			is_Click_on_Key = false;
 		}
 	}
 	else
 	{
-		is_Click_on = false;
-		Speak_skip_count = 0;
+		is_Click_on_Key = false;
+		Key_skip_count = 0;
 	}
-	return is_Click_on;
+	return is_Click_on_Key;
 };
-
+const bool& InputManager::XinputEveryOtherRightTrigger( const int FrequencyFrame )
+{
+	if ( _gxKey.RightTrigger >= 10 && (RightTrigger_skip_count == 0) )
+	{
+		return true;
+	}
+	if ( _gxKey.RightTrigger >= 10 )
+	{
+		RightTrigger_skip_count++;
+		if ( 0 == RightTrigger_skip_count % FrequencyFrame )
+		{
+			is_Click_on_R_Trigger = true;
+		}
+		else
+		{
+			is_Click_on_R_Trigger = false;
+		}
+	}
+	else
+	{
+		is_Click_on_R_Trigger = false;
+		RightTrigger_skip_count = 0;
+	}
+	return is_Click_on_R_Trigger;
+};
+const bool& InputManager::XinputEveryOtherLeftTrigger( const int FrequencyFrame )
+{
+	if ( _gxKey.LeftTrigger >= 10 && (LeftTrigger_skip_count == 0) )
+	{
+		return true;
+	}
+	if ( _gxKey.LeftTrigger >= 10 )
+	{
+		LeftTrigger_skip_count++;
+		if ( 0 == LeftTrigger_skip_count % FrequencyFrame )
+		{
+			is_Click_on_L_Trigger = true;
+		}
+		else
+		{
+			is_Click_on_L_Trigger = false;
+		}
+	}
+	else
+	{
+		is_Click_on_L_Trigger = false;
+		LeftTrigger_skip_count = 0;
+	}
+	return LeftTrigger_skip_count;
+};
 const bool InputManager::GetKeyXinput( const int button )
 {
 	return _gxKey.Buttons[button] == 1;
@@ -145,27 +217,27 @@ const bool InputManager::GetRelXinput( const int button )
 {
 	return _gxRel.Buttons[button] == 1;
 };
-const unsigned char InputManager::GetLeftTrigger()
+const unsigned char& InputManager::GetLeftTrigger()
 {
 	return _gxKey.LeftTrigger;
 };
-const unsigned char InputManager::GetRightTrigger()
+const unsigned char& InputManager::GetRightTrigger()
 {
 	return _gxKey.RightTrigger;
 };
-short InputManager::GetLstickX()
+short& InputManager::GetLstickX()
 {
 	return _gxKey.ThumbLX;
 };
-short InputManager::GetLstickY()
+short& InputManager::GetLstickY()
 {
 	return _gxKey.ThumbLY;
 };
-const short InputManager::GetRstickX()
+const short& InputManager::GetRstickX()
 {
 	return _gxKey.ThumbRX;
 };
-const short InputManager::GetRstickY()
+const short& InputManager::GetRstickY()
 {
 	return _gxKey.ThumbRY;
 };
