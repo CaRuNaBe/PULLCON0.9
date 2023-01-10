@@ -136,7 +136,11 @@ const int InputManager::GetRel( int button )
 
 const bool& InputManager::XinputEveryOtherKey( const int button,const int FrequencyFrame )
 {
-	if ( _gxKey.Buttons[button] >= 1 || _gxKey.LeftTrigger >= 10 || _gxKey.RightTrigger >= 10 )
+	if ( _gxKey.Buttons[button] >= 1 && (Key_skip_count == 0) )
+	{
+		return true;
+	}
+	if ( _gxKey.Buttons[button] >= 1 )
 	{
 		Key_skip_count++;
 		if ( 0 == Key_skip_count % FrequencyFrame )
