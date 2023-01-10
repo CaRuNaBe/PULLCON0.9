@@ -17,9 +17,10 @@ public:
 
 protected:
 
-	vector4 _vTer;
+	vector4 _vTarget;
 	float  _rotatX;
 	float  _rotatY;
-	int    _handle;
+	int    _handle_body;
+	int    _handle_turret;
 
 };
