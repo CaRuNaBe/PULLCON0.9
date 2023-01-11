@@ -52,7 +52,11 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 	}
 
 	_rotatY = -rad;
-	_rotatX = cos(theta);
+	float rX = cos(theta);
+	float degree = utility::radian_to_degree(rX);
+	if (degree >= 0) {
+		_rotatX = rX;
+	}
 
 	return true;
 }
