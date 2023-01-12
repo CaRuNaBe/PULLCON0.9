@@ -13,6 +13,7 @@ public:
 	virtual bool Update(ApplicationBase& game, ModeBase& mode);
 	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
 
+	virtual void Damage(ModeBase& mode);
 	void AddBullet(ModeBase& mode);
 
 protected:

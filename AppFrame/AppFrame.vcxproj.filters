@@ -140,6 +140,9 @@
     <ClInclude Include="source\Object\ActorBase3D.h">
       <Filter>source\Object</Filter>
     </ClInclude>
+    <ClInclude Include="source\Math\3dCollision.h">
+      <Filter>source\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -247,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="source\Object\ActorBase3D.cpp">
       <Filter>source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\3dCollision.cpp">
+      <Filter>source\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

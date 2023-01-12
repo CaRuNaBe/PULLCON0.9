@@ -23,6 +23,7 @@ void Player::Init() {
 	_speed = 30.f;
 	_rotatX = 0.f;
 	_rotatY = utility::PI;
+	_collision._fRadius = 500.f;
 
 	// カメラの設定
 	_cam._vPos = { 0.f, 2500.f, -4000.f };
@@ -77,6 +78,8 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		AddBullet(mode);
 	}
 
+	UpdateCollision();
+
 	vector4 cursor = { 0.f,0.f,0.f };
 	cursor.y = _cam._vTarget.y + sin(_rotatX) * length3D;
 	cursor.x = _cam._vTarget.x + length3D * cos(rad + camerad);
@@ -107,6 +110,7 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1SetPosition(_handle, ToDX(_vPos));
 	MV1DrawModel(_handle);
 
+	DrawCollision();
 
 	// デバック表記
 	int x = 0, y = 0, size = 16;

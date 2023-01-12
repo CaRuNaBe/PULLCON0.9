@@ -21,16 +21,28 @@ void EnemyAAA::Init() {
 	_rotatX = 0;
 	_rotatY = 0;
 	_vTarget = { 0.f,0.f,0.f };
-	_ST = 30;
+
+	_collision._fRadius = 300.f;
+
+	_CT = 30;
 }
 
 bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 	base::Update(game,mode);
 
 	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
-		if (obje->GetType() == ActorBase3D::Type::kPlayer) {
-			_vTarget = obje->_vPos;
-			break;
+		if (obje->GetType() == Type::kPlayer
+		 || obje->GetType() == Type::kBullet) {
+			if (obje->GetType() == Type::kPlayer) {
+				_vTarget = obje->_vPos;
+			}
+			if (obje->GetType() == Type::kBullet) {
+				if (IsHitObject(*obje)) {
+					if (obje->_CT == 0) {
+						_CT = 10;
+					}
+				}
+			}
 		}
 	}
 	// ŽOŽŸŒ³‹ÉÀ•W(r(length3D),ƒÆ(theta),ƒÓ(rad))
@@ -46,19 +58,25 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 	_vDir.y = cos(theta);
 	_vDir.Normalized();
 
-	if (_ST == 0) {
+	if (_CT == 0) {
 		AddBullet(mode);
-		_ST = 10;
+		_CT = 10;
 	}
 
 	_rotatY = -rad;
 	float rX = cos(theta);
 	float degree = utility::radian_to_degree(rX);
-	if (degree >= 0) {
+	if (degree >= 0.f && degree <= 40.f) {
 		_rotatX = rX;
 	}
 
+	UpdateCollision();
+
 	return true;
+}
+
+void EnemyAAA::Damage(ModeBase& mode) {
+	mode.GetObjectServer3D().Del(*this);
 }
 
 bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
@@ -72,11 +90,13 @@ bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1DrawModel(_handle_body);
 	MV1DrawModel(_handle_turret);
 
+	DrawCollision();
+
 	return true;
 }
 
 void EnemyAAA::AddBullet(ModeBase& mode) {
-	vector4 vBullet = { _vPos.x, _vPos.y, _vPos.z };
+	vector4 vBullet = { _vPos.x, _vPos.y + 100.f, _vPos.z };
 	auto bullet = std::make_shared<Bullet>();
 	bullet->SetPosition(vBullet);
 	bullet->SetDir(_vDir);

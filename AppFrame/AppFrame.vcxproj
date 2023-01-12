@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="source\Application\ScliptFlagManager.h" />
+    <ClInclude Include="source\Math\3dCollision.h" />
     <ClInclude Include="source\Math\Easing.h" />
     <ClInclude Include="source\Math\rect.h" />
     <ClInclude Include="source\Math\matrix33.h" />
@@ -201,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\ScliptFlagManager.cpp" />
+    <ClCompile Include="source\Math\3dCollision.cpp" />
     <ClCompile Include="source\Math\Easing.cpp" />
     <ClCompile Include="source\Math\rect.cpp" />
     <ClCompile Include="source\Math\matrix33.cpp" />

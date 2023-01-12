@@ -10,18 +10,23 @@ public:
 	virtual ~ActorBase3D();
 
 	enum class Type {  // 種別の列挙型
-		kBase,     // 0 アクター
-		kPlayer,   // 1 プレイヤー
-		kBullet,   // 2 弾丸
-		kEnemyAAA, // 3 対空砲
+		kBase,          // 0 アクター
+		kPlayer,        // 1 プレイヤー
+		kBullet,        // 2 弾丸
+		kEnemyAAA,      // 3 対空砲
 	};
 	virtual Type GetType() = 0;
 
 	virtual void Init();
 	virtual bool Update(ApplicationBase& game, ModeBase& mode);
+	virtual void	UpdateCollision();
 	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
+	virtual void	DrawCollision();
+	virtual bool	IsHitObject(ActorBase3D& object);	// 指定のオブジェクトと当たっているか
 
 	virtual void Damage(ModeBase& mode) {}
+
+	virtual Sphere& GetCollision() { return _collision; }
 
 	// 座標の設定
 	void SetPosition(const vector4& pos) { _vPos = pos; }
@@ -33,8 +38,11 @@ public:
 	vector4 _vPos;
 	vector4 _vDir;
 
+	Sphere  _collision;
+
 	float _speed;
 
 	int _cnt;  // 動作カウント
+	int _CT;   // クールタイム
 	int _ST;   // 生存時間
 };
