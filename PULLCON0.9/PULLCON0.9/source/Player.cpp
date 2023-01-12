@@ -73,7 +73,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	v.z = sin(rad + camerad);
 	v.y = sin(_rotatX);
 
-	if(game.Getinput().XinputEveryOtherKey(XINPUT_BUTTON_X,6)) {  // RT
+	if(game.Getinput().XinputEveryOtherRightTrigger(6)) {  // RT
 		_vDir = v;
 		AddBullet(mode);
 	}
