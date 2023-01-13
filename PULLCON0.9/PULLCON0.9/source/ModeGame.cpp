@@ -8,7 +8,8 @@
 ModeGame::ModeGame( ApplicationBase& game,int layer )
 	:base( game,layer )
 {
-	_handleSkySphere = MV1LoadModel( "res/stage_bg/SkySphere/skysphere.mv1" );
+	_handleSkySphere = MV1LoadModel( "res/stage/skysphere/cg_stageSkymap_1.mv1" );
+	//_handleSkySphere = MV1LoadModel( "res/stage_bg/SkySphere/skysphere.mv1" );
 	_cg = ResourceServer::LoadGraph("res/cursor00.png");
 
 	_vCursor = { 0.0f, 0.0f, 0.0f };

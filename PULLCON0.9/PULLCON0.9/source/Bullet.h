@@ -18,5 +18,10 @@ protected:
 
 	float  _speed;
 	int    _handle;
+	
+	int _grHandle;  // 現在のグラフィックハンドル
+	std::vector<int>_grAllHandles;// (1-1)全てのグラフィックハンドル
+	int _animeNo;// (1-1)アニメ番号
+	int _animeMax;// (1-1)アニメ最大数
 };
 

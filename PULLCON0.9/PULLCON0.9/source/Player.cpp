@@ -8,7 +8,7 @@
 Player::Player() 
 	:base()
 {
-	_handle = MV1LoadModel("res/Helicopter_Perfect.mv1");
+	_handle = MV1LoadModel("res/player/3Dmodel/mv1/cg_PlayerHelicopter.mv1");
 
 	Init();
 }
