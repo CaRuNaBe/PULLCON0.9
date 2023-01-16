@@ -33,18 +33,18 @@ void Bullet::Init() {
 bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 	base::Update(game, mode);
 
+	if (_ST == 0) {
+		Damage(mode);
+	}
+
 	vector4 _vd = _vDir;
 	_vd *= _speed;
 	_vPos += _vd;
 
-	if(_ST == 0) {
-		Damage(mode);
-	}
+	UpdateCollision();
 
-		UpdateCollision();
-
-		_animeNo = (_cnt / 5) % _animeMax;
-		_grHandle = _grAllHandles[_animeNo];
+	_animeNo = (_cnt / 5) % _animeMax;
+	_grHandle = _grAllHandles[_animeNo];
 	return true;
 }
 
@@ -64,12 +64,12 @@ bool Bullet::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1SetRotationZYAxis(_handle, VGet(_vDir.z, 0.f, -(_vDir.x)), VGet(0.f, 1.f, 0.f), theta);
 	MV1SetPosition(_handle, ToDX(_vPos));
 	MV1DrawModel(_handle);
-	//DrawSphere3D(ToDX(_vPos), 50.f, 4, GetColor(255, 0, 0), GetColor(0, 0, 0), FALSE);
 
-	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 1000.0f, 0.f, _grHandle, TRUE);
+	//DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 500.0f, 0.f, _grHandle, TRUE);
 
+	vector4 color = { 255, 255, 255 };
 	if (_CT == 0) {
-		//DrawCollision();
+		DrawCollision(color);
 	}
 
 	return true;

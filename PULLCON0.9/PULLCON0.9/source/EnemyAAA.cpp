@@ -18,11 +18,18 @@ EnemyAAA::~EnemyAAA() {
 
 void EnemyAAA::Init() {
 	base::Init();
+
+	_collision._fRadius = 300.f;
+	_collisionEvent._fRadius = 500.f;
+
+	_vPos = { 0.f, 0.f, 0.f };
+	float distance = _collision._fRadius + _collisionEvent._fRadius;
+	_vEvent = { _vPos.x, _vPos.y + distance, _vPos.z };
+
 	_rotatX = 0;
 	_rotatY = 0;
 	_vTarget = { 0.f,0.f,0.f };
 
-	_collision._fRadius = 300.f;
 
 	_CT = 30;
 }
@@ -35,16 +42,22 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		 || obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kPlayer) {
 				_vTarget = obje->_vPos;
+				if (Intersect(obje->_collision, _collisionEvent)) {
+					_event = true;
+				}
 			}
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
 					if (obje->_CT == 0) {
 						_CT = 10;
+						_overlap = true;
+						obje->Damage(mode);
 					}
 				}
 			}
 		}
 	}
+
 	// éOéüå≥ã…ç¿ïW(r(length3D),É∆(theta),É”(rad))
 	float sx = _vTarget.x - _vPos.x;
 	float sy = 300.f + _vTarget.y - _vPos.y;   // è≠Çµè„Çë_Ç§
@@ -90,7 +103,18 @@ bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1DrawModel(_handle_body);
 	MV1DrawModel(_handle_turret);
 
-	DrawCollision();
+	vector4 color = { 255, 255, 255 };
+	DrawCollision(color);
+	DrawCollisionEvent(color);
+	if (_overlap) { 
+		color = { 255, 0, 0 };
+		DrawCollision(color);
+	}
+	if(_event){
+		color = { 0, 255, 0 };
+		DrawCollisionEvent(color);
+	}
+
 
 	return true;
 }

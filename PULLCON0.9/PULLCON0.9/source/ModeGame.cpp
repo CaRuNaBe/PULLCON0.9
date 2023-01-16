@@ -68,8 +68,11 @@ bool ModeGame::Draw()
 	}
 #endif
 
-	MV1SetScale(_handleSkySphere, VGet(2.f, 2.f, 2.f));
+	//MV1SetScale(_handleSkySphere, VGet(2.f, 2.f, 2.f));
+	// ライティング計算
+	SetUseLighting(FALSE);
 	MV1DrawModel(_handleSkySphere);
+	SetUseLighting(TRUE);
 	_objectServer.Draw(_game, *this);
 	_3D_objectServer.Draw(_game, *this);
 

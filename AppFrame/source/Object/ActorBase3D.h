@@ -21,12 +21,16 @@ public:
 	virtual bool Update(ApplicationBase& game, ModeBase& mode);
 	virtual void	UpdateCollision();
 	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
-	virtual void	DrawCollision();
+	virtual void	DrawCollision(vector4 color);
+	virtual void	DrawCollisionEvent(vector4 color);
+
 	virtual bool	IsHitObject(ActorBase3D& object);	// 指定のオブジェクトと当たっているか
+	virtual bool	IsHitEvent(ActorBase3D& object);	// イベントスフィアと当たっているか
 
 	virtual void Damage(ModeBase& mode) {}
 
 	virtual Sphere& GetCollision() { return _collision; }
+	virtual Sphere& GetCollisionEvent() { return _collisionEvent; }
 
 	// 座標の設定
 	void SetPosition(const vector4& pos) { _vPos = pos; }
@@ -34,13 +38,18 @@ public:
 	// 向きベクトルの設定
 	void SetDir(const vector4& dir) { _vDir = dir; }
 	void SetDir(float x, float y, float z) { _vDir.x = x; _vDir.y = y; _vDir.z = z; }
+
 public:
-	vector4 _vPos;
-	vector4 _vDir;
+	vector4 _vPos;   // 位置
+	vector4 _vEvent;   // イベント位置
+	vector4 _vDir;   // 向き
 
-	Sphere  _collision;
+	Sphere  _collision;   // 球判定
+	Sphere  _collisionEvent;   // イベント判定
 
-	float _speed;
+	float _speed;   // 速度
+	bool  _overlap;   // 判定が重なったか
+	bool  _event;   // イベント判定と重なったか
 
 	int _cnt;  // 動作カウント
 	int _CT;   // クールタイム

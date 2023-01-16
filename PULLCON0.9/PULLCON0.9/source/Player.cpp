@@ -27,7 +27,7 @@ void Player::Init() {
 
 	// カメラの設定
 	_cam._vPos = { 0.f, 2500.f, -4000.f };
-	_cam._vTarget = { 0.f, 1200.f, 0.f };
+	_cam._vTarget = { 0.f, 1000.f, 0.f };
 	_cam._clipNear = 2000.f;
 	_cam._clipFar = 30000.f;
 
@@ -73,7 +73,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	v.z = sin(rad + camerad);
 	v.y = sin(_rotatX);
 
-	if(game.Getinput().XinputEveryOtherRightTrigger(6)) {  // RT
+	if(game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
 		_vDir = v;
 		AddBullet(mode);
 	}
@@ -110,7 +110,8 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1SetPosition(_handle, ToDX(_vPos));
 	MV1DrawModel(_handle);
 
-	DrawCollision();
+	vector4 color = { 255, 255, 255 };
+	DrawCollision(color);
 
 	// デバック表記
 	int x = 0, y = 0, size = 16;
@@ -176,13 +177,13 @@ void Player::CameraUpdate(ApplicationBase& game) {
 	// X軸回転
 	if(game.Getinput().GetRstickY() < -1000)
 	{
-		if(limitrad > 60.f) {
+		if(limitrad > 40.f) {
 			theta += -0.02f;
 			_rotatX += -0.02f;
 		}
 	} else if(game.Getinput().GetRstickY() > 1000)
 	{
-		if(limitrad < 130.f) {
+		if(limitrad < 100.f) {
 			theta += 0.02f;
 			_rotatX += 0.02f;
 		}
