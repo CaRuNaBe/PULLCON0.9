@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Bullet.cpp" />
+    <ClCompile Include="source\EffectTrail.cpp" />
     <ClCompile Include="source\EnemyAAA.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\ReturnTitleLogo.cpp" />
@@ -179,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Bullet.h" />
+    <ClInclude Include="source\EffectTrail.h" />
     <ClInclude Include="source\EnemyAAA.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\ReturnTitleLogo.h" />

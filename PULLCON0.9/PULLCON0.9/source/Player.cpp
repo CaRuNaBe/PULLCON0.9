@@ -23,18 +23,44 @@ void Player::Init() {
 	_speed = 30.f;
 	_rotatX = 0.f;
 	_rotatY = utility::PI;
+	_pull = false;
+
 	_collision._fRadius = 500.f;
 
 	// カメラの設定
 	_cam._vPos = { 0.f, 2500.f, -4000.f };
 	_cam._vTarget = { 0.f, 1000.f, 0.f };
 	_cam._clipNear = 2000.f;
-	_cam._clipFar = 30000.f;
+	_cam._clipFar = 60000.f;
 
 }
 
 bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	base::Update(game, mode);
+
+
+	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
+		if (obje->GetType() == Type::kEnemyAAA
+			|| obje->GetType() == Type::kBullet) {
+			if (obje->GetType() == Type::kEnemyAAA) {
+				if (_pull) {
+					_vPos = obje->_vPos;
+					_vPos.y += _collision._fRadius;
+					_vPos.z -= obje->_collision._fRadius;
+				}
+				if (IsHitEvent(*obje)) {
+					_event = true;
+				}
+			}
+			if (obje->GetType() == Type::kBullet) {
+				if (IsHitObject(*obje)) {
+					if (obje->_CT == 0) {
+
+					}
+				}
+			}
+		}
+	}
 
 	// カメラ更新	
 	CameraUpdate(game);
@@ -67,6 +93,13 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	_cam._vPos += dir;
 	_cam._vTarget += dir;
 
+	if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_X)) {
+		if (_event) {
+			_pull = true;
+		}
+	}
+
+	// 弾丸の向きベクトル設定
 	vector4 v = { -1.f, 0.f, 0.f };
 	rad = atan2(v.z, v.x);
 	v.x = cos(rad + camerad);
@@ -108,7 +141,10 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	//MV1SetScale(_handle, VGet(0.3f, 0.3f, 0.3f));
 	// 位置
 	MV1SetPosition(_handle, ToDX(_vPos));
+	// ライティング計算
+	SetUseLighting(FALSE);
 	MV1DrawModel(_handle);
+	SetUseLighting(TRUE);
 
 	vector4 color = { 255, 255, 255 };
 	DrawCollision(color);
@@ -136,19 +172,10 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 
 void Player::CameraUpdate(ApplicationBase& game) {
 
-	// ベクトルの大きさの変更
-	if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_RIGHT_SHOULDER)) {
-		_cam._vTarget.x += 20.f; _cam._vPos.x += 20.f;
-	}  // RB
-	if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_LEFT_SHOULDER)) {
-		_cam._vTarget.x -= 20.f; _cam._vPos.x -= 20.f;
-	}   // LB
-	if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_START)) {
-		_cam._vTarget.y += 20.f; _cam._vPos.y += 20.f;
-	}  // RB
-	if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_BACK)) {
-		_cam._vTarget.y -= 20.f; _cam._vPos.y -= 20.f;
-	}   // LB
+	if (_pull) {
+		EventCamera(game);
+		return;
+	}
 	
 	// 三次元極座標(r(length3D),θ(theta),φ(camerad))
 	float sx = _cam._vPos.x - _cam._vTarget.x;
@@ -173,7 +200,6 @@ void Player::CameraUpdate(ApplicationBase& game) {
 	}
 
 	float limitrad = utility::radian_to_degree(theta);  // 度数法に変換
-
 	// X軸回転
 	if(game.Getinput().GetRstickY() < -1000)
 	{
@@ -193,6 +219,31 @@ void Player::CameraUpdate(ApplicationBase& game) {
 	_cam._vPos.y = _cam._vTarget.y + cos(theta) * length3D;
 	_cam._vPos.x = _cam._vTarget.x + length3D * sin(theta) * cos(camerad);
 	_cam._vPos.z = _cam._vTarget.z + length3D * sin(theta) * sin(camerad);
+
+}
+
+void Player::EventCamera(ApplicationBase& game) {
+
+	// 三次元極座標(r(length3D),θ(theta),φ(camerad))
+	float sx = _cam._vPos.x - _vPos.x;
+	float sy = _cam._vPos.y - _vPos.y;
+	float sz = _cam._vPos.z - _vPos.z;
+	float length3D = sqrt(sx * sx + sy * sy + sz * sz);
+	float camerad = atan2(sz, sx);
+	float theta = acos(sy / length3D);
+
+	// 角度変更
+	// Y軸回転
+	camerad = utility::PI * 5.f / 6.f;
+
+	// X軸回転
+	float degree = 100.f;
+	theta = utility::degree_to_radian(degree);
+
+	// カメラ位置
+	_cam._vPos.y = _vPos.y + cos(theta) * length3D;
+	_cam._vPos.x = _vPos.x + length3D * sin(theta) * cos(camerad);
+	_cam._vPos.z = _vPos.z + length3D * sin(theta) * sin(camerad);
 
 }
 

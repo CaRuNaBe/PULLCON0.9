@@ -77,7 +77,7 @@ void ActorBase3D::DrawCollision(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collision.Draw(color.x, color.y, color.z);
+	_collision.Draw(static_cast<float>(color.x), static_cast<float>(color.y), static_cast<float>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }
@@ -87,7 +87,7 @@ void ActorBase3D::DrawCollisionEvent(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collisionEvent.Draw(color.x, color.y, color.z);
+	_collisionEvent.Draw(static_cast<float>(color.x), static_cast<float>(color.y), static_cast<float>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }

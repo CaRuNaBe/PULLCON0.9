@@ -9,6 +9,7 @@ ModeGame::ModeGame( ApplicationBase& game,int layer )
 	:base( game,layer )
 {
 	_handleSkySphere = MV1LoadModel( "res/stage/skysphere/cg_stageSkymap_1.mv1" );
+	_handleStage = MV1LoadModel( "res/stage/stage_file_1/mv1/cg_stage1.mv1" );
 	//_handleSkySphere = MV1LoadModel( "res/stage_bg/SkySphere/skysphere.mv1" );
 	_cg = ResourceServer::LoadGraph("res/cursor00.png");
 
@@ -68,10 +69,11 @@ bool ModeGame::Draw()
 	}
 #endif
 
-	//MV1SetScale(_handleSkySphere, VGet(2.f, 2.f, 2.f));
+	MV1SetScale(_handleSkySphere, VGet(2.f, 2.f, 2.f));
 	// ライティング計算
 	SetUseLighting(FALSE);
 	MV1DrawModel(_handleSkySphere);
+	//MV1DrawModel(_handleStage);
 	SetUseLighting(TRUE);
 	_objectServer.Draw(_game, *this);
 	_3D_objectServer.Draw(_game, *this);

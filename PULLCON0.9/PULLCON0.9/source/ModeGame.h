@@ -19,6 +19,7 @@ protected:
 	vector4 _vCursor;
 
 	int _handleSkySphere;
+	int _handleStage;
 	int _cg;
 
 

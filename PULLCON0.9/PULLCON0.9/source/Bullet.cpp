@@ -1,15 +1,16 @@
 
 #include "appframe.h"
 #include "Bullet.h"
+#include "EffectTrail.h"
 
 Bullet::Bullet()
 	:base()
 {
 	_handle = MV1LoadModel("res/bullet/model/normalammo/cg_NormalAmmo.mv1");
 
-	_animeMax = 17;
-	_grAllHandles.resize(_animeMax);
-	ResourceServer::LoadDivGraph("res/player/Fx/fx_BlackSmoke/fx_BlackSmoke.png", 17, 3, 6, 512, 512, _grAllHandles.data());
+	//_animeMax = 17;
+	//_grAllHandles.resize(_animeMax);
+	//ResourceServer::LoadDivGraph("res/player/Fx/fx_BlackSmoke/fx_BlackSmoke.png", 17, 3, 6, 512, 512, _grAllHandles.data());
 
 	Init();
 }
@@ -43,8 +44,12 @@ bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 
 	UpdateCollision();
 
-	_animeNo = (_cnt / 5) % _animeMax;
-	_grHandle = _grAllHandles[_animeNo];
+	auto effect = std::make_shared<EffectTrail>();
+	effect->SetPosition(_vPos);
+	mode.GetObjectServer3D().Add(effect);
+
+	//_animeNo = (_cnt / 5) % _animeMax;
+	//_grHandle = _grAllHandles[_animeNo];
 	return true;
 }
 
@@ -69,7 +74,7 @@ bool Bullet::Draw(ApplicationBase& game, ModeBase& mode) {
 
 	vector4 color = { 255, 255, 255 };
 	if (_CT == 0) {
-		DrawCollision(color);
+		//DrawCollision(color);
 	}
 
 	return true;
