@@ -1,11 +1,18 @@
+/*****************************************************************//**
+ * \file   input_manager.h
+ * \brief  “ü—ÍŠÇ—ƒNƒ‰ƒX
+ * 
+ * \author ˆ¢•”Œ’‘¾˜Y
+ * \date   January 2023
+ *********************************************************************/
 #pragma once
 #include<DxLib.h>
-#include<memory>
 class InputManager
 {
 public:
 	InputManager();
 	~InputManager();
+	//
 	bool Update();
 
 	//“ü—ÍŠÖ”

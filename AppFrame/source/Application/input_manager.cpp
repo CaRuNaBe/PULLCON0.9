@@ -92,7 +92,7 @@ bool InputManager::Update()
 	GetJoypadXInputState( DX_INPUT_PAD1,&_gxKey );
 	_gxTrg = (_gxKey ^ xkeyold) & _gxKey;	// キーのトリガ情報生成（押した瞬間しか反応しないキー情報）
 	_gxRel = (_gxKey ^ xkeyold) & ~_gxKey;	// キーのリリース情報生成（離した瞬間しか反応しないキー情報）
-	// キーの入力、トリガ入力を得る
+
 	int keyold = _gKey;
 	_gKey = GetJoypadInputState( DX_INPUT_KEY_PAD1 );
 	_gTrg = (_gKey ^ keyold) & _gKey;	// キーのトリガ情報生成（押した瞬間しか反応しないキー情報）
@@ -134,6 +134,8 @@ const int InputManager::GetRel( int button )
 	return _gRel & button;
 };
 
+//xinputコントローラー情報
+//連続入力
 const bool& InputManager::XinputEveryOtherKey( const int button,const int FrequencyFrame )
 {
 	if ( _gxKey.Buttons[button] >= 1 && (Key_skip_count == 0) )
@@ -213,35 +215,127 @@ const bool InputManager::GetKeyXinput( const int button )
 {
 	return _gxKey.Buttons[button] == 1;
 };
+//押したときだけ反応
 const bool InputManager::GetTrgXinput( const int button )
 {
 	return _gxTrg.Buttons[button] == 1;
 };
+//離したとき反応
 const bool InputManager::GetRelXinput( const int button )
 {
 	return _gxRel.Buttons[button] == 1;
 };
+//左トリガーの入力状態を取得
 const unsigned char& InputManager::GetLeftTrigger()
 {
 	return _gxKey.LeftTrigger;
 };
+//右トリガーの入力状態を取得
 const unsigned char& InputManager::GetRightTrigger()
 {
 	return _gxKey.RightTrigger;
 };
+//左スティックのx軸を取得
 short& InputManager::GetLstickX()
 {
 	return _gxKey.ThumbLX;
 };
+//左スティックのy軸を取得
 short& InputManager::GetLstickY()
 {
 	return _gxKey.ThumbLY;
 };
+//右スティックのx軸を取得
 const short& InputManager::GetRstickX()
 {
 	return _gxKey.ThumbRX;
 };
+//右スティックのy軸を取得
 const short& InputManager::GetRstickY()
 {
 	return _gxKey.ThumbRY;
+};
+//ボタンの隔フレーム入力を取得
+const bool& InputManager::XinputEveryOtherKey( const int button,const int FrequencyFrame )
+{
+	is_Click_on_Key = true;
+	if ( _gxKey.Buttons[button] >= 1 && (Key_skip_count == 0) )
+	{
+		Key_skip_count++;
+		return is_Click_on_Key;
+	}
+	if ( _gxKey.Buttons[button] >= 1 )
+	{
+		Key_skip_count++;
+		if ( 0 == Key_skip_count % FrequencyFrame )
+		{
+			is_Click_on_Key = true;
+		}
+		else
+		{
+			is_Click_on_Key = false;
+		}
+	}
+	else
+	{
+		is_Click_on_Key = false;
+		Key_skip_count = 0;
+	}
+	return is_Click_on_Key;
+};
+//右トリガーの隔フレーム入力を取得
+const bool& InputManager::XinputEveryOtherRightTrigger( const int FrequencyFrame )
+{
+	is_Click_on_R_Trigger = true;
+	if ( _gxKey.RightTrigger >= 10 && (RightTrigger_skip_count == 0) )
+	{
+		RightTrigger_skip_count++;
+		return is_Click_on_R_Trigger;
+	}
+	if ( _gxKey.RightTrigger >= 10 )
+	{
+		RightTrigger_skip_count++;
+		if ( 0 == RightTrigger_skip_count % FrequencyFrame )
+		{
+			is_Click_on_R_Trigger = true;
+		}
+		else
+		{
+			is_Click_on_R_Trigger = false;
+		}
+	}
+	else
+	{
+		is_Click_on_R_Trigger = false;
+		RightTrigger_skip_count = 0;
+	}
+	return is_Click_on_R_Trigger;
+};
+//左トリガーの隔フレーム入力を取得
+const bool& InputManager::XinputEveryOtherLeftTrigger( const int FrequencyFrame )
+{
+	is_Click_on_L_Trigger = true;
+	if ( _gxKey.LeftTrigger >= 10 && (LeftTrigger_skip_count == 0) )
+	{
+		LeftTrigger_skip_count++;
+		return is_Click_on_L_Trigger;
+	}
+	if ( _gxKey.LeftTrigger >= 10 )
+	{
+		LeftTrigger_skip_count++;
+		if ( 0 == LeftTrigger_skip_count % FrequencyFrame )
+		{
+			is_Click_on_L_Trigger = true;
+		}
+		else
+		{
+			is_Click_on_L_Trigger = false;
+		}
+	}
+	else
+	{
+		is_Click_on_L_Trigger = false;
+		LeftTrigger_skip_count = 0;
+	}
+	return is_Click_on_L_Trigger;
 };
