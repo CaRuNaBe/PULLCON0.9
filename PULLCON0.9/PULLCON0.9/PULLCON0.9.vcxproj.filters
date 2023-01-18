@@ -22,139 +22,179 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\ModeTitle.cpp">
+    <ClCompile Include="source\mode\ModeTitle.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\ModeGame.cpp">
+    <ClCompile Include="source\mode\ModeGame.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\ModePause.cpp">
+    <ClCompile Include="source\mode\ModePause.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\ModeGameResult.cpp">
+    <ClCompile Include="source\mode\ModeGameResult.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\ModeGameOver.cpp">
+    <ClCompile Include="source\mode\ModeGameOver.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\TitlePlayer.cpp">
+    <ClCompile Include="source\title\TitlePlayer.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\TitleLogo.cpp">
+    <ClCompile Include="source\title\TitleLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\CreditLogo.cpp">
+    <ClCompile Include="source\title\CreditLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\EndLogo.cpp">
+    <ClCompile Include="source\title\EndLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\StartLogo.cpp">
+    <ClCompile Include="source\title\StartLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
     <ClCompile Include="source\ApplicationMain.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\StartGuid.cpp">
+    <ClCompile Include="source\title\StartGuid.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\EndGuid.cpp">
+    <ClCompile Include="source\title\EndGuid.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\CreditGuid.cpp">
+    <ClCompile Include="source\title\CreditGuid.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\PauseLogo.cpp">
+    <ClCompile Include="source\pose\PauseLogo.cpp">
       <Filter>source\object\pause</Filter>
     </ClCompile>
-    <ClCompile Include="source\DescriptionLogo.cpp">
+    <ClCompile Include="source\pose\DescriptionLogo.cpp">
       <Filter>source\object\pause</Filter>
     </ClCompile>
-    <ClCompile Include="source\RestartLogo.cpp">
+    <ClCompile Include="source\pose\RestartLogo.cpp">
       <Filter>source\object\pause</Filter>
     </ClCompile>
-    <ClCompile Include="source\ReturnTitleLogo.cpp">
+    <ClCompile Include="source\pose\ReturnTitleLogo.cpp">
       <Filter>source\object\pause</Filter>
     </ClCompile>
-    <ClCompile Include="source\Bullet.cpp">
+    <ClCompile Include="source\maingame\Bullet.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
-    <ClCompile Include="source\EnemyAAA.cpp">
+    <ClCompile Include="source\maingame\EnemyAAA.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
-    <ClCompile Include="source\Player.cpp">
+    <ClCompile Include="source\maingame\Player.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
-    <ClCompile Include="source\EffectTrail.cpp">
+    <ClCompile Include="source\maingame\EffectTrail.cpp">
       <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeMainGame.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\ClearObject.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\CommunicationAria.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyAAAarea.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemySpawnEria.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\GameStage.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\NoEntryEria.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\SkySphere.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\StageObject.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\SupplyEria.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\ModeTitle.h">
+    <ClInclude Include="source\mode\ModeTitle.h">
       <Filter>source\mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\ModeGame.h">
+    <ClInclude Include="source\mode\ModeGame.h">
       <Filter>source\mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\ModePause.h">
+    <ClInclude Include="source\mode\ModePause.h">
       <Filter>source\mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\ModeGameResult.h">
+    <ClInclude Include="source\mode\ModeGameResult.h">
       <Filter>source\mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\ModeGameOver.h">
+    <ClInclude Include="source\mode\ModeGameOver.h">
       <Filter>source\mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\TitlePlayer.h">
+    <ClInclude Include="source\title\TitlePlayer.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\TitleLogo.h">
+    <ClInclude Include="source\title\TitleLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\CreditLogo.h">
+    <ClInclude Include="source\title\CreditLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\EndLogo.h">
+    <ClInclude Include="source\title\EndLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\StartLogo.h">
+    <ClInclude Include="source\title\StartLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
     <ClInclude Include="source\ApplicationMain.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="source\StartGuid.h">
+    <ClInclude Include="source\title\StartGuid.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\EndGuid.h">
+    <ClInclude Include="source\title\EndGuid.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\CreditGuid.h">
+    <ClInclude Include="source\title\CreditGuid.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\PauseLogo.h">
+    <ClInclude Include="source\pose\PauseLogo.h">
       <Filter>source\object\pause</Filter>
     </ClInclude>
-    <ClInclude Include="source\DescriptionLogo.h">
+    <ClInclude Include="source\pose\DescriptionLogo.h">
       <Filter>source\object\pause</Filter>
     </ClInclude>
-    <ClInclude Include="source\RestartLogo.h">
+    <ClInclude Include="source\pose\RestartLogo.h">
       <Filter>source\object\pause</Filter>
     </ClInclude>
-    <ClInclude Include="source\ReturnTitleLogo.h">
+    <ClInclude Include="source\pose\ReturnTitleLogo.h">
       <Filter>source\object\pause</Filter>
     </ClInclude>
-    <ClInclude Include="source\Bullet.h">
+    <ClInclude Include="source\maingame\Bullet.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
-    <ClInclude Include="source\EnemyAAA.h">
+    <ClInclude Include="source\maingame\EnemyAAA.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
-    <ClInclude Include="source\Player.h">
+    <ClInclude Include="source\maingame\Player.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
-    <ClInclude Include="source\EffectTrail.h">
+    <ClInclude Include="source\maingame\EffectTrail.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
+    <ClInclude Include="source\mode\ModeMainGame.h" />
+    <ClInclude Include="source\maingame\ClearObject.h" />
+    <ClInclude Include="source\maingame\CommunicationAria.h" />
+    <ClInclude Include="source\maingame\EnemyAAAarea.h" />
+    <ClInclude Include="source\maingame\EnemySpawnEria.h" />
+    <ClInclude Include="source\maingame\GameStage.h" />
+    <ClInclude Include="source\maingame\NoEntryEria.h" />
+    <ClInclude Include="source\maingame\SkySphere.h" />
+    <ClInclude Include="source\maingame\StageObject.h" />
+    <ClInclude Include="source\maingame\SupplyEria.h" />
   </ItemGroup>
 </Project>

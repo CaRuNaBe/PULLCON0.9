@@ -139,6 +139,7 @@ namespace
 
 
 	unsigned int message_string_color = 0;
+	constexpr auto SCRIPTS_JSON_PATH = _T( "./resourcefile/irisandglittermagic.json" );
 }
 
 ScriptEngine::ScriptEngine(std::string storyname,ApplicationBase& game)
@@ -146,7 +147,7 @@ ScriptEngine::ScriptEngine(std::string storyname,ApplicationBase& game)
 	movie_play.reset();
 	scripts_data.reset();
 	scripts_data = std::make_unique<ScriptsData>();
-	scripts_data->LoadJson(storyname);
+	scripts_data->LoadJson(storyname,SCRIPTS_JSON_PATH ,"irisandglittermagic.json");
 	max_line = scripts_data->GetScriptNum();
 	InitializeStrings(game);
 	state = ScriptState::PREPARSING;

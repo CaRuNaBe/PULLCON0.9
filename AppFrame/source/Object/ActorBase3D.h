@@ -15,6 +15,10 @@ public:
 		kBullet,        // 2 弾丸
 		kEnemyAAA,      // 3 対空砲
 		kEffect,        // n エフェクト
+		kClearObject,   // 5 倒したらclear
+		kSkySphere,     // 6スカイスフィア
+		kGameStage,     // 7ゲームステージ
+		kSupplyEria,    // 8 補給地点
 	};
 	virtual Type GetType() = 0;
 

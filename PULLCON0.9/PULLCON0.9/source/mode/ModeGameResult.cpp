@@ -1,5 +1,5 @@
 #include "ModeGameResult.h"
-#include "ApplicationMain.h"
+#include "../ApplicationMain.h"
 
 ModeGameResult::ModeGameResult(ApplicationBase& game,int layer)
 	:base(game,layer)

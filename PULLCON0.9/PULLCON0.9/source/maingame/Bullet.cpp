@@ -1,5 +1,4 @@
 
-#include "appframe.h"
 #include "Bullet.h"
 #include "EffectTrail.h"
 

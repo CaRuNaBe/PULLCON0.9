@@ -1,5 +1,5 @@
 #include "ModeGameOver.h"
-#include "ApplicationMain.h"
+#include "../ApplicationMain.h"
 
 ModeGameOver::ModeGameOver( ApplicationBase& game,int layer )
 	:base( game,layer )

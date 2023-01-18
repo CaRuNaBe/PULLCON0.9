@@ -1,15 +1,15 @@
 #include "ModeTitle.h"
-#include "ApplicationMain.h"
+#include "../ApplicationMain.h"
 
-#include "TitlePlayer.h"
-#include "TitleLogo.h"
+#include "../title/TitlePlayer.h"
+#include "../title/TitleLogo.h"
 
-#include "CreditLogo.h"
-#include "CreditGuid.h"
-#include "StartLogo.h"
-#include "StartGuid.h"
-#include "EndLogo.h"
-#include "EndGuid.h"
+#include "../title/CreditLogo.h"
+#include "../title/CreditGuid.h"
+#include "../title/StartLogo.h"
+#include "../title/StartGuid.h"
+#include "../title/EndLogo.h"
+#include "../title/EndGuid.h"
 ModeTitle::ModeTitle(ApplicationBase& game,int layer)
 	:base(game,layer)
 {

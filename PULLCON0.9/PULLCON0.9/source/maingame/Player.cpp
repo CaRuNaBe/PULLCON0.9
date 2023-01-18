@@ -1,6 +1,6 @@
 
 #include "appframe.h"
-#include "ModeGame.h"
+#include "../mode/ModeGame.h"
 #include "Player.h"
 #include "Bullet.h"
 
@@ -31,7 +31,7 @@ void Player::Init() {
 	_cam._vPos = { 0.f, 2500.f, -4000.f };
 	_cam._vTarget = { 0.f, 1000.f, 0.f };
 	_cam._clipNear = 2000.f;
-	_cam._clipFar = 60000.f;
+	_cam._clipFar = 30000000.f;
 
 }
 

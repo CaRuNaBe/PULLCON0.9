@@ -1,9 +1,9 @@
 
 #include "AppFrame.h"
-#include "ApplicationMain.h"
+#include "../ApplicationMain.h"
 #include "ModeGame.h"
-#include "Player.h"
-#include "EnemyAAA.h"
+#include "../maingame/Player.h"
+#include "../maingame/EnemyAAA.h"
 
 ModeGame::ModeGame( ApplicationBase& game,int layer )
 	:base( game,layer )

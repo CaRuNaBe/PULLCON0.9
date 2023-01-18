@@ -1,9 +1,9 @@
 #include "ModePause.h"
-#include "ApplicationMain.h"
-#include "PauseLogo.h"
-#include "DescriptionLogo.h"
-#include "RestartLogo.h"
-#include "ReturnTitleLogo.h"
+#include "../ApplicationMain.h"
+#include "../pose/PauseLogo.h"
+#include "../pose/DescriptionLogo.h"
+#include "../pose/RestartLogo.h"
+#include "../pose/ReturnTitleLogo.h"
 ModePause::ModePause( ApplicationBase& game,int layer )
 	:base( game,layer )
 {
