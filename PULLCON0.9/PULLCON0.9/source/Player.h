@@ -21,6 +21,7 @@ public:
 	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
 
 	void CameraUpdate(ApplicationBase& game);    // カメラ更新
+	void EventCamera(ApplicationBase& game);    // カメラ
 	void AddBullet(ModeBase& mode);
 
 protected:
@@ -30,6 +31,9 @@ protected:
 	float  _speed;
 	float  _rotatX;
 	float  _rotatY;
+
+	bool   _pull;
+
 	int    _handle;
 	int    _cg;
 

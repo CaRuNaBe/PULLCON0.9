@@ -85,6 +85,9 @@
     <ClCompile Include="source\Player.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
+    <ClCompile Include="source\EffectTrail.cpp">
+      <Filter>source\object\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ModeTitle.h">
@@ -148,6 +151,9 @@
       <Filter>source\object\game</Filter>
     </ClInclude>
     <ClInclude Include="source\Player.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\EffectTrail.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
   </ItemGroup>

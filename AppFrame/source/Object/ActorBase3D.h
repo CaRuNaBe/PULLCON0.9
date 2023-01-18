@@ -14,6 +14,7 @@ public:
 		kPlayer,        // 1 プレイヤー
 		kBullet,        // 2 弾丸
 		kEnemyAAA,      // 3 対空砲
+		kEffect,        // n エフェクト
 	};
 	virtual Type GetType() = 0;
 
@@ -35,6 +36,7 @@ public:
 	// 座標の設定
 	void SetPosition(const vector4& pos) { _vPos = pos; }
 	void SetPosition(float x, float y, float z) { _vPos.x = x; _vPos.y = y; _vPos.z = z; }
+	virtual vector4& GetPosition() { return _vPos; }
 	// 向きベクトルの設定
 	void SetDir(const vector4& dir) { _vDir = dir; }
 	void SetDir(float x, float y, float z) { _vDir.x = x; _vDir.y = y; _vDir.z = z; }
