@@ -31,8 +31,7 @@ protected:
 	float  _speed;
 	float  _rotatX;
 	float  _rotatY;
-
-	bool   _pull;
+	int    _push;
 
 	int    _handle;
 	int    _cg;

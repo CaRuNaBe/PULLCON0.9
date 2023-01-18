@@ -45,6 +45,7 @@ public:
 	vector4 _vPos;   // 位置
 	vector4 _vEvent;   // イベント位置
 	vector4 _vDir;   // 向き
+	vector4 _vRelation;   // 位置関係
 
 	Sphere  _collision;   // 球判定
 	Sphere  _collisionEvent;   // イベント判定
@@ -52,6 +53,8 @@ public:
 	float _speed;   // 速度
 	bool  _overlap;   // 判定が重なったか
 	bool  _event;   // イベント判定と重なったか
+	bool  _pull;    // イベント
+	bool  _finish;   // イベント完了
 
 	int _cnt;  // 動作カウント
 	int _CT;   // クールタイム

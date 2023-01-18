@@ -15,10 +15,13 @@ void ActorBase3D::Init() {
 	_vPos = { 0.f, 0.f ,0.f };
 	_vEvent = { 0.f, 0.f ,0.f };
 	_vDir = { 0.f, 0.f ,0.f };
+	_vRelation = { 0.f, 0.f ,0.f };
 
 	_speed = 0.f;
 	_overlap = false;
 	_event = false;
+	_pull = false;
+	_finish = false;
 	_cnt = 0;
 	_ST = 0;
 

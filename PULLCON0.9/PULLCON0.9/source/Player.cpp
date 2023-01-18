@@ -23,7 +23,7 @@ void Player::Init() {
 	_speed = 30.f;
 	_rotatX = 0.f;
 	_rotatY = utility::PI;
-	_pull = false;
+	_push = 0;
 
 	_collision._fRadius = 500.f;
 
@@ -44,9 +44,21 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kEnemyAAA) {
 				if (_pull) {
-					_vPos = obje->_vPos;
-					_vPos.y += _collision._fRadius;
-					_vPos.z -= obje->_collision._fRadius;
+					vector4 objective = obje->_vPos;
+					objective.y += _collision._fRadius;
+					objective.z -= obje->_collision._fRadius;
+					vector4 dir = objective - _vPos;
+					dir.Normalized();
+					_vPos += dir * static_cast<float>(_CT);
+					if (_CT == 0) {
+						_vPos = objective;
+					}
+				}
+				if (_finish) {
+					obje->_vRelation = obje->_vPos - _vPos;
+				}
+				if (obje->_finish == true) {
+					obje->_vDir = _vDir;
 				}
 				if (IsHitEvent(*obje)) {
 					_event = true;
@@ -90,12 +102,35 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	dir.x = cos(rad + camerad) * length;
 	dir.z = sin(rad + camerad) * length;
 	_vPos += dir;
+
+	// ƒJƒƒ‰‚à’Ç]‚³‚¹‚é
 	_cam._vPos += dir;
 	_cam._vTarget += dir;
 
-	if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_X)) {
-		if (_event) {
+	if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)) {
+		if (_event && !_pull) {
 			_pull = true;
+			_CT = 30;
+		}
+		if (_pull && _CT == 0) {
+			_vDir = { 0.f, 1.f, 0.f };
+			_CT = 20;
+			_push++;
+			if (_push == 6) {
+				_finish = true;
+				_push = 0;
+			}
+		}
+	}
+
+	if (_pull && _CT > 0) {
+		_cam._vTarget -= _vDir;
+		if (_finish) {
+			_vPos.y += _speed;
+			_cam._vTarget.y += _speed;
+			if (_CT == 1) {
+				_pull == false;
+			}
 		}
 	}
 
