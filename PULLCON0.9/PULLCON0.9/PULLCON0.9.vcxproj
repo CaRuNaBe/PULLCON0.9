@@ -155,16 +155,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\GameScenario\GameScriptEngine.cpp" />
     <ClCompile Include="source\maingame\Bullet.cpp" />
     <ClCompile Include="source\maingame\ClearObject.cpp" />
     <ClCompile Include="source\maingame\CommunicationAria.cpp" />
     <ClCompile Include="source\maingame\EffectTrail.cpp" />
     <ClCompile Include="source\maingame\EnemyAAA.cpp" />
-    <ClCompile Include="source\maingame\EnemyAAAarea.cpp" />
     <ClCompile Include="source\maingame\EnemySpawnEria.cpp" />
     <ClCompile Include="source\maingame\GameStage.cpp" />
-    <ClCompile Include="source\maingame\EreaNoEntry.cpp" />
+    <ClCompile Include="source\maingame\AreaNoEntry.cpp" />
     <ClCompile Include="source\maingame\SkySphere.cpp" />
     <ClCompile Include="source\maingame\StageObject.cpp" />
     <ClCompile Include="source\maingame\SupplyEria.cpp" />
@@ -183,23 +181,20 @@
     <ClCompile Include="source\mode\ModePause.cpp" />
     <ClCompile Include="source\mode\ModeTitle.cpp" />
     <ClCompile Include="source\ApplicationMain.cpp" />
-    <ClCompile Include="source\mode\ModeGame.cpp" />
     <ClCompile Include="source\title\TitlePlayer.cpp" />
     <ClCompile Include="source\title\TitleLogo.cpp" />
     <ClCompile Include="source\title\StartLogo.cpp" />
     <ClCompile Include="source\title\StartGuid.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\GameScenario\GameScriptEngine.h" />
     <ClInclude Include="source\maingame\Bullet.h" />
     <ClInclude Include="source\maingame\ClearObject.h" />
     <ClInclude Include="source\maingame\CommunicationAria.h" />
     <ClInclude Include="source\maingame\EffectTrail.h" />
     <ClInclude Include="source\maingame\EnemyAAA.h" />
-    <ClInclude Include="source\maingame\EnemyAAAarea.h" />
     <ClInclude Include="source\maingame\EnemySpawnEria.h" />
     <ClInclude Include="source\maingame\GameStage.h" />
-    <ClInclude Include="source\maingame\EreaNoEntry.h" />
+    <ClInclude Include="source\maingame\AreaNoEntry.h" />
     <ClInclude Include="source\maingame\SkySphere.h" />
     <ClInclude Include="source\maingame\StageObject.h" />
     <ClInclude Include="source\maingame\SupplyEria.h" />
@@ -218,7 +213,6 @@
     <ClInclude Include="source\mode\ModePause.h" />
     <ClInclude Include="source\mode\ModeTitle.h" />
     <ClInclude Include="source\ApplicationMain.h" />
-    <ClInclude Include="source\mode\ModeGame.h" />
     <ClInclude Include="source\title\TitlePlayer.h" />
     <ClInclude Include="source\title\TitleLogo.h" />
     <ClInclude Include="source\title\StartLogo.h" />

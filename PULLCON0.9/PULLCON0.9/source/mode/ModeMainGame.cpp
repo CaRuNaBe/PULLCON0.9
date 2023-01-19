@@ -15,19 +15,18 @@
 #include "../maingame/SupplyEria.h"
 #include"../maingame/ClearObject.h"
 #include "../maingame/EnemyAAA.h"
-namespace
-{
-	const std::string FILENAME = "pullcon0.9.json";
-	const std::string FILEPASS = "res/sclipt/gamesclipt/pullcon0.9.json" + FILENAME;
-	const std::string GAMESCLIPT = "pullcon0.9";
-}
+
 
 ModeMainGame::ModeMainGame( ApplicationMain& game,int layer,std::string stagename )
 	: ModeBase( game,layer )
 	//,GameSclipt()
 {
+	const std::string FILENAME = "pullcon0.9.json";
+	const std::string FILEPASS = "res/sclipt/gamesclipt/pullcon0.9.json" + FILENAME;
+	const std::string GAMESCLIPT = "pullcon0.9";
 	Init();
 	//GameSclipt.Initialize( FILEPASS,GAMESCLIPT,FILENAME );
+	
 	auto player = std::make_shared<Player>();
 	_3D_objectServer.Add( player );
 	auto stage = std::make_shared<GameStage>();
@@ -41,7 +40,6 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer,std::string stagenam
 	auto enemyAAA = std::make_shared<EnemyAAA>();
 	_3D_objectServer.Add( enemyAAA );
 	
-
 }
 
 ModeMainGame::~ModeMainGame()
@@ -64,6 +62,7 @@ bool ModeMainGame::Update()
 {
 	ModeBase::Update();
 	//GameSclipt.Update( _game,*this );
+	_3D_objectServer.Update( _game,*this );
 	return true;
 }
 /**
@@ -74,6 +73,7 @@ bool ModeMainGame::Update()
 bool ModeMainGame::Draw()
 {
 	ModeBase::Draw();
-//	GameSclipt.Draw(  _game,*this );
+  //GameSclipt.Draw(  _game,*this );
+	_3D_objectServer.Draw( _game,*this );
 	return true;
 }

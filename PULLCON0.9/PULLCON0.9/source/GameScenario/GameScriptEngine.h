@@ -8,14 +8,13 @@
 #pragma once
 
 
-#include <tchar.h>
 #include <vector>
 #include <string>
 #include <memory>
 #include "appframe.h"
 
 
-
+using namespace math;
 class GameScriptEngine
 {
 public:
@@ -32,15 +31,18 @@ public:
 	void Destroy();
 
 	void Update( ApplicationBase& _game,ModeBase& mode );
-	void Draw( ApplicationBase& _game,ModeBase& mode ) const;
+	void Draw( ApplicationBase& _game,ModeBase& mode ) ;
 
-
+	ObjectServer<ActorBase3D>& GetObjectServer3D()
+	{
+		return _3D_objectServer;
+	}
 
 private:
 	enum class ScriptState
 	{
-		EDIT,
-		PREPARSING,
+		EDIT,//エディットモード
+		PREPARSING,//プレパース
 		PARSING,
 		GAME,
 		STORY,
@@ -54,20 +56,19 @@ private:
 
 	void PreParsing();
 	void Parsing();
+	void Edit();
 
-	void TimeWait();
-
-
-
-	bool OnCommandWait( const std::vector<std::string>& scripts );
-	bool OnCommandJump( const std::vector<std::string>& scripts );
-	bool OnCommandLabel( unsigned int line,const std::vector<std::string>& scripts );
-
-	bool OnCommandChoice( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandDraw( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandAddPLayer( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandAddStage( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandAddSkySphere( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandAddClearObject( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandAddSupplyEria( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandAddEnemyAAA( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandEreaAddEnemyAAA( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandStart( unsigned int line,const std::vector<std::string>& scripts );
 
 	
-	std::unique_ptr<ScriptsData> scripts_data;
+	std::shared_ptr<ScriptsData> scripts_data;
 	ObjectServer<ActorBase3D> _3D_objectServer;
 	ScriptState state;
 

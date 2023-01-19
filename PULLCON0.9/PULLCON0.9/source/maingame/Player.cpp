@@ -20,7 +20,7 @@ Player::~Player() {
 void Player::Init() {
 	base::Init();
 
-	_speed = 30.f;
+	_speed = 100.f;
 	_rotatX = 0.f;
 	_rotatY = utility::PI;
 	_pull = false;

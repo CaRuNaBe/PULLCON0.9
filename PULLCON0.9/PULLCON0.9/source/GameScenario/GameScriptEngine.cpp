@@ -1,32 +1,41 @@
-﻿#include "GameScriptEngine.h"
-
-
-#include <algorithm>
+﻿#include"GameScriptEngine.h"
+#include"../maingame/Player.h"
+#include"../maingame/GameStage.h"
+#include"../maingame/SkySphere.h"
+#include"../maingame/SupplyEria.h"
+#include"../maingame/ClearObject.h"
+#include"../maingame/EnemyAAA.h"
+#include<algorithm>
 
 namespace
 {
 // スクリプト コマンド
 	const std::string COMMAND_STAGELABEL = "StageLabel";
 	const std::string COMMAND_JUNPLABEL = "StageJunp";
-	const std::string COMMAND_GAMESTART = "Start";
+	const std::string COMMAND_CHOICE = "StageChoice";
+	const std::string COMMAND_GAMESTART = "Start";//1
 	const std::string COMMAND_LOADING = "Load";
 	const std::string COMMAND_FEEDIN = "FeedIn";
 	const std::string COMMAND_FEEDOUT = "FeedOut";
 	const std::string COMMAND_WAIT = "Wait";
 	const std::string COMMAND_CLICK = "Click";
 
-	const std::string COMMAND_ADDSTAGE = "AddStage";
-	const std::string COMMAND_ADDSKYSPHERE = "AddSkySphere";
+	const std::string COMMAND_ADDSTAGE = "AddStage";//1
+	const std::string COMMAND_ADDSKYSPHERE = "AddSkySphere";//1
 	const std::string COMMAND_ADDNORMALOBJECT = "AddObject";
-	const std::string COMMAND_ADDCLEAROBJECT = "AddclearObject";
-	const std::string COMMAND_ADDENEMYAAAAREA = "AddAnemyaaaArea";
+	const std::string COMMAND_ADDCLEAROBJECT = "AddClearObject";//1
+	const std::string COMMAND_ADDENEMYAAAAREA = "AddAnemyaaaArea";//1
 	const std::string COMMAND_ADDENEMYSPAWNERIA = "AddEnemySpawnEria";
 	const std::string COMMAND_ADDSUPPLYERIA = "AddSupplyEria";
 	const std::string COMMAND_ADDCOMMUNICATIONARIA = "AddCommunicationAria";
 	const std::string COMMAND_ADDNOENTRYERIA = "AddNoEntryEria";
-	const std::string COMMAND_ADDENEMYAAA = "AddEnemyAAA";
-
-
+	const std::string COMMAND_ADDENEMYAAA = "AddEnemyAAA";//1
+	const std::string COMMAND_ADDPLAYER = "AddPlayer";
+	//編集コマンド
+	const std::string ECOMMAND_ADD = "add";
+	const std::string ECOMMAND_EDIT = "edit";
+	const std::string ECOMMAND_DELETE = "delete";
+	const std::string ECOMMAND_START = "start";
 }
 
 
@@ -84,8 +93,6 @@ bool GameScriptEngine::Initialize( std::string jsonpath,std::string scriptsname,
 	return true;
 }
 
-
-
 //!
 //! @fn void ScriptEngine::Destroy()
 //! @brief 明示的なスクリプトエンジンの終了処理
@@ -110,21 +117,42 @@ void GameScriptEngine::Destroy()
 //!
 void GameScriptEngine::Update( ApplicationBase& _game,ModeBase& mode )
 {
-
-
 	switch ( state )
 	{
+		case ScriptState::EDIT:
+			Edit();
+			break;
+
+		case ScriptState::PREPARSING:
+			PreParsing();
+			break;
+
 		case ScriptState::PARSING:
 			Parsing();
 			break;
 
+		case ScriptState::GAME:
+			break;
 
+		case ScriptState::STORY:
+			break;
+
+		case ScriptState::RESULT:
+			break;
+
+		case ScriptState::CRFEEDIN:
+			break;
+
+		case ScriptState::CRFEEDOUT:
+			break;
+
+		case ScriptState::LOADING:
+			break;
 
 		case ScriptState::END:
 			break;
 	}
-
-
+	_3D_objectServer.Update( _game,mode );
 }
 
 //!
@@ -135,28 +163,8 @@ void GameScriptEngine::Update( ApplicationBase& _game,ModeBase& mode )
 //!
 void GameScriptEngine::PreParsing()
 {
-	while ( now_line >= 0 && now_line < max_line )
-	{
-		const auto script = scripts_data->GetScript( now_line );
-		const auto command = (script[0])[0];
 
-		switch ( command )
-		{
-			case COMMAND_L:
-				OnCommandLabel( now_line,script );
-				break;
-
-
-			default:
-				break;
-		}
-
-		++now_line;
-	}
-
-	now_line = 0;
 }
-
 //!
 //! @fn void ScriptEngine::Parsing()
 //! @brief スクリプトの解析
@@ -165,125 +173,136 @@ void GameScriptEngine::PreParsing()
 //!
 void GameScriptEngine::Parsing()
 {
-	auto stop_parsing = false;
 
-	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
+}
+
+bool GameScriptEngine::OnCommandAddPLayer( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	string::ToFloat( scripts[1],posi.x );
+	string::ToFloat( scripts[2],posi.y );
+	string::ToFloat( scripts[3],posi.z );
+	auto player = std::make_shared<Player>();
+	player->SetPosition( posi );
+	_3D_objectServer.Add( player );
+};
+bool GameScriptEngine::OnCommandAddStage( unsigned int line,const std::vector<std::string>& scripts )
+{
+	auto stage = std::make_shared<GameStage>();
+	_3D_objectServer.Add( stage );
+};
+bool GameScriptEngine::OnCommandAddSkySphere( unsigned int line,const std::vector<std::string>& scripts )
+{
+	auto skysphere = std::make_shared<SkySphere>();
+	_3D_objectServer.Add( skysphere );
+};
+bool GameScriptEngine::OnCommandAddClearObject( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	string::ToFloat( scripts[1],posi.x );
+	string::ToFloat( scripts[2],posi.y );
+	string::ToFloat( scripts[3],posi.z );
+	auto clearobject = std::make_shared<ClearObject>();
+	clearobject->SetPosition( posi );
+	_3D_objectServer.Add( clearobject );
+};
+bool GameScriptEngine::OnCommandAddSupplyEria( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	string::ToFloat( scripts[1],posi.x );
+	string::ToFloat( scripts[2],posi.y );
+	string::ToFloat( scripts[3],posi.z );
+	auto supplyeria = std::make_shared<SupplyEria>();
+	supplyeria->SetPosition( posi );
+	_3D_objectServer.Add( supplyeria );
+};
+bool GameScriptEngine::OnCommandAddEnemyAAA( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	string::ToFloat( scripts[1],posi.x );
+	string::ToFloat( scripts[2],posi.y );
+	string::ToFloat( scripts[3],posi.z );
+	auto enemyAAA = std::make_shared<EnemyAAA>();
+	enemyAAA->SetPosition( posi );
+	_3D_objectServer.Add( enemyAAA );
+};
+
+bool GameScriptEngine::OnCommandEreaAddEnemyAAA( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	string::ToFloat( scripts[1],posi.x );
+	string::ToFloat( scripts[2],posi.y );
+	string::ToFloat( scripts[3],posi.z );
+	float range = 0.0f;
+	string::ToFloat( scripts[4],range );
+	int max = 0;
+	string::ToInt( scripts[5],max );
+	for ( int i = 0; i < max; i++ )
 	{
-		const auto script = scripts_data->GetScript( now_line );
-		const auto command = (script[0])[0];
+		vector4 AAAposi = {static_cast<float>(utility::get_random( posi.x,posi.x + range ))
+			,static_cast<float>(utility::get_random( posi.y,posi.y + range ))
+			,posi.z};
 
-		switch ( command )
-		{
-
-			default:
-				break;
-		}
-
-		++now_line;
-	}
-}
-
-
-//!
-//! @fn bool ScriptEngine::OnCommandWait(const std::vector<std::string>& scripts)
-//! @brief スクリプトの 'w' コマンドを処理
-//! @param[in] scripts スクリプトの内容
-//! @return 処理の成否
-//!
-bool GameScriptEngine::OnCommandWait( const std::vector<std::string>& scripts )
-{
-	auto wait = 0;
-	auto result = false;
-
-	return result;
-}
-
-//!
-//! @fn bool ScriptEngine::OnCommandJump(const std::vector<std::string>& scripts)
-//! @brief スクリプトの 'j' コマンドを処理
-//! @param[in] scripts スクリプトの内容
-//! @return 処理の成否
-//!
-bool GameScriptEngine::OnCommandJump( const std::vector<std::string>& scripts )
-{
-	auto line = 0U;
-	const auto result = GetLineNumber( scripts[1],line );
-
-	if ( result )
-	{
-		now_line = line;
+		auto enemyAAA = std::make_shared<EnemyAAA>();
+		enemyAAA->SetPosition( AAAposi );
+		_3D_objectServer.Add( enemyAAA );
 	}
 
-	return result;
-}
+};
+bool GameScriptEngine::OnCommandStart( unsigned int line,const std::vector<std::string>& scripts )
+{
+	state = ScriptState::GAME;
+};
 
-//!
-//! @fn bool ScriptEngine::OnCommandLabel(unsigned int line, const std::vector<std::string>& scripts)
-//! @brief スクリプトの 'l' コマンドを処理
-//! @param[in] line スクリプトの行数
-//! @param[in] scripts スクリプトの内容
-//! @return 処理の成否
-//!
-bool GameScriptEngine::OnCommandLabel( unsigned int line,const std::vector<std::string>& scripts )
+void GameScriptEngine::Edit()
 {
 
-	return true;
 }
-
-
-//!
-//! @fn bool ScriptEngine::OnCommandChoice(unsigned int line, const std::vector<std::string>& scripts)
-//! @brief スクリプトの 'c' コマンドを処理
-//! @param[in] line スクリプトの行数
-//! @param[in] scripts スクリプトの内容
-//! @return 処理の成否
-//!
-bool GameScriptEngine::OnCommandChoice( unsigned int line,const std::vector<std::string>& scripts )
-{
-
-	return true;
-}
-
-//!
-//! @fn bool ScriptEngine::OnCommandDraw(unsigned int line, const std::vector<std::string>& scripts)
-//! @brief スクリプトの 'd' コマンドを処理
-//! @param[in] line スクリプトの行数
-//! @param[in] scripts スクリプトの内容
-//! @return 処理の成否
-//!
-bool GameScriptEngine::OnCommandDraw( unsigned int line,const std::vector<std::string>& scripts )
-{
-
-	return true;
-}
-
-
-//!
-//! @fn void ScriptEngine::TimeWait()
-//! @brief 時間待ち処理
-//!
-void GameScriptEngine::TimeWait()
-{
-
-	if ( wait_count > 0 )
-	{
-		--wait_count;
-	}
-	else
-	{
-		state = ScriptState::PARSING;
-	}
-}
-
-
 
 //!
 //! @fn void ScriptEngine::Render() const
 //! @brief スクリプトの全ての描画処理
 //! @details 毎フレーム呼び出す必要があります。
 //!
-void GameScriptEngine::Draw( ApplicationBase& _game,ModeBase& mode ) const
-{}
+void GameScriptEngine::Draw( ApplicationBase& _game,ModeBase& mode )
+{
+	switch ( state )
+	{
+		case ScriptState::EDIT:
+
+			break;
+
+		case ScriptState::PREPARSING:
+
+			break;
+
+		case ScriptState::PARSING:
+
+			break;
+
+		case ScriptState::GAME:
+			break;
+
+		case ScriptState::STORY:
+			break;
+
+		case ScriptState::RESULT:
+			break;
+
+		case ScriptState::CRFEEDIN:
+			break;
+
+		case ScriptState::CRFEEDOUT:
+			break;
+
+		case ScriptState::LOADING:
+			break;
+
+		case ScriptState::END:
+			break;
+	}
+	_3D_objectServer.Draw( _game,mode );
+}
 
 
 

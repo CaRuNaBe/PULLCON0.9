@@ -106,8 +106,8 @@ private:
 	void DrawFeedin( ApplicationBase& game )const;
 	void DrawFeedout( ApplicationBase& game )const;
 	void DrawAnime( ApplicationBase& game )const;
-
-	std::unique_ptr<ScriptsData> scripts_data;
+	
+	std::shared_ptr<ScriptsData> scripts_data;
 	std::unique_ptr<CommandMovieplay>movie_play;
 
 	std::vector<std::unique_ptr<CommandImageload>> image_list;
@@ -124,7 +124,7 @@ private:
 	ScriptState state;
 
 
-	unsigned int max_line;//
+	unsigned int max_line;
 	unsigned int now_line;
 	unsigned int wait_count;
 	double _Alpha;

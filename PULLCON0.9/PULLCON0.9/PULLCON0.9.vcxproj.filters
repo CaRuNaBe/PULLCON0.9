@@ -28,9 +28,6 @@
     <ClCompile Include="source\mode\ModeTitle.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeGame.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
     <ClCompile Include="source\mode\ModePause.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
@@ -103,16 +100,13 @@
     <ClCompile Include="source\maingame\SkySphere.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
-    <ClCompile Include="source\maingame\NoEntryEria.cpp">
+    <ClCompile Include="source\maingame\AreaNoEntry.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
     <ClCompile Include="source\maingame\GameStage.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
     <ClCompile Include="source\maingame\EnemySpawnEria.cpp">
-      <Filter>source\object\game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\EnemyAAAarea.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
     <ClCompile Include="source\maingame\CommunicationAria.cpp">
@@ -124,9 +118,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\mode\ModeTitle.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModeGame.h">
       <Filter>source\mode</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModePause.h">
@@ -201,16 +192,13 @@
     <ClInclude Include="source\maingame\SkySphere.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
-    <ClInclude Include="source\maingame\NoEntryEria.h">
+    <ClInclude Include="source\maingame\AreaNoEntry.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
     <ClInclude Include="source\maingame\GameStage.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
     <ClInclude Include="source\maingame\EnemySpawnEria.h">
-      <Filter>source\object\game</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\EnemyAAAarea.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
     <ClInclude Include="source\maingame\CommunicationAria.h">
