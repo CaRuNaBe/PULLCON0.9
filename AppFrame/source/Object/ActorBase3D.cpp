@@ -18,6 +18,7 @@ void ActorBase3D::Init() {
 	_vRelation = { 0.f, 0.f ,0.f };
 
 	_speed = 0.f;
+	_coll = true;
 	_overlap = false;
 	_event = false;
 	_pull = false;
@@ -51,20 +52,24 @@ void	ActorBase3D::UpdateCollision()
 
 bool	ActorBase3D::IsHitObject(ActorBase3D& object)
 {
-	// Sphere‚Å“–‚½‚è”»’è
-	if (Intersect(object.GetCollision(), _collision))
-	{
-		return true;
+	if(_coll && object._coll == true){
+		// Sphere‚Å“–‚½‚è”»’è
+		if (Intersect(object.GetCollision(), _collision))
+		{
+			return true;
+		}
 	}
 	return false;
 }
 
 bool	ActorBase3D::IsHitEvent(ActorBase3D& object)
 {
-	// Sphere‚Å“–‚½‚è”»’è
-	if (Intersect(object.GetCollisionEvent(), _collision))
-	{
-		return true;
+	if (_coll && object._coll == true) {
+		// Sphere‚Å“–‚½‚è”»’è
+		if (Intersect(object.GetCollisionEvent(), _collision))
+		{
+			return true;
+		}
 	}
 	return false;
 }

@@ -5,7 +5,8 @@
 class Camera {
 public:
 	vector4	_vPos;					// 位置
-	vector4	_vTarget;				// 距離
+	vector4	_vTarget;				// 注視点
+	vector4	_vMemory;				// ベクトル保存用
 	float	_clipNear, _clipFar;	// クリップ
 };
 
@@ -15,6 +16,12 @@ public:
 	Player();
 	virtual ~Player();
 	virtual Type GetType() { return Type::kPlayer; }
+	// プレイヤーの状態
+	enum class State
+	{
+		PLAY,//プレイアブル状態
+		EVENT//イベント状態
+	};
 
 	virtual void Init();
 	virtual bool Update(ApplicationBase& game, ModeBase& mode);
@@ -27,6 +34,8 @@ public:
 protected:
 	// カメラ
 	Camera	_cam;
+
+	State  _statePlayer;
 
 	float  _speed;
 	float  _rotatX;

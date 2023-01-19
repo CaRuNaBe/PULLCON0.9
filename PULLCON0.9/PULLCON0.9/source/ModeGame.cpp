@@ -7,6 +7,7 @@
 
 ModeGame::ModeGame( ApplicationBase& game,int layer )
 	:base( game,layer )
+	,_game(game)
 {
 	_handleSkySphere = MV1LoadModel( "res/stage/skysphere/cg_stageSkymap_1.mv1" );
 	_handleStage = MV1LoadModel( "res/stage/stage_file_1/mv1/cg_stage1.mv1" );
@@ -14,6 +15,8 @@ ModeGame::ModeGame( ApplicationBase& game,int layer )
 	_cg = ResourceServer::LoadGraph("res/cursor00.png");
 
 	_vCursor = { 0.0f, 0.0f, 0.0f };
+	_blackout = false;
+	_transparence = false;
 
 	// ÉvÉåÉCÉÑÅ[
 	auto player = std::make_shared<Player>();
@@ -77,9 +80,15 @@ bool ModeGame::Draw()
 	SetUseLighting(TRUE);
 	_objectServer.Draw(_game, *this);
 	_3D_objectServer.Draw(_game, *this);
+	if (_blackout) {
+		DrawBox(0, 0, _game.DispSizeW(), _game.DispSizeH(), GetColor(0, 0, 0), FALSE);
+		_blackout = false;
+	}
 
-	VECTOR ScreenPos = ConvWorldPosToScreenPos(ToDX(_vCursor));
-	DrawRotaGraph(ScreenPos.x, ScreenPos.y, 0.5, 0, _cg, TRUE);
+	if (_transparence) {
+		VECTOR ScreenPos = ConvWorldPosToScreenPos(ToDX(_vCursor));
+		DrawRotaGraph(ScreenPos.x, ScreenPos.y, 0.5, 0, _cg, TRUE);
+	}
 
 	return true;
 }

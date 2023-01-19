@@ -8,6 +8,13 @@ public:
 	EnemyAAA();
 	virtual ~EnemyAAA();
 	virtual Type GetType() { return Type::kEnemyAAA; }
+	// 対空砲の状態
+	enum class State
+	{
+		PLAY,//プレイアブル状態
+		EVENT,//イベント状態
+		WEAPON//兵器化
+	};
 
 	virtual void Init();
 	virtual bool Update(ApplicationBase& game, ModeBase& mode);
@@ -17,6 +24,7 @@ public:
 	void AddBullet(ModeBase& mode);
 
 protected:
+	State   _stateAAA;
 
 	vector4 _vTarget;
 	float  _rotatX;

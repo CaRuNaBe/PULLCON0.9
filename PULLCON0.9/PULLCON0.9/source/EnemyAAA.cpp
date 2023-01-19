@@ -6,8 +6,8 @@
 EnemyAAA::EnemyAAA()
 	:base()
 {
-	_handle_body = MV1LoadModel("res/canon_mk1/mvi/cg_Canon_Mk1_dodai.mv1");
-	_handle_turret = MV1LoadModel("res/canon_mk1/mvi/cg_Canon_Mk1_houtou.mv1");
+	_handle_body = MV1LoadModel("res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_dodai.mv1");
+	_handle_turret = MV1LoadModel("res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_houtou.mv1");
 
 	Init();
 }
@@ -51,6 +51,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 					}
 				}
 				if (obje->_finish == true) {
+					_coll = false;
 					_finish = true;
 					_vPos = obje->_vPos + _vRelation;
 				}
@@ -131,18 +132,20 @@ bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1DrawModel(_handle_body);
 	MV1DrawModel(_handle_turret);
 
-	vector4 color = { 255, 255, 255 };
-	DrawCollision(color);
-	if (_finish) {
-		DrawCollisionEvent(color);
-	}
-	if (_overlap) { 
-		color = { 255, 0, 0 };
+	if(!_coll){
+		vector4 color = { 255, 255, 255 };
 		DrawCollision(color);
-	}
-	if(_event){
-		color = { 0, 255, 0 };
-		DrawCollisionEvent(color);
+		if (!_finish) {
+			DrawCollisionEvent(color);
+		}
+		if (_overlap) {
+			color = { 255, 0, 0 };
+			DrawCollision(color);
+		}
+		if (_event) {
+			color = { 0, 255, 0 };
+			DrawCollisionEvent(color);
+		}
 	}
 
 

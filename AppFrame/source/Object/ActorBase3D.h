@@ -51,6 +51,7 @@ public:
 	Sphere  _collisionEvent;   // イベント判定
 
 	float _speed;   // 速度
+	bool  _coll;   // コリジョン判定をするか
 	bool  _overlap;   // 判定が重なったか
 	bool  _event;   // イベント判定と重なったか
 	bool  _pull;    // イベント
