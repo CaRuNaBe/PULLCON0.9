@@ -1,4 +1,3 @@
-
 #include "appframe.h"
 #include "EnemyAAA.h"
 #include "Bullet.h"

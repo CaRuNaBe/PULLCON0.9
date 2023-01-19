@@ -23,6 +23,9 @@
     <Filter Include="source\ScliptEngin">
       <UniqueIdentifier>{f7001ca2-cb2e-4783-9ea9-7242b31127b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\gamesclipt">
+      <UniqueIdentifier>{7408e4e2-6577-4b49-8611-bc96a769bfb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ResourceServer\ResourceServer.h">

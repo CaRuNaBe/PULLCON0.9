@@ -146,7 +146,7 @@ ScriptEngine::ScriptEngine(std::string storyname,ApplicationBase& game)
 {
 	movie_play.reset();
 	scripts_data.reset();
-	scripts_data = std::make_unique<ScriptsData>();
+	scripts_data = std::make_shared<ScriptsData>();
 	scripts_data->LoadJson(storyname,SCRIPTS_JSON_PATH ,"irisandglittermagic.json");
 	max_line = scripts_data->GetScriptNum();
 	InitializeStrings(game);

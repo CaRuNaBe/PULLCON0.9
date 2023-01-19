@@ -24,6 +24,20 @@ namespace string
 		return result;
 	}
 
+	bool ToFloat( const std::string& str,float& floatnum )
+	{
+		auto result = true;
+		try
+		{
+			floatnum = std::stof( str );
+		}
+		catch ( ... )
+		{
+			result = false;
+		}
+		return result;
+	}
+
 	std::vector<std::string> Split(const std::string& str,const std::string& delimiter)
 	{
 		size_t first = 0;

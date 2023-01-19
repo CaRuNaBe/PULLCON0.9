@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\GameScenario\GameScriptEngine.cpp" />
     <ClCompile Include="source\maingame\Bullet.cpp" />
     <ClCompile Include="source\maingame\ClearObject.cpp" />
     <ClCompile Include="source\maingame\CommunicationAria.cpp" />
@@ -163,7 +164,7 @@
     <ClCompile Include="source\maingame\EnemyAAAarea.cpp" />
     <ClCompile Include="source\maingame\EnemySpawnEria.cpp" />
     <ClCompile Include="source\maingame\GameStage.cpp" />
-    <ClCompile Include="source\maingame\NoEntryEria.cpp" />
+    <ClCompile Include="source\maingame\EreaNoEntry.cpp" />
     <ClCompile Include="source\maingame\SkySphere.cpp" />
     <ClCompile Include="source\maingame\StageObject.cpp" />
     <ClCompile Include="source\maingame\SupplyEria.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="source\title\StartGuid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\GameScenario\GameScriptEngine.h" />
     <ClInclude Include="source\maingame\Bullet.h" />
     <ClInclude Include="source\maingame\ClearObject.h" />
     <ClInclude Include="source\maingame\CommunicationAria.h" />
@@ -197,7 +199,7 @@
     <ClInclude Include="source\maingame\EnemyAAAarea.h" />
     <ClInclude Include="source\maingame\EnemySpawnEria.h" />
     <ClInclude Include="source\maingame\GameStage.h" />
-    <ClInclude Include="source\maingame\NoEntryEria.h" />
+    <ClInclude Include="source\maingame\EreaNoEntry.h" />
     <ClInclude Include="source\maingame\SkySphere.h" />
     <ClInclude Include="source\maingame\StageObject.h" />
     <ClInclude Include="source\maingame\SupplyEria.h" />

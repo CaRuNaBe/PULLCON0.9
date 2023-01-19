@@ -13,7 +13,7 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include "picojson.h"
+#include "../../../picojson/picojson.h"
 
 class ScriptsData
 {

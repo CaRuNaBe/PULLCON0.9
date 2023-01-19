@@ -20,6 +20,9 @@
     <Filter Include="source\object\game">
       <UniqueIdentifier>{b0781283-a4ea-4ce3-b3ee-9edb1e405b8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\GameScenario">
+      <UniqueIdentifier>{dffa731b-b4e1-4962-8465-b810671bd736}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\mode\ModeTitle.cpp">
@@ -89,34 +92,34 @@
       <Filter>source\object\game</Filter>
     </ClCompile>
     <ClCompile Include="source\mode\ModeMainGame.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\ClearObject.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\CommunicationAria.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\EnemyAAAarea.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\EnemySpawnEria.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\GameStage.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\NoEntryEria.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\SkySphere.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\StageObject.cpp">
-      <Filter>source</Filter>
+      <Filter>source\mode</Filter>
     </ClCompile>
     <ClCompile Include="source\maingame\SupplyEria.cpp">
-      <Filter>source</Filter>
+      <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\StageObject.cpp">
+      <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\SkySphere.cpp">
+      <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\NoEntryEria.cpp">
+      <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\GameStage.cpp">
+      <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemySpawnEria.cpp">
+      <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyAAAarea.cpp">
+      <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\CommunicationAria.cpp">
+      <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\ClearObject.cpp">
+      <Filter>source\object\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -186,15 +189,35 @@
     <ClInclude Include="source\maingame\EffectTrail.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeMainGame.h" />
-    <ClInclude Include="source\maingame\ClearObject.h" />
-    <ClInclude Include="source\maingame\CommunicationAria.h" />
-    <ClInclude Include="source\maingame\EnemyAAAarea.h" />
-    <ClInclude Include="source\maingame\EnemySpawnEria.h" />
-    <ClInclude Include="source\maingame\GameStage.h" />
-    <ClInclude Include="source\maingame\NoEntryEria.h" />
-    <ClInclude Include="source\maingame\SkySphere.h" />
-    <ClInclude Include="source\maingame\StageObject.h" />
-    <ClInclude Include="source\maingame\SupplyEria.h" />
+    <ClInclude Include="source\mode\ModeMainGame.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\SupplyEria.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\StageObject.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\SkySphere.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\NoEntryEria.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\GameStage.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemySpawnEria.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyAAAarea.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\CommunicationAria.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\ClearObject.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
