@@ -44,13 +44,16 @@ public:
 public:
 	vector4 _vPos;   // 位置
 	vector4 _vEvent;   // イベント位置
-	vector4 _vDir;   // 向き
 	vector4 _vRelation;   // 位置関係
+	vector4 _vTarget;   // 目標位置
+	vector4 _vDir;   // 向き
 
 	Sphere  _collision;   // 球判定
 	Sphere  _collisionEvent;   // イベント判定
 
-	float _speed;   // 速度
+	float _fSpeed;   // 速度
+	float _fRotatX;  // X軸回転
+	float _fRotatY;  // Y軸回転
 	bool  _coll;   // コリジョン判定をするか
 	bool  _overlap;   // 判定が重なったか
 	bool  _event;   // イベント判定と重なったか

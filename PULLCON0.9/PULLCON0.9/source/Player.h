@@ -37,9 +37,6 @@ protected:
 
 	State  _statePlayer;
 
-	float  _speed;
-	float  _rotatX;
-	float  _rotatY;
 	int    _push;
 
 	int    _handle;

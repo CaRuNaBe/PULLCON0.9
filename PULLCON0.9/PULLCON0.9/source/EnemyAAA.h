@@ -27,8 +27,6 @@ protected:
 	State   _stateAAA;
 
 	vector4 _vTarget;
-	float  _rotatX;
-	float  _rotatY;
 	int    _handle_body;
 	int    _handle_turret;
 

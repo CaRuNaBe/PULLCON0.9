@@ -14,10 +14,13 @@ void ActorBase3D::Init() {
 	base::Init();
 	_vPos = { 0.f, 0.f ,0.f };
 	_vEvent = { 0.f, 0.f ,0.f };
-	_vDir = { 0.f, 0.f ,0.f };
 	_vRelation = { 0.f, 0.f ,0.f };
+	_vTarget = { 0.f, 0.f ,0.f };
+	_vDir = { 0.f, 0.f ,0.f };
 
-	_speed = 0.f;
+	_fSpeed = 0.f;
+	_fRotatX = 0.f;
+	_fRotatY = 0.f;
 	_coll = true;
 	_overlap = false;
 	_event = false;
@@ -85,7 +88,7 @@ void ActorBase3D::DrawCollision(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collision.Draw(static_cast<float>(color.x), static_cast<float>(color.y), static_cast<float>(color.z));
+	_collision.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }
@@ -95,7 +98,7 @@ void ActorBase3D::DrawCollisionEvent(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collisionEvent.Draw(static_cast<float>(color.x), static_cast<float>(color.y), static_cast<float>(color.z));
+	_collisionEvent.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }

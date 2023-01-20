@@ -85,9 +85,9 @@ bool ModeGame::Draw()
 		_blackout = false;
 	}
 
-	if (_transparence) {
+	if (!_transparence) {
 		VECTOR ScreenPos = ConvWorldPosToScreenPos(ToDX(_vCursor));
-		DrawRotaGraph(ScreenPos.x, ScreenPos.y, 0.5, 0, _cg, TRUE);
+		DrawRotaGraph(static_cast<int>(ScreenPos.x), static_cast<int>(ScreenPos.y), 0.5, 0, _cg, TRUE);
 	}
 
 	return true;
