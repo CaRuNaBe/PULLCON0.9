@@ -21,7 +21,7 @@ Bullet::~Bullet() {
 void Bullet::Init() {
 	base::Init();
 
-	_speed = 200.f;
+	_fSpeed = 200.f;
 	_animeNo = 0;
 
 	_collision._fRadius = 50.f;
@@ -38,7 +38,7 @@ bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 	}
 
 	vector4 _vd = _vDir;
-	_vd *= _speed;
+	_vd *= _fSpeed;
 	_vPos += _vd;
 
 	UpdateCollision();

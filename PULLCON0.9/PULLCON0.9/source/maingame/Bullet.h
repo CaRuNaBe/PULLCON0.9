@@ -16,7 +16,6 @@ public:
 
 protected:
 
-	float  _speed;
 	int    _handle;
 	
 	int _grHandle;  // 現在のグラフィックハンドル

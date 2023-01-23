@@ -14,11 +14,18 @@ void ActorBase3D::Init() {
 	base::Init();
 	_vPos = { 0.f, 0.f ,0.f };
 	_vEvent = { 0.f, 0.f ,0.f };
+	_vRelation = { 0.f, 0.f ,0.f };
+	_vTarget = { 0.f, 0.f ,0.f };
 	_vDir = { 0.f, 0.f ,0.f };
 
-	_speed = 0.f;
+	_fSpeed = 0.f;
+	_fRotatX = 0.f;
+	_fRotatY = 0.f;
+	_coll = true;
 	_overlap = false;
 	_event = false;
+	_pull = false;
+	_finish = false;
 	_cnt = 0;
 	_ST = 0;
 
@@ -48,20 +55,24 @@ void	ActorBase3D::UpdateCollision()
 
 bool	ActorBase3D::IsHitObject(ActorBase3D& object)
 {
-	// Sphereで当たり判定
-	if (Intersect(object.GetCollision(), _collision))
-	{
-		return true;
+	if(_coll && object._coll == true){
+		// Sphereで当たり判定
+		if (Intersect(object.GetCollision(), _collision))
+		{
+			return true;
+		}
 	}
 	return false;
 }
 
 bool	ActorBase3D::IsHitEvent(ActorBase3D& object)
 {
-	// Sphereで当たり判定
-	if (Intersect(object.GetCollisionEvent(), _collision))
-	{
-		return true;
+	if (_coll && object._coll == true) {
+		// Sphereで当たり判定
+		if (Intersect(object.GetCollisionEvent(), _collision))
+		{
+			return true;
+		}
 	}
 	return false;
 }
@@ -77,7 +88,7 @@ void ActorBase3D::DrawCollision(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collision.Draw(static_cast<float>(color.x), static_cast<float>(color.y), static_cast<float>(color.z));
+	_collision.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }
@@ -87,7 +98,7 @@ void ActorBase3D::DrawCollisionEvent(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collisionEvent.Draw(static_cast<float>(color.x), static_cast<float>(color.y), static_cast<float>(color.z));
+	_collisionEvent.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }

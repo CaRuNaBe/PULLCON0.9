@@ -14,9 +14,13 @@ public:
 
 	void SetCursor(const vector4& pos) { _vCursor = pos; }
 
-protected:
-
+public:
 	vector4 _vCursor;
+
+	bool _blackout;
+	bool _transparence;
+protected:
+	ApplicationBase& _game;
 
 	int _handleSkySphere;
 	int _handleStage;
