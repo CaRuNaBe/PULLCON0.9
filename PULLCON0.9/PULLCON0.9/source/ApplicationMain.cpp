@@ -11,7 +11,7 @@ bool ApplicationMain::Initialize(HINSTANCE hInstance) {
 	if (!base::Initialize(hInstance)) { return false; }
 
 	// ƒ‚[ƒh‚Ì“o˜^
-	auto game = std::make_shared<ModeMainGame>(*this,1,"stage1");
+	auto game = std::make_shared<ModeMainGame>(*this,1);
 	base::GetInstance()->GetModeServer()->Add(game);
 
 	return true;

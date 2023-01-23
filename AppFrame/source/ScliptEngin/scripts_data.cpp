@@ -13,14 +13,13 @@
 #include <fstream>
 #include "picojson.h"
 
-namespace
+namespace scliptused
 {
 	constexpr auto EMPTY_STR = _T( "" );
 	constexpr auto EMPTY_WSTR = L"";
 	constexpr auto DELIMITER = _T( "," );
-
 }
-
+using namespace scliptused;
 //!
 //! @fn bool ScriptsData::LoadJson(const TCHAR* path)
 //! @brief スクリプト用 Json ファイルの読込
@@ -278,3 +277,20 @@ std::vector<std::string> ScriptsData::GetScript( const unsigned int index ) cons
 
 	return string::Split( line,DELIMITER );
 }
+
+bool ScriptsData::ScriptAdd( std::string Sclipts )
+{
+	scripts->emplace_back( Sclipts );
+	return true;
+};
+bool ScriptsData::ScriptDelete(int line)
+{
+	scripts->erase(scripts->begin()+ line );
+	return true;
+};
+bool ScriptsData::ScriptClear()
+{
+	scripts->clear();
+	return true;
+};
+

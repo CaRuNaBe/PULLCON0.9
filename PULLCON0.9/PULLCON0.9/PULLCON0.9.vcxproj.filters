@@ -20,9 +20,6 @@
     <Filter Include="source\object\game">
       <UniqueIdentifier>{b0781283-a4ea-4ce3-b3ee-9edb1e405b8a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\GameScenario">
-      <UniqueIdentifier>{dffa731b-b4e1-4962-8465-b810671bd736}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\mode\ModeTitle.cpp">

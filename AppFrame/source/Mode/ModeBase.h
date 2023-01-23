@@ -40,6 +40,7 @@ public:
 	{
 		return _objectServer;
 	}
+
 	ObjectServer<ActorBase3D>& GetObjectServer3D()
 	{
 		return _3D_objectServer;

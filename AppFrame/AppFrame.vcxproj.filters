@@ -86,51 +86,6 @@
     <ClInclude Include="source\Application\ScliptFlagManager.h">
       <Filter>source\Application</Filter>
     </ClInclude>
-    <ClInclude Include="source\Mode\ModeSclipt.h">
-      <Filter>source\Mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_base.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_crfi.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_crfo.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_drawin.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_drawout.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_imageload.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_message.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_movieplay.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_musicbag.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_musicloop.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_musicstop.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_seload.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\rect.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ScliptEngin\script_engine.h">
-      <Filter>source\ScliptEngin</Filter>
-    </ClInclude>
     <ClInclude Include="source\ScliptEngin\scripts_data.h">
       <Filter>source\ScliptEngin</Filter>
     </ClInclude>
@@ -146,6 +101,9 @@
     <ClInclude Include="source\Math\3dCollision.h">
       <Filter>source\Math</Filter>
     </ClInclude>
+    <ClInclude Include="source\ScliptEngin\command_base.h" />
+    <ClInclude Include="source\ScliptEngin\command_crfi.h" />
+    <ClInclude Include="source\ScliptEngin\command_crfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -203,45 +161,6 @@
     <ClCompile Include="source\Application\ScliptFlagManager.cpp">
       <Filter>source\Application</Filter>
     </ClCompile>
-    <ClCompile Include="source\Mode\ModeSclipt.cpp">
-      <Filter>source\Mode</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_crfi.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_crfo.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_drawin.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_drawout.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_imageload.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_message.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_movieplay.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_musicbag.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_musicloop.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_musicstop.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_seload.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\script_engine.cpp">
-      <Filter>source\ScliptEngin</Filter>
-    </ClCompile>
     <ClCompile Include="source\ScliptEngin\scripts_data.cpp">
       <Filter>source\ScliptEngin</Filter>
     </ClCompile>
@@ -256,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="source\Math\3dCollision.cpp">
       <Filter>source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScliptEngin\command_crfi.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ScliptEngin\command_crfo.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
