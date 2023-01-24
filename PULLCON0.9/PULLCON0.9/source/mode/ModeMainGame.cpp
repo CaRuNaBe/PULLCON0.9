@@ -508,7 +508,7 @@ void ModeMainGame::Edit()
 			is_cannotdelete = true;
 			DrawString( x,250,"消去出来ませんでした\n",GetColor( 255,255,255 ) );
 		}
-		if ( KeyInputSingleCharString( 0,500,30,cchar,TRUE ) == 1 )
+		if ( KeyInputSingleCharString( 0,500,10,cchar,TRUE ) == 1 )
 		{
 			std::string ecommandbuf = cchar;
 			ClearDrawScreen();
@@ -537,7 +537,7 @@ bool ModeMainGame::OnEditCommandAdd()
 	std::string buf;
 	auto cchar = const_cast<char*>(buf.c_str());
 	DrawString( x,y,"何を追加しますか\n追加できるもの\nStage\nSkySphere\nPlayer,x座標の位置,y座標の位置,z座標の位置\nClearObject,x座標の位置,y座標の位置,z座標の位置\nAreaEnemyaaa,x座標の位置,y座標の位置,z座標の位置,円の範囲,何個出すか\nEnemyAAA,x座標の位置,y座標の位置,z座標の位置\nStart\nEnd",GetColor( 255,255,255 ) );
-	if ( KeyInputSingleCharString( 0,500,30,cchar,TRUE ) == 1 )
+	if ( KeyInputSingleCharString( 0,500,100,cchar,TRUE ) == 1 )
 	{
 		std::string ecommandbuf = cchar;
 
