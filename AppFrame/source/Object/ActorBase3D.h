@@ -14,11 +14,11 @@ public:
 		kPlayer,        // 1 プレイヤー
 		kBullet,        // 2 弾丸
 		kEnemyAAA,      // 3 対空砲
-		kEffect,        // n エフェクト
-		kClearObject,   // 5 倒したらclear
-		kSkySphere,     // 6スカイスフィア
-		kGameStage,     // 7ゲームステージ
+		kClearObject,   // 5 最終目標
+		kSkySphere,     // 6 スカイスフィア
+		kGameStage,     // 7 ゲームステージ
 		kSupplyEria,    // 8 補給地点
+		kEffect,        // n エフェクト
 	};
 	virtual Type GetType() = 0;
 
@@ -28,14 +28,17 @@ public:
 	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
 	virtual void	DrawCollision(vector4 color);
 	virtual void	DrawCollisionEvent(vector4 color);
+	virtual void	DrawCollisionSearch(vector4 color);
 
 	virtual bool	IsHitObject(ActorBase3D& object);	// 指定のオブジェクトと当たっているか
 	virtual bool	IsHitEvent(ActorBase3D& object);	// イベントスフィアと当たっているか
+	virtual bool	IsSearch(ActorBase3D& object);	  // サーチスフィアと当たっているか
 
 	virtual void Damage(ModeBase& mode) {}
 
 	virtual Sphere& GetCollision() { return _collision; }
 	virtual Sphere& GetCollisionEvent() { return _collisionEvent; }
+	virtual Sphere& GetCollisionSearch() { return _collisionSearch; }
 
 	// 座標の設定
 	void SetPosition(const vector4& pos) { _vPos = pos; }
@@ -54,7 +57,11 @@ public:
 
 	Sphere  _collision;   // 球判定
 	Sphere  _collisionEvent;   // イベント判定
+	Sphere  _collisionSearch;   // イベント判定
 
+	int   _iFuel;    // 燃料
+	int   _iLife;    // ライフ
+	int   _iDamage;  // 与えるダメージ
 	float _fSpeed;   // 速度
 	float _fRotatX;  // X軸回転
 	float _fRotatY;  // Y軸回転

@@ -2,7 +2,7 @@
 GameStage::GameStage()
 	:base()
 {
-	_handle = MV1LoadModel( "res/stage/stage_file_1/mv1/cg_stage1.mv1" );
+	_handle = MV1LoadModel( "res/stage/stage_file_1/mv1/stage1/cg_stage1.mv1" );
 
 	Init();
 }

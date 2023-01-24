@@ -26,7 +26,6 @@ public:
 protected:
 	State   _stateAAA;
 
-	vector4 _vTarget;
 	int    _handle_body;
 	int    _handle_turret;
 

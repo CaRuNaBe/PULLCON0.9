@@ -18,6 +18,9 @@ void ActorBase3D::Init() {
 	_vTarget = { 0.f, 0.f ,0.f };
 	_vDir = { 0.f, 0.f ,0.f };
 
+	_iFuel = 0;
+	_iLife = 0;
+	_iDamage = 0;
 	_fSpeed = 0.f;
 	_fRotatX = 0.f;
 	_fRotatY = 0.f;
@@ -50,6 +53,7 @@ bool ActorBase3D::Update(ApplicationBase& game, ModeBase& mode) {
 void	ActorBase3D::UpdateCollision()
 {
 	_collision._vCenter = _vPos;
+	_collisionSearch._vCenter = _vPos;
 	_collisionEvent._vCenter = _vEvent;
 }
 
@@ -77,6 +81,16 @@ bool	ActorBase3D::IsHitEvent(ActorBase3D& object)
 	return false;
 }
 
+bool	ActorBase3D::IsSearch(ActorBase3D& object)
+{
+	// Sphereで当たり判定
+	if (Intersect(object.GetCollisionSearch(), _collision))
+	{
+		return true;
+	}
+	return false;
+}
+
 bool ActorBase3D::Draw(ApplicationBase& game, ModeBase& mode) {
 	base::Draw(game, mode);
 
@@ -88,7 +102,7 @@ void ActorBase3D::DrawCollision(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collision.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
+	_collision.Draw(color.x, color.y, color.z);
 	SetUseLighting(TRUE);
 #endif
 }
@@ -98,7 +112,17 @@ void ActorBase3D::DrawCollisionEvent(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collisionEvent.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
+	_collisionEvent.Draw(color.x, color.y, color.z);
+	SetUseLighting(TRUE);
+#endif
+}
+
+void ActorBase3D::DrawCollisionSearch(vector4 color)
+{
+#if _DEBUG
+	// ライティング計算
+	SetUseLighting(FALSE);
+	_collisionSearch.Draw(color.x, color.y, color.z);
 	SetUseLighting(TRUE);
 #endif
 }

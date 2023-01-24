@@ -19,12 +19,13 @@ public:
 
 	bool _blackout;
 	bool _transparence;
+	bool _clear;
 protected:
 	ApplicationBase& _game;
 
-	int _handleSkySphere;
-	int _handleStage;
+
 	int _cg;
+	int _handlefont;
 
 
 }; 

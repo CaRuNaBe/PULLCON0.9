@@ -85,9 +85,6 @@
     <ClCompile Include="source\maingame\EffectTrail.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeMainGame.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
     <ClCompile Include="source\maingame\SupplyEria.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
@@ -111,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="source\maingame\ClearObject.cpp">
       <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeGame.cpp">
+      <Filter>source\mode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +177,6 @@
     <ClInclude Include="source\maingame\EffectTrail.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeMainGame.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
     <ClInclude Include="source\maingame\SupplyEria.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
@@ -203,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="source\maingame\ClearObject.h">
       <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeGame.h">
+      <Filter>source\mode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

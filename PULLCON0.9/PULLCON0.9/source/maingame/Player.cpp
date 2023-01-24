@@ -27,8 +27,10 @@ void Player::Init() {
 
 	_fSpeed = 30.f;
 	_fRotatY = utility::PI;
+	_iFuel = 100;
 	_push = 0;
 
+	_vPos = { 0.f, 100.f,  -1000.f };
 	_collision._fRadius = 500.f;
 
 	// カメラの設定
@@ -59,7 +61,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 					}
 				}
 				if (obje->_finish == true) {
-					obje->_vDir = _vDir;
+					obje->_vTarget = _vTarget;
 				}
 				if (IsHitEvent(*obje)) {
 					_event = true;
@@ -85,6 +87,12 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	if(_statePlayer == State::PLAY){
 
 		_finish = false;
+		if (_cnt % 30 == 0) {
+			--_iFuel;
+			if (_iFuel < 0) {
+				_iFuel = 0;
+			}
+		}
 
 		// カメラの向いている角度を取得
 		float sx = _cam._vPos.x - _cam._vTarget.x;
@@ -128,7 +136,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 			AddBullet(mode);
 		}
 
-		float distance = _collision._fRadius * 2.f * 20.f;
+		float distance = _collision._fRadius * 2.f * 15.f;
 		v.x = cos(rad + camerad) * distance;
 		v.z = sin(rad + camerad) * distance;
 		v.y = sin(_fRotatX) * distance;
@@ -218,17 +226,7 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	DrawFormatString(x, y, GetColor(255, 0, 0), "Camera:"); y += size;
 	DrawFormatString(x, y, GetColor(255, 0, 0), "  target = (%5.2f, %5.2f, %5.2f)", _cam._vTarget.x, _cam._vTarget.y, _cam._vTarget.z); y += size;
 	DrawFormatString(x, y, GetColor(255, 0, 0), "  pos    = (%5.2f, %5.2f, %5.2f)", _cam._vPos.x, _cam._vPos.y, _cam._vPos.z); y += size;
-	float sx = _cam._vPos.x - _cam._vTarget.x;
-	float sz = _cam._vPos.z - _cam._vTarget.z;
-	float length = sqrt(sz * sz + sx * sx);
-	float rad = atan2(sz, sx);
-	float deg = utility::radian_to_degree(rad);
-	// カメラの向いてる角度を求める
-	float sy = _cam._vPos.y - _cam._vTarget.y;
-	float length3D = sqrt(sx * sx + sy * sy + sz * sz);
-	float theta = acos(sy / length3D);
-	float toCamedeg = utility::radian_to_degree(theta);
-	DrawFormatString(x, y, GetColor(255, 0, 0), "  len = %5.2f, deg = %5.2f,toCamedeg = %5.2f", length, deg, toCamedeg); y += size;
+	DrawFormatString(x, y, GetColor(255, 0, 255), "  feil = %d ", _iFuel); y += size;
 
 	return true;
 }

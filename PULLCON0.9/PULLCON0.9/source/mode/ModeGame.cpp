@@ -2,28 +2,42 @@
 #include "AppFrame.h"
 #include "../ApplicationMain.h"
 #include "ModeGame.h"
-#include "../maingame/Player.h"
+#include"../maingame/Player.h"
+#include"../maingame/GameStage.h"
+#include"../maingame/SkySphere.h"
+#include "../maingame/SupplyEria.h"
+#include"../maingame/ClearObject.h"
 #include "../maingame/EnemyAAA.h"
 
 ModeGame::ModeGame( ApplicationBase& game,int layer )
 	:base( game,layer )
 	,_game(game)
 {
-	_handleSkySphere = MV1LoadModel( "res/stage/skysphere/cg_stageSkymap_1.mv1" );
-	_handleStage = MV1LoadModel( "res/stage/stage_file_1/mv1/cg_stage1.mv1" );
-	//_handleSkySphere = MV1LoadModel( "res/stage_bg/SkySphere/skysphere.mv1" );
 	_cg = ResourceServer::LoadGraph("res/cursor00.png");
+	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
+	// 作成したデータの識別番号を変数 FontHandle に保存する
+	_handlefont = CreateFontToHandle(NULL, 40, 3);
+
 
 	_vCursor = { 0.0f, 0.0f, 0.0f };
 	_blackout = false;
 	_transparence = false;
+	_clear = false;
 
-	// プレイヤー
-	auto player = std::make_shared<Player>();
-	_3D_objectServer.Add(player);
+
+
+	auto stage = std::make_shared<GameStage>();
+	_3D_objectServer.Add( stage );
+	auto skysphere = std::make_shared<SkySphere>();
+	_3D_objectServer.Add( skysphere );
+	auto supplyeria = std::make_shared<SupplyEria>();
+	_3D_objectServer.Add( supplyeria );
+	auto clearobject = std::make_shared<ClearObject>();
+	_3D_objectServer.Add( clearobject );
 	auto enemyAAA = std::make_shared<EnemyAAA>();
-	_3D_objectServer.Add(enemyAAA);
-
+	_3D_objectServer.Add( enemyAAA );
+	auto player = std::make_shared<Player>();
+	_3D_objectServer.Add( player );
 };
 
 ModeGame::~ModeGame()
@@ -41,7 +55,6 @@ bool ModeGame::Initialize()
 bool ModeGame::Update()
 {
 	base::Update();
-	_objectServer.Update(_game, *this);
 	_3D_objectServer.Update(_game, *this);
 	return true;
 }
@@ -72,14 +85,12 @@ bool ModeGame::Draw()
 	}
 #endif
 
-	MV1SetScale(_handleSkySphere, VGet(2.f, 2.f, 2.f));
-	// ライティング計算
-	SetUseLighting(FALSE);
-	MV1DrawModel(_handleSkySphere);
-	//MV1DrawModel(_handleStage);
-	SetUseLighting(TRUE);
-	_objectServer.Draw(_game, *this);
 	_3D_objectServer.Draw(_game, *this);
+
+	if (_clear) {
+		// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
+		DrawStringToHandle(_game.DispSizeW() / 2, _game.DispSizeH() / 2, "C L E A R!!", GetColor(255, 255, 0), _handlefont);
+	}
 	if (_blackout) {
 		DrawBox(0, 0, _game.DispSizeW(), _game.DispSizeH(), GetColor(0, 0, 0), FALSE);
 		_blackout = false;

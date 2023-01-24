@@ -22,12 +22,10 @@ void EnemyAAA::Init() {
 	_collision._fRadius = 300.f;
 	_collisionEvent._fRadius = 500.f;
 
-	_vPos = { 0.f, 0.f, 0.f };
+	_vPos = { 0.f, 50.f, 0.f };
 	_vRelation = { 0.f, 0.f, 0.f };
 	float distance = _collision._fRadius + _collisionEvent._fRadius;
 	_vEvent = { _vPos.x, _vPos.y + distance, _vPos.z };
-
-	_vTarget = { 0.f,0.f,0.f };
 
 
 	_CT = 30;
@@ -101,9 +99,17 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 	}
 	else if(_stateAAA == State::WEAPON){
 		// éOéüå≥ã…ç¿ïW(r(length3D),É∆(theta),É”(rad))
-		float length3D = sqrt(_vDir.x * _vDir.x + _vDir.y * _vDir.y + _vDir.z * _vDir.z);
-		float rad = atan2(_vDir.z, _vDir.x);
-		float theta = acos(_vDir.y / length3D);
+		float sx = _vTarget.x - _vPos.x;
+		float sy = _vTarget.y - _vPos.y;
+		float sz = _vTarget.z - _vPos.z;
+		float length3D = sqrt(sx *sx +sy * sy + sz * sz);
+		float rad = atan2(sz, sx);
+		float theta = acos(sy / length3D);
+
+		_vDir.x = cos(rad);
+		_vDir.z = sin(rad);
+		_vDir.y = cos(theta);
+		_vDir.Normalized();
 
 		if (_CT == 0) {
 			AddBullet(mode);

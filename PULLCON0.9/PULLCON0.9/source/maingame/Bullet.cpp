@@ -7,10 +7,6 @@ Bullet::Bullet()
 {
 	_handle = MV1LoadModel("res/bullet/model/normalammo/cg_NormalAmmo.mv1");
 
-	//_animeMax = 17;
-	//_grAllHandles.resize(_animeMax);
-	//ResourceServer::LoadDivGraph("res/player/Fx/fx_BlackSmoke/fx_BlackSmoke.png", 17, 3, 6, 512, 512, _grAllHandles.data());
-
 	Init();
 }
 
@@ -21,6 +17,7 @@ Bullet::~Bullet() {
 void Bullet::Init() {
 	base::Init();
 
+	_iDamage = 1;
 	_fSpeed = 200.f;
 	_animeNo = 0;
 
@@ -47,8 +44,6 @@ bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 	effect->SetPosition(_vPos);
 	mode.GetObjectServer3D().Add(effect);
 
-	//_animeNo = (_cnt / 5) % _animeMax;
-	//_grHandle = _grAllHandles[_animeNo];
 	return true;
 }
 
@@ -69,11 +64,9 @@ bool Bullet::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1SetPosition(_handle, ToDX(_vPos));
 	MV1DrawModel(_handle);
 
-	//DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 500.0f, 0.f, _grHandle, TRUE);
-
 	vector4 color = { 255, 255, 255 };
 	if (_CT == 0) {
-		//DrawCollision(color);
+		DrawCollision(color);
 	}
 
 	return true;
