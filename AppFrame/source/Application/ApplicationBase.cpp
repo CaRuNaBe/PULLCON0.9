@@ -12,7 +12,9 @@ ApplicationBase::~ApplicationBase() {
 }
 
 bool ApplicationBase::Initialize(HINSTANCE hInstance) {
-
+#if _DEBUG
+	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+#endif
 	// DXライブラリの初期化
 	if(AppWindowed()){
 		ChangeWindowMode(true);							// ウィンドウモードに指定する
@@ -25,11 +27,16 @@ bool ApplicationBase::Initialize(HINSTANCE hInstance) {
 		return false;
 	}
 	SetDrawScreen(DX_SCREEN_BACK);		// 描画先画面を裏画面にセット
+	
+	// Ｚバッファを有効にする
+	SetUseZBuffer3D( TRUE );
 
+	// Ｚバッファへの書き込みを有効にする
+	SetWriteZBuffer3D( TRUE );
 
 	// モードサーバの初期化
 	_serverMode = std::make_shared<ModeServer>(*this);
-
+	_flagManager = std::make_shared<ScliptFlagManager>();
 	return true;
 }
 

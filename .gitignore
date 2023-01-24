@@ -361,9 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/PULLCON0.9/PULLCON0.9/Log.txt
 
 Dxlib/
 
 res/
 
 picojson/
+
+/PULLCON0.9/PULLCON0.9/pullcon0.9.json

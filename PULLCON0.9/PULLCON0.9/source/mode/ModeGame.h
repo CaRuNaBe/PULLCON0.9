@@ -1,6 +1,6 @@
-
+#pragma once
 #include "appframe.h"
-
+using namespace math;
 
 class ModeGame : public ModeBase
 {
@@ -12,8 +12,22 @@ public:
 	virtual bool Update();
 	virtual bool Draw();
 
-protected:
+	void SetCursor(const vector4& pos) { _vCursor = pos; }
 
+public:
+	vector4 _vCursor;
+
+	bool _blackout;
+	bool _transparence;
+	bool _clear;
+protected:
+	ApplicationBase& _game;
+
+
+	int _cg;
+	int _handlefont;
 
 
 }; 
+
+

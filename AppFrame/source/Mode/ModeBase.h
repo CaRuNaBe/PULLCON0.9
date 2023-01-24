@@ -1,10 +1,9 @@
 #pragma once
-
-class ApplicationBase;
-
 #include	"../Object/ObjectServer.h"
 
-
+class ApplicationBase;
+class ActorBase2d;
+class ActorBase3D;
 class ModeBase
 {
 public:
@@ -13,16 +12,6 @@ public:
 	virtual	bool Initialize();
 	virtual bool Update();  // çXêV
 	virtual bool Draw();	// ï`âÊ
-
-	virtual ObjectServer& GetObjectServer()
-	{
-		return _objectServer;
-	}
-
-	virtual ObjectServer::TypeObjects& GetObjects()
-	{
-		return _objectServer.GetObjects();
-	}
 
 	virtual bool	IsDead()
 	{
@@ -47,10 +36,22 @@ public:
 	{
 		return _layer;
 	}
+	ObjectServer<ActorBase2d>& Get2DobjectServer()
+	{
+		return _objectServer;
+	}
+
+	ObjectServer<ActorBase3D>& GetObjectServer3D()
+	{
+		return _3D_objectServer;
+	}
+
 protected:
 	ApplicationBase& _game;
+	ObjectServer<ActorBase2d>_objectServer;
+	ObjectServer<ActorBase3D> _3D_objectServer;
+
 	bool	_dead;
-	ObjectServer _objectServer;
 	bool _isModeSkip;
 	bool _isDrawSkip;
 	int _layer;

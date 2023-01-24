@@ -106,31 +106,31 @@ namespace math
 	void matrix44::look_at(const vector4& position,const vector4& target,const vector4& up)
 	{
 		auto axis_z = target - position;
-		auto axis_x = up.cross(axis_z);
-		auto axis_y = axis_z.cross(axis_x);
+		auto axis_x = up.Cross(axis_z);
+		auto axis_y = axis_z.Cross(axis_x);
 
-		axis_x.normalized();
-		axis_y.normalized();
-		axis_z.normalized();
+		axis_x.Normalized();
+		axis_y.Normalized();
+		axis_z.Normalized();
 
-		row_column[0][0] = axis_x.get_x();
-		row_column[0][1] = axis_y.get_x();
-		row_column[0][2] = axis_z.get_x();
+		row_column[0][0] = axis_x.x;
+		row_column[0][1] = axis_y.x;
+		row_column[0][2] = axis_z.x;
 		row_column[0][3] = 0.0;
 
-		row_column[1][0] = axis_x.get_y();
-		row_column[1][1] = axis_y.get_y();
-		row_column[1][2] = axis_z.get_y();
+		row_column[1][0] = axis_x.y;
+		row_column[1][1] = axis_y.y;
+		row_column[1][2] = axis_z.y;
 		row_column[1][3] = 0.0;
 
-		row_column[2][0] = axis_x.get_z();
-		row_column[2][1] = axis_y.get_z();
-		row_column[2][2] = axis_z.get_z();
+		row_column[2][0] = axis_x.z;
+		row_column[2][1] = axis_y.z;
+		row_column[2][2] = axis_z.z;
 		row_column[2][3] = 0.0;
 
-		row_column[3][0] = -axis_x.dot(position);
-		row_column[3][1] = -axis_y.dot(position);
-		row_column[3][2] = -axis_z.dot(position);
+		row_column[3][0] = -axis_x.Dot(position);
+		row_column[3][1] = -axis_y.Dot(position);
+		row_column[3][2] = -axis_z.Dot(position);
 		row_column[3][3] = 1.0;
 	}
 
@@ -188,9 +188,9 @@ namespace math
 	{
 		matrix_array result = row_column;
 
-		result[3][0] += rhs.get_x();
-		result[3][1] += rhs.get_y();
-		result[3][2] += rhs.get_z();
+		result[3][0] += rhs.x;
+		result[3][1] += rhs.y;
+		result[3][2] += rhs.z;
 
 		return matrix44(result);
 	}

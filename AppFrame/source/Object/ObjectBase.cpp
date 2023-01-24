@@ -4,7 +4,7 @@
 
 #include "DxLib.h"
 #include "ObjectBase.h"
-
+#include "../Mode/ModeBase.h"
 ObjectBase::ObjectBase()
 	:isUpdateSkip(false)
 	,isDrawSkip(false)
@@ -21,9 +21,13 @@ void ObjectBase::Init()
 	_dead = false;
 }
 
-void ObjectBase::Update(ApplicationBase& game)
-{}
+bool ObjectBase::Update(ApplicationBase& game,ModeBase& mode )
+{
+	return true;
+}
 
-void ObjectBase::Draw(ApplicationBase& game)
-{}
+bool ObjectBase::Draw(ApplicationBase& game,ModeBase& mode )
+{
+	return true;
+}
 

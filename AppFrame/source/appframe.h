@@ -7,4 +7,12 @@
 #include"ResourceServer/ResourceServer.h"
 #include"../../picojson/picojson.h"
 #include "../../AppFrame/source/Math/Math.h"
+#include"../source/Object/ActorBase2d.h"
+#include"../source/Object/ActorBase3D.h"
+#include"Object/ObjectServer.h"
 
+#include "ScliptEngin/command_base.h"
+#include "ScliptEngin/scripts_data.h"
+#include "ScliptEngin/scripts_string.h"
+#include "ScliptEngin/command_crfi.h"
+#include "ScliptEngin/command_crfo.h"

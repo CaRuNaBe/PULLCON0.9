@@ -1,8 +1,9 @@
 
 #include "AppFrame.h"
 #include "ApplicationMain.h"
-#include "ModeGame.h"
-
+#include "mode/ModePause.h"
+#include "mode/ModeGame.h"
+#include "mode/ModeTitle.h"
 // ŽÀ‘Ì
 ApplicationMain				g_oApplicationMain;
 
