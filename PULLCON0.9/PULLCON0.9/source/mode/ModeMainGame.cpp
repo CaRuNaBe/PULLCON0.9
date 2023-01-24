@@ -614,6 +614,10 @@ bool ModeMainGame::CheckInputString( std::string command )
 	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrfi ) );
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrfo ) );
+	if ( command.size() <= 0 )
+	{
+		return false;
+	}
 
 	if ( comand_funcs.count( script[0] ) <= 0 )
 	{
