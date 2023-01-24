@@ -2,7 +2,7 @@
 SkySphere::SkySphere()
 	:base()
 {
-	_handle = MV1LoadModel( "res/stage/skysphere/cg_stageSkymap_1.mv1" );
+	_handle = MV1LoadModel( "res/stage/skysphere/mv1/cg_stageSkymap_1.mv1" );
 
 	Init();
 }
