@@ -43,7 +43,6 @@ private:
 
 	void PreParsing();
 	void Parsing();
-	void Edit();
 
 	bool OnCommandAddPLayer( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandAddStage( unsigned int line,const std::vector<std::string>& scripts );
@@ -56,11 +55,21 @@ private:
 	bool OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts );
 
+	/** エディットモード関係関数 */
+	void Edit();//エディットモードの時に入る関数
+
+	bool CheckInputString( std::string command );//実際使えるか
+
+	bool OnEditCommandAdd();//追加コマンド
+	bool OnEditCommandDelete();//消去コマンド
+	bool OnEditCommandClear();//初期化コマンド
+	bool OnEditCommandSave( );//保存コマンド
+	bool OnEditCommandJunp(  );//編集地点変更コマンド
+
 	void TimeWait();
 	void ClickWait();
 	void CrfiUpdate();
 	void CrfoUpdate();
-	bool CheckInputString( std::string command );
 	void DrawFeedin( ApplicationBase& game )const;
 	void DrawFeedout( ApplicationBase& game )const;
 
@@ -68,7 +77,8 @@ private:
 	std::vector<std::unique_ptr<CommandCrfi>> crfi_list;
 	std::vector<std::unique_ptr<CommandCrfo>> crfo_list;
 	ScriptState state;
-	using FuncsType = std::map<std::string,bool(ModeMainGame::*)(unsigned int,const std::vector<std::string>& scripts)>;
+	using FunctionGameCommand = std::map<std::string,bool(ModeMainGame::*)(unsigned int,const std::vector<std::string>& scripts)>;
+	using FunctionEditCommand = std::map<std::string,bool(ModeMainGame::*)()>;
 	unsigned int max_line;
 	unsigned int now_line;
 	unsigned int wait_count;
@@ -76,5 +86,6 @@ private:
 	double feedcount;
 
 	bool is_notcant;
-
+	bool is_notcommand;
+	bool is_cannotdelete;
 };
