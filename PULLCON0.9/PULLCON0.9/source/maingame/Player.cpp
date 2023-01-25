@@ -209,7 +209,12 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	base::Draw(game, mode);
 	// カメラ設定更新
-	SetCameraPositionAndTarget_UpVecY(ToDX(_cam._vPos), ToDX(_cam._vTarget));
+	if (_statePlayer == State::EVENT) {
+		SetCameraPositionAndTarget_UpVecY(ToDX(_cam._vPosEvent), ToDX(_cam._vTarget));
+	}
+	else {
+		SetCameraPositionAndTarget_UpVecY(ToDX(_cam._vPos), ToDX(_cam._vTarget));
+	}
 	SetCameraNearFar(_cam._clipNear, _cam._clipFar);
 
 	float linelength = 100.f;
@@ -218,10 +223,14 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(0, 0, -linelength)), VAdd(ToDX(_cam._vTarget), VGet(0, 0, linelength)), GetColor(0, 0, 255));
 
 	// モデルの回転値
-	float rX = _fRotatX + utility::degree_to_radian(5.f);   // 少し上向きに
-	MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
-	// モデルの拡大値
-	//MV1SetScale(_handle, VGet(0.3f, 0.3f, 0.3f));
+	float rX = utility::degree_to_radian(5.f);   // 少し上向きに
+	if (_statePlayer == State::EVENT) {
+		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
+	}
+	else {
+		rX += _fRotatX;   // カメラを動かした分プラス
+		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
+	}
 	// 位置
 	MV1SetPosition(_handle, ToDX(_vPos));
 	// ライティング計算
@@ -318,9 +327,9 @@ void Player::EventCamera(ApplicationBase& game) {
 	theta = utility::degree_to_radian(degree);
 
 	// カメラ位置
-	_cam._vPos.y = _vPos.y + cos(theta) * length3D;
-	_cam._vPos.x = _vPos.x + length3D * sin(theta) * cos(camerad);
-	_cam._vPos.z = _vPos.z + length3D * sin(theta) * sin(camerad);
+	_cam._vPosEvent.y = _vPos.y + cos(theta) * length3D;
+	_cam._vPosEvent.x = _vPos.x + length3D * sin(theta) * cos(camerad);
+	_cam._vPosEvent.z = _vPos.z + length3D * sin(theta) * sin(camerad);
 
 }
 

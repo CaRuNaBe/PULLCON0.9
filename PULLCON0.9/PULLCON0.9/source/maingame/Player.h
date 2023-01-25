@@ -5,6 +5,7 @@
 class Camera {
 public:
 	vector4	_vPos;					// 位置
+	vector4	_vPosEvent;			// 引っこ抜きカメラ位置
 	vector4	_vTarget;				// 注視点
 	vector4	_vMemory;				// ベクトル保存用
 	float	_clipNear, _clipFar;	// クリップ
