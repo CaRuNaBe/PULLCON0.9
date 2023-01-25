@@ -112,6 +112,9 @@
     <ClCompile Include="source\mode\ModeGame.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
+    <ClCompile Include="source\mode\ModeMainGame.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\mode\ModeTitle.h">
@@ -204,5 +207,6 @@
     <ClInclude Include="source\mode\ModeGame.h">
       <Filter>source\mode</Filter>
     </ClInclude>
+    <ClInclude Include="source\mode\ModeMainGame.h" />
   </ItemGroup>
 </Project>

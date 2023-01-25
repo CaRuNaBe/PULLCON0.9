@@ -56,6 +56,7 @@ bool ClearObject::Update( ApplicationBase& game,ModeBase& mode )
 		Damage(mode);
 	}
 
+	_vEvent = _vPos;
 	UpdateCollision();
 
 	return true;
@@ -69,7 +70,7 @@ void ClearObject::Damage(ModeBase& mode) {
 bool ClearObject::Draw( ApplicationBase& game,ModeBase& mode )
 {
 	base::Draw( game,mode );
-	DrawSphere3D(ToDX(_vObjective), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
+	//DrawSphere3D(ToDX(_vObjective), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 	MV1SetScale(_handle, VGet(3.0f, 3.0f, 3.0f));
 	MV1SetPosition(_handle, ToDX(_vPos));
 	MV1DrawModel(_handle);
