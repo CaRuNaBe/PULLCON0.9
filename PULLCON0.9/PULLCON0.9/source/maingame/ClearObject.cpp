@@ -53,7 +53,7 @@ bool ClearObject::Update( ApplicationBase& game,ModeBase& mode )
 		}
 	}
 
-	if (_iLife == 0) {
+	if (_iLife < 0) {
 		Damage(mode);
 	}
 

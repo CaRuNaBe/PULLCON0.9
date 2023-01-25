@@ -41,9 +41,11 @@ bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 
 	UpdateCollision();
 
-	auto effect = std::make_shared<EffectTrail>();
-	effect->SetPosition(_vPos);
-	mode.GetObjectServer3D().Add(effect);
+	if (_cnt % 4 == 0) {
+		auto effect = std::make_shared<EffectTrail>();
+		effect->SetPosition(_vPos);
+		mode.GetObjectServer3D().Add(effect);
+	}
 
 	return true;
 }
