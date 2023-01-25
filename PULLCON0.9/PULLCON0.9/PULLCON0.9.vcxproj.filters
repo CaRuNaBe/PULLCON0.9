@@ -76,9 +76,6 @@
     <ClCompile Include="source\maingame\Bullet.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
-    <ClCompile Include="source\maingame\EnemyAAA.cpp">
-      <Filter>source\object\game</Filter>
-    </ClCompile>
     <ClCompile Include="source\maingame\Player.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
@@ -109,8 +106,11 @@
     <ClCompile Include="source\maingame\ClearObject.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeGame.cpp">
+    <ClCompile Include="source\mode\ModeMainGame.cpp">
       <Filter>source\mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyAAA.cpp">
+      <Filter>source\object\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,7 +201,7 @@
     <ClInclude Include="source\maingame\ClearObject.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeGame.h">
+    <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode</Filter>
     </ClInclude>
   </ItemGroup>

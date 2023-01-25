@@ -52,8 +52,8 @@ private:
 	bool OnCommandAddEnemyAAA( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandAddAreaEnemyAAA( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandStart( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts );
+	//bool OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts );
+	//bool OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts );
 
 	/** エディットモード関係関数 */
 	void Edit();//エディットモードの時に入る関数
@@ -70,12 +70,12 @@ private:
 	void ClickWait();
 	void CrfiUpdate();
 	void CrfoUpdate();
-	void DrawFeedin( ApplicationBase& game )const;
-	void DrawFeedout( ApplicationBase& game )const;
+	//void DrawFeedin( ApplicationBase& game )const;
+	//void DrawFeedout( ApplicationBase& game )const;
 
-	std::shared_ptr<ScriptsData> scripts_data;
-	std::vector<std::unique_ptr<CommandCrfi>> crfi_list;
-	std::vector<std::unique_ptr<CommandCrfo>> crfo_list;
+	std::unique_ptr<ScriptsData> scripts_data;
+	//std::vector<std::unique_ptr<CommandCrfi>> crfi_list;
+	//std::vector<std::unique_ptr<CommandCrfo>> crfo_list;
 	ScriptState state;
 	using FunctionGameCommand = std::map<std::string,bool(ModeMainGame::*)(unsigned int,const std::vector<std::string>& scripts)>;
 	using FunctionEditCommand = std::map<std::string,bool(ModeMainGame::*)()>;

@@ -53,10 +53,10 @@ namespace
 ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	: ModeBase( game,layer )
 {
-	scripts_data = std::make_shared<ScriptsData>();
-	state = ScriptState::PREPARSING;
+	scripts_data = std::make_unique<ScriptsData>();
+	state = ScriptState::PARSING;
 #if _DEBUG
-	state = ScriptState::EDIT;
+//	state = ScriptState::EDIT;
 #endif
 	max_line = 0;
 	now_line = 0;
@@ -101,6 +101,8 @@ void ModeMainGame::Destroy()
 	const std::string FILENAME = "pullcon0.9.json";
 	const std::string GAMESCLIPT = "pullcon0.9";
 	scripts_data->WriteJson( FILENAME,GAMESCLIPT );
+	scripts_data.reset();
+	scripts_data = nullptr;
 }
 /**
  *¥fn void ModeGame::Init_modegame.
@@ -440,6 +442,7 @@ bool ModeMainGame::OnCommandStart( unsigned int line,const std::vector<std::stri
  * \param [in] scripts スクリプトの内容
  * \return 処理の成否
  */
+/*
 bool ModeMainGame::OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts )
 {
 	crfo_list.clear();
@@ -462,6 +465,7 @@ bool ModeMainGame::OnCommandCrfi( unsigned int line,const std::vector<std::strin
  * \param [in] scripts スクリプトの内容
  * \return 処理の成否
  */
+ /**
 bool ModeMainGame::OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts )
 {
 	crfi_list.clear();
@@ -476,7 +480,7 @@ bool ModeMainGame::OnCommandCrfo( unsigned int line,const std::vector<std::strin
 	state = ScriptState::CRFEEDOUT;
 	return true;
 }
-
+*/
 void ModeMainGame::Edit()
 {
 	int None = 0;
@@ -612,8 +616,8 @@ bool ModeMainGame::CheckInputString( std::string command )
 	comand_funcs.insert( std::make_pair( COMMAND_ADDENEMYAAA,&ModeMainGame::OnCommandAddEnemyAAA ) );
 	comand_funcs.insert( std::make_pair( COMMAND_ADDAREAENEMYAAA,&ModeMainGame::OnCommandAddAreaEnemyAAA ) );
 	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
-	comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrfi ) );
-	comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrfo ) );
+	//comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrfi ) );
+	//comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrfo ) );
 	if ( command.size() <= 0 )
 	{
 		return false;
@@ -650,8 +654,8 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_ADDENEMYAAA,&ModeMainGame::OnCommandAddEnemyAAA ) );
 	comand_funcs.insert( std::make_pair( COMMAND_ADDAREAENEMYAAA,&ModeMainGame::OnCommandAddAreaEnemyAAA ) );
 	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
-	comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrfi ) );
-	comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrfo ) );
+	//comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrfi ) );
+	//comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrfo ) );
 	//comand_funcs.insert( std::make_pair( COMMAND_VE,&ModeMainGame::OnCommandPlayanime ) );
 	//comand_funcs.insert( std::make_pair( COMMAND_E,&ModeMainGame::OnCommandScliptend ) );
 
@@ -733,9 +737,11 @@ bool ModeMainGame::Draw()
 			break;
 
 		case ScriptState::CRFEEDIN:
+			//DrawFeedin(_game);
 			break;
 
 		case ScriptState::CRFEEDOUT:
+			//DrawFeedout(_game);
 			break;
 
 		case ScriptState::LOADING:
@@ -744,8 +750,8 @@ bool ModeMainGame::Draw()
 		case ScriptState::END:
 			break;
 	}
-	DrawFeedin( _game );
-	DrawFeedout( _game );
+
+
 	return true;
 }
 /**
@@ -753,6 +759,7 @@ bool ModeMainGame::Draw()
  *¥brief "fi" コマンドによる描画
  *¥return void
  */
+/*
 void ModeMainGame::DrawFeedin( ApplicationBase& game )const
 {
 	for ( auto&& crfi : crfi_list )
@@ -762,11 +769,13 @@ void ModeMainGame::DrawFeedin( ApplicationBase& game )const
 		SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
 	}
 }
+*/
 /**
  *¥fn void script_engine::DrawFeedout.
  *¥brief "fo" コマンドによる描画
  *¥return void
  */
+/*
 void ModeMainGame::DrawFeedout( ApplicationBase& game )const
 {
 	for ( auto&& crfo : crfo_list )
@@ -778,3 +787,4 @@ void ModeMainGame::DrawFeedout( ApplicationBase& game )const
 		SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
 	}
 }
+*/

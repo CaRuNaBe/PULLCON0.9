@@ -54,7 +54,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		if (obje->GetType() == Type::kEnemyAAA
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kEnemyAAA) {
-				if (_pull) {
+				if (obje->_pull == true && _pull) {
 					vector4 objective = obje->_vPos;
 					objective.y += _collision._fRadius;
 					//objective.z -= obje->_collision._fRadius;
@@ -72,6 +72,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 					_event = true;
 					if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)  && !_pull) {
 						_pull = true;
+						obje->_pull = true;
 						_CT = 10;
 					}
 				}

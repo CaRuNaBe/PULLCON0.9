@@ -17,13 +17,14 @@ EnemyAAA::~EnemyAAA() {
 
 void EnemyAAA::Init() {
 	base::Init();
-
 	_stateAAA = State::PLAY;
+
 	_collision._fRadius = 300.f;
 	_collisionEvent._fRadius = 500.f;
 
-	_vPos = { 0.f, 50.f, 0.f };
+	//_vPos = { 0.f, 50.f, 0.f };
 	_vRelation = { 0.f, 0.f, 0.f };
+	_vEvent = { 1000.f, 1000.f, 1000.f };
 
 
 	_CT = 30;
@@ -48,6 +49,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 				}
 				if (obje->_finish == true) {
 					_coll = false;
+					_pull = false;
 					_finish = true;
 					_stateAAA = State::WEAPON;
 				}
