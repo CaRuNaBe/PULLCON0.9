@@ -1,4 +1,7 @@
+
 #include "SupplyEria.h"
+#include "../mode/ModeMainGame.h"
+
 SupplyEria::SupplyEria()
 	:base()
 {
@@ -16,7 +19,6 @@ void SupplyEria::Init()
 {
 	base::Init();
 	_vPos = {7000.f, 100.f, 7000.f};
-	_vEvent = _vPos;
 	_collisionEvent._fRadius = 5000.0f;
 
 }
@@ -39,6 +41,8 @@ bool SupplyEria::Update( ApplicationBase& game,ModeBase& mode )
 		}
 	}
 
+	_vEvent = _vPos;
+
 	UpdateCollision();
 
 	return true;
@@ -53,11 +57,13 @@ bool SupplyEria::Draw( ApplicationBase& game,ModeBase& mode )
 	MV1DrawModel(_handle);
 	SetUseLighting(TRUE);
 
-	vector4 color = { 255, 255, 255 };
-	DrawCollisionEvent(color);
-	if (_event) {
-		color = { 0, 255, 0 };
+	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
+		vector4 color = { 255, 255, 255 };
 		DrawCollisionEvent(color);
+		if (_event) {
+			color = { 0, 255, 0 };
+			DrawCollisionEvent(color);
+		}
 	}
 
 	return true;

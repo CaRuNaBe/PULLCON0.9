@@ -1,6 +1,7 @@
 #include "appframe.h"
 #include "EnemyAAA.h"
 #include "Bullet.h"
+#include "../mode/ModeMainGame.h"
 
 EnemyAAA::EnemyAAA()
 	:base()
@@ -17,13 +18,14 @@ EnemyAAA::~EnemyAAA() {
 
 void EnemyAAA::Init() {
 	base::Init();
-
 	_stateAAA = State::PLAY;
+
 	_collision._fRadius = 300.f;
 	_collisionEvent._fRadius = 500.f;
 
-	_vPos = { 0.f, 50.f, 0.f };
+	//_vPos = { 0.f, 50.f, 0.f };
 	_vRelation = { 0.f, 0.f, 0.f };
+	_vEvent = { 1000.f, 1000.f, 1000.f };
 
 
 	_CT = 30;
@@ -46,8 +48,9 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 						_vTarget = obje->_vPos;
 					}
 				}
-				if (obje->_finish == true) {
+				if (obje->_finish && _pull) {
 					_coll = false;
+					_pull = false;
 					_finish = true;
 					_stateAAA = State::WEAPON;
 				}
@@ -144,22 +147,23 @@ bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1DrawModel(_handle_body);
 	MV1DrawModel(_handle_turret);
 
-	if(_coll){
-		vector4 color = { 255, 255, 255 };
-		DrawCollision(color);
-		if (!_finish) {
-			DrawCollisionEvent(color);
-		}
-		if (_overlap) {
-			color = { 255, 0, 0 };
+	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
+		if (_coll) {
+			vector4 color = { 255, 255, 255 };
 			DrawCollision(color);
-		}
-		if (_event) {
-			color = { 0, 255, 0 };
-			DrawCollisionEvent(color);
+			if (!_finish) {
+				DrawCollisionEvent(color);
+			}
+			if (_overlap) {
+				color = { 255, 0, 0 };
+				DrawCollision(color);
+			}
+			if (_event) {
+				color = { 0, 255, 0 };
+				DrawCollisionEvent(color);
+			}
 		}
 	}
-
 
 	return true;
 }

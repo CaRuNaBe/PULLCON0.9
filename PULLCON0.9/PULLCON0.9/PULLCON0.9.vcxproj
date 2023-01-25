@@ -75,24 +75,32 @@
     <IntDir>$(Platform)/$(Configuration)/</IntDir>
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)/$(Configuration)/</OutDir>
     <IntDir>$(Platform)/$(Configuration)/</IntDir>
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)/$(Configuration)/</OutDir>
     <IntDir>$(Platform)/$(Configuration)/</IntDir>
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)/$(Configuration)/</OutDir>
     <IntDir>$(Platform)/$(Configuration)/</IntDir>
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -166,7 +174,6 @@
     <ClCompile Include="source\maingame\SkySphere.cpp" />
     <ClCompile Include="source\maingame\StageObject.cpp" />
     <ClCompile Include="source\maingame\SupplyEria.cpp" />
-    <ClCompile Include="source\mode\ModeGame.cpp" />
     <ClCompile Include="source\maingame\Player.cpp" />
     <ClCompile Include="source\mode\ModeMainGame.cpp" />
     <ClCompile Include="source\pose\ReturnTitleLogo.cpp" />
@@ -199,7 +206,6 @@
     <ClInclude Include="source\maingame\SkySphere.h" />
     <ClInclude Include="source\maingame\StageObject.h" />
     <ClInclude Include="source\maingame\SupplyEria.h" />
-    <ClInclude Include="source\mode\ModeGame.h" />
     <ClInclude Include="source\maingame\Player.h" />
     <ClInclude Include="source\mode\ModeMainGame.h" />
     <ClInclude Include="source\pose\ReturnTitleLogo.h" />

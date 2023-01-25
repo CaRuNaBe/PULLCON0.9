@@ -34,9 +34,9 @@ public:
 	bool ScriptAdd( std::string Sclipts );
 	bool ScriptDelete( int line );
 	bool ScriptClear();
-	
-private:
 	std::string GetScriptLine( const unsigned int index ) const;
+private:
+
 	std::wstring ConvertUTF8ToWide( const std::string& utf8 ) const;
 	std::string ConvertWideToUTF8( const std::wstring& utf16 )const;
 	std::string ConvertWideToMultiByte( const std::wstring& utf16 ) const;

@@ -1,6 +1,7 @@
 
 #include "Bullet.h"
 #include "EffectTrail.h"
+#include "../mode/ModeMainGame.h"
 
 Bullet::Bullet()
 	:base()
@@ -40,9 +41,11 @@ bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 
 	UpdateCollision();
 
-	auto effect = std::make_shared<EffectTrail>();
-	effect->SetPosition(_vPos);
-	mode.GetObjectServer3D().Add(effect);
+	if (_cnt % 4 == 0) {
+		auto effect = std::make_shared<EffectTrail>();
+		effect->SetPosition(_vPos);
+		mode.GetObjectServer3D().Add(effect);
+	}
 
 	return true;
 }
@@ -65,9 +68,10 @@ bool Bullet::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1DrawModel(_handle);
 
 	vector4 color = { 255, 255, 255 };
-	if (_CT == 0) {
-		DrawCollision(color);
+	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
+		if (_CT == 0) {
+			DrawCollision(color);
+		}
 	}
-
 	return true;
 }
