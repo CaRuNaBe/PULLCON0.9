@@ -24,8 +24,6 @@ void EnemyAAA::Init() {
 
 	_vPos = { 0.f, 50.f, 0.f };
 	_vRelation = { 0.f, 0.f, 0.f };
-	float distance = _collision._fRadius + _collisionEvent._fRadius;
-	_vEvent = { _vPos.x, _vPos.y + distance, _vPos.z };
 
 
 	_CT = 30;
@@ -72,6 +70,9 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 	}
 
 	if(_stateAAA == State::PLAY){
+		float distance = _collision._fRadius + _collisionEvent._fRadius;
+		_vEvent = { _vPos.x, _vPos.y + distance, _vPos.z };
+
 		// éOéüå≥ã…ç¿ïW(r(length3D),É∆(theta),É”(rad))
 		float sx = _vTarget.x - _vPos.x;
 		float sy = 300.f + _vTarget.y - _vPos.y;   // è≠Çµè„Çë_Ç§

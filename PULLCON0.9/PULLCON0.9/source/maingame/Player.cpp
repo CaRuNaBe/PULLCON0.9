@@ -23,7 +23,7 @@ Player::~Player() {
 
 void Player::Init() {
 	base::Init();
-	_statePlayer = State::PLAY;
+	_statePlayer = State::NUM;
 
 	_fSpeed = 30.f;
 	_fRotatY = utility::PI;
@@ -44,6 +44,11 @@ void Player::Init() {
 bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	base::Update(game, mode);
 
+	if (_statePlayer == State::NUM) {
+		_cam._vPos = _vPos + CAMERADEFAULT_POS;
+		_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
+		_statePlayer = State::PLAY;
+	}
 
 	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kEnemyAAA
@@ -52,7 +57,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 				if (_pull) {
 					vector4 objective = obje->_vPos;
 					objective.y += _collision._fRadius;
-					objective.z -= obje->_collision._fRadius;
+					//objective.z -= obje->_collision._fRadius;
 					vector4 dir = objective - _vPos;
 					dir.Normalized();
 					_vPos += dir * static_cast<float>(_CT);
@@ -147,8 +152,9 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		cursor.x = _cam._vTarget.x + length3D * cos(rad + camerad);
 		cursor.z = _cam._vTarget.z + length3D * sin(rad + camerad);
 
-		((ModeGame&)mode).SetCursor(cursor);
+		((ModeGame&)mode).SetCursor(_vTarget);
 
+		// ˆø‚Á‚±”²‚«‘JˆÚ
 		if (_pull && _CT == 0) {
 			((ModeGame&)mode)._blackout = true;
 			((ModeGame&)mode)._transparence = true;
@@ -295,11 +301,12 @@ void Player::EventCamera(ApplicationBase& game) {
 
 	// Šp“x•ÏX
 	// Y²‰ñ“]
-	camerad = utility::PI * 5.f / 6.f;
+	camerad = _fRotatY + utility::PI * 5.f / 6.f;
 
 	// X²‰ñ“]
 	float degree = 100.f;
 	theta = utility::degree_to_radian(degree);
+	_fRotatX = 0.f;
 
 	// ƒJƒƒ‰ˆÊ’u
 	_cam._vPos.y = _vPos.y + cos(theta) * length3D;
