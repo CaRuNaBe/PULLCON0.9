@@ -19,6 +19,7 @@ public:
 	// プレイヤーの状態
 	enum class State
 	{
+		NUM, //初期状態
 		PLAY,//プレイアブル状態
 		EVENT//イベント状態
 	};
