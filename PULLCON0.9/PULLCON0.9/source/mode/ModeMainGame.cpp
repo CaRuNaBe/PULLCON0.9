@@ -58,6 +58,12 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 #if _DEBUG
 //	state = ScriptState::EDIT;
 #endif
+	_cg = ResourceServer::LoadGraph("res/cursor00.png");
+	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
+	// 作成したデータの識別番号を変数 FontHandle に保存する
+	_handlefont = CreateFontToHandle(NULL, 40, 3);
+
+	_vCursor = { 0.0f, 0.0f, 0.0f };
 	max_line = 0;
 	now_line = 0;
 	feedcount = 0.0;
@@ -65,6 +71,9 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	is_notcant = false;
 	is_notcommand = false;
 	is_cannotdelete = false;
+	_transparence = false;
+	_clear = false;
+	_dbgCollisionDraw = false;
 	const std::string FILENAME = "pullcon0.9.json";
 	const std::string FILEPASS = "res/script/gamescript/" + FILENAME;
 	const std::string GAMESCRIPT = "pullcon0.9";
@@ -140,6 +149,10 @@ bool ModeMainGame::Update()
 {
 	ModeBase::Update();
 	_3D_objectServer.Update( _game,*this );
+
+	if (_game.Getinput().XinputEveryOtherLeftTrigger(30)) {
+		_dbgCollisionDraw = !_dbgCollisionDraw;
+	}
 
 	switch ( state )
 	{
@@ -713,6 +726,16 @@ bool ModeMainGame::Draw()
 	ModeBase::Draw();
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
 	_3D_objectServer.Draw( _game,*this );
+
+	if (_clear) {
+		// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
+		DrawStringToHandle(_game.DispSizeW() / 2, _game.DispSizeH() / 2, "C L E A R!!", GetColor(255, 255, 0), _handlefont);
+	}
+	if (!_transparence) {
+		VECTOR ScreenPos = ConvWorldPosToScreenPos(ToDX(_vCursor));
+		DrawRotaGraph(static_cast<int>(ScreenPos.x), static_cast<int>(ScreenPos.y), 0.5, 0, _cg, TRUE);
+	}
+
 	switch ( state )
 	{
 		case ScriptState::EDIT:

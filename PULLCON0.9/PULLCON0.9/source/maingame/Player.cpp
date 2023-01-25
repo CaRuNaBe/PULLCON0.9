@@ -1,6 +1,7 @@
 
 #include "appframe.h"
 #include "../mode/ModeGame.h"
+#include "../mode/ModeMainGame.h"
 #include "Player.h"
 #include "Bullet.h"
 
@@ -100,6 +101,13 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 			}
 		}
 
+		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
+			_fSpeed += 30.f;
+		}
+		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_LEFT_THUMB)) {
+			_fSpeed -= 30.f;
+		}
+
 		// カメラの向いている角度を取得
 		float sx = _cam._vPos.x - _cam._vTarget.x;
 		float sy = _cam._vPos.y - _cam._vTarget.y;
@@ -153,12 +161,11 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		cursor.x = _cam._vTarget.x + length3D * cos(rad + camerad);
 		cursor.z = _cam._vTarget.z + length3D * sin(rad + camerad);
 
-		((ModeGame&)mode).SetCursor(_vTarget);
+		((ModeMainGame&)mode).SetCursor(_vTarget);
 
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {
-			((ModeGame&)mode)._blackout = true;
-			((ModeGame&)mode)._transparence = true;
+			((ModeMainGame&)mode)._transparence = true;
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
 			_statePlayer = State::EVENT;
 		}
@@ -184,8 +191,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 				_cam._vTarget.y += _fSpeed;
 				if (_CT == 1) {
 					_pull = false;
-					((ModeGame&)mode)._blackout = true;
-					((ModeGame&)mode)._transparence = false;
+					((ModeMainGame&)mode)._transparence = false;
 					_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
 					_cam._vPos = _cam._vTarget + _cam._vMemory;
 					_statePlayer = State::PLAY;
@@ -224,8 +230,11 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	DrawSphere3D(ToDX(_vTarget), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 	SetUseLighting(TRUE);
 
-	vector4 color = { 255, 255, 255 };
-	DrawCollision(color);
+	// コリジョン描画
+	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
+		vector4 color = { 255, 255, 255 };
+		DrawCollision(color);
+	}
 
 	// デバック表記
 	int x = 0, y = 0, size = 16;
@@ -307,7 +316,6 @@ void Player::EventCamera(ApplicationBase& game) {
 	// X軸回転
 	float degree = 100.f;
 	theta = utility::degree_to_radian(degree);
-	_fRotatX = 0.f;
 
 	// カメラ位置
 	_cam._vPos.y = _vPos.y + cos(theta) * length3D;

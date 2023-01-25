@@ -22,7 +22,14 @@ public:
 
 	void Destroy();
 
+	void SetCursor(const vector4& pos) { _vCursor = pos; }
 
+	vector4 _vCursor;
+	bool _transparence;
+	bool _clear;
+
+	// 開発用
+	bool	_dbgCollisionDraw;		// コリジョン表示/非表示
 private:
 	enum class ScriptState
 	{
@@ -88,4 +95,7 @@ private:
 	bool is_notcant;
 	bool is_notcommand;
 	bool is_cannotdelete;
+
+	int _cg;
+	int _handlefont;
 };

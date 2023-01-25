@@ -1,6 +1,7 @@
 
 #include "ClearObject.h"
 #include "../mode/ModeGame.h"
+#include "../mode/ModeMainGame.h"
 
 ClearObject::ClearObject()
 	:base()
@@ -63,7 +64,7 @@ bool ClearObject::Update( ApplicationBase& game,ModeBase& mode )
 }
 
 void ClearObject::Damage(ModeBase& mode) {
-	((ModeGame&)mode)._clear = true;
+	((ModeMainGame&)mode)._clear = true;
 	mode.GetObjectServer3D().Del(*this);
 }
 
@@ -76,12 +77,13 @@ bool ClearObject::Draw( ApplicationBase& game,ModeBase& mode )
 	MV1DrawModel(_handle);
 
 	vector4 color = { 255,255,255 };
-	DrawCollision(color);
-	DrawCollisionEvent(color);
-	if (_overlap) {
-		color = { 255, 0, 0 };
+	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
 		DrawCollision(color);
+		DrawCollisionEvent(color);
+		if (_overlap) {
+			color = { 255, 0, 0 };
+			DrawCollision(color);
+		}
 	}
-
 	return true;
 }

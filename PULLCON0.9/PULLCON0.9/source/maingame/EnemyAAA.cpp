@@ -1,6 +1,7 @@
 #include "appframe.h"
 #include "EnemyAAA.h"
 #include "Bullet.h"
+#include "../mode/ModeMainGame.h"
 
 EnemyAAA::EnemyAAA()
 	:base()
@@ -47,7 +48,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 						_vTarget = obje->_vPos;
 					}
 				}
-				if (obje->_finish == true) {
+				if (obje->_finish && _pull) {
 					_coll = false;
 					_pull = false;
 					_finish = true;
@@ -146,22 +147,23 @@ bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1DrawModel(_handle_body);
 	MV1DrawModel(_handle_turret);
 
-	if(_coll){
-		vector4 color = { 255, 255, 255 };
-		DrawCollision(color);
-		if (!_finish) {
-			DrawCollisionEvent(color);
-		}
-		if (_overlap) {
-			color = { 255, 0, 0 };
+	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
+		if (_coll) {
+			vector4 color = { 255, 255, 255 };
 			DrawCollision(color);
-		}
-		if (_event) {
-			color = { 0, 255, 0 };
-			DrawCollisionEvent(color);
+			if (!_finish) {
+				DrawCollisionEvent(color);
+			}
+			if (_overlap) {
+				color = { 255, 0, 0 };
+				DrawCollision(color);
+			}
+			if (_event) {
+				color = { 0, 255, 0 };
+				DrawCollisionEvent(color);
+			}
 		}
 	}
-
 
 	return true;
 }
