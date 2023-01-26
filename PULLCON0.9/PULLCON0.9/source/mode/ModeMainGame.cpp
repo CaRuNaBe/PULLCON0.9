@@ -312,9 +312,12 @@ bool ModeMainGame::OnCommandStage( unsigned int line,const std::vector<std::stri
 	{
 		return false;
 	}
-	int stage_id = 0;
-
-	auto stage = std::make_shared<GameStage>( scripts[1] );
+	int object_id = 0;
+	if ( !(string::ToInt( scripts[1],object_id )) )
+	{
+		return false;
+	};
+	auto stage = std::make_shared<GameStage>( object_id );
 	_3D_objectServer.Add( stage );
 	return true;
 };
@@ -326,7 +329,13 @@ bool ModeMainGame::OnCommandSkySphere( unsigned int line,const std::vector<std::
 	{
 		return false;
 	}
-	auto skysphere = std::make_shared<SkySphere>();
+	int object_id = 0;
+	if ( !(string::ToInt( scripts[1],object_id )) )
+	{
+		return false;
+	};
+
+	auto skysphere = std::make_shared<SkySphere>( object_id );
 	_3D_objectServer.Add( skysphere );
 	return true;
 };
@@ -334,7 +343,8 @@ bool ModeMainGame::OnCommandSkySphere( unsigned int line,const std::vector<std::
 bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
-	const size_t SCRIPTSIZE = 4;
+	float scale = 1.0f;
+	const size_t SCRIPTSIZE = 5;
 	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
@@ -351,9 +361,13 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::str
 	{
 		return false;
 	}
-
+	if ( !(string::ToFloat( scripts[4],scale )) )
+	{
+		return false;
+	}
 	auto player = std::make_shared<Player>();
 	player->SetPosition( posi );
+	player->SetScale( scale );
 	_3D_objectServer.Add( player );
 	return true;
 };
