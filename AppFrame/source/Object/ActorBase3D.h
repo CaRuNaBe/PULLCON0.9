@@ -19,6 +19,7 @@ public:
 		kGameStage,     // 7 ゲームステージ
 		kSupplyEria,    // 8 補給地点
 		kStageObject,   // 9 ステージオブジェクト
+		kEnemySpawnEria,// 10 敵スポーンエリア
 		kEffect,        // n エフェクト
 	};
 	virtual Type GetType() = 0;
