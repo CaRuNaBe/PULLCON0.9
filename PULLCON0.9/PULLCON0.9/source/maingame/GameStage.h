@@ -4,7 +4,7 @@ class GameStage:public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	GameStage();
+	GameStage( int stageid );
 	virtual ~GameStage();
 	virtual Type GetType()
 	{

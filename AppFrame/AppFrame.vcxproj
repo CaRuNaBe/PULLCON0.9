@@ -190,9 +190,6 @@
     <ClInclude Include="source\Object\ObjectServer.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
     <ClInclude Include="source\Math\vector2.h" />
-    <ClInclude Include="source\ScliptEngin\command_base.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfi.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfo.h" />
     <ClInclude Include="source\ScliptEngin\scripts_data.h" />
     <ClInclude Include="source\ScliptEngin\scripts_string.h" />
   </ItemGroup>
@@ -219,8 +216,6 @@
     <ClCompile Include="source\Object\ObjectServer.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
     <ClCompile Include="source\Math\vector2.cpp" />
-    <ClCompile Include="source\ScliptEngin\command_crfi.cpp" />
-    <ClCompile Include="source\ScliptEngin\command_crfo.cpp" />
     <ClCompile Include="source\ScliptEngin\scripts_data.cpp" />
     <ClCompile Include="source\ScliptEngin\scripts_string.cpp" />
   </ItemGroup>

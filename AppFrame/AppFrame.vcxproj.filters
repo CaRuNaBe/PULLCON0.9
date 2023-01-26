@@ -101,9 +101,6 @@
     <ClInclude Include="source\Math\3dCollision.h">
       <Filter>source\Math</Filter>
     </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_base.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfi.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -175,12 +172,6 @@
     </ClCompile>
     <ClCompile Include="source\Math\3dCollision.cpp">
       <Filter>source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_crfi.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_crfo.cpp">
-      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
