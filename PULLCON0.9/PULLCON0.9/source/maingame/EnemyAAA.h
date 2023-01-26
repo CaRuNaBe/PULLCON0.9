@@ -2,13 +2,17 @@
 #include "appframe.h"
 
 
-class EnemyAAA : public ActorBase3D {
+class EnemyAAA: public ActorBase3D
+{
 	typedef ActorBase3D base;
 public:
-	EnemyAAA();
+	EnemyAAA( float objectid,int pile_num );
 	virtual ~EnemyAAA();
-	virtual Type GetType() { return Type::kEnemyAAA; }
-	// 対空砲の状態
+	virtual Type GetType()
+	{
+		return Type::kEnemyAAA;
+	}
+// 対空砲の状態
 	enum class State
 	{
 		PLAY,//プレイアブル状態
@@ -17,11 +21,11 @@ public:
 	};
 
 	virtual void Init();
-	virtual bool Update(ApplicationBase& game, ModeBase& mode);
-	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
+	virtual bool Update( ApplicationBase& game,ModeBase& mode );
+	virtual bool Draw( ApplicationBase& game,ModeBase& mode );
 
-	virtual void Damage(ModeBase& mode);
-	void AddBullet(ModeBase& mode);
+	virtual void Damage( ModeBase& mode );
+	void AddBullet( ModeBase& mode );
 
 protected:
 	State   _stateAAA;

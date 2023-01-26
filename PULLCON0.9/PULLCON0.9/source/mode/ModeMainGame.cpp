@@ -365,6 +365,10 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::str
 	{
 		return false;
 	}
+	if ( scale <= 0.0f )
+	{
+		return false;
+	}
 	auto player = std::make_shared<Player>();
 	player->SetPosition( posi );
 	player->SetScale( scale );
@@ -394,11 +398,11 @@ bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::st
 	{
 		return false;
 	}
-	if ( !(string::ToFloat( scripts[4],posi.z )) )
+	if ( !(string::ToFloat( scripts[4],radius )) )
 	{
 		return false;
 	}
-	auto clearobject = std::make_shared<ClearObject>();
+	auto clearobject = std::make_shared<ClearObject>( radius );
 	clearobject->SetPosition( posi );
 	_3D_objectServer.Add( clearobject );
 	return true;
@@ -407,6 +411,12 @@ bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::st
 bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
+	int object_id = 0;
+	float scale = 1.0f;
+	float y_rad = 0.0f;
+	float x_rad = 0.0f;
+	int pile_min_num = 0;
+	int pile_max_num = 0;
 	const size_t SCRIPTSIZE = 4;
 	if ( scripts.size() != SCRIPTSIZE )
 	{
@@ -424,8 +434,31 @@ bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,const std::vector<std::s
 	{
 		return false;
 	}
-	auto enemyAAA = std::make_shared<EnemyAAA>();
+	if ( !(string::ToFloat( scripts[4],y_rad )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[5],x_rad )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[6],scale )) )
+	{
+		return false;
+	}
+
+	if ( !(string::ToInt( scripts[7],object_id )) )
+	{
+		return false;
+	};
+	if ( scale <= 0.0f )
+	{
+		return false;
+	}
+
+	auto enemyAAA = std::make_shared<EnemyAAA>( object_id,pile_num );
 	enemyAAA->SetPosition( posi );
+	enemyAAA->SetScale( scale );
 	_3D_objectServer.Add( enemyAAA );
 	return true;
 };
