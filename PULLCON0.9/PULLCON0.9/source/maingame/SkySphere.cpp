@@ -4,10 +4,10 @@ namespace
 	const auto SUNNY = 1;
 	const auto CLOUDY = 2;
 }
-SkySphere::SkySphere( int object_id )
+SkySphere::SkySphere( int objectid )
 	:base()
 {
-	switch ( object_id )
+	switch ( objectid )
 	{
 		case SUNNY:
 			_handle = MV1LoadModel( "res/stage/skysphere/mv1/cg_stageSkymap_1.mv1" );

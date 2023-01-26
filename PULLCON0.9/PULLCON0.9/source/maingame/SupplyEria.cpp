@@ -1,9 +1,9 @@
 #include "SupplyEria.h"
-SupplyEria::SupplyEria()
+SupplyEria::SupplyEria( float _radius )
 	:base()
 {
 	_handle = MV1LoadModel("res/HelicopterBody.mv1");
-
+	radius = _radius;
 	Init();
 }
 

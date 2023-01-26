@@ -5,7 +5,7 @@ class SupplyEria:
 {
 	using base = ActorBase3D;
 public:
-	SupplyEria();
+	SupplyEria( float _radius );
 	virtual ~SupplyEria();
 	virtual Type GetType()
 	{
@@ -17,6 +17,6 @@ public:
 
 protected:
 	int    _handle;
-	
+	int radius;
 };
 

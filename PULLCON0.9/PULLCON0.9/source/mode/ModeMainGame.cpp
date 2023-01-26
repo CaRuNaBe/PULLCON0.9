@@ -16,6 +16,8 @@
 #include"../maingame/ClearObject.h"
 #include "../maingame/EnemyAAA.h"
 #include "../maingame/StageObject.h"
+#include "../maingame/EnemySpawnEria.h"
+#include "../maingame/CommunicationAria.h"
 
 namespace
 {
@@ -639,7 +641,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,const std::vector<std::str
 	{
 		return false;//文字列からintに変換
 	};
-	if ( !(string::ToInt( scripts[6],object_id )) )
+	if ( !(string::ToInt( scripts[6],collision_id )) )
 	{
 		return false;//文字列からintに変換
 	};
@@ -652,16 +654,15 @@ bool ModeMainGame::OnCommandObject( unsigned int line,const std::vector<std::str
 
 bool ModeMainGame::OnCommandAreaObj( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };
 
 bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,const std::vector<std::string>& scripts )
 {
-};
-
-bool ModeMainGame::OnCommandSupply( unsigned int line,const std::vector<std::string>& scripts )
-{
 	vector4 posi;
-	const size_t SCRIPTSIZE = 4;
+	int spawn_id = 0;
+	int spawn_fream = 0;
+	const size_t SCRIPTSIZE = 6;
 	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
@@ -678,7 +679,46 @@ bool ModeMainGame::OnCommandSupply( unsigned int line,const std::vector<std::str
 	{
 		return false;
 	}
-	auto supplyeria = std::make_shared<SupplyEria>();
+	if ( !(string::ToInt( scripts[4],spawn_fream )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToInt( scripts[5],spawn_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	auto spawn_eria = std::make_shared<EnemySpawnEria>( spawn_fream,spawn_id );
+	spawn_eria->SetPosition( posi );
+	_3D_objectServer.Add( spawn_eria );
+	return true;
+};
+
+bool ModeMainGame::OnCommandSupply( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	float radius = 0.0f;
+	const size_t SCRIPTSIZE = 5;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],radius )) )
+	{
+		return false;
+	}
+	auto supplyeria = std::make_shared<SupplyEria>( radius );
 	supplyeria->SetPosition( posi );
 	_3D_objectServer.Add( supplyeria );
 	return true;
@@ -686,6 +726,35 @@ bool ModeMainGame::OnCommandSupply( unsigned int line,const std::vector<std::str
 
 bool ModeMainGame::OnCommandCommunication( unsigned int line,const std::vector<std::string>& scripts )
 {
+	vector4 posi;
+	float radius = 0.0f;
+
+	const size_t SCRIPTSIZE = 6;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],radius )) )
+	{
+		return false;
+	}
+	std::string story_name = scripts[5];
+	auto commu_aria = std::make_shared<CommunicationAria>( radius,story_name );
+	commu_aria->SetPosition( posi );
+	_3D_objectServer.Add( commu_aria );
+	return true;
 };
 
 bool ModeMainGame::OnCommandNoEntry( unsigned int line,const std::vector<std::string>& scripts )

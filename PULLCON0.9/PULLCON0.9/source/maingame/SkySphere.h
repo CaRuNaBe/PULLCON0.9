@@ -5,7 +5,7 @@ class SkySphere:
 {
 	using base = ActorBase3D;
 public:
-	SkySphere(int object_id);
+	SkySphere(int objectid);
 	virtual ~SkySphere();
 	virtual Type GetType()
 	{
