@@ -14,6 +14,11 @@ Player::Player()
 	:base()
 {
 	_handle = MV1LoadModel("res/player/3Dmodel/mv1/cg_PlayerHelicopter.mv1");
+	_se = ResourceServer::LoadSoundMem("res/player/Audio/pull.wav");
+	_seBullet = ResourceServer::LoadSoundMem("res/player/Audio/normal_bullet_fast.wav");
+	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
+	// 作成したデータの識別番号を変数 FontHandle に保存する
+	_handlefont = CreateFontToHandle(NULL, 40, 3);
 
 	Init();
 }
@@ -30,6 +35,7 @@ void Player::Init() {
 	_fRotatY = utility::PI;
 	_iFuel = 100;
 	_push = 0;
+	_isHit = false;
 
 	_vPos = { 0.f, 100.f,  -1000.f };
 	_collision._fRadius = 500.f;
@@ -81,7 +87,8 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
 					if (obje->_CT == 0) {
-
+						_isHit = true;
+						_ST = 20;
 					}
 				}
 			}
@@ -100,6 +107,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 				_iFuel = 0;
 			}
 		}
+		((ModeMainGame&)mode).SetXMax(_iFuel);
 
 		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
 			_fSpeed += 30.f;
@@ -147,6 +155,10 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		_vDir = v;
 
 		if (game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
+			if (_cnt % 30 == 0) {
+				ChangeVolumeSoundMem(125, _seBullet);
+				PlaySoundMem(_seBullet, DX_PLAYTYPE_BACK);
+			}
 			AddBullet(mode);
 		}
 
@@ -178,6 +190,8 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 				_CT = 20;
 				++_push;
 				if (_push == 6) {
+					ChangeVolumeSoundMem(125 , _se);
+					PlaySoundMem(_se, DX_PLAYTYPE_BACK);
 					_finish = true;
 					_push = 0;
 				}
@@ -202,6 +216,9 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 
 	UpdateCollision();
 
+	if (_ST == 0) {
+		_isHit = false;
+	}
 
 	return true;
 }
@@ -242,7 +259,13 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	// コリジョン描画
 	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
 		vector4 color = { 255, 255, 255 };
+		if (_isHit) { color = { 255, 0, 0 }; }
 		DrawCollision(color);
+	}
+	VECTOR Pos = ConvWorldPosToScreenPos(ToDX(_vPos));
+	if (_isHit) {
+		// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
+		DrawStringToHandle(static_cast<int>(Pos.x), static_cast<int>(Pos.y), "H I T!!", GetColor(255, 255, 255), _handlefont);
 	}
 
 	// デバック表記

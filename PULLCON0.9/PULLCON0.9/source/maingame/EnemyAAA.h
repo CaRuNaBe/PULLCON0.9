@@ -26,6 +26,10 @@ public:
 protected:
 	State   _stateAAA;
 
+	int    _iType;
+	float  _fAxialY;  // Y軸回転(度数法)	
+	float  _fAxialX;  // X軸回転(度数法)
+
 	int    _handle_body;
 	int    _handle_turret;
 

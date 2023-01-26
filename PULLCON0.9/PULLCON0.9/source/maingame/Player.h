@@ -40,8 +40,11 @@ protected:
 	State  _statePlayer;
 
 	int    _push;
+	bool   _isHit;
 
 	int    _handle;
-	int    _cg;
+	int    _handlefont;
+	int    _se;
+	int    _seBullet;
 
 };

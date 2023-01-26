@@ -22,11 +22,11 @@ void EnemyAAA::Init() {
 
 	_collision._fRadius = 300.f;
 	_collisionEvent._fRadius = 500.f;
+	_vEvent = { 10000.f, 10000.f, 10000.f };
 
-	//_vPos = { 0.f, 50.f, 0.f };
-	_vRelation = { 0.f, 0.f, 0.f };
-	_vEvent = { 1000.f, 1000.f, 1000.f };
-
+	_iType = 0;
+	_fAxialX = 0.f;
+	_fAxialY = 0.f;
 
 	_CT = 30;
 }
@@ -45,7 +45,9 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 					}
 					else {
 						_stateAAA = State::PLAY;
-						_vTarget = obje->_vPos;
+						if (_iType == 0) {
+							_vTarget = obje->_vPos;
+						}
 					}
 				}
 				if (obje->_finish && _pull) {
@@ -66,6 +68,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 						_CT = 10;
 						_overlap = true;
 						obje->Damage(mode);
+						Damage(mode);
 					}
 				}
 			}
@@ -84,6 +87,12 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		float rad = atan2(sz, sx);
 		float theta = acos(sy / length3D);
 
+		if (_iType == 1) {
+			rad = utility::degree_to_radian(_fAxialY);
+			theta = utility::degree_to_radian(_fAxialX);
+			_fRotatX = theta;
+		}
+
 		_vDir.x = cos(rad);
 		_vDir.z = sin(rad);
 		_vDir.y = cos(theta);
@@ -98,7 +107,9 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		float rX = cos(theta);
 		float degree = utility::radian_to_degree(rX);
 		if (degree >= 0.f && degree <= 40.f) {
-			_fRotatX = rX;
+			if (_iType == 0) {
+				_fRotatX = rX;
+			}
 		}
 	}
 	else if(_stateAAA == State::WEAPON){
