@@ -375,7 +375,9 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::str
 bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
+	float radius = 0.0f;
 	const size_t SCRIPTSIZE = 4;
+
 	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
@@ -389,6 +391,10 @@ bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::st
 		return false;
 	}
 	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],posi.z )) )
 	{
 		return false;
 	}

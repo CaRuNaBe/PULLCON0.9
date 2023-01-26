@@ -5,7 +5,7 @@ class ClearObject:
 {
 	using base = ActorBase3D;
 public:
-	ClearObject();
+	ClearObject( float _radius );
 	virtual ~ClearObject();
 	virtual Type GetType()
 	{
@@ -21,6 +21,6 @@ protected:
 	vector4 _vObjective;
 
 	int    _handle;
-	
+	float radius;
 };
 

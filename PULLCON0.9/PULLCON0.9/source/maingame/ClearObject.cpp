@@ -2,10 +2,10 @@
 #include "ClearObject.h"
 #include "../mode/ModeGame.h"
 
-ClearObject::ClearObject()
+ClearObject::ClearObject( float _radius )
 	:base()
 {
-
+	radius = _radius;
 	Init();
 }
 
