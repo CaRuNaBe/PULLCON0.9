@@ -125,7 +125,8 @@ private:
 	double Alpha;
 	/** フェードアウトインするときに使うフレーム数 */
 	double feedcount;
-
+	/** ステージ名 */
+	std::string  stage_name;
 	bool is_notcant;
 	bool is_notcommand;
 	bool is_cannotdelete;
