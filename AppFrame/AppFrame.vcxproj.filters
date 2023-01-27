@@ -101,6 +101,7 @@
     <ClInclude Include="source\Math\3dCollision.h">
       <Filter>source\Math</Filter>
     </ClInclude>
+    <ClInclude Include="source\Mode\ModeScriptBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -172,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="source\Math\3dCollision.cpp">
       <Filter>source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Mode\ModeScriptBase.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,17 +1,18 @@
 #include "StageObject.h"
-StageObject::StageObject( int stageid,int collision )
+StageObject::StageObject( int objectid,int collision )
 	:base()
 {
-	if ( collision == 0 )
+	if ( collision == 1 )
 	{
+		is_coll = true;
 	}
-	switch ( stageid )
+	else
 	{
-		case STAGE_1:
-			_handle = MV1LoadModel( "res/stage/stage_file_1/mv1/stage1/cg_stage1.mv1" );
-			break;
+		is_coll = false;
+	}
+	switch ( objectid )
+	{
 
-			break;
 		default:
 			break;
 	}

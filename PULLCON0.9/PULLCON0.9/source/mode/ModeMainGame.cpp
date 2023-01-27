@@ -18,6 +18,7 @@
 #include "../maingame/StageObject.h"
 #include "../maingame/EnemySpawnEria.h"
 #include "../maingame/CommunicationAria.h"
+#include "../maingame/AreaNoEntry.h"
 
 namespace
 {
@@ -253,11 +254,11 @@ void ModeMainGame::TimeWait()
 
 bool ModeMainGame::OnCommandStageLabel( unsigned int line,const std::vector<std::string>& scripts )
 {
-};
+};//
 
 bool ModeMainGame::OnCommandJunpLabel( unsigned int line,const std::vector<std::string>& scripts )
 {
-};
+};//
 
 bool ModeMainGame::OnCommandChoice( unsigned int line,const std::vector<std::string>& scripts )
 {
@@ -354,7 +355,7 @@ bool ModeMainGame::OnCommandSkySphere( unsigned int line,const std::vector<std::
 	_3D_objectServer.Add( skysphere );//サーバーに追加
 	return true;
 };
-
+//
 bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
@@ -390,12 +391,12 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::str
 	_3D_objectServer.Add( player );
 	return true;
 };
-
+//
 bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
 	float radius = 0.0f;
-	const size_t SCRIPTSIZE = 4;
+	const size_t SCRIPTSIZE = 5;
 
 	if ( scripts.size() != SCRIPTSIZE )
 	{
@@ -645,6 +646,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,const std::vector<std::str
 	{
 		return false;//文字列からintに変換
 	};
+
 	auto object = std::make_shared<StageObject>( object_id,collision_id );
 	object->SetPosition( posi );
 	object->SetScale( scale );
@@ -654,6 +656,63 @@ bool ModeMainGame::OnCommandObject( unsigned int line,const std::vector<std::str
 
 bool ModeMainGame::OnCommandAreaObj( unsigned int line,const std::vector<std::string>& scripts )
 {
+	vector4 posi;
+	float scale = 1.0f;
+	float range = 0.0f;
+	float interval = 0.0f;
+	int object_id = 0;
+	int collision_id = 1;
+	const size_t SCRIPTSIZE = 10;
+	int shape_id = 0;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],scale )) )
+	{
+		return false;
+	}
+	if ( scale <= 0.0f )
+	{
+		return false;
+	}
+	if ( !(string::ToInt( scripts[5],object_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToInt( scripts[6],collision_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToInt( scripts[7],shape_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToFloat( scripts[8],range )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[9],interval )) )
+	{
+		return false;
+	}
+
+	auto object = std::make_shared<StageObject>( object_id,collision_id );
+	object->SetPosition( posi );
+	object->SetScale( scale );
+	_3D_objectServer.Add( object );
 	return true;
 };
 
@@ -759,7 +818,37 @@ bool ModeMainGame::OnCommandCommunication( unsigned int line,const std::vector<s
 
 bool ModeMainGame::OnCommandNoEntry( unsigned int line,const std::vector<std::string>& scripts )
 {
-
+	vector4 posi;
+	float radius = 0.0f;
+	float height = 0.0f;
+	const size_t SCRIPTSIZE = 6;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],radius )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[5],height )) )
+	{
+		return false;
+	}
+	auto no_entry = std::make_shared<AreaNoEntry>( radius,height );
+	no_entry->SetPosition( posi );
+	_3D_objectServer.Add( no_entry );
 	return true;
 };
 
