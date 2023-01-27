@@ -62,6 +62,7 @@ public:
 	int   _iFuel;    // 燃料
 	int   _iLife;    // ライフ
 	int   _iDamage;  // 与えるダメージ
+	int   _iPieces;  // 個数
 	float _fSpeed;   // 速度
 	float _fRotatX;  // X軸回転
 	float _fRotatY;  // Y軸回転

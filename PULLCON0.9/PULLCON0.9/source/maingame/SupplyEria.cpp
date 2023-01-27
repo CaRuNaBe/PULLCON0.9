@@ -42,8 +42,7 @@ bool SupplyEria::Update( ApplicationBase& game,ModeBase& mode )
 	}
 
 	_vEvent = _vPos;
-
-	UpdateCollision();
+	UpdateCollision();  // コリジョン更新
 
 	return true;
 }
@@ -51,12 +50,17 @@ bool SupplyEria::Update( ApplicationBase& game,ModeBase& mode )
 bool SupplyEria::Draw( ApplicationBase& game,ModeBase& mode )
 {
 	base::Draw( game,mode );
+	// モデル拡大
 	MV1SetScale(_handle, VGet(2.0f, 2.0f, 2.0f));
+	// モデル移動
 	MV1SetPosition(_handle, ToDX(_vPos));
+	// ライティング計算
+	// モデル描画
 	SetUseLighting(FALSE);
 	MV1DrawModel(_handle);
 	SetUseLighting(TRUE);
 
+	// コリジョン描画
 	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
 		vector4 color = { 255, 255, 255 };
 		DrawCollisionEvent(color);

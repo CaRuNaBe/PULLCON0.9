@@ -27,6 +27,7 @@ protected:
 	State   _stateAAA;
 
 	int    _iType;
+	int    _iPossession;
 	float  _fAxialY;  // Y軸回転(度数法)	
 	float  _fAxialX;  // X軸回転(度数法)
 

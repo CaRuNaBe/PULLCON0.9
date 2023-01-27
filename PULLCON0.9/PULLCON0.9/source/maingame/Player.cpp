@@ -16,8 +16,7 @@ Player::Player()
 	_handle = MV1LoadModel("res/player/3Dmodel/mv1/cg_PlayerHelicopter.mv1");
 	_se = ResourceServer::LoadSoundMem("res/player/Audio/pull.wav");
 	_seBullet = ResourceServer::LoadSoundMem("res/player/Audio/normal_bullet_fast.wav");
-	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
-	// 作成したデータの識別番号を変数 FontHandle に保存する
+	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成
 	_handlefont = CreateFontToHandle(NULL, 40, 3);
 
 	Init();
@@ -43,14 +42,14 @@ void Player::Init() {
 	// カメラの設定
 	_cam._vPos = _vPos + CAMERADEFAULT_POS;
 	_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
-	_cam._clipNear = 2000.f;
+	_cam._clipNear = 100.f;
 	_cam._clipFar = 30000000.f;
 
 }
 
 bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	base::Update(game, mode);
-
+	// NUM状態ならPLAY状態に移行する
 	if (_statePlayer == State::NUM) {
 		_cam._vPos = _vPos + CAMERADEFAULT_POS;
 		_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
@@ -62,9 +61,10 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kEnemyAAA) {
 				if (obje->_pull == true && _pull) {
+					// オブジェクトまで移動する
 					vector4 objective = obje->_vPos;
-					objective.y += _collision._fRadius;
-					//objective.z -= obje->_collision._fRadius;
+					// 対空砲パーツの個数で変動させる
+					objective.y += _collision._fRadius + static_cast<float>(_iPieces + 1) * obje->_collision._fRadius;
 					vector4 dir = objective - _vPos;
 					dir.Normalized();
 					_vPos += dir * static_cast<float>(_CT);
@@ -73,11 +73,13 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 					}
 				}
 				if (obje->_finish == true) {
+					// 対空砲に指定位置を狙わせる
 					obje->_vTarget = _vTarget;
 				}
 				if (IsHitEvent(*obje)) {
 					_event = true;
 					if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)  && !_pull) {
+						// 引っこ抜き開始
 						_pull = true;
 						obje->_pull = true;
 						_CT = 10;
@@ -101,6 +103,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	if(_statePlayer == State::PLAY){
 
 		_finish = false;
+		// 燃料消費
 		if (_cnt % 30 == 0) {
 			--_iFuel;
 			if (_iFuel < 0) {
@@ -109,6 +112,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		}
 		((ModeMainGame&)mode).SetXMax(_iFuel);
 
+		// 速度操作
 		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
 			_fSpeed += 30.f;
 		}
@@ -130,9 +134,9 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_A)) { diry += 1; }     // A
 		if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_B)) { diry += -1; }     // B
 
-		//キャラの移動
+		//左スティックの入力情報をとる
 		vector4 dir = { -(game.Getinput().GetLstickY()),0,game.Getinput().GetLstickX() };   // int値が入る
-
+		//キャラの移動
 		float length = 0.f;
 		dir.Normalized();
 		if (dir.Lenght() > 0.f) { length = _fSpeed; }
@@ -155,24 +159,30 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		_vDir = v;
 
 		if (game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
-			if (_cnt % 30 == 0) {
-				ChangeVolumeSoundMem(125, _seBullet);
+			if (_cnt % 20 == 0) {
+				// SE再生
+				ChangeVolumeSoundMem(255 * 40 / 100, _seBullet);
 				PlaySoundMem(_seBullet, DX_PLAYTYPE_BACK);
 			}
+			// 弾生成
 			AddBullet(mode);
 		}
 
+		// 指定位置設定
 		float distance = _collision._fRadius * 2.f * 15.f;
 		v.x = cos(rad + camerad) * distance;
 		v.z = sin(rad + camerad) * distance;
 		v.y = sin(_fRotatX) * distance;
 		_vTarget = _vPos + v;
 
+		/*
 		vector4 cursor = { 0.f,0.f,0.f };
 		cursor.y = _cam._vTarget.y + sin(_fRotatX) * length3D;
 		cursor.x = _cam._vTarget.x + length3D * cos(rad + camerad);
 		cursor.z = _cam._vTarget.z + length3D * sin(rad + camerad);
+		*/
 
+		// カーソル位置セット
 		((ModeMainGame&)mode).SetCursor(_vTarget);
 
 		// 引っこ抜き遷移
@@ -190,7 +200,8 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 				_CT = 20;
 				++_push;
 				if (_push == 6) {
-					ChangeVolumeSoundMem(125 , _se);
+					// 引っこ抜き完了
+					ChangeVolumeSoundMem(255 * 40 / 100, _se);
 					PlaySoundMem(_se, DX_PLAYTYPE_BACK);
 					_finish = true;
 					_push = 0;
@@ -199,12 +210,16 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		}
 
 		if (_pull && _CT > 0) {
+			// 注視点の移動
 			_cam._vTarget -= move;
 			if (_finish) {
+				// 上昇させる
 				_vPos.y += _fSpeed;
 				_cam._vTarget.y += _fSpeed;
 				if (_CT == 1) {
+					// PLAY状態に遷移
 					_pull = false;
+					++_iPieces;
 					((ModeMainGame&)mode)._transparence = false;
 					_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
 					_cam._vPos = _cam._vTarget + _cam._vMemory;
@@ -214,7 +229,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		}
 	}
 
-	UpdateCollision();
+	UpdateCollision();   // コリジョン更新
 
 	if (_ST == 0) {
 		_isHit = false;
@@ -234,6 +249,7 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	}
 	SetCameraNearFar(_cam._clipNear, _cam._clipFar);
 
+	// 注視点を描画
 	float linelength = 100.f;
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(-linelength, 0, 0)), VAdd(ToDX(_cam._vTarget), VGet(linelength, 0, 0)), GetColor(255, 0, 0));
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(0, -linelength, 0)), VAdd(ToDX(_cam._vTarget), VGet(0, linelength, 0)), GetColor(0, 255, 0));
@@ -242,6 +258,7 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	// モデルの回転値
 	float rX = utility::degree_to_radian(5.f);   // 少し上向きに
 	if (_statePlayer == State::EVENT) {
+		// 引っこ抜き状態
 		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
 	}
 	else {
@@ -251,6 +268,7 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	// 位置
 	MV1SetPosition(_handle, ToDX(_vPos));
 	// ライティング計算
+	// モデル描画
 	SetUseLighting(FALSE);
 	MV1DrawModel(_handle);
 	DrawSphere3D(ToDX(_vTarget), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
@@ -282,6 +300,7 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 void Player::CameraUpdate(ApplicationBase& game) {
 
 	if (_statePlayer == State::EVENT) {
+		// 引っこ抜き状態のカメラ
 		EventCamera(game);
 		return;
 	}
@@ -295,7 +314,7 @@ void Player::CameraUpdate(ApplicationBase& game) {
 	float theta = acos(sy / length3D);
 
 
-	// 角度変更
+	// 角度変更  モデルも同期させる
 	// Y軸回転
 	if(game.Getinput().GetRstickX() < -1000)
 	{

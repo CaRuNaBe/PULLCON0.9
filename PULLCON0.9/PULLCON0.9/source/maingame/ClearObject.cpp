@@ -19,8 +19,8 @@ void ClearObject::Init()
 {
 	base::Init();
 	_handle = MV1LoadModel( "res/enemy/gunship/mv1/cg_Gunship.mv1" );
-	_vObjective = { 0.f ,5000.f, 15000.f };
 
+	_vObjective = { _vPos.x ,_vPos.y, _vPos.z };
 	_vPos = { _vObjective.x - 5000.f, _vObjective.y, _vObjective.z };
 	_vEvent = _vPos;
 	_collision._fRadius = 1400.f;
@@ -33,6 +33,12 @@ void ClearObject::Init()
 bool ClearObject::Update( ApplicationBase& game,ModeBase& mode )
 {
 	base::Update( game,mode );
+
+	if (!_pull) {
+		_vObjective = { _vPos.x ,_vPos.y, _vPos.z };
+		_vPos = { _vObjective.x + 5000.f, _vObjective.y, _vObjective.z + 5000.f };
+		_pull = !_pull;
+	}
 
 	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kPlayer
@@ -53,12 +59,29 @@ bool ClearObject::Update( ApplicationBase& game,ModeBase& mode )
 		}
 	}
 
+	// 極座標(r(length),θ(rad))
+	float sx = _vPos.x - _vObjective.x;
+	float sz = _vPos.z - _vObjective.z;
+	float length = sqrt(sx * sx + sz * sz);
+	float rad = atan2(sz, sx);
+	// 角速度
+	rad += utility::TwoPi / (24.f * 60.f);
+
+	_vPos.x = _vObjective.x + cos(rad) * length;
+	_vPos.z = _vObjective.z + sin(rad) * length;
+
+	// フォワードベクトル
+	_vDir.x = cos(rad);
+	_vDir.z = sin(rad);
+	_vDir.Normalized();
+
 	if (_iLife < 0) {
+		// ライフが0以下だったら消去
 		Damage(mode);
 	}
 
 	_vEvent = _vPos;
-	UpdateCollision();
+	UpdateCollision();  // コリジョン更新
 
 	return true;
 }
@@ -71,11 +94,18 @@ void ClearObject::Damage(ModeBase& mode) {
 bool ClearObject::Draw( ApplicationBase& game,ModeBase& mode )
 {
 	base::Draw( game,mode );
-	//DrawSphere3D(ToDX(_vObjective), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
+
+	DrawSphere3D(ToDX(_vObjective), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
+	// モデル拡大
 	MV1SetScale(_handle, VGet(3.0f, 3.0f, 3.0f));
+	// モデル回転
+	MV1SetRotationYUseDir(_handle, ToDX(_vDir), 0.f);
+	// モデル移動
 	MV1SetPosition(_handle, ToDX(_vPos));
+	// モデル描画
 	MV1DrawModel(_handle);
 
+	// コリジョン描画
 	vector4 color = { 255,255,255 };
 	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
 		DrawCollision(color);

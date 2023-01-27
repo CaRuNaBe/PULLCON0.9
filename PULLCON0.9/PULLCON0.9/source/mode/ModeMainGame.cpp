@@ -61,7 +61,7 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	_cg = ResourceServer::LoadGraph("res/cursor00.png");
 	_se = ResourceServer::LoadSoundMem("res/sound/stage1~3 BGM/650832__timbre__weasel-damage-excerpt-of-audiomirages-freesound-647499.wav");
 	ChangeVolumeSoundMem(255 * 40 / 100, _se);
-	PlaySoundMem(_se, DX_PLAYTYPE_LOOP);
+	//PlaySoundMem(_se, DX_PLAYTYPE_LOOP);
 	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
 	// 作成したデータの識別番号を変数 FontHandle に保存する
 	_handlefont = CreateFontToHandle(NULL, 40, 3);

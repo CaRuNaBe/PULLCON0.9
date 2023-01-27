@@ -21,6 +21,7 @@ void ActorBase3D::Init() {
 	_iFuel = 0;
 	_iLife = 0;
 	_iDamage = 0;
+	_iPieces = 0;
 	_fSpeed = 0.f;
 	_fRotatX = 0.f;
 	_fRotatY = 0.f;
