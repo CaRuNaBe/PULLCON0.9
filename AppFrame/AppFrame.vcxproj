@@ -183,6 +183,7 @@
     <ClInclude Include="source\Math\utility.h" />
     <ClInclude Include="source\Math\vector4.h" />
     <ClInclude Include="source\Mode\ModeBase.h" />
+    <ClInclude Include="source\Mode\ModeScriptBase.h" />
     <ClInclude Include="source\Mode\ModeServer.h" />
     <ClInclude Include="source\Object\ActorBase3D.h" />
     <ClInclude Include="source\Object\ActorBase2d.h" />
@@ -190,11 +191,8 @@
     <ClInclude Include="source\Object\ObjectServer.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
     <ClInclude Include="source\Math\vector2.h" />
-    <ClInclude Include="source\ScliptEngin\command_base.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfi.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfo.h" />
-    <ClInclude Include="source\ScliptEngin\scripts_data.h" />
-    <ClInclude Include="source\ScliptEngin\scripts_string.h" />
+    <ClInclude Include="source\Script\scripts_data.h" />
+    <ClInclude Include="source\Script\scripts_string.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\ScliptFlagManager.cpp" />
@@ -212,6 +210,7 @@
     <ClCompile Include="source\Math\utility.cpp" />
     <ClCompile Include="source\Math\vector4.cpp" />
     <ClCompile Include="source\Mode\ModeBase.cpp" />
+    <ClCompile Include="source\Mode\ModeScriptBase.cpp" />
     <ClCompile Include="source\Mode\ModeServer.cpp" />
     <ClCompile Include="source\Object\ActorBase3D.cpp" />
     <ClCompile Include="source\Object\ActorBase2d.cpp" />
@@ -219,10 +218,8 @@
     <ClCompile Include="source\Object\ObjectServer.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
     <ClCompile Include="source\Math\vector2.cpp" />
-    <ClCompile Include="source\ScliptEngin\command_crfi.cpp" />
-    <ClCompile Include="source\ScliptEngin\command_crfo.cpp" />
-    <ClCompile Include="source\ScliptEngin\scripts_data.cpp" />
-    <ClCompile Include="source\ScliptEngin\scripts_string.cpp" />
+    <ClCompile Include="source\Script\scripts_data.cpp" />
+    <ClCompile Include="source\Script\scripts_string.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

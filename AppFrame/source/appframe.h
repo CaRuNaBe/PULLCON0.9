@@ -11,8 +11,8 @@
 #include"../source/Object/ActorBase3D.h"
 #include"Object/ObjectServer.h"
 
-#include "ScliptEngin/command_base.h"
-#include "ScliptEngin/scripts_data.h"
-#include "ScliptEngin/scripts_string.h"
-#include "ScliptEngin/command_crfi.h"
-#include "ScliptEngin/command_crfo.h"
+#include "Script/command_base.h"
+#include "Script/scripts_data.h"
+#include "Script/scripts_string.h"
+#include "Script/command_crfi.h"
+#include "Script/command_crfo.h"

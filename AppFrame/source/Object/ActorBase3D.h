@@ -18,6 +18,10 @@ public:
 		kSkySphere,     // 6 スカイスフィア
 		kGameStage,     // 7 ゲームステージ
 		kSupplyEria,    // 8 補給地点
+		kStageObject,   // 9 ステージオブジェクト
+		kEnemySpawnEria,// 10 敵スポーンエリア
+		kCommunicationAria,//11　会話スクリプト起動エリア
+		kAreaNoEntry,   // 12 侵入不能エリア
 		kEffect,        // n エフェクト
 	};
 	virtual Type GetType() = 0;

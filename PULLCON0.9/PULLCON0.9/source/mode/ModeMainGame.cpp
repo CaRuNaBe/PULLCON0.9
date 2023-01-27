@@ -15,41 +15,62 @@
 #include "../maingame/SupplyEria.h"
 #include"../maingame/ClearObject.h"
 #include "../maingame/EnemyAAA.h"
+#include "../maingame/StageObject.h"
+#include "../maingame/EnemySpawnEria.h"
+#include "../maingame/CommunicationAria.h"
+#include "../maingame/AreaNoEntry.h"
 
 namespace
 {
-	// スクリプト コマンド
-	const std::string COMMAND_STAGELABEL = "StageLabel";
-	const std::string COMMAND_JUNPLABEL = "StageJunp";
-	const std::string COMMAND_CHOICE = "StageChoice";
+	//ゲームコマンド
+	const std::string COMMAND_STAGELABEL = "StageLabel";//ステージラベル決定コマンド
+	const std::string COMMAND_JUNPLABEL = "StageJunp";//ステージジャンプコマンド
+	const std::string COMMAND_CHOICE = "StageChoice";//ステージ分岐コマンド
 	const std::string COMMAND_GAMESTART = "Start";//ゲームスタート
 	const std::string COMMAND_END = "End";//ゲーム終了
 	const std::string COMMAND_LOADING = "Load";//ロード画面表示
-	const std::string COMMAND_FEEDIN = "FeedIn";
-	const std::string COMMAND_FEEDOUT = "FeedOut";
-	const std::string COMMAND_TIMEWAIT = "TimeWait";
-	const std::string COMMAND_CLICK = "ClickWait";
+	const std::string COMMAND_FEEDIN = "FeedIn";//フェードイン
+	const std::string COMMAND_FEEDOUT = "FeedOut";//フェードアウト
+	const std::string COMMAND_TIMEWAIT = "TimeWait";//フレーム数待つ
+	const std::string COMMAND_CLICK = "ClickWait";//ボタン押されるまで待つ
+	const std::string COMMAND_BGM = "Bgm";//bgm再生
+	const std::string COMMAND_STORY = "Story";//ストーリー再生
 
-	const std::string COMMAND_ADDSTAGE = "Stage";//1
-	const std::string COMMAND_ADDSKYSPHERE = "SkySphere";//1
-	const std::string COMMAND_ADDNORMALOBJECT = "Object";
-	const std::string COMMAND_ADDCLEAROBJECT = "ClearObject";//1
-	const std::string COMMAND_ADDAREAENEMYAAA = "AreaEnemyaaa";//1
-	const std::string COMMAND_ADDAREAENEMYSPAWN = "AreaEnemySpawn";
-	const std::string COMMAND_ADDAREASUPPLY = "AreaSupply";
-	const std::string COMMAND_ADDAREACOMMUNICATION = "AreaCommunication";
-	const std::string COMMAND_ADDAREANOENTRY = "AreaNoEntry";
-	const std::string COMMAND_ADDENEMYAAA = "EnemyAAA";//1
-	const std::string COMMAND_ADDPLAYER = "Player";//1
+	const std::string COMMAND_STAGE = "Stage";//ステージ土台決定
+	const std::string COMMAND_SKYSPHERE = "SkySphere";//スカイスフィア決定
+	const std::string COMMAND_PLAYER = "Player";//位置決定
+	const std::string COMMAND_GUNSHIP = "GunShip";//壊したらゲームクリアの位置決定
+	const std::string COMMAND_ENEMYAAA = "EnemyAAA";//砲台の単品生成
+	const std::string COMMAND_AREAAAA = "AreaAAA";//砲台エリア生成
+	const std::string COMMAND_OBJECT = "Object";//ステージ上にオブジェクト追加
+	const std::string COMMAND_AREAOBJECT = "AreaObj";//オブジェクトエリア生成
+	const std::string COMMAND_ENEMYSPAWN = "AreaSpawn";//敵のスポーンエリアと敵の設定
+	const std::string COMMAND_SUPPLY = "Supply";//回復エリアの生成
+	const std::string COMMAND_AREACOMMUNICATION = "Communication";//会話エリア発生エリアの設定
+	const std::string COMMAND_AREANOENTRY = "NoEntry";//侵入不能エリア生成
+
+
 
 	//編集コマンド
-	const std::string ECOMMAND_ADD = "add";
-	const std::string ECOMMAND_DELETE = "delete";
-	const std::string ECOMMAND_CLEAR = "clear";
-	const std::string ECOMMAND_JUNP = "junp";
-	const std::string ECOMMAND_SAVE = "save";
+	const std::string ECOMMAND_ADD = "add";//追加コマンド
+	const std::string ECOMMAND_DELETE = "delete";//消去コマンド
+	const std::string ECOMMAND_CLEAR = "clear";//初期化コマンド
+	const std::string ECOMMAND_SAVE = "save";//保存コマンド
+	const std::string ECOMMAND_JUNP = "jump";//編集地点変更コマンド
+
+	//jsonファイル関係
+	const std::string FILENAME = "pullcon0.9.json";//ファイル名
+	const std::string FILEPASS = "res/script/gamescript/" + FILENAME;//ファイルパス
+	const std::string GAMESCRIPT = "pullcon0.9";//スクリプト名
 }
 
+/**
+ * \fn void ModeMainGame::ModeMainGame.
+ * \brief コンストラクタ
+ * \param game ApplicationMainの参照を受け取る
+ * \param layer 何番目に移すか
+ * \return void
+ */
 ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	: ModeBase( game,layer )
 {
@@ -67,32 +88,13 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	max_line = 0;
 	now_line = 0;
 	feedcount = 0.0;
-	_Alpha = 0;
+	Alpha = 0;
 	is_notcant = false;
 	is_notcommand = false;
 	is_cannotdelete = false;
-	_transparence = false;
-	_clear = false;
-	_dbgCollisionDraw = false;
-	const std::string FILENAME = "pullcon0.9.json";
-	const std::string FILEPASS = "res/script/gamescript/" + FILENAME;
-	const std::string GAMESCRIPT = "pullcon0.9";
+
 	Initialize( FILEPASS,GAMESCRIPT,FILENAME );
-	/*
-	state = ScriptState::GAME;
-	auto stage = std::make_shared<GameStage>();
-	_3D_objectServer.Add( stage );
-	auto skysphere = std::make_shared<SkySphere>();
-	_3D_objectServer.Add( skysphere );
-	auto supplyeria = std::make_shared<SupplyEria>();
-	_3D_objectServer.Add( supplyeria );
-	auto clearobject = std::make_shared<ClearObject>();
-	_3D_objectServer.Add( clearobject );
-	auto enemyAAA = std::make_shared<EnemyAAA>();
-	_3D_objectServer.Add( enemyAAA );
-	auto player = std::make_shared<Player>();
-	_3D_objectServer.Add( player );
-	*/
+
 }
 
 ModeMainGame::~ModeMainGame()
@@ -102,14 +104,10 @@ ModeMainGame::~ModeMainGame()
 
 void ModeMainGame::Destroy()
 {
-
 	state = ScriptState::PARSING;
 	max_line = 0;
 	now_line = 0;
 	wait_count = 0;
-	const std::string FILENAME = "pullcon0.9.json";
-	const std::string GAMESCLIPT = "pullcon0.9";
-	scripts_data->WriteJson( FILENAME,GAMESCLIPT );
 	scripts_data.reset();
 	scripts_data = nullptr;
 }
@@ -212,13 +210,13 @@ void ModeMainGame::CrfiUpdate()
 	auto i = 255 / feedcount;
 
 
-	if ( _Alpha > 0.0 )
+	if ( Alpha > 0.0 )
 	{
-		_Alpha -= i;
+		Alpha -= i;
 	}
 	else
 	{
-		_Alpha = 0.0;
+		Alpha = 0.0;
 		state = ScriptState::PARSING;
 	}
 }
@@ -231,13 +229,13 @@ void ModeMainGame::CrfoUpdate()
 	auto i = 255.0 / feedcount;
 
 
-	if ( _Alpha < 255.0 )
+	if ( Alpha < 255.0 )
 	{
-		_Alpha += i;
+		Alpha += i;
 	}
 	else
 	{
-		_Alpha = 255.0;
+		Alpha = 255.0;
 		state = ScriptState::PARSING;
 	}
 }
@@ -264,10 +262,115 @@ void ModeMainGame::TimeWait()
 	}
 }
 
-bool ModeMainGame::OnCommandAddPLayer( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandStageLabel( unsigned int line,const std::vector<std::string>& scripts )
+{
+};//
+
+bool ModeMainGame::OnCommandJunpLabel( unsigned int line,const std::vector<std::string>& scripts )
+{
+};//
+
+bool ModeMainGame::OnCommandChoice( unsigned int line,const std::vector<std::string>& scripts )
+{
+};
+
+bool ModeMainGame::OnCommandStart( unsigned int line,const std::vector<std::string>& scripts )
+{
+	const size_t SCRIPTSIZE = 2;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	state = ScriptState::GAME;
+	return true;
+};
+
+bool ModeMainGame::OnCommandEnd( unsigned int line,const std::vector<std::string>& scripts )
+{
+};
+
+bool ModeMainGame::OnCommandLoading( unsigned int line,const std::vector<std::string>& scripts )
+{
+};
+
+bool ModeMainGame::OnCommandFeedIn( unsigned int line,const std::vector<std::string>& scripts )
+{
+	return  true;
+}
+
+bool ModeMainGame::OnCommandFeedOut( unsigned int line,const std::vector<std::string>& scripts )
+{
+	return true;
+}
+
+bool ModeMainGame::OnCommandTimeWait( unsigned int line,const std::vector<std::string>& scripts )
+{
+};
+
+bool ModeMainGame::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
+{
+};
+
+bool ModeMainGame::OnCommandBgm( unsigned int line,const std::vector<std::string>& scripts )
+{
+};
+
+bool ModeMainGame::OnCommandStory( unsigned int line,const std::vector<std::string>& scripts )
+{
+};
+/**
+ * \fn bool ModeMainGame::OnCommandStage.
+ * \brief ステージ土台配置
+ * \param line 行数
+ * \param scripts 文字列vector
+ * \return bool
+ */
+bool ModeMainGame::OnCommandStage( unsigned int line,const std::vector<std::string>& scripts )
+{
+	const size_t SCRIPTSIZE = 2;//scriptsに入ってる文字列の最大数
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;//scripts入ってる物が指定数入っているか確認
+	}
+	int object_id = 0;//呼び込むステージのid
+	if ( !(string::ToInt( scripts[1],object_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	auto stage = std::make_shared<GameStage>( object_id );//ステージ土台のインスタンス作成
+	_3D_objectServer.Add( stage );//サーバーに追加
+	return true;
+};
+/**
+ * \fn bool ModeMainGame::OnCommandSkySphere.
+ * \brief スカイスフィア配置
+ * \param line
+ * \param scripts
+ * \return bool
+ */
+bool ModeMainGame::OnCommandSkySphere( unsigned int line,const std::vector<std::string>& scripts )
+{
+	const size_t SCRIPTSIZE = 2;//scriptsに入ってる文字列の最大数
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;//scripts入ってる物が指定数入っているか確認
+	}
+	int object_id = 0;//呼び込むステージのid
+	if ( !(string::ToInt( scripts[1],object_id )) )
+	{
+		return false; // 文字列からintに変換
+	};
+
+	auto skysphere = std::make_shared<SkySphere>( object_id );//スカイスフィアのインスタンス作成
+	_3D_objectServer.Add( skysphere );//サーバーに追加
+	return true;
+};
+//
+bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
-	const size_t SCRIPTSIZE = 4;
+	float scale = 1.0f;
+	const size_t SCRIPTSIZE = 5;
 	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
@@ -284,41 +387,27 @@ bool ModeMainGame::OnCommandAddPLayer( unsigned int line,const std::vector<std::
 	{
 		return false;
 	}
-
+	if ( !(string::ToFloat( scripts[4],scale )) )
+	{
+		return false;
+	}
+	if ( scale <= 0.0f )
+	{
+		return false;
+	}
 	auto player = std::make_shared<Player>();
 	player->SetPosition( posi );
+	player->SetScale( scale );
 	_3D_objectServer.Add( player );
 	return true;
 };
-
-bool ModeMainGame::OnCommandAddStage( unsigned int line,const std::vector<std::string>& scripts )
-{
-	const size_t SCRIPTSIZE = 2;
-	if ( scripts.size() != SCRIPTSIZE )
-	{
-		return false;
-	}
-	auto stage = std::make_shared<GameStage>();
-	_3D_objectServer.Add( stage );
-	return true;
-};
-
-bool ModeMainGame::OnCommandAddSkySphere( unsigned int line,const std::vector<std::string>& scripts )
-{
-	const size_t SCRIPTSIZE = 2;
-	if ( scripts.size() != SCRIPTSIZE )
-	{
-		return false;
-	}
-	auto skysphere = std::make_shared<SkySphere>();
-	_3D_objectServer.Add( skysphere );
-	return true;
-};
-
-bool ModeMainGame::OnCommandAddClearObject( unsigned int line,const std::vector<std::string>& scripts )
+//
+bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
-	const size_t SCRIPTSIZE = 4;
+	float radius = 0.0f;
+	const size_t SCRIPTSIZE = 5;
+
 	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
@@ -335,67 +424,319 @@ bool ModeMainGame::OnCommandAddClearObject( unsigned int line,const std::vector<
 	{
 		return false;
 	}
-	auto clearobject = std::make_shared<ClearObject>();
+	if ( !(string::ToFloat( scripts[4],radius )) )
+	{
+		return false;
+	}
+	auto clearobject = std::make_shared<ClearObject>( radius );
 	clearobject->SetPosition( posi );
 	_3D_objectServer.Add( clearobject );
 	return true;
 };
 
-bool ModeMainGame::OnCommandAddAreaSupply( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
-	const size_t SCRIPTSIZE = 4;
+	int object_min_id = 0;
+	int object_max_id = 0;
+	float scale = 1.0f;
+	float y_rad = 0.0f;
+	float x_rad = 0.0f;
+	int pile_num = 0;
+	int pile_min_num = 0;
+	int pile_max_num = 0;
+	int aim_player = 0;
+	const size_t SCRIPTSIZE = 12;
 	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
 	}
 	if ( !(string::ToFloat( scripts[1],posi.x )) )
 	{
-		return false;
+		return false;//文字列をx座標に変換
 	}
 	if ( !(string::ToFloat( scripts[2],posi.y )) )
 	{
-		return false;
+		return false;//文字列をy座標に変換
 	}
 	if ( !(string::ToFloat( scripts[3],posi.z )) )
 	{
-		return false;
+		return false;//文字列をz座標に変換
 	}
-	auto supplyeria = std::make_shared<SupplyEria>();
-	supplyeria->SetPosition( posi );
-	_3D_objectServer.Add( supplyeria );
-	return true;
-};
-
-bool ModeMainGame::OnCommandAddEnemyAAA( unsigned int line,const std::vector<std::string>& scripts )
-{
-	vector4 posi;
-	const size_t SCRIPTSIZE = 4;
-	if ( scripts.size() != SCRIPTSIZE )
+	if ( !(string::ToFloat( scripts[4],scale )) )
+	{
+		return false;//文字列をスケールに変換
+	}
+	if ( scale <= 0.0f )
+	{
+		return false;//scaleが0以下だったら返す
+	}
+	if ( !(string::ToInt( scripts[5],object_min_id )) )
+	{
+		return false;//砲台が生成されるときランダムに生成されるため、あらかじめ決めておいた呼び込む砲台のidの最低値
+	};
+	if ( !(string::ToInt( scripts[6],object_max_id )) )
+	{
+		return false;//砲台が生成されるときランダムに生成されるため、あらかじめ決めておいた呼び込む砲台のidの最高値
+	};
+	if ( !(string::ToFloat( scripts[7],y_rad )) )
+	{
+		return false;//y軸砲台の傾きの初期位置
+	}
+	if ( !(string::ToFloat( scripts[8],x_rad )) )
+	{
+		return false;//z軸砲台の傾きの初期位置
+	}
+	if ( !(string::ToInt( scripts[9],pile_min_num )) )
+	{
+		return false;//下に重なる砲台の個数の最低値
+	}
+	if ( !(string::ToInt( scripts[10],pile_max_num )) )
+	{
+		return false;//下に重なる砲台の個数の最高値
+	}
+	pile_num = utility::get_random( pile_min_num,pile_max_num );//ランダム値取得
+	if ( !(string::ToInt( scripts[11],aim_player )) )
 	{
 		return false;
 	}
-	if ( !(string::ToFloat( scripts[1],posi.x )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[2],posi.y )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[3],posi.z )) )
-	{
-		return false;
-	}
-	auto enemyAAA = std::make_shared<EnemyAAA>();
+	auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,pile_num );
 	enemyAAA->SetPosition( posi );
+	enemyAAA->SetScale( scale );
+	enemyAAA->SetAxialX( x_rad );
+	enemyAAA->SetAxialY( y_rad );
+	enemyAAA->SetAim( aim_player );
 	_3D_objectServer.Add( enemyAAA );
 	return true;
 };
 
-bool ModeMainGame::OnCommandAddAreaEnemyAAA( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
+	const size_t SCRIPTSIZE = 14;
+	float range = 0.0f;
+	float scale = 1.0f;
+	float interval = 0.0f;
+	int object_min_id = 0;
+	int object_max_id = 0;
+	int pile_num = 0;
+	int pile_min_num = 0;
+	int pile_max_num = 0;
+	int min_map_draw_red = 0;
+	int min_map_draw_green = 0;
+	int min_map_draw_blue = 0;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],scale )) )
+	{
+		return false;
+	}
+	if ( scale <= 0.0f )
+	{
+		return false;
+	}
+	if ( !(string::ToInt( scripts[5],object_min_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToInt( scripts[6],object_max_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToFloat( scripts[7],range )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[8],interval )) )
+	{
+		return false;
+	}
+
+	if ( !(string::ToInt( scripts[9],pile_min_num )) )
+	{
+		return false;
+	}
+	if ( !(string::ToInt( scripts[10],pile_max_num )) )
+	{
+		return false;
+	}
+	pile_num = utility::get_random( pile_min_num,pile_max_num );
+
+	if ( !(string::ToInt( scripts[11],min_map_draw_red )) )
+	{
+		return false;
+	}
+	if ( !(string::ToInt( scripts[12],min_map_draw_green )) )
+	{
+		return false;
+	}
+	if ( !(string::ToInt( scripts[13],min_map_draw_blue )) )
+	{
+		return false;
+	}
+	auto color = GetColor( min_map_draw_red,min_map_draw_green,min_map_draw_blue );
+
+	std::vector<math::vector4>posivec;
+	while ( true )
+	{
+		auto max = posi.x + range;
+		auto min = posi.x - range;
+		auto max_random = std::abs( max ) + std::abs( min );
+		auto posi_rand_x = static_cast<float>(utility::get_random( 0,static_cast<int>(max_random) ));
+		auto posi_rand_z = static_cast<float>(utility::get_random( 0,static_cast<int>(max_random) ));
+		auto posi_new_x = posi_rand_x + min;
+		auto posi_new_z = posi_rand_x + min;
+		vector4 rand_posi = {posi_new_x,0.0f,posi_new_z};
+		auto pos = rand_posi - posi;
+		if ( pos.Lenght() > range )
+		{
+			continue;
+		}
+		posivec.push_back( rand_posi );
+		if ( posivec.size() > 100 )
+		{
+			break;
+		}
+	}
+
+	for ( auto&& set_pos: posivec )
+	{
+		auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,pile_num );
+		enemyAAA->SetPosition( set_pos );
+		enemyAAA->SetScale( scale );
+		_3D_objectServer.Add( enemyAAA );
+	}
+	return true;
+};
+
+bool ModeMainGame::OnCommandObject( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	float scale = 1.0f;
+	int object_id = 0;
+	int collision_id = 1;
+	const size_t SCRIPTSIZE = 7;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],scale )) )
+	{
+		return false;
+	}
+	if ( scale <= 0.0f )
+	{
+		return false;
+	}
+	if ( !(string::ToInt( scripts[5],object_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToInt( scripts[6],collision_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+
+	auto object = std::make_shared<StageObject>( object_id,collision_id );
+	object->SetPosition( posi );
+	object->SetScale( scale );
+	_3D_objectServer.Add( object );
+	return true;
+};
+
+bool ModeMainGame::OnCommandAreaObj( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	float scale = 1.0f;
+	float range = 0.0f;
+	float interval = 0.0f;
+	int object_id = 0;
+	int collision_id = 1;
+	const size_t SCRIPTSIZE = 10;
+	int shape_id = 0;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],scale )) )
+	{
+		return false;
+	}
+	if ( scale <= 0.0f )
+	{
+		return false;
+	}
+	if ( !(string::ToInt( scripts[5],object_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToInt( scripts[6],collision_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToInt( scripts[7],shape_id )) )
+	{
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToFloat( scripts[8],range )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[9],interval )) )
+	{
+		return false;
+	}
+
+	auto object = std::make_shared<StageObject>( object_id,collision_id );
+	object->SetPosition( posi );
+	object->SetScale( scale );
+	_3D_objectServer.Add( object );
+	return true;
+};
+
+bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	int spawn_id = 0;
+	int spawn_fream = 0;
 	const size_t SCRIPTSIZE = 6;
 	if ( scripts.size() != SCRIPTSIZE )
 	{
@@ -413,87 +754,120 @@ bool ModeMainGame::OnCommandAddAreaEnemyAAA( unsigned int line,const std::vector
 	{
 		return false;
 	}
-	float range = 0.0f;
-	if ( !(string::ToFloat( scripts[4],range )) )
+	if ( !(string::ToInt( scripts[4],spawn_fream )) )
 	{
-		return false;
-	}
-
-	int max = 1;
-	if ( !(string::ToInt( scripts[5],max )) )
+		return false;//文字列からintに変換
+	};
+	if ( !(string::ToInt( scripts[5],spawn_id )) )
 	{
-		return false;
-	}
-
-	for ( int i = 0; i < max; i++ )
-	{
-		vector4 AAAposi = {static_cast<float>(utility::get_random( posi.x,posi.x + range ))
-			,posi.z
-			,static_cast<float>(utility::get_random( posi.y,posi.y + range ))};
-
-		auto enemyAAA = std::make_shared<EnemyAAA>();
-		enemyAAA->SetPosition( AAAposi );
-		_3D_objectServer.Add( enemyAAA );
-	}
+		return false;//文字列からintに変換
+	};
+	auto spawn_eria = std::make_shared<EnemySpawnEria>( spawn_fream,spawn_id );
+	spawn_eria->SetPosition( posi );
+	_3D_objectServer.Add( spawn_eria );
 	return true;
 };
 
-bool ModeMainGame::OnCommandStart( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandSupply( unsigned int line,const std::vector<std::string>& scripts )
 {
-	const size_t SCRIPTSIZE = 2;
+	vector4 posi;
+	float radius = 0.0f;
+	const size_t SCRIPTSIZE = 5;
 	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
 	}
-	state = ScriptState::GAME;
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],radius )) )
+	{
+		return false;
+	}
+	auto supplyeria = std::make_shared<SupplyEria>( radius );
+	supplyeria->SetPosition( posi );
+	_3D_objectServer.Add( supplyeria );
 	return true;
 };
-/**
- * @fn bool ScriptEngine::OnCommandCrfi(unsigned int line, const std::vector<std::string>& scripts)
- * @brief スクリプトの 'fi' コマンドを処理
- * \param [in] scripts スクリプトの内容
- * \param [in] scripts スクリプトの内容
- * \return 処理の成否
- */
-/*
-bool ModeMainGame::OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts )
-{
-	crfo_list.clear();
-	auto crfi = std::make_unique<CommandCrfi>( line,scripts );
-	if ( !crfi->Check() )
-	{
-		return false;
-	}
-	feedcount = static_cast<double>(crfi->GetinCount());
-	crfi_list.emplace_back( std::move( crfi ) );
-	_Alpha = 255.0;
-	state = ScriptState::CRFEEDIN;
 
-	return  true;
-}
-/**
- * @fn bool ScriptEngine::OnCommandCrfo(unsigned int line, const std::vector<std::string>& scripts)
- * @brief スクリプトの "fo" コマンドを処理
- * \param [in] scripts スクリプトの内容
- * \param [in] scripts スクリプトの内容
- * \return 処理の成否
- */
- /**
-bool ModeMainGame::OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandCommunication( unsigned int line,const std::vector<std::string>& scripts )
 {
-	crfi_list.clear();
-	auto crfo = std::make_unique<CommandCrfo>( line,scripts );
-	if ( !crfo->Check() )
+	vector4 posi;
+	float radius = 0.0f;
+
+	const size_t SCRIPTSIZE = 6;
+	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
 	}
-	feedcount = static_cast<double>(crfo->GetoutCount());
-	crfo_list.emplace_back( std::move( crfo ) );
-	_Alpha = 0.0;
-	state = ScriptState::CRFEEDOUT;
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],radius )) )
+	{
+		return false;
+	}
+	std::string story_name = scripts[5];
+	auto commu_aria = std::make_shared<CommunicationAria>( radius,story_name );
+	commu_aria->SetPosition( posi );
+	_3D_objectServer.Add( commu_aria );
 	return true;
-}
-*/
+};
+
+bool ModeMainGame::OnCommandNoEntry( unsigned int line,const std::vector<std::string>& scripts )
+{
+	vector4 posi;
+	float radius = 0.0f;
+	float height = 0.0f;
+	const size_t SCRIPTSIZE = 6;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[3],posi.z )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[4],radius )) )
+	{
+		return false;
+	}
+	if ( !(string::ToFloat( scripts[5],height )) )
+	{
+		return false;
+	}
+	auto no_entry = std::make_shared<AreaNoEntry>( radius,height );
+	no_entry->SetPosition( posi );
+	_3D_objectServer.Add( no_entry );
+	return true;
+};
+
 void ModeMainGame::Edit()
 {
 	int None = 0;
@@ -509,7 +883,7 @@ void ModeMainGame::Edit()
 		int x = 0; int y = 0;
 		std::string buf = "";
 		auto cchar = const_cast<char*>(buf.c_str());
-		DrawString( x,y,"コマンドを入力してください\nESCで戻る\nadd:オブジェクトの追加\ndelete:オブジェクトの消去\nclear:いま追加されているゲームコマンドを初期化コマンド\nsave:ファイルに書き込み",GetColor( 255,255,255 ) );
+		DrawString( x,y,"コマンドを入力してください\nESCで戻る\nadd:オブジェクトの追加\ndelete:オブジェクトの消去\nclear:いま追加されているゲームコマンドを初期化コマンド\njump:編集地点変更\nsave:ファイルに書き込み",GetColor( 255,255,255 ) );
 		if ( is_notcant )
 		{
 			is_notcant = false;
@@ -522,7 +896,7 @@ void ModeMainGame::Edit()
 		}
 		if ( is_cannotdelete )
 		{
-			is_cannotdelete = true;
+			is_cannotdelete = false;
 			DrawString( x,250,"消去出来ませんでした\n",GetColor( 255,255,255 ) );
 		}
 		if ( KeyInputSingleCharString( 0,500,10,cchar,TRUE ) == 1 )
@@ -553,7 +927,8 @@ bool ModeMainGame::OnEditCommandAdd()
 	x = y = 0;
 	std::string buf;
 	auto cchar = const_cast<char*>(buf.c_str());
-	DrawString( x,y,"何を追加しますか\n追加できるもの\nStage\nSkySphere\nPlayer,x座標の位置,y座標の位置,z座標の位置\nClearObject,x座標の位置,y座標の位置,z座標の位置\nAreaEnemyaaa,x座標の位置,y座標の位置,z座標の位置,円の範囲,何個出すか\nEnemyAAA,x座標の位置,y座標の位置,z座標の位置\nStart\nEnd",GetColor( 255,255,255 ) );
+	DrawString( x,y,"何を追加しますか\n追加できるもの",GetColor( 255,255,255 ) );
+
 	if ( KeyInputSingleCharString( 0,500,100,cchar,TRUE ) == 1 )
 	{
 		std::string ecommandbuf = cchar;
@@ -581,7 +956,9 @@ bool ModeMainGame::OnEditCommandDelete()
 	auto maxline = scripts_data->GetScriptNum();
 	for ( unsigned int i = 0; i <= maxline; i++ )
 	{
-		DrawString( x,y,scripts_data->GetScriptLine( i ).c_str(),GetColor( 255,255,255 ) );
+		auto script = scripts_data->GetScriptLine( i );
+		auto stringnew = "番号%d" + script;
+		DrawFormatString( x,y,GetColor( 255,255,255 ),stringnew.c_str(),i + 1 );
 		y += 30;
 	}
 	if ( KeyInputSingleCharString( 0,500,30,cchar,TRUE ) == 1 )
@@ -606,9 +983,7 @@ bool ModeMainGame::OnEditCommandClear()
 };
 bool ModeMainGame::OnEditCommandSave()
 {
-	const std::string FILENAME = "pullcon0.9.json";
-	const std::string GAMESCLIPT = "pullcon0.9";
-	scripts_data->WriteJson( FILENAME,GAMESCLIPT );
+	scripts_data->WriteJson( FILENAME,GAMESCRIPT );
 	return true;
 };
 bool ModeMainGame::OnEditCommandJunp()
@@ -621,13 +996,13 @@ bool ModeMainGame::CheckInputString( std::string command )
 	auto script = string::Split( command,"," );
 
 	FunctionGameCommand comand_funcs;
-	comand_funcs.insert( std::make_pair( COMMAND_ADDPLAYER,&ModeMainGame::OnCommandAddPLayer ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDSTAGE,&ModeMainGame::OnCommandAddStage ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDSKYSPHERE,&ModeMainGame::OnCommandAddSkySphere ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDCLEAROBJECT,&ModeMainGame::OnCommandAddClearObject ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDAREASUPPLY,&ModeMainGame::OnCommandAddAreaSupply ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDENEMYAAA,&ModeMainGame::OnCommandAddEnemyAAA ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDAREAENEMYAAA,&ModeMainGame::OnCommandAddAreaEnemyAAA ) );
+	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
+	comand_funcs.insert( std::make_pair( COMMAND_STAGE,&ModeMainGame::OnCommandStage ) );
+	comand_funcs.insert( std::make_pair( COMMAND_SKYSPHERE,&ModeMainGame::OnCommandSkySphere ) );
+	comand_funcs.insert( std::make_pair( COMMAND_GUNSHIP,&ModeMainGame::OnCommandGunShip ) );
+	comand_funcs.insert( std::make_pair( COMMAND_SUPPLY,&ModeMainGame::OnCommandSupply ) );
+	comand_funcs.insert( std::make_pair( COMMAND_ENEMYAAA,&ModeMainGame::OnCommandEnemyAAA ) );
+	comand_funcs.insert( std::make_pair( COMMAND_AREAAAA,&ModeMainGame::OnCommandEnemyAAA ) );
 	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
 	//comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrfi ) );
 	//comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrfo ) );
@@ -659,13 +1034,13 @@ void ModeMainGame::Parsing()
 	auto stop_parsing = false;
 	unsigned	int dateempty = 0;
 	FunctionGameCommand comand_funcs;
-	comand_funcs.insert( std::make_pair( COMMAND_ADDPLAYER,&ModeMainGame::OnCommandAddPLayer ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDSTAGE,&ModeMainGame::OnCommandAddStage ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDSKYSPHERE,&ModeMainGame::OnCommandAddSkySphere ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDCLEAROBJECT,&ModeMainGame::OnCommandAddClearObject ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDAREASUPPLY,&ModeMainGame::OnCommandAddAreaSupply ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDENEMYAAA,&ModeMainGame::OnCommandAddEnemyAAA ) );
-	comand_funcs.insert( std::make_pair( COMMAND_ADDAREAENEMYAAA,&ModeMainGame::OnCommandAddAreaEnemyAAA ) );
+	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
+	comand_funcs.insert( std::make_pair( COMMAND_STAGE,&ModeMainGame::OnCommandStage ) );
+	comand_funcs.insert( std::make_pair( COMMAND_SKYSPHERE,&ModeMainGame::OnCommandSkySphere ) );
+	comand_funcs.insert( std::make_pair( COMMAND_GUNSHIP,&ModeMainGame::OnCommandGunShip ) );
+	comand_funcs.insert( std::make_pair( COMMAND_SUPPLY,&ModeMainGame::OnCommandSupply ) );
+	comand_funcs.insert( std::make_pair( COMMAND_ENEMYAAA,&ModeMainGame::OnCommandEnemyAAA ) );
+	comand_funcs.insert( std::make_pair( COMMAND_AREAAAA,&ModeMainGame::OnCommandAreaAAA ) );
 	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
 	//comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrfi ) );
 	//comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrfo ) );

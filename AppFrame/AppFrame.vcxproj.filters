@@ -86,10 +86,10 @@
     <ClInclude Include="source\Application\ScliptFlagManager.h">
       <Filter>source\Application</Filter>
     </ClInclude>
-    <ClInclude Include="source\ScliptEngin\scripts_data.h">
+    <ClInclude Include="source\Script\scripts_data.h">
       <Filter>source\ScliptEngin</Filter>
     </ClInclude>
-    <ClInclude Include="source\ScliptEngin\scripts_string.h">
+    <ClInclude Include="source\Script\scripts_string.h">
       <Filter>source\ScliptEngin</Filter>
     </ClInclude>
     <ClInclude Include="source\Object\ActorBase2d.h">
@@ -101,9 +101,7 @@
     <ClInclude Include="source\Math\3dCollision.h">
       <Filter>source\Math</Filter>
     </ClInclude>
-    <ClInclude Include="source\ScliptEngin\command_base.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfi.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfo.h" />
+    <ClInclude Include="source\Mode\ModeScriptBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -161,10 +159,10 @@
     <ClCompile Include="source\Application\ScliptFlagManager.cpp">
       <Filter>source\Application</Filter>
     </ClCompile>
-    <ClCompile Include="source\ScliptEngin\scripts_data.cpp">
+    <ClCompile Include="source\Script\scripts_data.cpp">
       <Filter>source\ScliptEngin</Filter>
     </ClCompile>
-    <ClCompile Include="source\ScliptEngin\scripts_string.cpp">
+    <ClCompile Include="source\Script\scripts_string.cpp">
       <Filter>source\ScliptEngin</Filter>
     </ClCompile>
     <ClCompile Include="source\Object\ActorBase2d.cpp">
@@ -176,10 +174,7 @@
     <ClCompile Include="source\Math\3dCollision.cpp">
       <Filter>source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_crfi.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ScliptEngin\command_crfo.cpp">
+    <ClCompile Include="source\Mode\ModeScriptBase.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
