@@ -71,6 +71,7 @@ public:
 	bool  _event;   // イベント判定と重なったか
 	bool  _pull;    // イベント
 	bool  _finish;   // イベント完了
+	bool  _fire;    // 発砲
 
 	int _cnt;  // 動作カウント
 	int _CT;   // クールタイム

@@ -23,6 +23,7 @@ void EnemyAAA::Init() {
 	_collision._fRadius = 300.f;
 	_collisionEvent._fRadius = 500.f;
 	_vEvent = { 10000.f, 10000.f, 10000.f };
+	_iLife = 50;
 
 	_iType = 0;
 	_iPossession = 0;
@@ -70,6 +71,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 					_vPos = obje->_vPos;
 					_vPos.y -= 2.f * _collision._fRadius + static_cast<float>(_iPieces) * _collision._fRadius;
 					_fRotatY = obje->_fRotatY + utility::PiOver2;
+					_fire = obje->_fire;
 				}
 			}
 			if (obje->GetType() == Type::kBullet) {
@@ -78,7 +80,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 						_CT = 10;
 						_overlap = true;
 						obje->Damage(mode);
-						//Damage(mode);
+						Damage(mode);
 					}
 				}
 			}
@@ -142,7 +144,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		_vDir.y = cos(theta);
 		_vDir.Normalized();
 
-		if (_CT == 0) {
+		if (_fire && _CT == 0) {
 			AddBullet(mode);
 			_CT = 10;
 		}
@@ -161,7 +163,10 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 }
 
 void EnemyAAA::Damage(ModeBase& mode) {
-	mode.GetObjectServer3D().Del(*this);
+	--_iLife;
+	if (_iLife < 0) {
+		mode.GetObjectServer3D().Del(*this);
+	}
 }
 
 bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {

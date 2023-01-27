@@ -30,6 +30,7 @@ void ActorBase3D::Init() {
 	_event = false;
 	_pull = false;
 	_finish = false;
+	_fire = false;
 	_cnt = 0;
 	_ST = 0;
 
@@ -40,6 +41,7 @@ bool ActorBase3D::Update(ApplicationBase& game, ModeBase& mode) {
 
 	_overlap = false;
 	_event = false;
+	_fire = false;
 
 	_cnt++;
 	if(_CT > 0) {

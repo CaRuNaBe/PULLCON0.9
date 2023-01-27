@@ -165,6 +165,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 				PlaySoundMem(_seBullet, DX_PLAYTYPE_BACK);
 			}
 			// íeê∂ê¨
+			_fire = true;
 			AddBullet(mode);
 		}
 
