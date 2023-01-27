@@ -579,31 +579,37 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::st
 		return false;
 	}
 	auto color = GetColor( min_map_draw_red,min_map_draw_green,min_map_draw_blue );
-	/*
+
 	std::vector<math::vector4>posivec;
 	while ( true )
 	{
-		posix = utility::get_random(0,);
-		posi.x; posi.z;
-
-
-		if ( posivec.size()>1000 )
-		{
-			break;
-		}
-		if ( < range )
+		auto max = posi.x + range;
+		auto min = posi.x - range;
+		auto max_random = std::abs( max ) + std::abs( min );
+		auto posi_rand_x = static_cast<float>(utility::get_random( 0,static_cast<int>(max_random) ));
+		auto posi_rand_z = static_cast<float>(utility::get_random( 0,static_cast<int>(max_random) ));
+		auto posi_new_x = posi_rand_x + min;
+		auto posi_new_z = posi_rand_x + min;
+		vector4 rand_posi = {posi_new_x,0.0f,posi_new_z};
+		auto pos = rand_posi - posi;
+		if ( pos.Lenght() > range )
 		{
 			continue;
 		}
-		vector4 setposi{,posi.y,};
-		posivec.push_back( setposi );
+		posivec.push_back( rand_posi );
+		if ( posivec.size() > 100 )
+		{
+			break;
+		}
 	}
-	*/
-	auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,pile_num );
-	enemyAAA->SetPosition( posi );
-	enemyAAA->SetScale( scale );
-	_3D_objectServer.Add( enemyAAA );
 
+	for ( auto&& set_pos: posivec )
+	{
+		auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,pile_num );
+		enemyAAA->SetPosition( set_pos );
+		enemyAAA->SetScale( scale );
+		_3D_objectServer.Add( enemyAAA );
+	}
 	return true;
 };
 

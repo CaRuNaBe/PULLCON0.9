@@ -191,8 +191,8 @@
     <ClInclude Include="source\Object\ObjectServer.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
     <ClInclude Include="source\Math\vector2.h" />
-    <ClInclude Include="source\ScliptEngin\scripts_data.h" />
-    <ClInclude Include="source\ScliptEngin\scripts_string.h" />
+    <ClInclude Include="source\Script\scripts_data.h" />
+    <ClInclude Include="source\Script\scripts_string.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\ScliptFlagManager.cpp" />
@@ -218,8 +218,8 @@
     <ClCompile Include="source\Object\ObjectServer.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
     <ClCompile Include="source\Math\vector2.cpp" />
-    <ClCompile Include="source\ScliptEngin\scripts_data.cpp" />
-    <ClCompile Include="source\ScliptEngin\scripts_string.cpp" />
+    <ClCompile Include="source\Script\scripts_data.cpp" />
+    <ClCompile Include="source\Script\scripts_string.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
