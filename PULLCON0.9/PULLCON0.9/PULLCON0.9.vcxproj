@@ -76,7 +76,7 @@
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)/$(Configuration)/</OutDir>
@@ -84,7 +84,7 @@
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)/$(Configuration)/</OutDir>
@@ -92,7 +92,7 @@
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)/$(Configuration)/</OutDir>
@@ -100,7 +100,7 @@
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

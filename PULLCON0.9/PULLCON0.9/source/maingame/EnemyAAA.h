@@ -6,7 +6,7 @@ class EnemyAAA: public ActorBase3D
 {
 	typedef ActorBase3D base;
 public:
-	EnemyAAA( float objectid,int pile_num );
+	EnemyAAA( float min_id,float max_id,int pile_num );
 	virtual ~EnemyAAA();
 	virtual Type GetType()
 	{

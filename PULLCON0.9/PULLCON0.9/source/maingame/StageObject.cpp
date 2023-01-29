@@ -10,13 +10,14 @@ StageObject::StageObject( int objectid,int collision )
 	{
 		is_coll = false;
 	}
+	/*
 	switch ( objectid )
 	{
 
 		default:
 			break;
 	}
-
+	*/
 	Init();
 }
 

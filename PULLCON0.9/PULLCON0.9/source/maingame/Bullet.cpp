@@ -6,8 +6,8 @@
 Bullet::Bullet()
 	:base()
 {
-	_handle = MV1LoadModel("res/bullet/model/normalammo/cg_NormalAmmo.mv1");
-
+	//_handle = MV1LoadModel("res/bullet/model/normalammo/cg_NormalAmmo.mv1");
+	_handle = 0;
 	Init();
 }
 
@@ -44,7 +44,7 @@ bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 	if (_cnt % 4 == 0) {
 		auto effect = std::make_shared<EffectTrail>();
 		effect->SetPosition(_vPos);
-		mode.GetObjectServer3D().Add(effect);
+		//mode.GetObjectServer3D().Add(effect);
 	}
 
 	return true;

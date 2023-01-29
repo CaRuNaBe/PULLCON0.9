@@ -79,12 +79,12 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 #if _DEBUG
 //	state = ScriptState::EDIT;
 #endif
-	_cg = ResourceServer::LoadGraph("res/cursor00.png");
+	_cg = ResourceServer::LoadGraph( "res/cursor00.png" );
 	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
 	// 作成したデータの識別番号を変数 FontHandle に保存する
-	_handlefont = CreateFontToHandle(NULL, 40, 3);
+	_handlefont = CreateFontToHandle( NULL,40,3 );
 
-	_vCursor = { 0.0f, 0.0f, 0.0f };
+	_vCursor = {0.0f, 0.0f, 0.0f};
 	max_line = 0;
 	now_line = 0;
 	feedcount = 0.0;
@@ -148,7 +148,8 @@ bool ModeMainGame::Update()
 	ModeBase::Update();
 	_3D_objectServer.Update( _game,*this );
 
-	if (_game.Getinput().XinputEveryOtherLeftTrigger(30)) {
+	if ( _game.Getinput().XinputEveryOtherLeftTrigger( 30 ) )
+	{
 		_dbgCollisionDraw = !_dbgCollisionDraw;
 	}
 
@@ -264,14 +265,17 @@ void ModeMainGame::TimeWait()
 
 bool ModeMainGame::OnCommandStageLabel( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };//
 
 bool ModeMainGame::OnCommandJunpLabel( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };//
 
 bool ModeMainGame::OnCommandChoice( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };
 
 bool ModeMainGame::OnCommandStart( unsigned int line,const std::vector<std::string>& scripts )
@@ -287,10 +291,12 @@ bool ModeMainGame::OnCommandStart( unsigned int line,const std::vector<std::stri
 
 bool ModeMainGame::OnCommandEnd( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };
 
 bool ModeMainGame::OnCommandLoading( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };
 
 bool ModeMainGame::OnCommandFeedIn( unsigned int line,const std::vector<std::string>& scripts )
@@ -305,18 +311,22 @@ bool ModeMainGame::OnCommandFeedOut( unsigned int line,const std::vector<std::st
 
 bool ModeMainGame::OnCommandTimeWait( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };
 
 bool ModeMainGame::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };
 
 bool ModeMainGame::OnCommandBgm( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };
 
 bool ModeMainGame::OnCommandStory( unsigned int line,const std::vector<std::string>& scripts )
 {
+	return true;
 };
 /**
  * \fn bool ModeMainGame::OnCommandStage.
@@ -397,7 +407,7 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::str
 	}
 	auto player = std::make_shared<Player>();
 	player->SetPosition( posi );
-	player->SetScale( scale );
+	//player->SetScale( scale );
 	_3D_objectServer.Add( player );
 	return true;
 };
@@ -502,33 +512,48 @@ bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,const std::vector<std::s
 	}
 	auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,pile_num );
 	enemyAAA->SetPosition( posi );
-	enemyAAA->SetScale( scale );
-	enemyAAA->SetAxialX( x_rad );
-	enemyAAA->SetAxialY( y_rad );
-	enemyAAA->SetAim( aim_player );
+	//enemyAAA->SetScale( scale );
+	//enemyAAA->SetAxialX( x_rad );
+	//enemyAAA->SetAxialY( y_rad );
+	//enemyAAA->SetAim( aim_player );
 	_3D_objectServer.Add( enemyAAA );
 	return true;
 };
 
 bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::string>& scripts )
 {
+	/** エリアのポジション */
 	vector4 posi;
+	/** scriptsの中の想定している数値や文字列の数 */
 	const size_t SCRIPTSIZE = 14;
+	/** ポジションからの最大の距離 */
 	float range = 0.0f;
+	/** 大きさ */
 	float scale = 1.0f;
+	/** オブジェクト同士の最低の距離 */
 	float interval = 0.0f;
+	/** あらかじめ決めていた対空砲の順番の一番低いid */
 	int object_min_id = 0;
+	/** あらかじめ決めていた対空砲の順番の一番高いid */
 	int object_max_id = 0;
-	int pile_num = 0;
+	/** AAA下に続く最低の数 */
 	int pile_min_num = 0;
+	/** AAA下に続く最高の数 */
 	int pile_max_num = 0;
+	/** マップにエリア表示する為の赤色の段階番号 */
 	int min_map_draw_red = 0;
+	/** マップにエリア表示する為の緑色の段階番号 */
 	int min_map_draw_green = 0;
+	/** マップにエリア表示する為の青色の段階番号 */
 	int min_map_draw_blue = 0;
+
+	/** scriptsの中に指定のサイズ入っているか確認入ってない場合失敗を返す */
 	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
 	}
+
+	/** ポジションを文字列からxyzを取得。うまく変換出来なかった場合失敗を返す */
 	if ( !(string::ToFloat( scripts[1],posi.x )) )
 	{
 		return false;
@@ -541,41 +566,57 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::st
 	{
 		return false;
 	}
+	/** 大きさを文字列から取得。うまく変換出来なかった場合失敗を返す */
 	if ( !(string::ToFloat( scripts[4],scale )) )
 	{
 		return false;
 	}
+	/** scaleが0以下だった場合失敗を返す */
 	if ( scale <= 0.0f )
 	{
 		return false;
 	}
+	/** 対空砲の一番低いidを文字列から取得。うまく変換出来なかった場合失敗を返す */
 	if ( !(string::ToInt( scripts[5],object_min_id )) )
 	{
-		return false;//文字列からintに変換
+		return false;
 	};
+	/** 対空砲の一番高いidを文字列から取得。うまく変換出来なかった場合失敗を返す */
 	if ( !(string::ToInt( scripts[6],object_max_id )) )
 	{
-		return false;//文字列からintに変換
+		return false;
 	};
+	/** ポジションからの最大の距離を文字列から取得。うまく変換出来なかった場合失敗を返す */
 	if ( !(string::ToFloat( scripts[7],range )) )
 	{
 		return false;
 	}
+	/** オブジェクト同士の最低の距離を文字列から取得。うまく変換出来なかった場合失敗を返す */
 	if ( !(string::ToFloat( scripts[8],interval )) )
 	{
 		return false;
 	}
-
+	/** AAA下に続く最低の数を文字列から取得。うまく変換出来なかった場合失敗を返す */
 	if ( !(string::ToInt( scripts[9],pile_min_num )) )
 	{
+		/** pile_min_numが0未満だった場合失敗を返す */
+		if ( pile_min_num < 0 )
+		{
+			return false;
+		}
 		return false;
 	}
+	/** AAA下に続く最高の数を文字列から取得。うまく変換出来なかった場合失敗を返す */
 	if ( !(string::ToInt( scripts[10],pile_max_num )) )
 	{
+		/** pile_max_numが0未満だった場合失敗を返す */
+		if ( pile_max_num < 0 )
+		{
+			return false;
+		}
 		return false;
 	}
-	pile_num = utility::get_random( pile_min_num,pile_max_num );
-
+	/**  */
 	if ( !(string::ToInt( scripts[11],min_map_draw_red )) )
 	{
 		return false;
@@ -590,36 +631,60 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::st
 	}
 	auto color = GetColor( min_map_draw_red,min_map_draw_green,min_map_draw_blue );
 
-	std::vector<math::vector4>posivec;
+	std::vector<std::tuple<math::vector4,int>>posivec;
+	int num_while = 0;
+	auto x_posi_max = posi.x + std::abs( range );
+	auto x_posi_min = posi.x - std::abs( range );
+	auto z_posi_max = posi.z + std::abs( range );
+	auto z_posi_min = posi.z - std::abs( range );
 	while ( true )
 	{
-		auto max = posi.x + range;
-		auto min = posi.x - range;
-		auto max_random = std::abs( max ) + std::abs( min );
-		auto posi_rand_x = static_cast<float>(utility::get_random( 0,static_cast<int>(max_random) ));
-		auto posi_rand_z = static_cast<float>(utility::get_random( 0,static_cast<int>(max_random) ));
-		auto posi_new_x = posi_rand_x + min;
-		auto posi_new_z = posi_rand_x + min;
-		vector4 rand_posi = {posi_new_x,0.0f,posi_new_z};
+		auto posi_rand_x = static_cast<float>(utility::get_random( static_cast<int>(x_posi_min),static_cast<int>(x_posi_max) ));
+		auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
+		int pile_num = utility::get_random( pile_min_num,pile_max_num );
+		vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
+		//
+		int in_range_nim = 0;
+
+		for ( auto&& set_pos : posivec )
+		{
+			auto pos = std::get<0>(set_pos) - rand_posi;
+			if ( pos.Lenght() < interval )
+			{
+				in_range_nim++;
+				break;
+			}
+		}
+
+		if ( num_while > 100 )
+		{
+			break;
+		}
+		num_while++;
+		if ( in_range_nim > 0 )
+		{
+			continue;
+		}
+
 		auto pos = rand_posi - posi;
 		if ( pos.Lenght() > range )
 		{
 			continue;
 		}
-		posivec.push_back( rand_posi );
-		if ( posivec.size() > 100 )
-		{
-			break;
-		}
+
+		posivec.push_back( std::make_tuple( rand_posi,pile_num ) );
 	}
 
-	for ( auto&& set_pos: posivec )
+
+
+	for ( auto&& set_pos : posivec )
 	{
-		auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,pile_num );
-		enemyAAA->SetPosition( set_pos );
-		enemyAAA->SetScale( scale );
+		auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,std::get<1>( set_pos ) );
+		enemyAAA->SetPosition( std::get<0>(set_pos) );
+		//enemyAAA->SetScale( scale );
 		_3D_objectServer.Add( enemyAAA );
 	}
+
 	return true;
 };
 
@@ -665,21 +730,29 @@ bool ModeMainGame::OnCommandObject( unsigned int line,const std::vector<std::str
 
 	auto object = std::make_shared<StageObject>( object_id,collision_id );
 	object->SetPosition( posi );
-	object->SetScale( scale );
+	//object->SetScale( scale );
 	_3D_objectServer.Add( object );
 	return true;
 };
 
 bool ModeMainGame::OnCommandAreaObj( unsigned int line,const std::vector<std::string>& scripts )
 {
+	/** エリアのポジション */
 	vector4 posi;
-	float scale = 1.0f;
-	float range = 0.0f;
-	float interval = 0.0f;
-	int object_id = 0;
-	int collision_id = 1;
+	/** scriptsの中にある数値や文字列の数 */
 	const size_t SCRIPTSIZE = 10;
-	int shape_id = 0;
+	/** 大きさ */
+	float scale = 1.0f;
+	/** 配置するものの範囲 */
+	float range = 0.0f;
+	/** 配置するものの間隔 */
+	float interval = 0.0f;
+	/** 呼び込む3dモデルのid */
+	int object_id = 0;
+	/** コリジョン有無(1有;0無) */
+	int collision_id = 1;
+	/** 円状に配置か正方形状に配置か。1円状,0正方形状 */
+	int is_circular = 0;
 	if ( scripts.size() != SCRIPTSIZE )
 	{
 		return false;
@@ -712,7 +785,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,const std::vector<std::st
 	{
 		return false;//文字列からintに変換
 	};
-	if ( !(string::ToInt( scripts[7],shape_id )) )
+	if ( !(string::ToInt( scripts[7],is_circular )) )
 	{
 		return false;//文字列からintに変換
 	};
@@ -725,10 +798,60 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,const std::vector<std::st
 		return false;
 	}
 
-	auto object = std::make_shared<StageObject>( object_id,collision_id );
-	object->SetPosition( posi );
-	object->SetScale( scale );
-	_3D_objectServer.Add( object );
+	std::vector<math::vector4>posivec;
+	int num_while = 0;
+	auto x_posi_max = posi.x + std::abs( range );
+	auto x_posi_min = posi.x - std::abs( range );
+	auto z_posi_max = posi.z + std::abs( range );
+	auto z_posi_min = posi.z - std::abs( range );
+	while ( true )
+	{
+		auto posi_rand_x = static_cast<float>(utility::get_random( static_cast<int>(x_posi_min),static_cast<int>(x_posi_max) ));
+		auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
+
+		vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
+		//
+		int in_range_nim = 0;
+
+		for ( auto&& set_pos : posivec )
+		{
+			auto pos = set_pos - rand_posi;
+			if ( pos.Lenght() < interval )
+			{
+				in_range_nim++;
+			}
+		}
+
+		if ( num_while > 100 )
+		{
+			break;
+		}
+		num_while++;
+		if ( in_range_nim > 0 )
+		{
+			continue;
+		}
+
+		auto pos = rand_posi - posi;
+		if ( is_circular )
+		{
+			if ( pos.Lenght() > range )
+			{
+				continue;
+			}
+		}
+		posivec.push_back( rand_posi );
+
+
+	}
+
+	for ( auto&& set_pos : posivec )
+	{
+		auto object = std::make_shared<StageObject>( object_id,collision_id );
+		object->SetPosition( set_pos );
+		//object->SetScale( scale );
+		_3D_objectServer.Add( object );
+	}
 	return true;
 };
 
@@ -1050,7 +1173,7 @@ void ModeMainGame::Parsing()
 	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
 	{
 		const auto script = scripts_data->GetScript( now_line );
-		const auto command = (script[0]);
+		const auto& command = (script[0]);
 		std::string string_comand{command};
 		/*
 		bool isThrough = false;
@@ -1102,13 +1225,15 @@ bool ModeMainGame::Draw()
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
 	_3D_objectServer.Draw( _game,*this );
 
-	if (_clear) {
-		// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
-		DrawStringToHandle(_game.DispSizeW() / 2, _game.DispSizeH() / 2, "C L E A R!!", GetColor(255, 255, 0), _handlefont);
+	if ( _clear )
+	{
+// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
+		DrawStringToHandle( _game.DispSizeW() / 2,_game.DispSizeH() / 2,"C L E A R!!",GetColor( 255,255,0 ),_handlefont );
 	}
-	if (!_transparence) {
-		VECTOR ScreenPos = ConvWorldPosToScreenPos(ToDX(_vCursor));
-		DrawRotaGraph(static_cast<int>(ScreenPos.x), static_cast<int>(ScreenPos.y), 0.5, 0, _cg, TRUE);
+	if ( !_transparence )
+	{
+		VECTOR ScreenPos = ConvWorldPosToScreenPos( ToDX( _vCursor ) );
+		DrawRotaGraph( static_cast<int>(ScreenPos.x),static_cast<int>(ScreenPos.y),0.5,0,_cg,TRUE );
 	}
 
 	switch ( state )

@@ -1,5 +1,6 @@
 
 #include "SupplyEria.h"
+#include "../mode/ModeMainGame.h"
 SupplyEria::SupplyEria( float _radius )
 	:base()
 {

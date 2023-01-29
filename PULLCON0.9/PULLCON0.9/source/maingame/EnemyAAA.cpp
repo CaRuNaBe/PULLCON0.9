@@ -3,7 +3,7 @@
 #include "Bullet.h"
 #include "../mode/ModeMainGame.h"
 
-EnemyAAA::EnemyAAA( float objectid,int pile_num )
+EnemyAAA::EnemyAAA( float min_id,float max_id,int pile_num )
 	:base()
 {
 

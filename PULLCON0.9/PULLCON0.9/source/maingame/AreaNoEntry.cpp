@@ -14,7 +14,9 @@ void AreaNoEntry::Init()
 };
 bool AreaNoEntry::Update( ApplicationBase& game,ModeBase& mode )
 {
+	return true;
 };
 bool AreaNoEntry::Draw( ApplicationBase& game,ModeBase& mode )
 {
+	return true;
 };
