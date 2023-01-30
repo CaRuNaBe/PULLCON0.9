@@ -13,7 +13,7 @@
 
 class ApplicationMain;
 class CommandLabel;
-
+class CommandChoice;
 class ModeMainGame:public ModeBase
 {
 public:
@@ -122,6 +122,8 @@ private:
 	std::unique_ptr<ScriptsData> scripts_data;
 	/** ステージ名を格納するvector */
 	std::vector<std::unique_ptr<CommandLabel>> label_list;
+	std::vector<std::unique_ptr<CommandChoice>> choice_list;
+
 	//std::vector<std::unique_ptr<CommandCrfi>> crfi_list;
 	//std::vector<std::unique_ptr<CommandCrfo>> crfo_list;
 

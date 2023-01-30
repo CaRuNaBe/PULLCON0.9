@@ -11,9 +11,7 @@
 #include "../source/Object/ActorBase3D.h"
 #include"Object/ObjectServer.h"
 
-#include "Script/command_base.h"
 #include "Script/scripts_data.h"
 #include "Script/scripts_string.h"
-#include "Script/command_crfi.h"
-#include "Script/command_crfo.h"
 #include "Script/CommandLabel.h"
+#include "Script/CommandChoice.h"

@@ -1,5 +1,5 @@
 ﻿
-#include "command_choice.h"
+#include "CommandChoice.h"
 
 namespace
 {
@@ -10,7 +10,7 @@ namespace
 CommandChoice::CommandChoice( unsigned int line,const std::vector<std::string>& script )
 	: CommandBase( line,script )
 {
-	this->line = 0; color = 0; is_cursor_over = false;
+	this->line = 0;
 }
 
 bool CommandChoice::Check()

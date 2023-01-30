@@ -7,6 +7,7 @@
  *********************************************************************/
 
 #include "ModeMainGame.h"
+#include "ModeTitle.h"
 #include <DxLib.h>
 #include "../ApplicationMain.h"
 #include "../maingame/Player.h"
@@ -25,7 +26,7 @@ namespace
 	//ゲームコマンド
 	const std::string COMMAND_STAGELABEL = "StageLabel";//ステージラベル決定コマンド
 	const std::string COMMAND_JUNPLABEL = "StageJunp";//ステージジャンプコマンド
-	const std::string COMMAND_CHOICE = "StageChoice";//ステージ分岐コマンド
+	const std::string COMMAND_TURNING = "Turning";//ステージ分岐コマンド
 	const std::string COMMAND_GAMESTART = "Start";//ゲームスタート
 	const std::string COMMAND_END = "End";//ゲーム終了
 	const std::string COMMAND_LOADING = "Load";//ロード画面表示
@@ -47,7 +48,7 @@ namespace
 	const std::string COMMAND_ENEMYSPAWN = "AreaSpawn";//敵のスポーンエリアと敵の設定
 	const std::string COMMAND_SUPPLY = "Supply";//回復エリアの生成
 	const std::string COMMAND_AREACOMMUNICATION = "Communication";//会話エリア発生エリアの設定
-	const std::string COMMAND_AREANOENTRY = "NoEntry";//侵入不能エリア生成
+	const std::string COMMAND_NOENTRY = "NoEntry";//侵入不能エリア生成
 
 
 
@@ -113,6 +114,8 @@ void ModeMainGame::Destroy()
 	now_line = 0;
 	wait_count = 0;
 	scripts_data.reset();
+	label_list.clear();
+	choice_list.clear();
 	scripts_data = nullptr;
 }
 
@@ -189,6 +192,9 @@ bool ModeMainGame::Update()
 			break;
 
 		case ScriptState::END:
+			auto title = std::make_shared<ModeTitle>( _game,1 );
+			_game.GetInstance()->GetModeServer()->Add( title );
+			_game.GetModeServer()->Del( *this );
 			break;
 	}
 
@@ -267,28 +273,50 @@ bool ModeMainGame::OnCommandStageLabel( unsigned int line,const std::vector<std:
 	{
 		return false;
 	}
-
-	label_list.emplace_back( std::move( label ) );
-
+	if ( state != ScriptState::EDIT )
+	{
+		label_list.emplace_back( std::move( label ) );
+	}
 	return true;
 };
 
 bool ModeMainGame::OnCommandJunpLabel( unsigned int line,const std::vector<std::string>& scripts )
 {
-	auto line = 0U;
+	line = 0U;
 	const auto result = GetLineNumber( scripts[1],line );
 
 	if ( result )
 	{
-		now_line = line;
+		if ( state != ScriptState::EDIT )
+		{
+			now_line = line;
+		}
 	}
 
 	return result;
 };
 
-bool ModeMainGame::OnCommandChoice( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandTurning( unsigned int line,const std::vector<std::string>& scripts )
 {
+	auto choice = std::make_unique<CommandChoice>( line,scripts );
 
+	if ( !choice->Check() )
+	{
+		return false;
+	}
+
+	auto line_number = 0U;
+	/*
+	if ( !GetLineNumber( choice->GetLabel(),line_number ) )
+	{
+		return false;
+	}
+	*/
+
+	if ( state != ScriptState::EDIT )
+	{
+		choice_list.emplace_back( std::move( choice ) );
+	}
 	return true;
 };
 
@@ -299,20 +327,31 @@ bool ModeMainGame::OnCommandStart( unsigned int line,const std::vector<std::stri
 	{
 		return false;
 	}
-	state = ScriptState::GAME;
+	if ( state != ScriptState::EDIT )
+	{
+		state = ScriptState::GAME;
+	}
 	return true;
 };
 
 bool ModeMainGame::OnCommandEnd( unsigned int line,const std::vector<std::string>& scripts )
 {
-
+	const size_t SCRIPTSIZE = 2;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( state != ScriptState::EDIT )
+	{
+		state = ScriptState::END;
+	}
 	return true;
 };
 
 bool ModeMainGame::OnCommandLoading( unsigned int line,const std::vector<std::string>& scripts )
 {
-
-	return true;
+	const size_t SCRIPTSIZE =
+		return true;
 };
 
 bool ModeMainGame::OnCommandFeedIn( unsigned int line,const std::vector<std::string>& scripts )
@@ -334,16 +373,19 @@ bool ModeMainGame::OnCommandTimeWait( unsigned int line,const std::vector<std::s
 
 bool ModeMainGame::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
 {
+
 	return true;
 };
 
 bool ModeMainGame::OnCommandBgm( unsigned int line,const std::vector<std::string>& scripts )
 {
+
 	return true;
 };
 
 bool ModeMainGame::OnCommandStory( unsigned int line,const std::vector<std::string>& scripts )
 {
+
 	return true;
 };
 
@@ -1129,16 +1171,20 @@ bool ModeMainGame::CheckInputString( std::string command )
 	auto script = string::Split( command,"," );
 
 	FunctionGameCommand comand_funcs;
-	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
+	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
 	comand_funcs.insert( std::make_pair( COMMAND_STAGE,&ModeMainGame::OnCommandStage ) );
 	comand_funcs.insert( std::make_pair( COMMAND_SKYSPHERE,&ModeMainGame::OnCommandSkySphere ) );
+	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
 	comand_funcs.insert( std::make_pair( COMMAND_GUNSHIP,&ModeMainGame::OnCommandGunShip ) );
-	comand_funcs.insert( std::make_pair( COMMAND_SUPPLY,&ModeMainGame::OnCommandSupply ) );
 	comand_funcs.insert( std::make_pair( COMMAND_ENEMYAAA,&ModeMainGame::OnCommandEnemyAAA ) );
-	comand_funcs.insert( std::make_pair( COMMAND_AREAAAA,&ModeMainGame::OnCommandEnemyAAA ) );
-	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
-	//comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrfi ) );
-	//comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrfo ) );
+	comand_funcs.insert( std::make_pair( COMMAND_AREAAAA,&ModeMainGame::OnCommandAreaAAA ) );
+	comand_funcs.insert( std::make_pair( COMMAND_OBJECT,&ModeMainGame::OnCommandObject ) );
+	comand_funcs.insert( std::make_pair( COMMAND_AREAOBJECT,&ModeMainGame::OnCommandAreaObj ) );
+	comand_funcs.insert( std::make_pair( COMMAND_ENEMYSPAWN,&ModeMainGame::OnCommandAreaSpawn ) );
+	comand_funcs.insert( std::make_pair( COMMAND_SUPPLY,&ModeMainGame::OnCommandSupply ) );
+	comand_funcs.insert( std::make_pair( COMMAND_AREACOMMUNICATION,&ModeMainGame::OnCommandCommunication ) );
+	comand_funcs.insert( std::make_pair( COMMAND_NOENTRY,&ModeMainGame::OnCommandNoEntry ) );
+
 	if ( command.size() <= 0 )
 	{
 		return false;
@@ -1160,27 +1206,47 @@ bool ModeMainGame::CheckInputString( std::string command )
 
 void ModeMainGame::PreParsing()
 {
+	FunctionGameCommand comand_funcs;
+	comand_funcs.insert( std::make_pair( COMMAND_STAGELABEL,&ModeMainGame::OnCommandStageLabel ) );
+
+	while ( now_line >= 0 && now_line < max_line )
+	{
+		const auto script = scripts_data->GetScript( now_line );
+		const auto& command = (script[0]);
+		std::string string_comand{command};
+		if ( string_comand == COMMAND_STAGELABEL )
+		{
+			(this->*comand_funcs[string_comand])(now_line,script);
+			++now_line;
+		}
+		else
+		{
+			++now_line;
+		}
+	}
+
+	now_line = 0;
 }
 
 void ModeMainGame::Parsing()
 {
 	auto stop_parsing = false;
-	unsigned	int dateempty = 0;
+	unsigned	int date_empty = 0;
 	FunctionGameCommand comand_funcs;
+	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
 	comand_funcs.insert( std::make_pair( COMMAND_STAGE,&ModeMainGame::OnCommandStage ) );
 	comand_funcs.insert( std::make_pair( COMMAND_SKYSPHERE,&ModeMainGame::OnCommandSkySphere ) );
 	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
-
-
 	comand_funcs.insert( std::make_pair( COMMAND_GUNSHIP,&ModeMainGame::OnCommandGunShip ) );
-	comand_funcs.insert( std::make_pair( COMMAND_SUPPLY,&ModeMainGame::OnCommandSupply ) );
 	comand_funcs.insert( std::make_pair( COMMAND_ENEMYAAA,&ModeMainGame::OnCommandEnemyAAA ) );
 	comand_funcs.insert( std::make_pair( COMMAND_AREAAAA,&ModeMainGame::OnCommandAreaAAA ) );
-	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
-	//comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrfi ) );
-	//comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrfo ) );
-	//comand_funcs.insert( std::make_pair( COMMAND_VE,&ModeMainGame::OnCommandPlayanime ) );
-	//comand_funcs.insert( std::make_pair( COMMAND_E,&ModeMainGame::OnCommandScliptend ) );
+	comand_funcs.insert( std::make_pair( COMMAND_OBJECT,&ModeMainGame::OnCommandObject ) );
+	comand_funcs.insert( std::make_pair( COMMAND_AREAOBJECT,&ModeMainGame::OnCommandAreaObj ) );
+	comand_funcs.insert( std::make_pair( COMMAND_ENEMYSPAWN,&ModeMainGame::OnCommandAreaSpawn ) );
+	comand_funcs.insert( std::make_pair( COMMAND_SUPPLY,&ModeMainGame::OnCommandSupply ) );
+	comand_funcs.insert( std::make_pair( COMMAND_AREACOMMUNICATION,&ModeMainGame::OnCommandCommunication ) );
+	comand_funcs.insert( std::make_pair( COMMAND_NOENTRY,&ModeMainGame::OnCommandNoEntry ) );
+
 
 	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
 	{
@@ -1213,7 +1279,7 @@ void ModeMainGame::Parsing()
 			}
 		}
 		*/
-		(this->*comand_funcs[string_comand])(now_line,script);
+
 		if ( string_comand == COMMAND_GAMESTART )
 		{
 			stop_parsing = true;
@@ -1221,7 +1287,7 @@ void ModeMainGame::Parsing()
 		}
 		++now_line;
 	}
-	if ( max_line <= dateempty )
+	if ( max_line <= date_empty )
 	{
 		state = ScriptState::EDIT;
 	}

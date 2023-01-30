@@ -1,7 +1,6 @@
 #pragma once
-#include "ModeBase.h"
+#include "appframe.h"
 #include"string"
-#include "../scliptengin/script_engine.h"
 
 class ModeSclipt:public ModeBase
 {
@@ -13,5 +12,4 @@ public:
 	virtual bool Draw();	// •`‰æ
 
 private:
-	ScriptEngine script;
 };

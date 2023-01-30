@@ -5,7 +5,7 @@
 //!
 #pragma once
 
-#include "command_base.h"
+#include "CommandBase.h"
 #include <string>
 
 
@@ -23,9 +23,9 @@ public:
 
 	bool Check() override;
 
-	inline void Initialize( Rect&& area,const int line )
+	inline void Initialize( const int line )
 	{
-		this->area = area; this->line = line;
+	 this->line = line;
 	}
 
 	inline std::string GetLabel() const
@@ -36,37 +36,17 @@ public:
 	{
 		return script[2];
 	}
-	inline const Rect& GetArea() const
-	{
-		return area;
-	}
+
 	inline unsigned int GetLineNumber() const
 	{
 		return line;
 	}
 
-	inline unsigned int GetColor() const
-	{
-		return color;
-	}
-	inline void SetColor( const unsigned int color )
-	{
-		this->color = color;
-	}
 
-	inline bool IsCursorOver() const
-	{
-		return is_cursor_over;
-	}
-	inline void SetCursorOver( const bool cursor_over )
-	{
-		is_cursor_over = cursor_over;
-	}
+
+
 
 private:
-	Rect area;
 	unsigned int line;
-	unsigned int color;
-	bool is_cursor_over;
 };
-}
+
