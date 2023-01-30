@@ -8,6 +8,7 @@
 
 #include "ModeMainGame.h"
 #include "ModeTitle.h"
+#include "ModeResourceRoad.h"
 #include <DxLib.h>
 #include "../ApplicationMain.h"
 #include "../maingame/Player.h"
@@ -350,35 +351,67 @@ bool ModeMainGame::OnCommandEnd( unsigned int line,const std::vector<std::string
 
 bool ModeMainGame::OnCommandLoading( unsigned int line,const std::vector<std::string>& scripts )
 {
-	const size_t SCRIPTSIZE =
+	const size_t SCRIPTSIZE = 2;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+	if ( state != ScriptState::EDIT )
+	{
+		auto loading = std::make_shared<ModeResourceRoad>(_game,20);
+		_game.GetModeServer()->Add( loading );
+	}
 		return true;
 };
 
 bool ModeMainGame::OnCommandFeedIn( unsigned int line,const std::vector<std::string>& scripts )
 {
-
+	const size_t SCRIPTSIZE = 5;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
 	return  true;
 }
 
 bool ModeMainGame::OnCommandFeedOut( unsigned int line,const std::vector<std::string>& scripts )
 {
-
+	const size_t SCRIPTSIZE = 5;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
 	return true;
 }
 
 bool ModeMainGame::OnCommandTimeWait( unsigned int line,const std::vector<std::string>& scripts )
 {
+	const size_t SCRIPTSIZE = 2;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
 	return true;
 };
 
 bool ModeMainGame::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
 {
+	const size_t SCRIPTSIZE = 2;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
 
 	return true;
 };
 
 bool ModeMainGame::OnCommandBgm( unsigned int line,const std::vector<std::string>& scripts )
 {
+	const size_t SCRIPTSIZE = 2;
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
 
 	return true;
 };

@@ -1,21 +1,16 @@
-/*****************************************************************//**
- * \file   ModeResourceRoad.h
- * \brief  リソースロード中表示画面クラス
- *
- * \author 阿部健太郎
- * \date   September 2022
- *********************************************************************/
+
 #pragma once
-#include "ModeBase.h"
-class Game;
+#include "appframe.h"
 class ModeResourceRoad :public ModeBase
 {
+	using base = ModeBase;
 public:
-	ModeResourceRoad ( Game& game );
-	virtual ~ModeResourceRoad ();
+	ModeResourceRoad( ApplicationBase& game,int layer );
+	virtual ~ModeResourceRoad();
+	virtual bool Initialize();
+	virtual bool Update();
+	virtual bool Draw();
 
-	virtual void Update ();  // 更新
-	virtual void Render ();	// 描画
 private:
 };
 

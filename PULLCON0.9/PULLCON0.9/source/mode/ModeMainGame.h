@@ -61,7 +61,7 @@ private:
 
 	bool OnCommandStageLabel( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandJunpLabel( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandChoice( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandTurning( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandStart( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandEnd( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandLoading( unsigned int line,const std::vector<std::string>& scripts );
