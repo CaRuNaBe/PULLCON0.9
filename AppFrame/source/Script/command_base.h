@@ -1,9 +1,4 @@
-﻿//!
-//! @file command_base.h
-//!
-//! @brief スクリプトを処理する基底クラス定義
-//!
-#pragma once
+﻿#pragma once
 
 #include <vector>
 #include <string>
@@ -11,17 +6,17 @@
 class CommandBase
 {
 public:
-	CommandBase(unsigned int line,const std::vector<std::string>& script)
+	CommandBase( unsigned int line,const std::vector<std::string>& script )
 	{
 		this->line = line; this->script = script;
 	}
-	CommandBase(const CommandBase&) = default;
-	CommandBase(CommandBase&&) noexcept = default;
+	CommandBase( const CommandBase& ) = default;
+	CommandBase( CommandBase&& ) noexcept = default;
 
 	virtual ~CommandBase() = default;
 
-	CommandBase& operator=(const CommandBase& right) = default;
-	CommandBase& operator=(CommandBase&& right) noexcept = default;
+	CommandBase& operator=( const CommandBase& right ) = default;
+	CommandBase& operator=( CommandBase&& right ) noexcept = default;
 
 	virtual bool Check() = 0;
 

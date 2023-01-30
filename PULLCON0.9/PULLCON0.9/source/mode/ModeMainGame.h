@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * @file   ModeMainGame.h
+ * @brief  ゲームスクリプト定義
+ * 
+ * @author 阿部健太郎
+ * @date   January 2023
+ *********************************************************************/
 #pragma once
 #include "appframe.h"
 #include<vector>
@@ -5,21 +12,22 @@
 #include<string>
 
 class ApplicationMain;
-class CommandCrfi;
-class CommandCrfo;
+class CommandLabel;
 
 class ModeMainGame:public ModeBase
 {
 public:
+	/** コンストラクタ */
 	ModeMainGame( ApplicationMain& game,int layer );
+	/** デストラクタ */
 	virtual ~ModeMainGame();
-
+	/** 初期化 コンストラクタ時よぶ */
 	void Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname );
-
-
-
-	virtual bool Draw();	// 描画
-
+	/** 計算 毎フレーム呼ばれる */
+	virtual bool Update();
+	/** 描画 毎フレーム呼ばれる */
+	virtual bool Draw();
+	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
 
 	void SetCursor(const vector4& pos) { _vCursor = pos; }
@@ -96,10 +104,10 @@ private:
 	bool OnEditCommandSave();
 	/** 編集地点変更コマンドに使われる関数 */
 	bool OnEditCommandJunp();
-	/** 毎フレーム呼ばれる */
-	virtual bool Update();
+
 	/** フレーム数待つ時に使われるUpdate */
 	void TimeWait();
+	bool GetLineNumber( const std::string& str,unsigned int& line ) const;
 	/** ボタン押すまで待つに使われるUpdate */
 	void ClickWait();
 	/** フェードイン時に使われるUpdate */
@@ -112,7 +120,8 @@ private:
 
 	/** ScriptsDataにアクセスするポインタ */
 	std::unique_ptr<ScriptsData> scripts_data;
-
+	/** ステージ名を格納するvector */
+	std::vector<std::unique_ptr<CommandLabel>> label_list;
 	//std::vector<std::unique_ptr<CommandCrfi>> crfi_list;
 	//std::vector<std::unique_ptr<CommandCrfo>> crfo_list;
 
@@ -129,9 +138,9 @@ private:
 	/** 待つ時間 */
 	unsigned int wait_count;
 	/** フェードアウトインするときに使うα値 */
-	double Alpha;
+	float Alpha;
 	/** フェードアウトインするときに使うフレーム数 */
-	double feedcount;
+	float feedcount;
 	/** ステージ名 */
 	std::string  stage_name;
 	bool is_notcant;

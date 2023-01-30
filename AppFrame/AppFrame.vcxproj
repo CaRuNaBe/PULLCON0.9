@@ -191,6 +191,9 @@
     <ClInclude Include="source\Object\ObjectServer.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
     <ClInclude Include="source\Math\vector2.h" />
+    <ClInclude Include="source\Script\command_base.h" />
+    <ClInclude Include="source\Script\command_choice.h" />
+    <ClInclude Include="source\Script\command_label.h" />
     <ClInclude Include="source\Script\scripts_data.h" />
     <ClInclude Include="source\Script\scripts_string.h" />
   </ItemGroup>
@@ -218,6 +221,8 @@
     <ClCompile Include="source\Object\ObjectServer.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
     <ClCompile Include="source\Math\vector2.cpp" />
+    <ClCompile Include="source\Script\command_choice.cpp" />
+    <ClCompile Include="source\Script\command_label.cpp" />
     <ClCompile Include="source\Script\scripts_data.cpp" />
     <ClCompile Include="source\Script\scripts_string.cpp" />
   </ItemGroup>

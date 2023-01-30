@@ -1,19 +1,19 @@
 ﻿/*****************************************************************//**
- * \file   ModeGame.cpp
- * \brief  ゲームモード実装
+ * @file   ModeMainGame.cpp
+ * @brief  ゲームスクリプト実装
  *
- * \author 阿部健太郎
- * \date   September 2022
+ * @author 阿部健太郎
+ * @date   January 2023
  *********************************************************************/
 
 #include "ModeMainGame.h"
 #include <DxLib.h>
 #include "../ApplicationMain.h"
-#include"../maingame/Player.h"
-#include"../maingame/GameStage.h"
-#include"../maingame/SkySphere.h"
+#include "../maingame/Player.h"
+#include "../maingame/GameStage.h"
+#include "../maingame/SkySphere.h"
 #include "../maingame/SupplyEria.h"
-#include"../maingame/ClearObject.h"
+#include "../maingame/ClearObject.h"
 #include "../maingame/EnemyAAA.h"
 #include "../maingame/StageObject.h"
 #include "../maingame/EnemySpawnEria.h"
@@ -65,11 +65,11 @@ namespace
 }
 
 /**
- * \fn void ModeMainGame::ModeMainGame.
- * \brief コンストラクタ
- * \param game ApplicationMainの参照を受け取る
- * \param layer 何番目に移すか
- * \return void
+ * @fn void ModeMainGame::ModeMainGame.
+ * @brief コンストラクタ
+ * @param game ApplicationMainの参照を受け取る
+ * @param layer 何番目に移すか
+ * @return void
  */
 ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	: ModeBase( game,layer )
@@ -96,7 +96,11 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	Initialize( FILEPASS,GAMESCRIPT,FILENAME );
 
 }
-
+/**
+ * @fn void ModeMainGame::~ModeMainGame.
+ * @brief デストラクタ 後処理を行う
+ * @return void
+ */
 ModeMainGame::~ModeMainGame()
 {
 	Destroy();
@@ -111,11 +115,7 @@ void ModeMainGame::Destroy()
 	scripts_data.reset();
 	scripts_data = nullptr;
 }
-/**
- *¥fn void ModeGame::Init_modegame.
- *¥brief
- *¥return void
- */
+
 void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname )
 {
 	ModeBase::Initialize();
@@ -133,16 +133,9 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 		return;
 	}
 
-	//PreParsing();
-
-
 	return;
 };
-/**
- *¥fn void ModeGame::Update.
- *¥brief 計算処理毎回呼ばれる
- *¥return void
- */
+
 bool ModeMainGame::Update()
 {
 	ModeBase::Update();
@@ -202,10 +195,7 @@ bool ModeMainGame::Update()
 
 	return true;
 }
-/**
- * @fn void ModeMainGame::CrfiUpdate ()
- * @brief スクリプトの "fi" コマンド時の計算処理
- */
+
 void ModeMainGame::CrfiUpdate()
 {
 	auto i = 255 / feedcount;
@@ -221,10 +211,7 @@ void ModeMainGame::CrfiUpdate()
 		state = ScriptState::PARSING;
 	}
 }
-/**
- * @fn void ModeMainGame::CrfoUpdate ()
- * @brief スクリプトの "fo" コマンド時の計算処理
- */
+
 void ModeMainGame::CrfoUpdate()
 {
 	auto i = 255.0 / feedcount;
@@ -240,17 +227,11 @@ void ModeMainGame::CrfoUpdate()
 		state = ScriptState::PARSING;
 	}
 }
-//!
-//! @fn void ModeMainGame::ClickWait()
-//! @brief クリック待ち処理
-//!
+
 void ModeMainGame::ClickWait()
 {
 }
-//!
-//! @fn void ModeMainGame::TimeWait()
-//! @brief 時間待ち処理
-//!
+
 void ModeMainGame::TimeWait()
 {
 	if ( wait_count > 0 )
@@ -263,18 +244,51 @@ void ModeMainGame::TimeWait()
 	}
 }
 
+bool ModeMainGame::GetLineNumber( const std::string& str,unsigned int& line ) const
+{
+	for ( auto&& label : label_list )
+	{
+		if ( label->GetLabel() == str )
+		{
+			line = label->GetLineNumber();
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool ModeMainGame::OnCommandStageLabel( unsigned int line,const std::vector<std::string>& scripts )
 {
+	auto label = std::make_unique<CommandLabel>( line,scripts );
+
+	if ( !label->Check() )
+	{
+		return false;
+	}
+
+	label_list.emplace_back( std::move( label ) );
+
 	return true;
-};//
+};
 
 bool ModeMainGame::OnCommandJunpLabel( unsigned int line,const std::vector<std::string>& scripts )
 {
-	return true;
-};//
+	auto line = 0U;
+	const auto result = GetLineNumber( scripts[1],line );
+
+	if ( result )
+	{
+		now_line = line;
+	}
+
+	return result;
+};
 
 bool ModeMainGame::OnCommandChoice( unsigned int line,const std::vector<std::string>& scripts )
 {
+
 	return true;
 };
 
@@ -291,21 +305,25 @@ bool ModeMainGame::OnCommandStart( unsigned int line,const std::vector<std::stri
 
 bool ModeMainGame::OnCommandEnd( unsigned int line,const std::vector<std::string>& scripts )
 {
+
 	return true;
 };
 
 bool ModeMainGame::OnCommandLoading( unsigned int line,const std::vector<std::string>& scripts )
 {
+
 	return true;
 };
 
 bool ModeMainGame::OnCommandFeedIn( unsigned int line,const std::vector<std::string>& scripts )
 {
+
 	return  true;
 }
 
 bool ModeMainGame::OnCommandFeedOut( unsigned int line,const std::vector<std::string>& scripts )
 {
+
 	return true;
 }
 
@@ -328,13 +346,7 @@ bool ModeMainGame::OnCommandStory( unsigned int line,const std::vector<std::stri
 {
 	return true;
 };
-/**
- * \fn bool ModeMainGame::OnCommandStage.
- * \brief ステージ土台配置
- * \param line 行数
- * \param scripts 文字列vector
- * \return bool
- */
+
 bool ModeMainGame::OnCommandStage( unsigned int line,const std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 2;//scriptsに入ってる文字列の最大数
@@ -351,13 +363,7 @@ bool ModeMainGame::OnCommandStage( unsigned int line,const std::vector<std::stri
 	_3D_objectServer.Add( stage );//サーバーに追加
 	return true;
 };
-/**
- * \fn bool ModeMainGame::OnCommandSkySphere.
- * \brief スカイスフィア配置
- * \param line
- * \param scripts
- * \return bool
- */
+
 bool ModeMainGame::OnCommandSkySphere( unsigned int line,const std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 2;//scriptsに入ってる文字列の最大数
@@ -375,7 +381,7 @@ bool ModeMainGame::OnCommandSkySphere( unsigned int line,const std::vector<std::
 	_3D_objectServer.Add( skysphere );//サーバーに追加
 	return true;
 };
-//
+
 bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
@@ -411,7 +417,7 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::str
 	_3D_objectServer.Add( player );
 	return true;
 };
-//
+
 bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::string>& scripts )
 {
 	vector4 posi;
@@ -648,7 +654,7 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::st
 
 		for ( auto&& set_pos : posivec )
 		{
-			auto pos = std::get<0>(set_pos) - rand_posi;
+			auto pos = std::get<0>( set_pos ) - rand_posi;
 			if ( pos.Lenght() < interval )
 			{
 				in_range_nim++;
@@ -680,7 +686,7 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::st
 	for ( auto&& set_pos : posivec )
 	{
 		auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,std::get<1>( set_pos ) );
-		enemyAAA->SetPosition( std::get<0>(set_pos) );
+		enemyAAA->SetPosition( std::get<0>( set_pos ) );
 		//enemyAAA->SetScale( scale );
 		_3D_objectServer.Add( enemyAAA );
 	}
@@ -1068,6 +1074,7 @@ bool ModeMainGame::OnEditCommandAdd()
 	}
 	return true;
 };
+
 bool ModeMainGame::OnEditCommandDelete()
 {
 	int x,y;
@@ -1099,16 +1106,19 @@ bool ModeMainGame::OnEditCommandDelete()
 	}
 	return true;
 };
+
 bool ModeMainGame::OnEditCommandClear()
 {
 	scripts_data->ScriptClear();
 	return true;
 };
+
 bool ModeMainGame::OnEditCommandSave()
 {
 	scripts_data->WriteJson( FILENAME,GAMESCRIPT );
 	return true;
 };
+
 bool ModeMainGame::OnEditCommandJunp()
 {
 	return true;
@@ -1157,9 +1167,11 @@ void ModeMainGame::Parsing()
 	auto stop_parsing = false;
 	unsigned	int dateempty = 0;
 	FunctionGameCommand comand_funcs;
-	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
 	comand_funcs.insert( std::make_pair( COMMAND_STAGE,&ModeMainGame::OnCommandStage ) );
 	comand_funcs.insert( std::make_pair( COMMAND_SKYSPHERE,&ModeMainGame::OnCommandSkySphere ) );
+	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
+
+
 	comand_funcs.insert( std::make_pair( COMMAND_GUNSHIP,&ModeMainGame::OnCommandGunShip ) );
 	comand_funcs.insert( std::make_pair( COMMAND_SUPPLY,&ModeMainGame::OnCommandSupply ) );
 	comand_funcs.insert( std::make_pair( COMMAND_ENEMYAAA,&ModeMainGame::OnCommandEnemyAAA ) );

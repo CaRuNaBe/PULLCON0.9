@@ -102,6 +102,9 @@
       <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\Mode\ModeScriptBase.h" />
+    <ClInclude Include="source\Script\command_choice.h" />
+    <ClInclude Include="source\Script\command_label.h" />
+    <ClInclude Include="source\Script\command_base.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -175,6 +178,12 @@
       <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Mode\ModeScriptBase.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\command_choice.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\command_label.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
