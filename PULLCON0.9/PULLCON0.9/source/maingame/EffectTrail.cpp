@@ -2,8 +2,8 @@
 #include "appframe.h"
 #include "EffectTrail.h"
 
-EffectTrail::EffectTrail()
-	:base()
+EffectTrail::EffectTrail( ApplicationBase& game,ModeBase& mode )
+	:base( game,mode )
 {
 
 	_animeMax = 17;
@@ -25,11 +25,11 @@ void EffectTrail::Init() {
 
 }
 
-bool EffectTrail::Update(ApplicationBase& game, ModeBase& mode) {
-	base::Update(game, mode);
+bool EffectTrail::Update() {
+	base::Update();
 
 	if (_animeCnt == _animeMax) {
-		mode.GetObjectServer3D().Del(*this);
+		_mode.GetObjectServer3D().Del(*this);
 	}
 
 	_animeNo = _animeCnt % _animeMax;
@@ -38,8 +38,8 @@ bool EffectTrail::Update(ApplicationBase& game, ModeBase& mode) {
 	return true;
 }
 
-bool EffectTrail::Draw(ApplicationBase& game, ModeBase& mode) {
-	base::Draw(game, mode);
+bool EffectTrail::Draw() {
+	base::Draw();
 
 	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 100.0f, 0.f, _grHandle, TRUE);
 

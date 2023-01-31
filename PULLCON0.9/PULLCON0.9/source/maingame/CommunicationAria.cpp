@@ -1,6 +1,6 @@
 #include "CommunicationAria.h"
-CommunicationAria::CommunicationAria(float collradius, std::string storyname )
-	:base()
+CommunicationAria::CommunicationAria( ApplicationBase& game,ModeBase& mode,float collradius, std::string storyname )
+	:base( game,mode )
 {
 	story_name = storyname;
 	coll_radius = collradius;
@@ -19,17 +19,17 @@ void CommunicationAria::Init()
 
 }
 
-bool CommunicationAria::Update( ApplicationBase& game,ModeBase& mode )
+bool CommunicationAria::Update(  )
 {
-	base::Update( game,mode );
+	base::Update( );
 
 
 
 	return true;
 }
 
-bool CommunicationAria::Draw( ApplicationBase& game,ModeBase& mode )
+bool CommunicationAria::Draw(  )
 {
-	base::Draw( game,mode );
+	base::Draw( );
 	return true;
 }

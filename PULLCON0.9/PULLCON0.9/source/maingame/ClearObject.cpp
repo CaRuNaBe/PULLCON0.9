@@ -3,8 +3,8 @@
 #include "../mode/ModeGame.h"
 #include "../mode/ModeMainGame.h"
 
-ClearObject::ClearObject( float _radius )
-	:base()
+ClearObject::ClearObject( ApplicationBase& game,ModeBase& mode,float _radius )
+	:base( game,mode )
 {
 	radius = _radius;
 	Init();
@@ -30,11 +30,11 @@ void ClearObject::Init()
 
 }
 
-bool ClearObject::Update( ApplicationBase& game,ModeBase& mode )
+bool ClearObject::Update(  )
 {
-	base::Update( game,mode );
+	base::Update( );
 
-	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kPlayer
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kPlayer) {
@@ -45,7 +45,7 @@ bool ClearObject::Update( ApplicationBase& game,ModeBase& mode )
 					if (obje->_CT == 0) {
 						_CT = 10;
 						_overlap = true;
-						obje->Damage(mode);
+						obje->Damage();
 						_iLife -= obje->_iDamage;
 					}
 				}
@@ -54,7 +54,7 @@ bool ClearObject::Update( ApplicationBase& game,ModeBase& mode )
 	}
 
 	if (_iLife < 0) {
-		Damage(mode);
+		Damage(_mode);
 	}
 
 	_vEvent = _vPos;
@@ -68,16 +68,16 @@ void ClearObject::Damage(ModeBase& mode) {
 	mode.GetObjectServer3D().Del(*this);
 }
 
-bool ClearObject::Draw( ApplicationBase& game,ModeBase& mode )
+bool ClearObject::Draw(  )
 {
-	base::Draw( game,mode );
+	base::Draw();
 	//DrawSphere3D(ToDX(_vObjective), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 	MV1SetScale(_handle, VGet(3.0f, 3.0f, 3.0f));
 	MV1SetPosition(_handle, ToDX(_vPos));
 	MV1DrawModel(_handle);
 
 	vector4 color = { 255,255,255 };
-	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		DrawCollision(color);
 		DrawCollisionEvent(color);
 		if (_overlap) {

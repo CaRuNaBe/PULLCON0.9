@@ -66,10 +66,10 @@ namespace string
 		std::string str;
 		for ( int i = 0; i < script_size; i++ )
 		{
-			str = str + script[0];
+			str += script[0];
 			if ( i < script_size - 1 )
 			{
-				str = str + delimiter;
+				str += delimiter;
 			}
 		}
 		return str;

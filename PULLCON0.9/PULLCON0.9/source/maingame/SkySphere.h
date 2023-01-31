@@ -5,15 +5,15 @@ class SkySphere:
 {
 	using base = ActorBase3D;
 public:
-	SkySphere(int objectid);
+	SkySphere( ApplicationBase& game,ModeBase& mode,int objectid);
 	virtual ~SkySphere();
 	virtual Type GetType()
 	{
 		return Type::kSkySphere;
 	}
 	virtual void Init();
-	virtual bool Update( ApplicationBase& game,ModeBase& mode );
-	virtual bool Draw( ApplicationBase& game,ModeBase& mode );
+	virtual bool Update(  );
+	virtual bool Draw(  );
 
 protected:
 	int    _handle;

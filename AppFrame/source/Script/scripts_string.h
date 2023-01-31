@@ -19,5 +19,5 @@ namespace string
 
 	std::vector<std::string> Split(const std::string& str,const std::string& delimiter);
 
-	std::string Combine( std::vector<std::string> script,const std::string& delimiter );
+	std::string Combine( std::vector<std::string>& script,const std::string& delimiter );
 }

@@ -6,7 +6,7 @@ class EnemyAAA: public ActorBase3D
 {
 	typedef ActorBase3D base;
 public:
-	EnemyAAA( int min_id,int max_id,int pile_num );
+	EnemyAAA( ApplicationBase& game,ModeBase& mode,int min_id,int max_id,int pile_num );
 	virtual ~EnemyAAA();
 	virtual Type GetType()
 	{
@@ -21,11 +21,11 @@ public:
 	};
 
 	virtual void Init();
-	virtual bool Update( ApplicationBase& game,ModeBase& mode );
-	virtual bool Draw( ApplicationBase& game,ModeBase& mode );
+	virtual bool Update();
+	virtual bool Draw();
 
-	virtual void Damage( ModeBase& mode );
-	void AddBullet( ModeBase& mode );
+	virtual void Damage( );
+	void AddBullet(  );
 
 protected:
 	State   _stateAAA;

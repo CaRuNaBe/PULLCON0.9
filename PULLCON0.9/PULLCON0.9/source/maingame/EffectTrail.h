@@ -5,13 +5,13 @@ class EffectTrail : public ActorBase3D
 {
 	typedef ActorBase3D base;
 public:
-	EffectTrail();
+	EffectTrail( ApplicationBase& game,ModeBase& mode );
 	virtual ~EffectTrail();
 	virtual Type GetType() { return Type::kEffect; }
 
 	virtual void Init();
-	virtual bool Update(ApplicationBase& game, ModeBase& mode);
-	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
+	virtual bool Update();
+	virtual bool Draw();
 
 protected:
 

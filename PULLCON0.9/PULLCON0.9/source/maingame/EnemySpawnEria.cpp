@@ -1,5 +1,6 @@
 #include "EnemySpawnEria.h"
-EnemySpawnEria::EnemySpawnEria( int spawnfream,int typeenemy )
+EnemySpawnEria::EnemySpawnEria( ApplicationBase& game,ModeBase& mode,int spawnfream,int typeenemy )
+	:base( game,mode )
 {
 	spawn_fream = spawnfream;
 	/*
@@ -18,11 +19,11 @@ EnemySpawnEria::~EnemySpawnEria()
 void EnemySpawnEria::Init()
 {
 };
-bool EnemySpawnEria::Update( ApplicationBase& game,ModeBase& mode )
+bool EnemySpawnEria::Update( )
 {
 	return true;
 };
-bool EnemySpawnEria::Draw( ApplicationBase& game,ModeBase& mode )
+bool EnemySpawnEria::Draw( )
 {
 	return true;
 };

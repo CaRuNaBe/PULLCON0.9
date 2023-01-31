@@ -7,8 +7,8 @@ namespace
 	const auto STAGE_4 = 4;
 
 }
-GameStage::GameStage( int stageid )
-	:base()
+GameStage::GameStage( ApplicationBase& game,ModeBase& mode,int stageid )
+	:base( game,mode )
 {
 
 	switch ( stageid )
@@ -44,18 +44,18 @@ void GameStage::Init()
 
 }
 
-bool GameStage::Update( ApplicationBase& game,ModeBase& mode )
+bool GameStage::Update( )
 {
-	base::Update( game,mode );
+	base::Update( );
 
 
 
 	return true;
 }
 
-bool GameStage::Draw( ApplicationBase& game,ModeBase& mode )
+bool GameStage::Draw( )
 {
-	base::Draw( game,mode );
+	base::Draw(  );
 	MV1DrawModel( _handle );
 	return true;
 }

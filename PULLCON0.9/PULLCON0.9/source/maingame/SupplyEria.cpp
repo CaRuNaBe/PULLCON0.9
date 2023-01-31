@@ -1,10 +1,10 @@
 
 #include "SupplyEria.h"
 #include "../mode/ModeMainGame.h"
-SupplyEria::SupplyEria( float _radius )
-	:base()
+SupplyEria::SupplyEria( ApplicationBase& game,ModeBase& mode,float _radius )
+	:base( game,mode )
 {
-	_handle = MV1LoadModel("res/HelicopterBody.mv1");
+	_handle = MV1LoadModel( "res/HelicopterBody.mv1" );
 	radius = _radius;
 	Init();
 }
@@ -22,17 +22,22 @@ void SupplyEria::Init()
 
 }
 
-bool SupplyEria::Update( ApplicationBase& game,ModeBase& mode )
+bool SupplyEria::Update()
 {
-	base::Update( game,mode );
+	base::Update();
 
-	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
-		if (obje->GetType() == Type::kPlayer) {
-			if (Intersect(obje->_collision, _collisionEvent)) {
+	for ( auto&& obje : _mode.GetObjectServer3D().GetObjects() )
+	{
+		if ( obje->GetType() == Type::kPlayer )
+		{
+			if ( Intersect( obje->_collision,_collisionEvent ) )
+			{
 				_event = true;
-				if (_cnt % 10 == 0) {
+				if ( _cnt % 10 == 0 )
+				{
 					obje->_iFuel++;
-					if (obje->_iFuel > 100) {
+					if ( obje->_iFuel > 100 )
+					{
 						obje->_iFuel = 100;
 					}
 				}
@@ -47,21 +52,23 @@ bool SupplyEria::Update( ApplicationBase& game,ModeBase& mode )
 	return true;
 }
 
-bool SupplyEria::Draw( ApplicationBase& game,ModeBase& mode )
+bool SupplyEria::Draw()
 {
-	base::Draw( game,mode );
-	MV1SetScale(_handle, VGet(2.0f, 2.0f, 2.0f));
-	MV1SetPosition(_handle, ToDX(_vPos));
-	SetUseLighting(FALSE);
-	MV1DrawModel(_handle);
-	SetUseLighting(TRUE);
+	base::Draw();
+	MV1SetScale( _handle,VGet( 2.0f,2.0f,2.0f ) );
+	MV1SetPosition( _handle,ToDX( _vPos ) );
+	SetUseLighting( FALSE );
+	MV1DrawModel( _handle );
+	SetUseLighting( TRUE );
 
-	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
-		vector4 color = { 255, 255, 255 };
-		DrawCollisionEvent(color);
-		if (_event) {
-			color = { 0, 255, 0 };
-			DrawCollisionEvent(color);
+	if ( !((ModeMainGame&)_mode)._dbgCollisionDraw )
+	{
+		vector4 color = {255, 255, 255};
+		DrawCollisionEvent( color );
+		if ( _event )
+		{
+			color = {0, 255, 0};
+			DrawCollisionEvent( color );
 		}
 	}
 

@@ -3,8 +3,8 @@
 #include "Bullet.h"
 #include "../mode/ModeMainGame.h"
 
-EnemyAAA::EnemyAAA( int min_id,int max_id,int pile_num )
-	:base()
+EnemyAAA::EnemyAAA( ApplicationBase& game,ModeBase& mode,int min_id,int max_id,int pile_num )
+	:base( game,mode )
 {
 
 	_handle_body = MV1LoadModel( "res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_dodai.mv1" );
@@ -34,11 +34,11 @@ void EnemyAAA::Init()
 	_CT = 30;
 }
 
-bool EnemyAAA::Update( ApplicationBase& game,ModeBase& mode )
+bool EnemyAAA::Update()
 {
-	base::Update( game,mode );
+	base::Update();
 
-	for ( auto&& obje : mode.GetObjectServer3D().GetObjects() )
+	for ( auto&& obje : _mode.GetObjectServer3D().GetObjects() )
 	{
 		if ( obje->GetType() == Type::kPlayer
 				 || obje->GetType() == Type::kBullet )
@@ -58,7 +58,8 @@ bool EnemyAAA::Update( ApplicationBase& game,ModeBase& mode )
 						_vTarget = obje->_vPos;
 					}
 				}
-				if (obje->_finish && _pull) {
+				if ( obje->_finish && _pull )
+				{
 					_coll = false;
 					_pull = false;
 					_finish = true;
@@ -79,7 +80,7 @@ bool EnemyAAA::Update( ApplicationBase& game,ModeBase& mode )
 					{
 						_CT = 10;
 						_overlap = true;
-						obje->Damage( mode );
+						obje->Damage();
 					}
 				}
 			}
@@ -106,7 +107,7 @@ bool EnemyAAA::Update( ApplicationBase& game,ModeBase& mode )
 
 		if ( _CT == 0 )
 		{
-			AddBullet( mode );
+			AddBullet();
 			_CT = 10;
 		}
 
@@ -135,7 +136,7 @@ bool EnemyAAA::Update( ApplicationBase& game,ModeBase& mode )
 
 		if ( _CT == 0 )
 		{
-			AddBullet( mode );
+			AddBullet();
 			_CT = 10;
 		}
 
@@ -152,14 +153,14 @@ bool EnemyAAA::Update( ApplicationBase& game,ModeBase& mode )
 	return true;
 }
 
-void EnemyAAA::Damage( ModeBase& mode )
+void EnemyAAA::Damage()
 {
-	mode.GetObjectServer3D().Del( *this );
+	_mode.GetObjectServer3D().Del( *this );
 }
 
-bool EnemyAAA::Draw( ApplicationBase& game,ModeBase& mode )
+bool EnemyAAA::Draw()
 {
-	base::Draw( game,mode );
+	base::Draw();
 
 	VECTOR pos = ToDX( _vPos );
 	MV1SetRotationXYZ( _handle_body,VGet( 0.f,_fRotatY,0.f ) );
@@ -169,20 +170,25 @@ bool EnemyAAA::Draw( ApplicationBase& game,ModeBase& mode )
 	MV1DrawModel( _handle_body );
 	MV1DrawModel( _handle_turret );
 
-	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
-		if (_coll) {
-			vector4 color = { 255, 255, 255 };
-			DrawCollision(color);
-			if (!_finish) {
-				DrawCollisionEvent(color);
+	if ( !((ModeMainGame&)_mode)._dbgCollisionDraw )
+	{
+		if ( _coll )
+		{
+			vector4 color = {255, 255, 255};
+			DrawCollision( color );
+			if ( !_finish )
+			{
+				DrawCollisionEvent( color );
 			}
-			if (_overlap) {
-				color = { 255, 0, 0 };
-				DrawCollision(color);
+			if ( _overlap )
+			{
+				color = {255, 0, 0};
+				DrawCollision( color );
 			}
-			if (_event) {
-				color = { 0, 255, 0 };
-				DrawCollisionEvent(color);
+			if ( _event )
+			{
+				color = {0, 255, 0};
+				DrawCollisionEvent( color );
 			}
 		}
 	}
@@ -190,11 +196,11 @@ bool EnemyAAA::Draw( ApplicationBase& game,ModeBase& mode )
 	return true;
 }
 
-void EnemyAAA::AddBullet( ModeBase& mode )
+void EnemyAAA::AddBullet()
 {
 	vector4 vBullet = {_vPos.x, _vPos.y + 100.f, _vPos.z};
-	auto bullet = std::make_shared<Bullet>();
+	auto bullet = std::make_shared<Bullet>( _game,_mode );
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
-	mode.GetObjectServer3D().Add( bullet );
+	_mode.GetObjectServer3D().Add( bullet );
 }

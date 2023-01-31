@@ -1,5 +1,6 @@
 #include "AreaNoEntry.h"
-AreaNoEntry::AreaNoEntry( float _radius,float _height )
+AreaNoEntry::AreaNoEntry( ApplicationBase& game,ModeBase& mode,float _radius,float _height )
+	:base(game,mode)
 {
 	height = _height;
 	radius = _radius;
@@ -12,11 +13,11 @@ AreaNoEntry::~AreaNoEntry()
 void AreaNoEntry::Init()
 {
 };
-bool AreaNoEntry::Update( ApplicationBase& game,ModeBase& mode )
+bool AreaNoEntry::Update()
 {
 	return true;
 };
-bool AreaNoEntry::Draw( ApplicationBase& game,ModeBase& mode )
+bool AreaNoEntry::Draw()
 {
 	return true;
 };

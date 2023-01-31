@@ -4,8 +4,8 @@ namespace
 	const auto SUNNY = 1;
 	const auto CLOUDY = 2;
 }
-SkySphere::SkySphere( int objectid )
-	:base()
+SkySphere::SkySphere( ApplicationBase& game,ModeBase& mode,int objectid )
+	:base( game,mode )
 {
 	switch ( objectid )
 	{
@@ -35,21 +35,21 @@ void SkySphere::Init()
 
 }
 
-bool SkySphere::Update( ApplicationBase& game,ModeBase& mode )
+bool SkySphere::Update()
 {
-	base::Update( game,mode );
+	base::Update();
 
 
 
 	return true;
 }
 
-bool SkySphere::Draw( ApplicationBase& game,ModeBase& mode )
+bool SkySphere::Draw()
 {
-	base::Draw( game,mode );
+	base::Draw();
 	MV1SetScale( _handle,VGet( 35.0f,35.0f,35.0f ) );
-	SetUseLighting(FALSE);
-	MV1DrawModel(_handle);
-	SetUseLighting(TRUE);
+	SetUseLighting( FALSE );
+	MV1DrawModel( _handle );
+	SetUseLighting( TRUE );
 	return true;
 }

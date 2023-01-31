@@ -38,7 +38,7 @@ public:
 	virtual bool	IsHitEvent(ActorBase3D& object);	// イベントスフィアと当たっているか
 	virtual bool	IsSearch(ActorBase3D& object);	  // サーチスフィアと当たっているか
 
-	virtual void Damage(ModeBase& mode) {}
+	virtual void Damage() {}
 
 	virtual Sphere& GetCollision() { return _collision; }
 	virtual Sphere& GetCollisionEvent() { return _collisionEvent; }

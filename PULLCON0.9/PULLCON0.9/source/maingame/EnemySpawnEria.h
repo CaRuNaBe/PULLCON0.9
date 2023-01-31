@@ -5,15 +5,15 @@ class EnemySpawnEria:public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	EnemySpawnEria( int spawnfream,int typeenemy );
+	EnemySpawnEria( ApplicationBase& game,ModeBase& mode,  int spawnfream,int typeenemy );
 	virtual ~EnemySpawnEria();
 	virtual Type GetType()
 	{
 		return Type::kEnemySpawnEria;
 	}
 	virtual void Init();
-	virtual bool Update( ApplicationBase& game,ModeBase& mode );
-	virtual bool Draw( ApplicationBase& game,ModeBase& mode );
+	virtual bool Update( );
+	virtual bool Draw(  );
 
 protected:
 	int spawn_fream;

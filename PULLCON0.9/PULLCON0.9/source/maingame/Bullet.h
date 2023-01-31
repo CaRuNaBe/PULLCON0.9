@@ -4,15 +4,15 @@
 class Bullet : public ActorBase3D{
 	typedef ActorBase3D base;
 public:
-	Bullet();
+	Bullet( ApplicationBase& game,ModeBase& mode);
 	virtual ~Bullet();
 	virtual Type GetType() { return Type::kBullet; }
 
 	virtual void Init();
-	virtual bool Update(ApplicationBase& game, ModeBase& mode);
-	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
+	virtual bool Update();
+	virtual bool Draw();
 
-	virtual void Damage(ModeBase& mode);
+	virtual void Damage();
 
 protected:
 

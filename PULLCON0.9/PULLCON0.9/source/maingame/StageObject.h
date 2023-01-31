@@ -6,15 +6,15 @@ class StageObject:
 {
 	using base = ActorBase3D;
 public:
-	StageObject( int objectid,int collision );
+	StageObject( ApplicationBase& game,ModeBase& mode,int objectid,int collision );
 	virtual ~StageObject();
 	virtual Type GetType()
 	{
 		return Type::kStageObject;
 	}
 	virtual void Init();
-	virtual bool Update( ApplicationBase& game,ModeBase& mode );
-	virtual bool Draw( ApplicationBase& game,ModeBase& mode );
+	virtual bool Update(  );
+	virtual bool Draw( );
 
 protected:
 	int    _handle;

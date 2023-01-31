@@ -232,7 +232,7 @@ void ModeMainGame::Parsing()
 bool ModeMainGame::Update()
 {
 	ModeBase::Update();
-	_3D_objectServer.Update( _game,*this );
+	_3D_objectServer.Update();
 
 	if ( _game.Getinput().XinputEveryOtherLeftTrigger( 30 ) )
 	{
@@ -538,7 +538,7 @@ bool ModeMainGame::OnCommandStage( unsigned int line,const std::vector<std::stri
 	{
 		return false;//文字列からintに変換
 	};
-	auto stage = std::make_shared<GameStage>( object_id );//ステージ土台のインスタンス作成
+	auto stage = std::make_shared<GameStage>( _game,*this,object_id );//ステージ土台のインスタンス作成
 	_3D_objectServer.Add( stage );//サーバーに追加
 	return true;
 };
@@ -556,7 +556,7 @@ bool ModeMainGame::OnCommandSkySphere( unsigned int line,const std::vector<std::
 		return false; // 文字列からintに変換
 	};
 
-	auto skysphere = std::make_shared<SkySphere>( object_id );//スカイスフィアのインスタンス作成
+	auto skysphere = std::make_shared<SkySphere>( _game,*this,object_id );//スカイスフィアのインスタンス作成
 	_3D_objectServer.Add( skysphere );//サーバーに追加
 	return true;
 };
@@ -590,7 +590,7 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::str
 	{
 		return false;
 	}
-	auto player = std::make_shared<Player>();
+	auto player = std::make_shared<Player>( _game,*this );
 	player->SetPosition( posi );
 	//player->SetScale( scale );
 	_3D_objectServer.Add( player );
@@ -623,7 +623,7 @@ bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::st
 	{
 		return false;
 	}
-	auto clearobject = std::make_shared<ClearObject>( radius );
+	auto clearobject = std::make_shared<ClearObject>( _game,*this,radius );
 	clearobject->SetPosition( posi );
 	_3D_objectServer.Add( clearobject );
 	return true;
@@ -695,7 +695,7 @@ bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,const std::vector<std::s
 	{
 		return false;
 	}
-	auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,pile_num );
+	auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,pile_num );
 	enemyAAA->SetPosition( posi );
 	//enemyAAA->SetScale( scale );
 	//enemyAAA->SetAxialX( x_rad );
@@ -864,7 +864,7 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::st
 
 	for ( auto&& set_pos : posivec )
 	{
-		auto enemyAAA = std::make_shared<EnemyAAA>( object_min_id,object_max_id,std::get<1>( set_pos ) );
+		auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ) );
 		enemyAAA->SetPosition( std::get<0>( set_pos ) );
 		//enemyAAA->SetScale( scale );
 		_3D_objectServer.Add( enemyAAA );
@@ -913,7 +913,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,const std::vector<std::str
 		return false;//文字列からintに変換
 	};
 
-	auto object = std::make_shared<StageObject>( object_id,collision_id );
+	auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 	object->SetPosition( posi );
 	//object->SetScale( scale );
 	_3D_objectServer.Add( object );
@@ -1032,7 +1032,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,const std::vector<std::st
 
 	for ( auto&& set_pos : posivec )
 	{
-		auto object = std::make_shared<StageObject>( object_id,collision_id );
+		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 		object->SetPosition( set_pos );
 		//object->SetScale( scale );
 		_3D_objectServer.Add( object );
@@ -1070,7 +1070,7 @@ bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,const std::vector<std::
 	{
 		return false;//文字列からintに変換
 	};
-	auto spawn_eria = std::make_shared<EnemySpawnEria>( spawn_fream,spawn_id );
+	auto spawn_eria = std::make_shared<EnemySpawnEria>( _game,*this,spawn_fream,spawn_id );
 	spawn_eria->SetPosition( posi );
 	_3D_objectServer.Add( spawn_eria );
 	return true;
@@ -1101,7 +1101,7 @@ bool ModeMainGame::OnCommandSupply( unsigned int line,const std::vector<std::str
 	{
 		return false;
 	}
-	auto supplyeria = std::make_shared<SupplyEria>( radius );
+	auto supplyeria = std::make_shared<SupplyEria>( _game,*this,radius );
 	supplyeria->SetPosition( posi );
 	_3D_objectServer.Add( supplyeria );
 	return true;
@@ -1134,7 +1134,7 @@ bool ModeMainGame::OnCommandCommunication( unsigned int line,const std::vector<s
 		return false;
 	}
 	std::string story_name = scripts[5];
-	auto commu_aria = std::make_shared<CommunicationAria>( radius,story_name );
+	auto commu_aria = std::make_shared<CommunicationAria>( _game,*this,radius,story_name );
 	commu_aria->SetPosition( posi );
 	_3D_objectServer.Add( commu_aria );
 	return true;
@@ -1170,7 +1170,7 @@ bool ModeMainGame::OnCommandNoEntry( unsigned int line,const std::vector<std::st
 	{
 		return false;
 	}
-	auto no_entry = std::make_shared<AreaNoEntry>( radius,height );
+	auto no_entry = std::make_shared<AreaNoEntry>( _game,*this,radius,height );
 	no_entry->SetPosition( posi );
 	_3D_objectServer.Add( no_entry );
 	return true;
@@ -1179,7 +1179,7 @@ bool ModeMainGame::OnCommandNoEntry( unsigned int line,const std::vector<std::st
 bool ModeMainGame::Draw()
 {
 	ModeBase::Draw();
-	_3D_objectServer.Draw( _game,*this );
+	_3D_objectServer.Draw();
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
 	///////////////////////////////////////////////////////////////
 	if ( _clear )
@@ -1234,7 +1234,6 @@ bool ModeMainGame::Draw()
 
 	return true;
 }
-
 
 void ModeMainGame::DrawFeedIn()const
 {
@@ -1449,11 +1448,12 @@ bool ModeMainGame::CheckInputString( std::string& command )
 	{
 		return false;
 	}
-
+	/*
 	if ( )
 	{
 		return false
 	}
+	*/
 	state = ScriptState::EDIT;
 	_3D_objectServer.Clear();
 	return true;

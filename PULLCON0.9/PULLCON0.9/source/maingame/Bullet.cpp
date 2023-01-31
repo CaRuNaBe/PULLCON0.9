@@ -3,8 +3,8 @@
 #include "EffectTrail.h"
 #include "../mode/ModeMainGame.h"
 
-Bullet::Bullet()
-	:base()
+Bullet::Bullet( ApplicationBase& game,ModeBase& mode)
+	:base(game,mode)
 {
 	//_handle = MV1LoadModel("res/bullet/model/normalammo/cg_NormalAmmo.mv1");
 	_handle = 0;
@@ -28,11 +28,11 @@ void Bullet::Init() {
 	_ST = 90;
 }
 
-bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
-	base::Update(game, mode);
+bool Bullet::Update() {
+	base::Update();
 
 	if (_ST == 0) {
-		Damage(mode);
+		Damage();
 	}
 
 	vector4 _vd = _vDir;
@@ -42,7 +42,7 @@ bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 	UpdateCollision();
 
 	if (_cnt % 4 == 0) {
-		auto effect = std::make_shared<EffectTrail>();
+		auto effect = std::make_shared<EffectTrail>( _game,_mode);
 		effect->SetPosition(_vPos);
 		//mode.GetObjectServer3D().Add(effect);
 	}
@@ -50,12 +50,12 @@ bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 	return true;
 }
 
-void Bullet::Damage(ModeBase& mode) {
-	mode.GetObjectServer3D().Del(*this);
+void Bullet::Damage() {
+	_mode.GetObjectServer3D().Del(*this);
 }
 
-bool Bullet::Draw(ApplicationBase& game, ModeBase& mode) {
-	base::Draw(game, mode);
+bool Bullet::Draw() {
+	base::Draw();
 
 	// éOéüå≥ã…ç¿ïW(r(length3D),É∆(theta),É”(camerad))
 	float length3D = sqrt(_vDir.x * _vDir.x + _vDir.y * _vDir.y + _vDir.z * _vDir.z);
@@ -68,7 +68,7 @@ bool Bullet::Draw(ApplicationBase& game, ModeBase& mode) {
 	MV1DrawModel(_handle);
 
 	vector4 color = { 255, 255, 255 };
-	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		if (_CT == 0) {
 			DrawCollision(color);
 		}

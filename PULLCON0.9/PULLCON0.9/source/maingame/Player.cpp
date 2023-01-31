@@ -10,8 +10,8 @@ namespace {
 	const vector4 CAMERADEFAULT_POS = { 0.f, 2500.f, -4000.f };   // カメラのプレイヤーを原点としたときのベクトル
 }
 
-Player::Player() 
-	:base()
+Player::Player( ApplicationBase& game,ModeBase& mode )
+	:base( game,mode )
 {
 	_handle = MV1LoadModel("res/player/3Dmodel/mv1/cg_PlayerHelicopter.mv1");
 
@@ -42,8 +42,8 @@ void Player::Init() {
 
 }
 
-bool Player::Update(ApplicationBase& game, ModeBase& mode) {
-	base::Update(game, mode);
+bool Player::Update() {
+	base::Update();
 
 	if (_statePlayer == State::NUM) {
 		_cam._vPos = _vPos + CAMERADEFAULT_POS;
@@ -51,7 +51,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		_statePlayer = State::PLAY;
 	}
 
-	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kEnemyAAA
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kEnemyAAA) {
@@ -71,7 +71,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 				}
 				if (IsHitEvent(*obje)) {
 					_event = true;
-					if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)  && !_pull) {
+					if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)  && !_pull) {
 						_pull = true;
 						obje->_pull = true;
 						_CT = 10;
@@ -89,7 +89,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	}
 
 	// カメラ更新	
-	CameraUpdate(game);
+	CameraUpdate();
 
 	if(_statePlayer == State::PLAY){
 
@@ -101,10 +101,10 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 			}
 		}
 
-		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
+		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
 			_fSpeed += 30.f;
 		}
-		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_LEFT_THUMB)) {
+		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_LEFT_THUMB)) {
 			_fSpeed -= 30.f;
 		}
 
@@ -119,11 +119,11 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 
 		//キャラの上昇下降
 		int diry = 0;
-		if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_A)) { diry += 1; }     // A
-		if (game.Getinput().GetKeyXinput(XINPUT_BUTTON_B)) { diry += -1; }     // B
+		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_A)) { diry += 1; }     // A
+		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_B)) { diry += -1; }     // B
 
 		//キャラの移動
-		vector4 dir = { -(game.Getinput().GetLstickY()),0,game.Getinput().GetLstickX() };   // int値が入る
+		vector4 dir = { -(_game.Getinput().GetLstickY()),0,_game.Getinput().GetLstickX() };   // int値が入る
 
 		float length = 0.f;
 		dir.Normalized();
@@ -146,8 +146,8 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		v.y = sin(_fRotatX);
 		_vDir = v;
 
-		if (game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
-			AddBullet(mode);
+		if (_game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
+			AddBullet();
 		}
 
 		float distance = _collision._fRadius * 2.f * 15.f;
@@ -161,11 +161,11 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		cursor.x = _cam._vTarget.x + length3D * cos(rad + camerad);
 		cursor.z = _cam._vTarget.z + length3D * sin(rad + camerad);
 
-		((ModeMainGame&)mode).SetCursor(_vTarget);
+		((ModeMainGame&)_mode).SetCursor(_vTarget);
 
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {
-			((ModeMainGame&)mode)._transparence = true;
+			((ModeMainGame&)_mode)._transparence = true;
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
 			_statePlayer = State::EVENT;
 		}
@@ -173,7 +173,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	}
 	else if (_statePlayer == State::EVENT) {
 		vector4 move = { 0.f, 1.f, 0.f };
-		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)) {
+		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)) {
 			if (_pull && _CT == 0) {
 				_CT = 20;
 				++_push;
@@ -191,7 +191,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 				_cam._vTarget.y += _fSpeed;
 				if (_CT == 1) {
 					_pull = false;
-					((ModeMainGame&)mode)._transparence = false;
+					((ModeMainGame&)_mode)._transparence = false;
 					_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
 					_cam._vPos = _cam._vTarget + _cam._vMemory;
 					_statePlayer = State::PLAY;
@@ -206,8 +206,8 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 	return true;
 }
 
-bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
-	base::Draw(game, mode);
+bool Player::Draw() {
+	base::Draw();
 	// カメラ設定更新
 	SetCameraPositionAndTarget_UpVecY(ToDX(_cam._vPos), ToDX(_cam._vTarget));
 	SetCameraNearFar(_cam._clipNear, _cam._clipFar);
@@ -231,7 +231,7 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	SetUseLighting(TRUE);
 
 	// コリジョン描画
-	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		vector4 color = { 255, 255, 255 };
 		DrawCollision(color);
 	}
@@ -247,10 +247,10 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	return true;
 }
 
-void Player::CameraUpdate(ApplicationBase& game) {
+void Player::CameraUpdate() {
 
 	if (_statePlayer == State::EVENT) {
-		EventCamera(game);
+		EventCamera();
 		return;
 	}
 	
@@ -265,12 +265,12 @@ void Player::CameraUpdate(ApplicationBase& game) {
 
 	// 角度変更
 	// Y軸回転
-	if(game.Getinput().GetRstickX() < -1000)
+	if(_game.Getinput().GetRstickX() < -1000)
 	{
 		camerad += 0.02f;
 		_fRotatY += -0.02f;
 	} 
-	else if(game.Getinput().GetRstickX() > 1000)
+	else if(_game.Getinput().GetRstickX() > 1000)
 	{
 		camerad += -0.02f;
 		_fRotatY += 0.02f;
@@ -278,13 +278,13 @@ void Player::CameraUpdate(ApplicationBase& game) {
 
 	float limitrad = utility::radian_to_degree(theta);  // 度数法に変換
 	// X軸回転
-	if(game.Getinput().GetRstickY() < -1000)
+	if(_game.Getinput().GetRstickY() < -1000)
 	{
 		if(limitrad > 40.f) {
 			theta += -0.02f;
 			_fRotatX += -0.02f;
 		}
-	} else if(game.Getinput().GetRstickY() > 1000)
+	} else if(_game.Getinput().GetRstickY() > 1000)
 	{
 		if(limitrad < 100.f) {
 			theta += 0.02f;
@@ -299,7 +299,7 @@ void Player::CameraUpdate(ApplicationBase& game) {
 
 }
 
-void Player::EventCamera(ApplicationBase& game) {
+void Player::EventCamera() {
 
 	// 三次元極座標(r(length3D),θ(theta),φ(camerad))
 	float sx = _cam._vPos.x - _vPos.x;
@@ -324,10 +324,10 @@ void Player::EventCamera(ApplicationBase& game) {
 
 }
 
-void Player::AddBullet(ModeBase& mode) {
+void Player::AddBullet() {
 	vector4 vBullet = { _vPos.x, _vPos.y, _vPos.z};
-	auto bullet = std::make_shared<Bullet>();
+	auto bullet = std::make_shared<Bullet>( _game,_mode );
 	bullet->SetPosition(vBullet);
 	bullet->SetDir(_vDir);
-	mode.GetObjectServer3D().Add(bullet);
+	_mode.GetObjectServer3D().Add(bullet);
 }

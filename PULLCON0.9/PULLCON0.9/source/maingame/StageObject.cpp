@@ -1,6 +1,6 @@
 #include "StageObject.h"
-StageObject::StageObject( int objectid,int collision )
-	:base()
+StageObject::StageObject( ApplicationBase& game,ModeBase& mode, int objectid,int collision )
+	:base( game,mode )
 {
 	if ( collision == 1 )
 	{
@@ -33,18 +33,18 @@ void StageObject::Init()
 
 }
 
-bool StageObject::Update( ApplicationBase& game,ModeBase& mode )
+bool StageObject::Update(  )
 {
-	base::Update( game,mode );
+	base::Update( );
 
 
 
 	return true;
 }
 
-bool StageObject::Draw( ApplicationBase& game,ModeBase& mode )
+bool StageObject::Draw(  )
 {
-	base::Draw( game,mode );
+	base::Draw(  );
 	MV1DrawModel( _handle );
 	return true;
 }
