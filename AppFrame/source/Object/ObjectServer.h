@@ -18,8 +18,9 @@ public:
 	using TypeObjects = std::vector <ObjectPtr >;	// オブジェクトリストを定義
 	/** コンストラクタ */
 	ObjectServer():_updating( false )
-	{}
-	/** デストラクタ */
+	{
+	}
+ /** デストラクタ */
 	~ObjectServer()
 	{
 		Clear();
@@ -52,7 +53,7 @@ public:
 		object.Dead();
 	}
 	/** 更新処理　毎フレーム呼ばれる */
-	bool	Update( ApplicationBase& game,ModeBase& mode )
+	bool	Update()
 	{
 		_updating = true;//処理開始
 		for ( auto&& object : _vObjects )
@@ -61,7 +62,7 @@ public:
 			{
 				continue;//スキップする
 			}
-			object->Update( game,mode );
+			object->Update();
 		}
 		_updating = false;//処理終了
 		AddPendingObjects();//_vObjectsに追加し次のフレームから動かす
@@ -69,7 +70,7 @@ public:
 		return true;
 	}
 	/** 描画処理　毎フレーム呼ばれる */
-	bool	Draw( ApplicationBase& game,ModeBase& mode )
+	bool	Draw()
 	{
 		for ( auto&& object : _vObjects )
 		{

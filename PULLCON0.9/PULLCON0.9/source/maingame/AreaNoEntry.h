@@ -6,7 +6,7 @@ class AreaNoEntry:
 {
 	using base = ActorBase3D;
 public:
-	AreaNoEntry( int _radius,int _height );
+	AreaNoEntry( float _radius,float _height );
 	virtual ~AreaNoEntry();
 	virtual Type GetType()
 	{
@@ -17,7 +17,7 @@ public:
 	virtual bool Draw( ApplicationBase& game,ModeBase& mode );
 
 protected:
-	int  height;
-	int radius;
+	float  height;
+	float radius;
 };
 

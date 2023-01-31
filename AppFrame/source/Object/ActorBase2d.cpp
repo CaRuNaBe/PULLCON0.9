@@ -6,7 +6,8 @@ ActorBase2d::ActorBase2d():base()
 }
 
 ActorBase2d::~ActorBase2d()
-{}
+{
+}
 
 void ActorBase2d::Init()
 {

@@ -4,7 +4,7 @@ class RestartLogo:public ActorBase2d
 {
 	using Actor2d = ActorBase2d;
 public:
-	RestartLogo();
+	RestartLogo( ApplicationBase& game,ModeBase& mode );
 	~RestartLogo();
 	virtual Type	GetType()//©•ª‚ª‰½Ò‚©
 	{
@@ -12,8 +12,8 @@ public:
 	}
 
 	void	Init();//‰Šú‰»
-	bool	Update( ApplicationBase& game,ModeBase& mode );
-	bool	Draw( ApplicationBase& game,ModeBase& mode );
+	bool	Update();
+	bool	Draw();
 private:
 	int FontHandle;
 };

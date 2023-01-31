@@ -6,7 +6,7 @@ class CommunicationAria:
 {
 	using base = ActorBase3D;
 public:
-	CommunicationAria( int collradius,const std::string storyname );
+	CommunicationAria( float collradius,const std::string storyname );
 	virtual ~CommunicationAria();
 	virtual Type GetType()
 	{
@@ -18,7 +18,7 @@ public:
 
 protected:
 	 std::string story_name;
-	int coll_radius;
+	float coll_radius;
 };
 
 

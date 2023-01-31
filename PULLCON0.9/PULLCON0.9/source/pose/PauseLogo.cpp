@@ -1,5 +1,5 @@
 #include "PauseLogo.h"
-PauseLogo::PauseLogo(): ActorBase2d()
+PauseLogo::PauseLogo( ApplicationBase& game,ModeBase& mode ): ActorBase2d( game,mode )
 {
 	Init();
 }
@@ -23,18 +23,18 @@ void PauseLogo::Init()
 	FontHandle = CreateFontToHandle( NULL,128,3 );
 }
 
-bool PauseLogo::Update( ApplicationBase& game,ModeBase& mode )
+bool PauseLogo::Update()
 {
-	ActorBase2d::Update( game,mode );
+	ActorBase2d::Update();
 	//ChangeFontType( フォントタイプ );
 	UpdateCollision();	// コリジョン更新
 	return true;
 }
 
 
-bool PauseLogo::Draw( ApplicationBase& game,ModeBase& mode )
+bool PauseLogo::Draw()
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw();
 	DrawStringToHandle( _pos.IntX(),_pos.IntY(),"Pause",GetColor( 0,255,0 ),FontHandle );
 	DrawCollision();	// コリジョン描画
 	return true;

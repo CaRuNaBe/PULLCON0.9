@@ -17,6 +17,6 @@ public:
 
 protected:
 	int    _handle;
-	int radius;
+	float radius;
 };
 

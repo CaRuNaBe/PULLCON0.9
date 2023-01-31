@@ -21,7 +21,7 @@ public:
 		WAIT//待つ
 	};
 	/** コンストラクタ */
-	TitlePlayer();
+	TitlePlayer( ApplicationBase& game,ModeBase& mode );
 	/** デストラクタ */
 	~TitlePlayer();
 
@@ -31,8 +31,8 @@ public:
 	}
 
 	void	Init();//初期化
-	bool	Update( ApplicationBase& game,ModeBase& mode );//更新
-	bool	Draw( ApplicationBase& game,ModeBase& mode );//描画
+	bool	Update();//更新
+	bool	Draw();//描画
 
 private:
 	int		cg_player;		// プレイヤー画像

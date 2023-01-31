@@ -6,7 +6,7 @@ using namespace math;
 class ActorBase3D : public ObjectBase {
 	typedef ObjectBase base;
 public:
-	ActorBase3D();
+	ActorBase3D( ApplicationBase& game,ModeBase& mode );
 	virtual ~ActorBase3D();
 
 	enum class Type {  // Ží•Ê‚Ì—ñ‹“Œ^
@@ -27,9 +27,9 @@ public:
 	virtual Type GetType() = 0;
 
 	virtual void Init();
-	virtual bool Update(ApplicationBase& game, ModeBase& mode);
+	virtual bool Update();
 	virtual void	UpdateCollision();
-	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
+	virtual bool Draw();
 	virtual void	DrawCollision(vector4 color);
 	virtual void	DrawCollisionEvent(vector4 color);
 	virtual void	DrawCollisionSearch(vector4 color);

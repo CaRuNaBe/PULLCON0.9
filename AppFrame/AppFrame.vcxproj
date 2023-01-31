@@ -193,7 +193,7 @@
     <ClInclude Include="source\Script\CommandBase.h" />
     <ClInclude Include="source\Script\CommandLabel.h" />
     <ClInclude Include="source\Script\CommandCrFeedIn.h" />
-    <ClInclude Include="source\Script\CommandCrFeedout.h" />
+    <ClInclude Include="source\Script\CommandCrFeedOut.h" />
     <ClInclude Include="source\Script\scripts_data.h" />
     <ClInclude Include="source\Script\scripts_string.h" />
   </ItemGroup>
@@ -222,7 +222,7 @@
     <ClCompile Include="source\Math\vector2.cpp" />
     <ClCompile Include="source\Script\CommandLabel.cpp" />
     <ClCompile Include="source\Script\CommandCrFeedIn.cpp" />
-    <ClCompile Include="source\Script\CommandCrFeedout.cpp" />
+    <ClCompile Include="source\Script\CommandCrFeedOut.cpp" />
     <ClCompile Include="source\Script\scripts_data.cpp" />
     <ClCompile Include="source\Script\scripts_string.cpp" />
   </ItemGroup>

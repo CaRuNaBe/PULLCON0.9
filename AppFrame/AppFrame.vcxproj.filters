@@ -108,7 +108,7 @@
       <Filter>source\Sclipt</Filter>
     </ClInclude>
     <ClInclude Include="source\Script\CommandCrFeedIn.h" />
-    <ClInclude Include="source\Script\CommandCrFeedout.h" />
+    <ClInclude Include="source\Script\CommandCrFeedOut.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -187,7 +187,7 @@
     <ClCompile Include="source\Script\CommandCrFeedIn.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\Script\CommandCrFeedout.cpp">
+    <ClCompile Include="source\Script\CommandCrFeedOut.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

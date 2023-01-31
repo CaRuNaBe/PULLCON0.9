@@ -13,13 +13,12 @@
 #include <fstream>
 #include "picojson.h"
 
-namespace scliptused
+namespace
 {
 	constexpr auto EMPTY_STR = _T( "" );
 	constexpr auto EMPTY_WSTR = L"";
 	constexpr auto DELIMITER = _T( "," );
 }
-using namespace scliptused;
 //!
 //! @fn bool ScriptsData::LoadJson(const TCHAR* path)
 //! @brief スクリプト用 Json ファイルの読込
@@ -32,7 +31,7 @@ using namespace scliptused;
 //! 読込時は Json(UTF-8) -> ユニコード(UTF-16) -> マルチバイト文字
 //! の様に文字コードの変換を行います。
 //!
-bool ScriptsData::LoadJson( std::string filepath,std::string storyname,std::string filename )
+bool ScriptsData::LoadJson( std::string filepath,std::string storyname,std::string filename  )
 {
 	// UTF-8 BOM無し Json file
 	std::ifstream ifs( filepath );
@@ -69,14 +68,14 @@ bool ScriptsData::LoadJson( std::string filepath,std::string storyname,std::stri
 			return false;
 		}
 		std::cout << picojson::value( json_value ) << std::endl;
-		auto &root = json_value.get<picojson::array>();
+		auto& root = json_value.get<picojson::array>();
 		auto& object = root[0].get<picojson::object>();
-		const auto &array = object[storyname].get<picojson::array>();
+		const auto& array = object[storyname].get<picojson::array>();
 
 		// UTF-8 -> Wide(UTF-16) -> MultiByte と文字コードを変換しながらスクリプト文字を取得
 		for ( auto i = array.begin(); i != array.end(); ++i )
 		{
-			const auto &utf8 = (*i).get<std::string>();
+			const auto& utf8 = (*i).get<std::string>();
 			const auto utf16 = ConvertUTF8ToWide( utf8 );
 			const auto mbs = ConvertWideToMultiByte( utf16 );
 
@@ -96,7 +95,7 @@ bool ScriptsData::WriteJson( std::string newfilename,std::string storyname )
 	picojson::array datalist;
 	for ( auto i = scripts->begin(); i != scripts->end(); ++i )
 	{
-		const auto &mbs = *i;//マルチバイト文字取得
+		const auto& mbs = *i;//マルチバイト文字取得
 		const auto utf16 = ConvertMultiByteToWide( mbs );//マルチバイト文字からUTF-16
 		const auto utf8 = ConvertWideToUTF8( utf16 );//utf-16からutf-8
 		datalist.push_back( picojson::value( utf8 ) );
@@ -277,9 +276,9 @@ bool ScriptsData::ScriptAdd( std::string Sclipts )
 	scripts->emplace_back( Sclipts );
 	return true;
 };
-bool ScriptsData::ScriptDelete(int line)
+bool ScriptsData::ScriptDelete( int line )
 {
-	scripts->erase(scripts->begin()+ line );
+	scripts->erase( scripts->begin() + line );
 	return true;
 };
 bool ScriptsData::ScriptClear()

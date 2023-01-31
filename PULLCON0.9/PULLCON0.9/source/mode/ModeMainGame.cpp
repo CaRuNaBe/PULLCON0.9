@@ -34,7 +34,6 @@ namespace
 	const std::string COMMAND_FEEDIN = "CrFeedIn";//フェードイン
 	const std::string COMMAND_FEEDOUT = "CrFeedOut";//フェードアウト
 	const std::string COMMAND_TIMEWAIT = "TimeWait";//フレーム数待つ
-	const std::string COMMAND_CLICK = "ClickWait";//ボタン押されるまで待つ
 	const std::string COMMAND_BGM = "Bgm";//bgm再生
 	const std::string COMMAND_STORY = "Story";//ストーリー再生
 
@@ -87,6 +86,7 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	// 作成したデータの識別番号を変数 FontHandle に保存する
 	_handlefont = CreateFontToHandle( NULL,40,3 );
 	_vCursor = {0.0f, 0.0f, 0.0f};
+	_clear = false;
 	///////////////////////////////////////////////////////
 	start_time = 0;
 	max_line = 0;
@@ -191,7 +191,6 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrFeedIn ) );
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrFeedOut ) );
 	comand_funcs.insert( std::make_pair( COMMAND_TIMEWAIT,&ModeMainGame::OnCommandTimeWait ) );
-	comand_funcs.insert( std::make_pair( COMMAND_CLICK,&ModeMainGame::OnCommandClick ) );
 	comand_funcs.insert( std::make_pair( COMMAND_BGM,&ModeMainGame::OnCommandBgm ) );
 	comand_funcs.insert( std::make_pair( COMMAND_STORY,&ModeMainGame::OnCommandStory ) );
 
@@ -275,9 +274,7 @@ bool ModeMainGame::Update()
 			TimeWait();
 			break;
 
-		case ScriptState::CLICK_WAIT:
-			ClickWait();
-			break;
+
 
 		case ScriptState::LOADING:
 			break;
@@ -311,7 +308,7 @@ void ModeMainGame::CrfiUpdate()
 
 void ModeMainGame::CrfoUpdate()
 {
-	auto i = 255.0 / feedcount;
+	auto i = 255.0f / feedcount;
 
 
 	if ( alpha < 255.0 )
@@ -323,10 +320,6 @@ void ModeMainGame::CrfoUpdate()
 		alpha = 255.0;
 		state = ScriptState::PARSING;
 	}
-}
-
-void ModeMainGame::ClickWait()
-{
 }
 
 void ModeMainGame::TimeWait()
@@ -467,7 +460,7 @@ bool ModeMainGame::OnCommandCrFeedIn( unsigned int line,const std::vector<std::s
 	{
 		return false;
 	}
-	feedcount = static_cast<double>(crfi->GetinCount());
+	feedcount = static_cast<float>(crfi->GetinCount());
 	crfi_list.emplace_back( std::move( crfi ) );
 	alpha = 255.0;
 	state = ScriptState::CRFEEDIN;
@@ -483,7 +476,7 @@ bool ModeMainGame::OnCommandCrFeedOut( unsigned int line,const std::vector<std::
 	{
 		return false;
 	}
-	feedcount = static_cast<double>(crfo->GetoutCount());
+	feedcount = static_cast<float>(crfo->GetoutCount());
 	crfo_list.emplace_back( std::move( crfo ) );
 	alpha = 0.0;
 	state = ScriptState::CRFEEDOUT;
@@ -508,17 +501,7 @@ bool ModeMainGame::OnCommandTimeWait( unsigned int line,const std::vector<std::s
 		state = ScriptState::TIME_WAIT;
 		result = true;
 	}
-};
-
-bool ModeMainGame::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
-{
-	const size_t SCRIPTSIZE = 2;
-	if ( scripts.size() != SCRIPTSIZE )
-	{
-		return false;
-	}
-	state = ScriptState::CLICK_WAIT;
-	return true;
+	return result;
 };
 
 bool ModeMainGame::OnCommandBgm( unsigned int line,const std::vector<std::string>& scripts )
@@ -1213,7 +1196,7 @@ bool ModeMainGame::Draw()
 	switch ( state )
 	{
 		case ScriptState::EDIT:
-			//Edit();
+			Edit();
 			break;
 
 		case ScriptState::PREPARSING:
@@ -1276,7 +1259,7 @@ void ModeMainGame::DrawFeedOut()const
 }
 /**
  * @fn void ModeMainGame::Edit.
- * @brief エディットモードの時の描画処理
+ * @brief エディットモードの時の描画、入力処理
  * @return void
  */
 void ModeMainGame::Edit()
@@ -1296,7 +1279,7 @@ void ModeMainGame::Edit()
 		std::string buf = "";
 		auto cchar = const_cast<char*>(buf.c_str());
 
-		DrawString( x,y,"コマンドを入力してください\nESCで戻る\nadd,:オブジェクトの追加\ndelete,ステージ名:オブジェクトの消去\nclear:いま追加されているゲームコマンドを初期化コマンド\njump:編集地点変更\nsave:ファイルに書き込み",GetColor( 255,255,255 ) );
+		DrawString( x,y,"コマンドを入力してください\nESCで戻る\nadd:オブジェクトの追加\ndelete,ステージ名:オブジェクトの消去\nclear,ステージ名:ステージ名の部分を削除\njump,ステージ名:編集地点変更\nsave:ファイルに書き込み",GetColor( 255,255,255 ) );
 		if ( is_notcant )
 		{
 			is_notcant = false;
@@ -1312,38 +1295,56 @@ void ModeMainGame::Edit()
 			is_cannotdelete = false;
 			DrawString( x,250,"消去出来ませんでした\n",GetColor( 255,255,255 ) );
 		}
+
 		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
 		{
 			std::string ecommandbuf = cchar;
+			auto editcommand_Stagename = string::Split( ecommandbuf,"," );
+
 			ClearDrawScreen();
-			if ( editCommand.count( ecommandbuf ) <= NONE )
+			if ( editcommand_Stagename.empty() )
 			{
 				is_notcommand = true;
 				return;
 			}
-
-			(this->*editCommand[ecommandbuf])();
-
+			if ( editCommand.count( editcommand_Stagename[0] ) <= NONE )
+			{
+				is_notcommand = true;
+				return;
+			}
+			(this->*editCommand[ecommandbuf])(editcommand_Stagename[1]);
 		}
 		else
 		{
 			now_line = 0;
 			max_line = scripts_data->GetScriptNum();
-			state = ScriptState::PARSING;
+			state = ScriptState::PREPARSING;
 		};
 	}
 }
 
-bool ModeMainGame::OnEditCommandAdd()
+bool ModeMainGame::OnEditCommandAdd( const std::string& command )
 {
 	int x,y;
 	x = y = 0;
 	std::string buf;
+	const std::string FILEPASS = "res/script/gamescript/gamecommand.json";
+	const std::string ARREYNAME = "gamecommand";
+	auto adddate = std::make_unique<ScriptsData>();
+	adddate->LoadJson( FILEPASS,ARREYNAME );
+	auto maxline = adddate->GetScriptNum();
 	auto cchar = const_cast<char*>(buf.c_str());
 	DrawString( x,y,"何を追加しますか\n追加できるもの",GetColor( 255,255,255 ) );
+	y += 38;
+	for ( unsigned int line = 0; line < maxline; line++ )
+	{
+		auto command = string::Split( adddate->GetScriptLine( line ),"," );
 
-
-	if ( KeyInputSingleCharString( 0,500,100,cchar,TRUE ) == 1 )
+		DrawString( x,y,command[0].c_str(),GetColor( 255,255,255 ) );
+		y += 16;
+	}
+	/** 追加するゲームコマンド入力 */
+	if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
 	{
 		std::string ecommandbuf = cchar;
 
@@ -1360,7 +1361,8 @@ bool ModeMainGame::OnEditCommandAdd()
 	return true;
 };
 
-bool ModeMainGame::OnEditCommandDelete()
+bool ModeMainGame::OnEditCommandDelete( const std::string& command )
+
 {
 	int x,y;
 	x = y = 0;
@@ -1392,29 +1394,39 @@ bool ModeMainGame::OnEditCommandDelete()
 	return true;
 };
 
-bool ModeMainGame::OnEditCommandClear()
+bool ModeMainGame::OnEditCommandClear( const std::string& command )
 {
 	scripts_data->ScriptClear();
 	return true;
 };
 
-bool ModeMainGame::OnEditCommandSave()
+bool ModeMainGame::OnEditCommandSave( const std::string& command )
 {
 	scripts_data->WriteJson( FILENAME,GAMESCRIPT );
 	return true;
 };
 
-bool ModeMainGame::OnEditCommandJunp()
+bool ModeMainGame::OnEditCommandJunp( const std::string& command )
 {
 	return true;
 };
 
-bool ModeMainGame::CheckInputString( std::string command )
+bool ModeMainGame::CheckInputString( std::string& command )
 {
-	auto script = string::Split( command,"," );
-
 	FunctionGameCommand comand_funcs;
+	comand_funcs.insert( std::make_pair( COMMAND_STAGELABEL,&ModeMainGame::OnCommandStageLabel ) );
+	comand_funcs.insert( std::make_pair( COMMAND_JUNPLABEL,&ModeMainGame::OnCommandJunpLabel ) );
+	comand_funcs.insert( std::make_pair( COMMAND_TURNING,&ModeMainGame::OnCommandTurning ) );
 	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
+	comand_funcs.insert( std::make_pair( COMMAND_END,&ModeMainGame::OnCommandEnd ) );
+	comand_funcs.insert( std::make_pair( COMMAND_LOADING,&ModeMainGame::OnCommandLoading ) );
+	comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrFeedIn ) );
+	comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrFeedOut ) );
+	comand_funcs.insert( std::make_pair( COMMAND_TIMEWAIT,&ModeMainGame::OnCommandTimeWait ) );
+	comand_funcs.insert( std::make_pair( COMMAND_BGM,&ModeMainGame::OnCommandBgm ) );
+	comand_funcs.insert( std::make_pair( COMMAND_STORY,&ModeMainGame::OnCommandStory ) );
+
+
 	comand_funcs.insert( std::make_pair( COMMAND_STAGE,&ModeMainGame::OnCommandStage ) );
 	comand_funcs.insert( std::make_pair( COMMAND_SKYSPHERE,&ModeMainGame::OnCommandSkySphere ) );
 	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
@@ -1433,15 +1445,16 @@ bool ModeMainGame::CheckInputString( std::string command )
 		return false;
 	}
 
-	if ( comand_funcs.count( script[0] ) <= 0 )
+	if ( comand_funcs.count( command ) <= 0 )
 	{
 		return false;
 	}
 
-	if ( !(this->*comand_funcs[script[0]])(now_line,script) )
+	if ( )
 	{
-		return false;
-	};
+		return false
+
+	}
 	state = ScriptState::EDIT;
 	_3D_objectServer.Clear();
 	return true;

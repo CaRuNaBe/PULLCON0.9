@@ -1,14 +1,14 @@
 /*****************************************************************//**
  * \file   CreditLogo.h
  * \brief  クレジットロゴオブジェクトクラス
- * 
+ *
  * \author 阿部健太郎
  * \date   December 2022
  *********************************************************************/
 #pragma once
 #include "appframe.h"
 class CreditLogo:
-    public ActorBase2d
+	public ActorBase2d
 {
 	using Actor2d = ActorBase2d;
 		/**
@@ -20,7 +20,7 @@ class CreditLogo:
 		PULLED//引っ張られている
 	};
 public:
-	CreditLogo();
+	CreditLogo( ApplicationBase& game,ModeBase& mode );
 	~CreditLogo();
 	virtual Type	GetType()//自分が何者か
 	{
@@ -28,8 +28,8 @@ public:
 	}
 
 	void	Init();//初期化
-	bool	Update( ApplicationBase& game,ModeBase& mode );
-	bool	Draw( ApplicationBase& game,ModeBase& mode );
+	bool	Update();
+	bool	Draw();
 
 private:
 	int		_cg;		// 画像

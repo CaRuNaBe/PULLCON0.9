@@ -1,8 +1,8 @@
 
 #include "ActorBase3D.h"
 
-ActorBase3D::ActorBase3D()
-	:base() {
+ActorBase3D::ActorBase3D( ApplicationBase& game,ModeBase& mode )
+	:base( game ,mode ) {
 	Init();
 }
 
@@ -34,8 +34,8 @@ void ActorBase3D::Init() {
 
 }
 
-bool ActorBase3D::Update(ApplicationBase& game, ModeBase& mode) {
-	base::Update(game, mode);
+bool ActorBase3D::Update() {
+	base::Update();
 
 	_overlap = false;
 	_event = false;
@@ -91,8 +91,8 @@ bool	ActorBase3D::IsSearch(ActorBase3D& object)
 	return false;
 }
 
-bool ActorBase3D::Draw(ApplicationBase& game, ModeBase& mode) {
-	base::Draw(game, mode);
+bool ActorBase3D::Draw() {
+	base::Draw();
 
 	return true;
 }

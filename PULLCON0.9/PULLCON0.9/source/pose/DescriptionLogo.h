@@ -4,7 +4,7 @@ class DescriptionLogo:public ActorBase2d
 {
 	using Actor2d = ActorBase2d;
 public:
-	DescriptionLogo();
+	DescriptionLogo( ApplicationBase& game,ModeBase& mode );
 	~DescriptionLogo();
 	virtual Type	GetType()//é©ï™Ç™âΩé“Ç©
 	{
@@ -12,8 +12,8 @@ public:
 	}
 
 	void	Init();//èâä˙âª
-	bool	Update( ApplicationBase& game,ModeBase& mode );
-	bool	Draw( ApplicationBase& game,ModeBase& mode );
+	bool	Update();
+	bool	Draw();
 private:
 	int FontHandle;
 };

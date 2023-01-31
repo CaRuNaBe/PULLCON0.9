@@ -1,5 +1,5 @@
 #include "CommunicationAria.h"
-CommunicationAria::CommunicationAria(int collradius, std::string storyname )
+CommunicationAria::CommunicationAria(float collradius, std::string storyname )
 	:base()
 {
 	story_name = storyname;

@@ -1,6 +1,6 @@
 #include "CreditGuid.h"
 #include "Dxlib.h"
-CreditGuid::CreditGuid(): ActorBase2d()
+CreditGuid::CreditGuid( ApplicationBase& game,ModeBase& mode ): ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_CreditMenuIcon.png" );
 
@@ -22,9 +22,9 @@ void CreditGuid::Init()
 	_easing = Easing::GetMode( "Linear" );
 }
 
-bool CreditGuid::Update( ApplicationBase& game,ModeBase& mode )
+bool CreditGuid::Update( )
 {
-	ActorBase2d::Update( game,mode );
+	ActorBase2d::Update( );
 	float start = 800.0f;
 	float stop = 1000.0f;
 
@@ -37,9 +37,9 @@ bool CreditGuid::Update( ApplicationBase& game,ModeBase& mode )
 }
 
 
-bool CreditGuid::Draw( ApplicationBase& game,ModeBase& mode )
+bool CreditGuid::Draw(  )
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw();
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	DrawCollision();	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	return true;

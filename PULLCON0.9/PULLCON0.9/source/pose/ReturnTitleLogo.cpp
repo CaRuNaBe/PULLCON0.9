@@ -1,5 +1,5 @@
 #include "ReturnTitleLogo.h"
-ReturnTitleLogo::ReturnTitleLogo(): ActorBase2d()
+ReturnTitleLogo::ReturnTitleLogo( ApplicationBase& game,ModeBase& mode ): ActorBase2d( game,mode )
 {
 	Init();
 }
@@ -23,17 +23,17 @@ void ReturnTitleLogo::Init()
 	FontHandle = CreateFontToHandle( NULL,32,3 );
 }
 
-bool ReturnTitleLogo::Update( ApplicationBase& game,ModeBase& mode )
+bool ReturnTitleLogo::Update(  )
 {
-	ActorBase2d::Update( game,mode );
+	ActorBase2d::Update(  );
 	UpdateCollision();	// コリジョン更新
 	return true;
 }
 
 
-bool ReturnTitleLogo::Draw( ApplicationBase& game,ModeBase& mode )
+bool ReturnTitleLogo::Draw( )
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw( );
 	DrawStringToHandle( _pos.IntX(),_pos.IntY(),"タイトルに戻る",GetColor( 0,255,0 ),FontHandle );
 	DrawCollision();	// コリジョン描画
 	return true;

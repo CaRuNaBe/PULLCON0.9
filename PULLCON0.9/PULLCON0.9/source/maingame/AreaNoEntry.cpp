@@ -1,5 +1,5 @@
 #include "AreaNoEntry.h"
-AreaNoEntry::AreaNoEntry( int _radius,int _height )
+AreaNoEntry::AreaNoEntry( float _radius,float _height )
 {
 	height = _height;
 	radius = _radius;

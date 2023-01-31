@@ -1,7 +1,7 @@
 /*****************************************************************//**
  * @file   ModeMainGame.h
  * @brief  ゲームスクリプト定義
- * 
+ *
  * @author 阿部健太郎
  * @date   January 2023
  *********************************************************************/
@@ -30,7 +30,10 @@ public:
 	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
 
-	void SetCursor(const vector4& pos) { _vCursor = pos; }
+	void SetCursor( const vector4& pos )
+	{
+		_vCursor = pos;
+	}
 
 	vector4 _vCursor;
 	bool _transparence;
@@ -68,7 +71,6 @@ private:
 	bool OnCommandCrFeedIn( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandCrFeedOut( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandTimeWait( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandClick( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandBgm( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandStory( unsigned int line,const std::vector<std::string>& scripts );
 
@@ -93,23 +95,24 @@ private:
 	/** エディットモードの時に入る関数 */
 	void Edit();
 	/** 入力されたコマンドがゲームで使われるか確認 */
-	bool CheckInputString( std::string command );
+	bool CheckInputString( std::string& command );
 	/** 追加コマンドに使われる関数 */
-	bool OnEditCommandAdd();
+	bool OnEditCommandAdd( const std::string& command );
 	/** 消去コマンドに使われる関数 */
-	bool OnEditCommandDelete();
+	bool OnEditCommandDelete( const std::string& command );
 	/** 初期化コマンドに使われる関数 */
-	bool OnEditCommandClear();
+	bool OnEditCommandClear( const std::string& command );
 	/** 保存コマンドに使われる関数 */
-	bool OnEditCommandSave();
+	bool OnEditCommandSave( const std::string& command );
 	/** 編集地点変更コマンドに使われる関数 */
-	bool OnEditCommandJunp();
+	bool OnEditCommandJunp( const std::string& command );
+
+
 
 	/** フレーム数待つ時に使われるUpdate */
 	void TimeWait();
+	/** 文字列に対応した行数を取得 */
 	bool GetLineNumber( const std::string& str,unsigned int& line ) const;
-	/** ボタン押すまで待つに使われるUpdate */
-	void ClickWait();
 	/** フェードイン時に使われるUpdate */
 	void CrfiUpdate();
 	/** フェードアウト時に使われるUpdate */
@@ -130,9 +133,9 @@ private:
 	/** ゲームのステータス */
 	ScriptState state;
 	/** ゲームコマンドに使われる文字列をキーとした関数ポインタ */
-	using FunctionGameCommand = std::map<std::string,bool(ModeMainGame::*)(unsigned int,const std::vector<std::string>& scripts)>;
+	using FunctionGameCommand = std::map<std::string,bool(ModeMainGame::*)(unsigned int,const std::vector<std::string>&)>;
 	/** エディットコマンドの時に使われる文字列をキーとした関数ポインタ */
-	using FunctionEditCommand = std::map<std::string,bool(ModeMainGame::*)()>;
+	using FunctionEditCommand = std::map<std::string,bool(ModeMainGame::*)(const std::string)>;
 	/** スクリプトの最大行数 */
 	unsigned int max_line;
 	/** 今の行数 */

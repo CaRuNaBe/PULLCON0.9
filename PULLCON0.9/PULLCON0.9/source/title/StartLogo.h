@@ -1,7 +1,7 @@
 /*****************************************************************//**
  * \file   StartLogo.h
  * \brief  ゲームスタートロゴクラス
- * 
+ *
  * \author 阿部健太郎
  * \date   December 2022
  *********************************************************************/
@@ -19,7 +19,7 @@ class StartLogo:public ActorBase2d
 		PULLED//引っ張られている
 	};
 public:
-	StartLogo();
+	StartLogo( ApplicationBase& game,ModeBase& mode );
 	~StartLogo();
 	virtual Type	GetType()//自分が何者か
 	{
@@ -27,8 +27,8 @@ public:
 	}
 
 	void	Init();//初期化
-	bool	Update( ApplicationBase& game,ModeBase& mode );
-	bool	Draw( ApplicationBase& game,ModeBase& mode );
+	bool	Update();
+	bool	Draw();
 
 private:
 	int		_cg;		// 画像

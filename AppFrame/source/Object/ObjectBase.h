@@ -7,12 +7,12 @@ class ModeBase;
 class ObjectBase
 {
 public:
-	ObjectBase();
+	ObjectBase( ApplicationBase& game,ModeBase& mode );
 	virtual ~ObjectBase();
 
 	virtual void	Init();
-	virtual bool	Update(ApplicationBase& game,ModeBase& mode );
-	virtual bool	Draw(ApplicationBase& game,ModeBase& mode );
+	virtual bool	Update();
+	virtual bool	Draw();
 
 	virtual bool	IsDead()
 	{
@@ -27,7 +27,7 @@ public:
 	{
 		return isUpdateSkip;
 	}
-	void SetUpdateSkip(bool UpdateSkip)
+	void SetUpdateSkip( bool UpdateSkip )
 	{
 		isUpdateSkip = UpdateSkip;
 	}
@@ -39,5 +39,6 @@ protected:
 	bool	_dead;
 	bool isUpdateSkip;
 	bool isDrawSkip;
-
+	ApplicationBase& _game;
+	ModeBase& _mode
 };

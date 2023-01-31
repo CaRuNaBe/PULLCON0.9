@@ -1,7 +1,7 @@
 #include "CreditLogo.h"
 #include "Dxlib.h"
-CreditLogo::CreditLogo()
-	: ActorBase2d()
+CreditLogo::CreditLogo( ApplicationBase& game,ModeBase& mode )
+	: ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_CreditLogo.png" );
 
@@ -9,7 +9,8 @@ CreditLogo::CreditLogo()
 }
 
 CreditLogo::~CreditLogo()
-{}
+{
+}
 
 void CreditLogo::Init()
 {
@@ -21,16 +22,16 @@ void CreditLogo::Init()
 	_spd = 0;
 }
 
-bool CreditLogo::Update( ApplicationBase& game,ModeBase& mode )
+bool CreditLogo::Update()
 {
-	ActorBase2d::Update( game,mode );
-	for ( auto&& obje : mode.Get2DobjectServer().GetObjects() )
+	ActorBase2d::Update();
+	for ( auto&& obje : _mode.Get2DobjectServer().GetObjects() )
 	{
 		if ( (obje->GetType() == ActorBase2d::Type::KPLAYER) )
 		{
 			if ( IsHitObject( *obje ) )
 			{
-				if ( game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
+				if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
 				{
 					_spd = static_cast<float>(utility::get_random( 5,20 ));
 					_pos.y -= _spd;		// ˆÊ’u‚ð“®‚©‚·  
@@ -43,9 +44,9 @@ bool CreditLogo::Update( ApplicationBase& game,ModeBase& mode )
 }
 
 
-bool CreditLogo::Draw( ApplicationBase& game,ModeBase& mode )
+bool CreditLogo::Draw()
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw();
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	DrawCollision();	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	return true;
