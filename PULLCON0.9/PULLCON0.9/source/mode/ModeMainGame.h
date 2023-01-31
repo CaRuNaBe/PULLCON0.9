@@ -62,32 +62,32 @@ private:
 	void PreParsing();
 	void Parsing();
 
-	bool OnCommandStageLabel( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandJunpLabel( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandTurning( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandStart( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandEnd( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandLoading( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandCrFeedIn( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandCrFeedOut( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandTimeWait( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandBgm( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandStory( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandStageLabel( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandJunpLabel( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandTurning( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandStart( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandEnd( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandLoading( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandCrFeedIn( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandCrFeedOut( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandTimeWait( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandBgm( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandStory( unsigned int line, std::vector<std::string>& scripts );
 
 
 
-	bool OnCommandStage( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandSkySphere( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandPLayer( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandGunShip( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandEnemyAAA( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandAreaAAA( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandObject( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandAreaObj( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandAreaSpawn( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandSupply( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandCommunication( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandNoEntry( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandStage( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandSkySphere( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandPLayer( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandGunShip( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandEnemyAAA( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandAreaAAA( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandObject( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandAreaObj( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandAreaSpawn( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandSupply( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandCommunication( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandNoEntry( unsigned int line, std::vector<std::string>& scripts );
 
 
 
@@ -95,7 +95,7 @@ private:
 	/** エディットモードの時に入る関数 */
 	void Edit();
 	/** 入力されたコマンドがゲームで使われるか確認 */
-	bool CheckInputString( std::string& command );
+	bool CheckInputString( std::string& command,std::vector < std::string >& _sclipt );
 	/** 追加コマンドに使われる関数 */
 	bool OnEditCommandAdd( const std::string& command );
 	/** 消去コマンドに使われる関数 */
@@ -133,7 +133,7 @@ private:
 	/** ゲームのステータス */
 	ScriptState state;
 	/** ゲームコマンドに使われる文字列をキーとした関数ポインタ */
-	using FunctionGameCommand = std::map<std::string,bool(ModeMainGame::*)(unsigned int,const std::vector<std::string>&)>;
+	using FunctionGameCommand = std::map<std::string,bool(ModeMainGame::*)(unsigned int, std::vector<std::string>&)>;
 	/** エディットコマンドの時に使われる文字列をキーとした関数ポインタ */
 	using FunctionEditCommand = std::map<std::string,bool(ModeMainGame::*)(const std::string&)>;
 	/** スクリプトの最大行数 */

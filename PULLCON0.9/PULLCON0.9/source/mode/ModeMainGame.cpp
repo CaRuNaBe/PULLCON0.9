@@ -156,7 +156,7 @@ void ModeMainGame::PreParsing()
 
 	while ( now_line >= 0 && now_line < max_line )
 	{
-		const auto script = scripts_data->GetScript( now_line );
+		auto script = scripts_data->GetScript( now_line );
 		const auto& command = (script[0]);
 		std::string string_comand{command};
 		if ( string_comand == COMMAND_STAGELABEL )
@@ -211,11 +211,11 @@ void ModeMainGame::Parsing()
 
 	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
 	{
-		const auto script = scripts_data->GetScript( now_line );
+		auto script = scripts_data->GetScript( now_line );
 		const auto& command = (script[0]);
 		std::string string_comand{command};
 
-
+		(this->*comand_funcs[string_comand])(now_line,script);
 		if ( string_comand == COMMAND_GAMESTART )
 		{
 			stop_parsing = true;
@@ -349,17 +349,32 @@ bool ModeMainGame::GetLineNumber( const std::string& str,unsigned int& line ) co
 	return false;
 }
 
-bool ModeMainGame::OnCommandStageLabel( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandStageLabel( unsigned int line,std::vector<std::string>& scripts )
 {
-	auto label = std::make_unique<CommandLabel>( line,scripts );
-
-	if ( !label->Check() )
-	{
-		return false;
-	}
 	if ( state != ScriptState::EDIT )
 	{
+		auto label = std::make_unique<CommandLabel>( line,scripts );
+
+		if ( !label->Check() )
+		{
+			return false;
+		}
+
 		label_list.emplace_back( std::move( label ) );
+	}
+	else
+	{
+		ClearDrawScreen();
+		std::string buf = "";
+		auto cchar = const_cast<char*>(buf.c_str());
+		int x = 0,y = 0;
+		DrawString( x,y,"ステージ名を入力してください",GetColor( 255,255,255 ) );
+
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			scripts.push_back( ecommandbuf );
+		}
 	}
 	return true;
 };
@@ -370,7 +385,7 @@ bool ModeMainGame::OnCommandStageLabel( unsigned int line,const std::vector<std:
  * @param scripts スクリプトの中身
  * @return bool 成功可否(true成功、false失敗)
  */
-bool ModeMainGame::OnCommandJunpLabel( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandJunpLabel( unsigned int line,std::vector<std::string>& scripts )
 {
 	/** 引数として持ってきたlineのコピーを0初期化 */
 	line = 0U;
@@ -385,7 +400,7 @@ bool ModeMainGame::OnCommandJunpLabel( unsigned int line,const std::vector<std::
 	return result;
 };
 
-bool ModeMainGame::OnCommandTurning( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandTurning( unsigned int line,std::vector<std::string>& scripts )
 {
 	int clear_time = (GetNowCount() - start_time) / 1000;
 	int turning_time = 0;
@@ -407,7 +422,7 @@ bool ModeMainGame::OnCommandTurning( unsigned int line,const std::vector<std::st
 	return result;
 };
 
-bool ModeMainGame::OnCommandStart( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 2;
 	if ( scripts.size() != SCRIPTSIZE )
@@ -423,7 +438,7 @@ bool ModeMainGame::OnCommandStart( unsigned int line,const std::vector<std::stri
 	return true;
 };
 
-bool ModeMainGame::OnCommandEnd( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandEnd( unsigned int line,std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 2;
 	if ( scripts.size() != SCRIPTSIZE )
@@ -437,7 +452,7 @@ bool ModeMainGame::OnCommandEnd( unsigned int line,const std::vector<std::string
 	return true;
 };
 
-bool ModeMainGame::OnCommandLoading( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandLoading( unsigned int line,std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 2;
 	if ( scripts.size() != SCRIPTSIZE )
@@ -452,7 +467,7 @@ bool ModeMainGame::OnCommandLoading( unsigned int line,const std::vector<std::st
 	return true;
 };
 
-bool ModeMainGame::OnCommandCrFeedIn( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandCrFeedIn( unsigned int line,std::vector<std::string>& scripts )
 {
 	crfo_list.clear();
 	auto crfi = std::make_unique<CommandCrFeedIn>( line,scripts );
@@ -468,7 +483,7 @@ bool ModeMainGame::OnCommandCrFeedIn( unsigned int line,const std::vector<std::s
 	return  true;
 }
 
-bool ModeMainGame::OnCommandCrFeedOut( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandCrFeedOut( unsigned int line,std::vector<std::string>& scripts )
 {
 	crfi_list.clear();
 	auto crfo = std::make_unique<CommandCrFeedOut>( line,scripts );
@@ -484,7 +499,7 @@ bool ModeMainGame::OnCommandCrFeedOut( unsigned int line,const std::vector<std::
 	return true;
 }
 
-bool ModeMainGame::OnCommandTimeWait( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandTimeWait( unsigned int line,std::vector<std::string>& scripts )
 {
 	auto wait = 0;
 	auto result = false;
@@ -504,7 +519,7 @@ bool ModeMainGame::OnCommandTimeWait( unsigned int line,const std::vector<std::s
 	return result;
 };
 
-bool ModeMainGame::OnCommandBgm( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandBgm( unsigned int line,std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 2;
 	if ( scripts.size() != SCRIPTSIZE )
@@ -515,7 +530,7 @@ bool ModeMainGame::OnCommandBgm( unsigned int line,const std::vector<std::string
 	return true;
 };
 
-bool ModeMainGame::OnCommandStory( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 3;
 	if ( scripts.size() != SCRIPTSIZE )
@@ -525,8 +540,14 @@ bool ModeMainGame::OnCommandStory( unsigned int line,const std::vector<std::stri
 
 	return true;
 };
-
-bool ModeMainGame::OnCommandStage( unsigned int line,const std::vector<std::string>& scripts )
+/**
+ * @fn bool ModeMainGame::OnCommandStage.
+ * @brief ステージ土台追加コマンド
+ * @param line 今の行
+ * @param scripts スクリプトの中身
+ * @return bool 成功可否(true成功、false失敗)
+ */
+bool ModeMainGame::OnCommandStage( unsigned int line,std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 2;//scriptsに入ってる文字列の最大数
 	if ( scripts.size() != SCRIPTSIZE )
@@ -538,12 +559,15 @@ bool ModeMainGame::OnCommandStage( unsigned int line,const std::vector<std::stri
 	{
 		return false;//文字列からintに変換
 	};
-	auto stage = std::make_shared<GameStage>( _game,*this,object_id );//ステージ土台のインスタンス作成
-	_3D_objectServer.Add( stage );//サーバーに追加
+	if ( state != ScriptState::EDIT )
+	{
+		auto stage = std::make_shared<GameStage>( _game,*this,object_id );//ステージ土台のインスタンス作成
+		_3D_objectServer.Add( stage );//サーバーに追加
+	}
 	return true;
 };
 
-bool ModeMainGame::OnCommandSkySphere( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandSkySphere( unsigned int line,std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 2;//scriptsに入ってる文字列の最大数
 	if ( scripts.size() != SCRIPTSIZE )
@@ -561,7 +585,7 @@ bool ModeMainGame::OnCommandSkySphere( unsigned int line,const std::vector<std::
 	return true;
 };
 
-bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& scripts )
 {
 	vector4 posi;
 	float scale = 1.0f;
@@ -597,7 +621,7 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,const std::vector<std::str
 	return true;
 };
 
-bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandGunShip( unsigned int line,std::vector<std::string>& scripts )
 {
 	vector4 posi;
 	float radius = 0.0f;
@@ -629,7 +653,7 @@ bool ModeMainGame::OnCommandGunShip( unsigned int line,const std::vector<std::st
 	return true;
 };
 
-bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,std::vector<std::string>& scripts )
 {
 	vector4 posi;
 	int object_min_id = 0;
@@ -705,7 +729,7 @@ bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,const std::vector<std::s
 	return true;
 };
 
-bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>& scripts )
 {
 	/** エリアのポジション */
 	vector4 posi;
@@ -873,7 +897,7 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,const std::vector<std::st
 	return true;
 };
 
-bool ModeMainGame::OnCommandObject( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& scripts )
 {
 	vector4 posi;
 	float scale = 1.0f;
@@ -920,7 +944,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,const std::vector<std::str
 	return true;
 };
 
-bool ModeMainGame::OnCommandAreaObj( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>& scripts )
 {
 	/** エリアのポジション */
 	vector4 posi;
@@ -1040,7 +1064,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,const std::vector<std::st
 	return true;
 };
 
-bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,std::vector<std::string>& scripts )
 {
 	vector4 posi;
 	int spawn_id = 0;
@@ -1076,7 +1100,7 @@ bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,const std::vector<std::
 	return true;
 };
 
-bool ModeMainGame::OnCommandSupply( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandSupply( unsigned int line,std::vector<std::string>& scripts )
 {
 	vector4 posi;
 	float radius = 0.0f;
@@ -1107,7 +1131,7 @@ bool ModeMainGame::OnCommandSupply( unsigned int line,const std::vector<std::str
 	return true;
 };
 
-bool ModeMainGame::OnCommandCommunication( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandCommunication( unsigned int line,std::vector<std::string>& scripts )
 {
 	vector4 posi;
 	float radius = 0.0f;
@@ -1140,7 +1164,7 @@ bool ModeMainGame::OnCommandCommunication( unsigned int line,const std::vector<s
 	return true;
 };
 
-bool ModeMainGame::OnCommandNoEntry( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandNoEntry( unsigned int line,std::vector<std::string>& scripts )
 {
 	vector4 posi;
 	float radius = 0.0f;
@@ -1271,8 +1295,8 @@ void ModeMainGame::Edit()
 		editCommand.insert( std::make_pair( ECOMMAND_ADD,&ModeMainGame::OnEditCommandAdd ) );
 		editCommand.insert( std::make_pair( ECOMMAND_DELETE,&ModeMainGame::OnEditCommandDelete ) );
 		editCommand.insert( std::make_pair( ECOMMAND_CLEAR,&ModeMainGame::OnEditCommandClear ) );
-		editCommand.insert( std::make_pair( ECOMMAND_JUNP,&ModeMainGame::OnEditCommandSave ) );
-		editCommand.insert( std::make_pair( ECOMMAND_SAVE,&ModeMainGame::OnEditCommandJunp ) );
+		editCommand.insert( std::make_pair( ECOMMAND_SAVE,&ModeMainGame::OnEditCommandSave ) );
+		editCommand.insert( std::make_pair( ECOMMAND_JUNP,&ModeMainGame::OnEditCommandJunp ) );
 
 		int x = 0; int y = 0;
 		std::string buf = "";
@@ -1327,6 +1351,8 @@ bool ModeMainGame::OnEditCommandAdd( const std::string& command )
 	int x,y;
 	x = y = 0;
 	std::string buf;
+	const std::string DELIMITER = ",";
+	std::vector < std::string >_script;
 	const std::string FILEPASS = "res/script/gamescript/gamecommand.json";
 	const std::string ARREYNAME = "gamecommand";
 	auto adddate = std::make_unique<ScriptsData>();
@@ -1347,9 +1373,10 @@ bool ModeMainGame::OnEditCommandAdd( const std::string& command )
 	{
 		std::string ecommandbuf = cchar;
 
-		if ( CheckInputString( ecommandbuf ) )
+		if ( CheckInputString( ecommandbuf,_script ) )
 		{
-			scripts_data->ScriptAdd( ecommandbuf );
+			auto com = string::Combine( _script,DELIMITER );
+			scripts_data->ScriptAdd( com );
 		}
 		else
 		{
@@ -1361,21 +1388,20 @@ bool ModeMainGame::OnEditCommandAdd( const std::string& command )
 };
 
 bool ModeMainGame::OnEditCommandDelete( const std::string& command )
-
 {
 	int x,y;
 	x = y = 0;
 	std::string buf = "";
 	auto cchar = const_cast<char*>(buf.c_str());
 	DrawString( x,y,"何を消去しますか\n番号を入力してください",GetColor( 255,255,255 ) );
-	y += 30;
+	y += 40;
 	auto maxline = scripts_data->GetScriptNum();
 	for ( unsigned int i = 0; i <= maxline; i++ )
 	{
 		auto script = scripts_data->GetScriptLine( i );
 		auto stringnew = "番号%d" + script;
 		DrawFormatString( x,y,GetColor( 255,255,255 ),stringnew.c_str(),i + 1 );
-		y += 30;
+		y += 18;
 	}
 	if ( KeyInputSingleCharString( 0,500,30,cchar,TRUE ) == 1 )
 	{
@@ -1410,7 +1436,7 @@ bool ModeMainGame::OnEditCommandJunp( const std::string& command )
 	return true;
 };
 
-bool ModeMainGame::CheckInputString( std::string& command )
+bool ModeMainGame::CheckInputString( std::string& command,std::vector < std::string >& _sclipt )
 {
 	FunctionGameCommand comand_funcs;
 	comand_funcs.insert( std::make_pair( COMMAND_STAGELABEL,&ModeMainGame::OnCommandStageLabel ) );
@@ -1448,12 +1474,12 @@ bool ModeMainGame::CheckInputString( std::string& command )
 	{
 		return false;
 	}
-	/*
-	if ( )
+	_sclipt.push_back( command );
+	if ( !(this->*comand_funcs[_sclipt[0]])(0,_sclipt) )
 	{
-		return false
+		return false;
 	}
-	*/
+
 	state = ScriptState::EDIT;
 	_3D_objectServer.Clear();
 	return true;
