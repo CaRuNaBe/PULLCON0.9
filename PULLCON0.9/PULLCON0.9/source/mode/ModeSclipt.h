@@ -12,4 +12,7 @@ public:
 	virtual bool Draw();	// •`‰æ
 
 private:
+	int Tem_image;
+	int timer;
+	std::string story_name;
 };

@@ -20,11 +20,11 @@
     <Filter Include="source\Math">
       <UniqueIdentifier>{adb50178-8503-4cd3-aa02-1f3d5bc8a761}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\ScliptEngin">
-      <UniqueIdentifier>{f7001ca2-cb2e-4783-9ea9-7242b31127b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\gamesclipt">
       <UniqueIdentifier>{7408e4e2-6577-4b49-8611-bc96a769bfb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Sclipt">
+      <UniqueIdentifier>{f7001ca2-cb2e-4783-9ea9-7242b31127b5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,10 +87,10 @@
       <Filter>source\Application</Filter>
     </ClInclude>
     <ClInclude Include="source\Script\scripts_data.h">
-      <Filter>source\ScliptEngin</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClInclude>
     <ClInclude Include="source\Script\scripts_string.h">
-      <Filter>source\ScliptEngin</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClInclude>
     <ClInclude Include="source\Object\ActorBase2d.h">
       <Filter>source\Object</Filter>
@@ -101,10 +101,14 @@
     <ClInclude Include="source\Math\3dCollision.h">
       <Filter>source\Math</Filter>
     </ClInclude>
-    <ClInclude Include="source\Mode\ModeScriptBase.h" />
-    <ClInclude Include="source\Script\command_choice.h" />
-    <ClInclude Include="source\Script\command_label.h" />
-    <ClInclude Include="source\Script\command_base.h" />
+    <ClInclude Include="source\Script\CommandLabel.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandBase.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandCrFeedIn.h" />
+    <ClInclude Include="source\Script\CommandCrFeedout.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -163,10 +167,10 @@
       <Filter>source\Application</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\scripts_data.cpp">
-      <Filter>source\ScliptEngin</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\scripts_string.cpp">
-      <Filter>source\ScliptEngin</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Object\ActorBase2d.cpp">
       <Filter>source\Object</Filter>
@@ -177,13 +181,13 @@
     <ClCompile Include="source\Math\3dCollision.cpp">
       <Filter>source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="source\Mode\ModeScriptBase.cpp">
+    <ClCompile Include="source\Script\CommandLabel.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandCrFeedIn.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\Script\command_choice.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Script\command_label.cpp">
+    <ClCompile Include="source\Script\CommandCrFeedout.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

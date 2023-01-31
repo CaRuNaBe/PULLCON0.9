@@ -14,4 +14,5 @@
 #include "Script/scripts_data.h"
 #include "Script/scripts_string.h"
 #include "Script/CommandLabel.h"
-#include "Script/CommandChoice.h"
+#include "Script/CommandCrFeedIn.h"
+#include "Script/CommandCrFeedOut.h"

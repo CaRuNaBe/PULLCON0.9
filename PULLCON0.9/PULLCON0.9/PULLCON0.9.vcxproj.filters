@@ -116,7 +116,7 @@
       <Filter>source\mode</Filter>
     </ClCompile>
     <ClCompile Include="source\mode\ModeResourceRoad.cpp">
-      <Filter>source</Filter>
+      <Filter>source\mode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +213,8 @@
     <ClInclude Include="source\mode\ModeSclipt.h">
       <Filter>source\mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeResourceRoad.h" />
+    <ClInclude Include="source\mode\ModeResourceRoad.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

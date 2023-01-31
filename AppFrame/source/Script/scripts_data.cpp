@@ -62,21 +62,21 @@ bool ScriptsData::LoadJson( std::string filepath,std::string storyname,std::stri
 
 		ifs >> json_value;
 
-		const auto err = picojson::get_last_error();
+		const auto& err = picojson::get_last_error();
 
 		if ( !err.empty() )
 		{
 			return false;
 		}
 		std::cout << picojson::value( json_value ) << std::endl;
-		auto root = json_value.get<picojson::array>();
-		auto object = root[0].get<picojson::object>();
-		const auto array = object[storyname].get<picojson::array>();
+		auto &root = json_value.get<picojson::array>();
+		auto& object = root[0].get<picojson::object>();
+		const auto &array = object[storyname].get<picojson::array>();
 
 		// UTF-8 -> Wide(UTF-16) -> MultiByte と文字コードを変換しながらスクリプト文字を取得
 		for ( auto i = array.begin(); i != array.end(); ++i )
 		{
-			const auto utf8 = (*i).get<std::string>();
+			const auto &utf8 = (*i).get<std::string>();
 			const auto utf16 = ConvertUTF8ToWide( utf8 );
 			const auto mbs = ConvertWideToMultiByte( utf16 );
 
@@ -87,13 +87,7 @@ bool ScriptsData::LoadJson( std::string filepath,std::string storyname,std::stri
 	ifs.close();
 	return true;
 }
-/**
- * .
- *
- * \param newfilename
- * \param storyname
- * \return
- */
+
 bool ScriptsData::WriteJson( std::string newfilename,std::string storyname )
 {
 	std::ofstream writing_file;
@@ -102,7 +96,7 @@ bool ScriptsData::WriteJson( std::string newfilename,std::string storyname )
 	picojson::array datalist;
 	for ( auto i = scripts->begin(); i != scripts->end(); ++i )
 	{
-		const auto mbs = *i;//マルチバイト文字取得
+		const auto &mbs = *i;//マルチバイト文字取得
 		const auto utf16 = ConvertMultiByteToWide( mbs );//マルチバイト文字からUTF-16
 		const auto utf8 = ConvertWideToUTF8( utf16 );//utf-16からutf-8
 		datalist.push_back( picojson::value( utf8 ) );

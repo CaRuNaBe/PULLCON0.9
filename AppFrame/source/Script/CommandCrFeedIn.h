@@ -1,25 +1,25 @@
 /*****************************************************************//**
- * \file   command_crfi.h
- * \brief  'fi' スクリプトを処理するクラス定義
+ * \file   CommandCrFeedIn.h
+ * \brief  'CrFeedIn' スクリプトを処理するクラス定義
  *
  *
  * \author 阿部健太郎
  * \date   August 2022
  *********************************************************************/
 #pragma once
-#include "command_base.h"
+#include "CommandBase.h"
 #include <string>
-class CommandCrfi :public CommandBase
+class CommandCrFeedIn:public CommandBase
 {
 public:
-	CommandCrfi ( unsigned int line , const std::vector<std::string>& script );
-	CommandCrfi ( const CommandCrfi& ) = default;
-	CommandCrfi ( CommandCrfi&& ) noexcept = default;
+	CommandCrFeedIn( unsigned int line , const std::vector<std::string>& script );
+	CommandCrFeedIn( const CommandCrFeedIn& ) = default;
+	CommandCrFeedIn( CommandCrFeedIn&& ) noexcept = default;
 
-	virtual ~CommandCrfi () = default;
+	virtual ~CommandCrFeedIn() = default;
 
-	CommandCrfi& operator=( const CommandCrfi& right ) = default;
-	CommandCrfi& operator=( CommandCrfi&& right ) noexcept = default;
+	CommandCrFeedIn& operator=( const CommandCrFeedIn& right ) = default;
+	CommandCrFeedIn& operator=( CommandCrFeedIn&& right ) noexcept = default;
 
 	bool Check () override;
 

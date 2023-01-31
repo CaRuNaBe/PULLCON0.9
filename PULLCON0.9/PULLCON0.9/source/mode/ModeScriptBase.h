@@ -1,6 +1,7 @@
 #pragma once
-#include "ModeBase.h"
+#include "appframe.h"
 class ModeScriptBase:public ModeBase
 {
+
 };
 

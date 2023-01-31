@@ -65,8 +65,8 @@ private:
 	bool OnCommandStart( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandEnd( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandLoading( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandFeedIn( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandFeedOut( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandCrFeedIn( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandCrFeedOut( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandTimeWait( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandClick( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandBgm( unsigned int line,const std::vector<std::string>& scripts );
@@ -114,18 +114,18 @@ private:
 	void CrfiUpdate();
 	/** フェードアウト時に使われるUpdate */
 	void CrfoUpdate();
-
-	//void DrawFeedin( ApplicationBase& game )const;
-	//void DrawFeedout( ApplicationBase& game )const;
+	/** フェードイン描画 */
+	void DrawFeedIn()const;
+	/** フェードアウト描画 */
+	void DrawFeedOut()const;
 
 	/** ScriptsDataにアクセスするポインタ */
 	std::unique_ptr<ScriptsData> scripts_data;
 	/** ステージ名を格納するvector */
 	std::vector<std::unique_ptr<CommandLabel>> label_list;
-	std::vector<std::unique_ptr<CommandChoice>> choice_list;
+	std::vector < std::unique_ptr < CommandCrFeedIn>> crfi_list;
+	std::vector < std::unique_ptr < CommandCrFeedOut>> crfo_list;
 
-	//std::vector<std::unique_ptr<CommandCrfi>> crfi_list;
-	//std::vector<std::unique_ptr<CommandCrfo>> crfo_list;
 
 	/** ゲームのステータス */
 	ScriptState state;
@@ -140,11 +140,14 @@ private:
 	/** 待つ時間 */
 	unsigned int wait_count;
 	/** フェードアウトインするときに使うα値 */
-	float Alpha;
+	float alpha;
 	/** フェードアウトインするときに使うフレーム数 */
 	float feedcount;
 	/** ステージ名 */
 	std::string  stage_name;
+	/** ゲームスタート時間 */
+	int start_time;
+
 	bool is_notcant;
 	bool is_notcommand;
 	bool is_cannotdelete;

@@ -1,12 +1,12 @@
 /*****************************************************************//**
- * \file   command_crfo.cpp
- * \brief  'fo' スクリプトを処理するクラス実装
+ * @file   CommandCrFeedout.cpp
+ * @brief  'CrFeedout' スクリプトを処理するクラス実装
  *
  *
- * \author 阿部健太郎
- * \date   August 2022
+ * @author 阿部健太郎
+ * @date   August 2022
  *********************************************************************/
-#include "command_crfo.h"
+#include "CommandCrFeedOut.h"
 #include "scripts_string.h"
 
 namespace
@@ -14,8 +14,8 @@ namespace
 	constexpr size_t SCRIPT_NUM = 5;
 }
 
-CommandCrfo::CommandCrfo ( unsigned int line , const std::vector<std::string>& script )
-	: CommandBase ( line , script )
+CommandCrFeedOut::CommandCrFeedOut( unsigned int line,const std::vector<std::string>& script )
+	: CommandBase( line,script )
 {
 	out_count = 0;
 	out_red = 0;
@@ -23,9 +23,9 @@ CommandCrfo::CommandCrfo ( unsigned int line , const std::vector<std::string>& s
 	out_blue = 0;
 }
 
-bool CommandCrfo::Check ()
+bool CommandCrFeedOut::Check()
 {
-	const auto size = script.size ();
+	const auto size = script.size();
 
 	if ( size != SCRIPT_NUM )
 	{
@@ -34,28 +34,28 @@ bool CommandCrfo::Check ()
 
 	auto value = 0;
 
-	if ( !string::ToInt ( script [ 1 ] , value ) )
+	if ( !string::ToInt( script[1],value ) )
 	{
 		return false;
 	}
 
 	out_count = value;
 
-	if ( !string::ToInt ( script [ 2 ] , value ) )
+	if ( !string::ToInt( script[2],value ) )
 	{
 		return false;
 	}
 
 	out_red = value;
 
-	if ( !string::ToInt ( script [ 3 ] , value ) )
+	if ( !string::ToInt( script[3],value ) )
 	{
 		return false;
 	}
 
 	out_green = value;
 
-	if ( !string::ToInt ( script [ 4 ] , value ) )
+	if ( !string::ToInt( script[4],value ) )
 	{
 		return false;
 	}
