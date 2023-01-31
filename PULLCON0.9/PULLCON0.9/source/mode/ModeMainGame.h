@@ -63,7 +63,7 @@ private:
 	void Parsing();
 
 	bool OnCommandStageLabel( unsigned int line, std::vector<std::string>& scripts );
-	bool OnCommandJunpLabel( unsigned int line, std::vector<std::string>& scripts );
+	bool OnCommandJumpLabel( unsigned int line, std::vector<std::string>& scripts );
 	bool OnCommandTurning( unsigned int line, std::vector<std::string>& scripts );
 	bool OnCommandStart( unsigned int line, std::vector<std::string>& scripts );
 	bool OnCommandEnd( unsigned int line, std::vector<std::string>& scripts );

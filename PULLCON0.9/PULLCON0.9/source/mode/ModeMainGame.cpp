@@ -26,7 +26,7 @@ namespace
 {
 	//ゲームコマンド
 	const std::string COMMAND_STAGELABEL = "StageLabel";//ステージラベル決定コマンド
-	const std::string COMMAND_JUNPLABEL = "StageJunp";//ステージジャンプコマンド
+	const std::string COMMAND_JUNPLABEL = "StageJump";//ステージジャンプコマンド
 	const std::string COMMAND_TURNING = "Turning";//ステージ分岐コマンド
 	const std::string COMMAND_GAMESTART = "Start";//ゲームスタート
 	const std::string COMMAND_END = "End";//ゲーム終了
@@ -183,7 +183,7 @@ void ModeMainGame::Parsing()
 	auto stop_parsing = false;
 	unsigned	int date_empty = 0;
 	FunctionGameCommand comand_funcs;
-	comand_funcs.insert( std::make_pair( COMMAND_JUNPLABEL,&ModeMainGame::OnCommandJunpLabel ) );
+	comand_funcs.insert( std::make_pair( COMMAND_JUNPLABEL,&ModeMainGame::OnCommandJumpLabel ) );
 	comand_funcs.insert( std::make_pair( COMMAND_TURNING,&ModeMainGame::OnCommandTurning ) );
 	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
 	comand_funcs.insert( std::make_pair( COMMAND_END,&ModeMainGame::OnCommandEnd ) );
@@ -373,6 +373,11 @@ bool ModeMainGame::OnCommandStageLabel( unsigned int line,std::vector<std::strin
 		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
 		{
 			std::string ecommandbuf = cchar;
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
 			scripts.push_back( ecommandbuf );
 		}
 	}
@@ -385,47 +390,129 @@ bool ModeMainGame::OnCommandStageLabel( unsigned int line,std::vector<std::strin
  * @param scripts スクリプトの中身
  * @return bool 成功可否(true成功、false失敗)
  */
-bool ModeMainGame::OnCommandJunpLabel( unsigned int line,std::vector<std::string>& scripts )
+bool ModeMainGame::OnCommandJumpLabel( unsigned int line,std::vector<std::string>& scripts )
 {
 	/** 引数として持ってきたlineのコピーを0初期化 */
 	line = 0U;
-	/** 成功可否(true成功、false失敗)を取得、lineにラベルコマンドで追加した文字列に対応した行数を入れる */
-	const auto result = GetLineNumber( scripts[1],line );
-	/** 成功した場合naw_lineにlineをいれジャンプする */
-	if ( result )
-	{
-		now_line = line;
-	}
 
-	return result;
+	if ( state != ScriptState::EDIT )
+	{
+		/** 成功可否(true成功、false失敗)を取得、lineにラベルコマンドで追加した文字列に対応した行数を入れる */
+		const auto result = GetLineNumber( scripts[1],line );
+		/** 成功した場合naw_lineにlineをいれジャンプする */
+		if ( result )
+		{
+			now_line = line;
+		}
+		return result;
+	}
+	else
+	{
+		ClearDrawScreen();
+		std::string buf = "";
+		auto cchar = const_cast<char*>(buf.c_str());
+		int x = 0,y = 0;
+		DrawString( x,y,"ステージ名を入力してください\n追加可能ステージ名",GetColor( 255,255,255 ) );
+		y += 38;
+		auto maxline = scripts_data->GetScriptNum();
+		if ( maxline <= 0 )
+		{
+			is_notcant = true;
+			return false;
+		}
+		for ( unsigned int i = 0; i < maxline; i++ )
+		{
+			auto script = scripts_data->GetScriptLine( i );
+			auto command = string::Split( script,"," );
+			if ( command[0] != COMMAND_STAGELABEL )
+			{
+				continue;
+			}
+			DrawString( x,y,command[1].c_str(),GetColor( 255,255,255 ) );
+			y += 18;
+
+		}
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+			scripts.push_back( ecommandbuf );
+		}
+	}
 };
 
 bool ModeMainGame::OnCommandTurning( unsigned int line,std::vector<std::string>& scripts )
 {
-	int clear_time = (GetNowCount() - start_time) / 1000;
-	int turning_time = 0;
-
-	line = 0U;
-	const auto result = GetLineNumber( scripts[1],line );
-	if ( !(string::ToInt( scripts[2],turning_time )) )
+	
+	if ( state != ScriptState::EDIT )
 	{
-		return false;
-	}
+		int clear_time = (GetNowCount() - start_time) / 1000;
+		int turning_time = 0;
 
-	if ( result )
-	{
-		if ( clear_time < turning_time )
+		line = 0U;
+		const auto result = GetLineNumber( scripts[1],line );
+		if ( !(string::ToInt( scripts[2],turning_time )) )
 		{
-			now_line = line;
+			return false;
+		}
+
+		if ( result )
+		{
+			if ( clear_time < turning_time )
+			{
+				now_line = line;
+			}
+		}
+		return result;
+	}
+	else
+	{
+		ClearDrawScreen();
+		std::string buf = "";
+		auto cchar = const_cast<char*>(buf.c_str());
+		int x = 0,y = 0;
+		DrawString( x,y,"ステージ名を入力してください\n追加可能ステージ名",GetColor( 255,255,255 ) );
+		y += 38;
+		auto maxline = scripts_data->GetScriptNum();
+		if ( maxline <= 0 )
+		{
+			is_notcant = true;
+			return false;
+		}
+		for ( unsigned int i = 0; i < maxline; i++ )
+		{
+			auto script = scripts_data->GetScriptLine( i );
+			auto command = string::Split( script,"," );
+			if ( command[0] != COMMAND_STAGELABEL )
+			{
+				continue;
+			}
+			DrawString( x,y,command[1].c_str(),GetColor( 255,255,255 ) );
+			y += 18;
+
+		}
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+			scripts.push_back( ecommandbuf );
+			return true;
 		}
 	}
-	return result;
 };
 
 bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& scripts )
 {
-	const size_t SCRIPTSIZE = 2;
-	if ( scripts.size() != SCRIPTSIZE )
+	const size_t SCRIPTSIZE = 1;
+	if ( scripts.size() > SCRIPTSIZE )
 	{
 		return false;
 	}
@@ -589,6 +676,7 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 {
 	vector4 posi;
 	float scale = 1.0f;
+	float speed = 30.0f;
 	const size_t SCRIPTSIZE = 5;
 	if ( scripts.size() != SCRIPTSIZE )
 	{
@@ -614,9 +702,14 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 	{
 		return false;
 	}
+	if ( !(string::ToFloat( scripts[5],speed )) )
+	{
+		return false;
+	}
 	auto player = std::make_shared<Player>( _game,*this );
 	player->SetPosition( posi );
 	//player->SetScale( scale );
+	//player->SerSpeed( speed );
 	_3D_objectServer.Add( player );
 	return true;
 };
@@ -1306,7 +1399,7 @@ void ModeMainGame::Edit()
 		if ( is_notcant )
 		{
 			is_notcant = false;
-			DrawString( x,150,"追加できませんでした\n",GetColor( 255,255,255 ) );
+			DrawString( x,150,"追加出来るものがありません\n",GetColor( 255,255,255 ) );
 		}
 		if ( is_notcommand )
 		{
@@ -1427,7 +1520,10 @@ bool ModeMainGame::OnEditCommandClear( const std::string& command )
 
 bool ModeMainGame::OnEditCommandSave( const std::string& command )
 {
-	scripts_data->WriteJson( FILENAME,GAMESCRIPT );
+	if ( !scripts_data->WriteJson( FILENAME,GAMESCRIPT ) )
+	{
+		return false;
+	};
 	return true;
 };
 
@@ -1440,7 +1536,7 @@ bool ModeMainGame::CheckInputString( std::string& command,std::vector < std::str
 {
 	FunctionGameCommand comand_funcs;
 	comand_funcs.insert( std::make_pair( COMMAND_STAGELABEL,&ModeMainGame::OnCommandStageLabel ) );
-	comand_funcs.insert( std::make_pair( COMMAND_JUNPLABEL,&ModeMainGame::OnCommandJunpLabel ) );
+	comand_funcs.insert( std::make_pair( COMMAND_JUNPLABEL,&ModeMainGame::OnCommandJumpLabel ) );
 	comand_funcs.insert( std::make_pair( COMMAND_TURNING,&ModeMainGame::OnCommandTurning ) );
 	comand_funcs.insert( std::make_pair( COMMAND_GAMESTART,&ModeMainGame::OnCommandStart ) );
 	comand_funcs.insert( std::make_pair( COMMAND_END,&ModeMainGame::OnCommandEnd ) );
