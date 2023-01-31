@@ -5,6 +5,7 @@
 
 EnemyAAA::EnemyAAA()
 	:base()
+
 {
 	_handle_body = MV1LoadModel("res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_dodai.mv1");
 	_handle_turret = MV1LoadModel("res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_houtou.mv1");
@@ -26,34 +27,49 @@ void EnemyAAA::Init() {
 	_iLife = 50;
 
 	_iType = 0;
-	_iPossession = 0;
+	_iPossession = 3;
 	_fAxialX = 0.f;
 	_fAxialY = 0.f;
+	_have = false;
+	_ = false;
 
 	_CT = 30;
 }
 
 bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 	base::Update(game,mode);
-
+	
 	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kPlayer
+		 || obje->GetType() == Type::kEnemyAAA
 		 || obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kPlayer) {
 				if(!_finish){
-					if (Intersect(obje->_collision, _collisionEvent)) {
-						// イベント状態に移行させる
-						_event = true;
-						_stateAAA = State::EVENT;
+					if (_stateAAA != State::NUM) {
+						if (Intersect(obje->_collision, _collisionEvent)) {
+							// イベント状態に移行させる
+							_event = true;
+							_stateAAA = State::EVENT;
+						}
+						else {
+							// 起動状態に移行
+							_stateAAA = State::PLAY;
+							if (_iType == 0) {
+								_vRelation = obje->_vPos;
+								// 弾にバラつきを持たせる
+								float randomX = static_cast<float>(utility::get_random(-700, 700));
+								float randomY = static_cast<float>(utility::get_random(-700, 700));
+								float randomZ = static_cast<float>(utility::get_random(-700, 700));
+								_vTarget = { _vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ };
+							}
+						}
+						if (!_pull) {
+							_iPieces = obje->_iPieces;
+						}
 					}
 					else {
-						// 起動状態に以降
-						_stateAAA = State::PLAY;
-						if (_iType == 0) {
-							_vTarget = obje->_vPos;
-							// 弾にバラつきを持たせる
-							float random = static_cast<float>(utility::get_random(0, 1000));
-							_vTarget = { _vTarget.x + random, _vTarget.y + random, _vTarget.z + random };
+						if (obje->_pull == false) {
+							_iPieces = obje->_iPieces + _iPart;
 						}
 					}
 				}
@@ -62,7 +78,6 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 					_coll = false;
 					_pull = false;
 					_finish = true;
-					_iPieces = obje->_iPieces;
 					obje->_iPieces += _iPossession;
 					_stateAAA = State::WEAPON;
 				}
@@ -72,6 +87,19 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 					_vPos.y -= 2.f * _collision._fRadius + static_cast<float>(_iPieces) * _collision._fRadius;
 					_fRotatY = obje->_fRotatY + utility::PiOver2;
 					_fire = obje->_fire;
+				}
+			}
+			if (obje->GetType() == Type::kEnemyAAA) {
+				if (_stateAAA == State::NUM) {
+					if (Intersect(obje->_collision, _collision)) {
+						if (_iPieces == obje->_iPieces + 1) {
+							if (obje->_finish) {
+								_finish = true;
+								_iPieces = obje->_iPieces + 1;
+								_stateAAA = State::WEAPON;
+							}
+						}
+					}
 				}
 			}
 			if (obje->GetType() == Type::kBullet) {
@@ -92,9 +120,14 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		float distance = _collision._fRadius + _collisionEvent._fRadius;
 		_vEvent = { _vPos.x, _vPos.y + distance, _vPos.z };
 
+		if (!_have && _iPossession > 0) {
+			AddPieces(mode);
+			_have = true;
+		}
+
 		// 三次元極座標(r(length3D),θ(theta),φ(rad))
 		float sx = _vTarget.x - _vPos.x;
-		float sy = 100.f + _vTarget.y - _vPos.y;   // 少し上を狙う
+		float sy = _vTarget.y - _vPos.y;
 		float sz = _vTarget.z - _vPos.z;
 		float length3D = sqrt(sx * sx + sy * sy + sz * sz);
 		float rad = atan2(sz, sx);
@@ -107,16 +140,30 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 			_fRotatX = theta;
 		}
 
-		// 弾の進行方向の向きを設定する
+		// 弾の進行方向の向きを設定
 		_vDir.x = cos(rad);
 		_vDir.z = sin(rad);
 		_vDir.y = cos(theta);
 		_vDir.Normalized();
 
+		// 一定間隔で撃つ
 		if (_CT == 0) {
 			AddBullet(mode);
 			_CT = 10;
 		}
+
+		// 三次元極座標(r(length3D),θ(theta),φ(rad))
+		sx = _vRelation.x - _vPos.x;
+		sy = _vRelation.y - _vPos.y;
+		sz = _vRelation.z - _vPos.z;
+		length3D = sqrt(sx * sx + sy * sy + sz * sz);
+		rad = atan2(sz, sx);
+		theta = acos(sy / length3D);
+
+		// モデルの向きの設定用
+		_vDir.x = cos(rad);
+		_vDir.z = sin(rad);
+		_vDir.Normalized();
 
 		// Y軸回転
 		_fRotatY = -rad;
@@ -124,9 +171,10 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		float rX = cos(theta);
 		float degree = utility::radian_to_degree(rX);
 		if (degree >= 0.f && degree <= 40.f) {
-			if (_iType == 0) {
-				_fRotatX = rX;
-			}
+			_fRotatX = rX;
+		}
+		if (_iType == 1) {
+			_fRotatX = rX;
 		}
 	}
 	else if(_stateAAA == State::WEAPON){
@@ -144,6 +192,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		_vDir.y = cos(theta);
 		_vDir.Normalized();
 
+		// プレイヤーが射撃していたら一定間隔で撃つ
 		if (_fire && _CT == 0) {
 			AddBullet(mode);
 			_CT = 10;
@@ -155,6 +204,11 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		if (degree >= 0.f && degree <= 40.f) {
 			_fRotatX = rX;
 		}
+	}
+	else if(_stateAAA == State::NUM){
+		// イベント用コリジョンを移動
+		float distance = _collision._fRadius + _collisionEvent._fRadius;
+		_vEvent = { _vPos.x, _vPos.y + distance, _vPos.z };
 	}
 
 	UpdateCollision();   // コリジョンアップデート
@@ -173,6 +227,9 @@ bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
 	base::Draw(game, mode);
 
 	VECTOR pos = ToDX(_vPos);
+	// モデル拡大
+	MV1SetScale(_handle_body, ToDX(_vScale));
+	MV1SetScale(_handle_turret, ToDX(_vScale));
 	// モデル回転
 	MV1SetRotationXYZ(_handle_body, VGet(0.f,_fRotatY,0.f));
 	MV1SetRotationZYAxis(_handle_turret, VGet(-(_vDir.z), 0.f, _vDir.x), VGet(0.f, 1.f, 0.f), _fRotatX);
@@ -211,4 +268,17 @@ void EnemyAAA::AddBullet(ModeBase& mode) {
 	bullet->SetPosition(vBullet);
 	bullet->SetDir(_vDir);
 	mode.GetObjectServer3D().Add(bullet);
+}
+
+void EnemyAAA::AddPieces(ModeBase& mode) {
+	for (auto i = 0; i < _iPossession; ++i) {
+		vector4 vPiece = { _vPos.x, _vPos.y - _collision._fRadius * static_cast<float>(i + 1), _vPos.z};
+		auto piece = std::make_shared<EnemyAAA>();
+		piece->SetPosition(vPiece);
+		piece->_stateAAA = State::NUM;
+		piece->_coll = false;
+		piece->_iPart = i + 1;
+		piece->_iPossession = 0;
+		mode.GetObjectServer3D().Add(piece);
+	}
 }

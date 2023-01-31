@@ -30,7 +30,7 @@ void Player::Init() {
 	base::Init();
 	_statePlayer = State::NUM;
 
-	_fSpeed = 30.f;
+	_fSpeed = 90.f;
 	_fRotatY = utility::PI;
 	_iFuel = 100;
 	_push = 0;
@@ -198,7 +198,7 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		vector4 move = { 0.f, 1.f, 0.f };
 		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)) {
 			if (_pull && _CT == 0) {
-				_CT = 20;
+				_CT = 10;
 				++_push;
 				if (_push == 6) {
 					// 引っこ抜き完了
@@ -266,6 +266,8 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 		rX += _fRotatX;   // カメラを動かした分プラス
 		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
 	}
+	// モデル拡大
+	MV1SetScale(_handle, ToDX(_vScale));
 	// 位置
 	MV1SetPosition(_handle, ToDX(_vPos));
 	// ライティング計算
@@ -366,8 +368,8 @@ void Player::EventCamera(ApplicationBase& game) {
 	camerad = _fRotatY + utility::PI * 5.f / 6.f;
 
 	// X軸回転
-	float degree = 100.f;
-	theta = utility::degree_to_radian(degree);
+	//float degree = 100.f;
+	//theta = utility::degree_to_radian(degree);
 
 	// カメラ位置
 	_cam._vPosEvent.y = _vPos.y + cos(theta) * length3D;

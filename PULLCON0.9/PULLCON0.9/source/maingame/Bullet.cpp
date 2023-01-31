@@ -65,7 +65,7 @@ bool Bullet::Draw(ApplicationBase& game, ModeBase& mode) {
 	float theta = acos(_vDir.y / length3D);
 
 	// ƒ‚ƒfƒ‹Šg‘å
-	MV1SetScale(_handle, VGet(2.f, 2.f, 2.f));
+	MV1SetScale(_handle, ToDX(_vScale));
 	// ƒ‚ƒfƒ‹‰ñ“]
 	MV1SetRotationZYAxis(_handle, VGet(_vDir.z, 0.f, -(_vDir.x)), VGet(0.f, 1.f, 0.f), theta);
 	// ƒ‚ƒfƒ‹ˆÚ“®

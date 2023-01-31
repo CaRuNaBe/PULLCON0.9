@@ -17,6 +17,7 @@ void ActorBase3D::Init() {
 	_vRelation = { 0.f, 0.f ,0.f };
 	_vTarget = { 0.f, 0.f ,0.f };
 	_vDir = { 0.f, 0.f ,0.f };
+	_vScale = { 1.f, 1.f , 1.f };
 
 	_iFuel = 0;
 	_iLife = 0;
@@ -38,7 +39,7 @@ void ActorBase3D::Init() {
 
 bool ActorBase3D::Update(ApplicationBase& game, ModeBase& mode) {
 	base::Update(game, mode);
-
+	// 毎フレームfalseにする
 	_overlap = false;
 	_event = false;
 	_fire = false;
@@ -105,7 +106,7 @@ void ActorBase3D::DrawCollision(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collision.Draw(color.x, color.y, color.z);
+	_collision.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }
@@ -115,7 +116,7 @@ void ActorBase3D::DrawCollisionEvent(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collisionEvent.Draw(color.x, color.y, color.z);
+	_collisionEvent.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }

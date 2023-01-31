@@ -54,10 +54,11 @@ public:
 	vector4 _vRelation;   // 位置関係
 	vector4 _vTarget;   // 目標位置
 	vector4 _vDir;   // 向き
+	vector4 _vScale;   // 大きさ
 
 	Sphere  _collision;   // 球判定
 	Sphere  _collisionEvent;   // イベント判定
-	Sphere  _collisionSearch;   // イベント判定
+	Sphere  _collisionSearch;   // 索敵判定
 
 	int   _iFuel;    // 燃料
 	int   _iLife;    // ライフ

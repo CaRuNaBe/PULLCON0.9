@@ -18,7 +18,7 @@ public:
 	virtual void Damage(ModeBase& mode);
 
 protected:
-	vector4 _vObjective;
+	vector4 _vObjective;  // ’†SÀ•W
 
 	int    _handle;
 	

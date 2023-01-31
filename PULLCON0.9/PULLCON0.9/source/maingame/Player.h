@@ -37,10 +37,10 @@ protected:
 	// カメラ
 	Camera	_cam;
 
-	State  _statePlayer;
+	State  _statePlayer;  // プレイヤーステータス
 
-	int    _push;
-	bool   _isHit;
+	int    _push;   // ボタン連打回数
+	bool   _isHit;  // 当たったか
 
 	int    _handle;
 	int    _handlefont;
