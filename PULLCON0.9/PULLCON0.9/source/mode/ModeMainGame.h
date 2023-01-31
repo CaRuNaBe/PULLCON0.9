@@ -135,7 +135,7 @@ private:
 	/** ゲームコマンドに使われる文字列をキーとした関数ポインタ */
 	using FunctionGameCommand = std::map<std::string,bool(ModeMainGame::*)(unsigned int,const std::vector<std::string>&)>;
 	/** エディットコマンドの時に使われる文字列をキーとした関数ポインタ */
-	using FunctionEditCommand = std::map<std::string,bool(ModeMainGame::*)(const std::string)>;
+	using FunctionEditCommand = std::map<std::string,bool(ModeMainGame::*)(const std::string&)>;
 	/** スクリプトの最大行数 */
 	unsigned int max_line;
 	/** 今の行数 */

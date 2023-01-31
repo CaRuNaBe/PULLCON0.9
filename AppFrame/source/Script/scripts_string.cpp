@@ -66,7 +66,8 @@ namespace string
 		std::string str;
 		for ( int i = 0; 0 < script_size; i++ )
 		{
-			str = str + script
+			str = str + script[];
+			
 		}
 		return str;
 	}

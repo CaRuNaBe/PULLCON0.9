@@ -1453,7 +1453,6 @@ bool ModeMainGame::CheckInputString( std::string& command )
 	if ( )
 	{
 		return false
-
 	}
 	state = ScriptState::EDIT;
 	_3D_objectServer.Clear();

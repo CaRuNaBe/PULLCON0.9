@@ -40,5 +40,5 @@ protected:
 	bool isUpdateSkip;
 	bool isDrawSkip;
 	ApplicationBase& _game;
-	ModeBase& _mode
+	ModeBase& _mode;
 };

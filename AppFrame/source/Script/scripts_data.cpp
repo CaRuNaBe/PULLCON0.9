@@ -271,7 +271,7 @@ std::vector<std::string> ScriptsData::GetScript( const unsigned int index ) cons
 	return string::Split( line,DELIMITER );
 }
 
-bool ScriptsData::ScriptAdd( std::string Sclipts )
+bool ScriptsData::ScriptAdd( std::string& Sclipts )
 {
 	scripts->emplace_back( Sclipts );
 	return true;

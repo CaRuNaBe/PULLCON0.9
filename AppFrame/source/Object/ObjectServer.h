@@ -78,7 +78,7 @@ public:
 			{
 				continue;//描画スキップ
 			}
-			object->Draw( game,mode );
+			object->Draw( );
 		}
 		return true;
 	}
