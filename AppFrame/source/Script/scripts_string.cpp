@@ -64,10 +64,13 @@ namespace string
 	{
 		auto script_size = script.size();
 		std::string str;
-		for ( int i = 0; 0 < script_size; i++ )
+		for ( int i = 0; i < script_size; i++ )
 		{
-			str = str + script[];
-			
+			str = str + script[0];
+			if ( i < script_size - 1 )
+			{
+				str = str + delimiter;
+			}
 		}
 		return str;
 	}
