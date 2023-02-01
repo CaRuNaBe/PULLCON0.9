@@ -583,7 +583,7 @@ bool ModeMainGame::OnCommandLoading( unsigned int line,std::vector<std::string>&
 
 bool ModeMainGame::OnCommandCrFeedIn( unsigned int line,std::vector<std::string>& scripts )
 {
-	crfo_list.clear();
+	crfi_list.clear();
 	if ( state != ScriptState::EDIT )
 	{
 		auto crfi = std::make_unique<CommandCrFeedIn>( line,scripts );
@@ -596,22 +596,236 @@ bool ModeMainGame::OnCommandCrFeedIn( unsigned int line,std::vector<std::string>
 		alpha = 255.0;
 		state = ScriptState::CRFEEDIN;
 	}
+	else
+	{
+		std::string buf = "";
+		auto cchar = const_cast<char*>(buf.c_str());
+		int x = 0,y = 0;
+		ClearDrawScreen();
+		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
+		/** 上記で表示したフレーム数を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+		ClearDrawScreen();
+		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
+		/** 上記で表示したフレーム数を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+		ClearDrawScreen();
+		DrawString( x,y,"赤の色段階(0～255)",GetColor( 255,255,255 ) );
+		/** 上記で表示した赤の色段階を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+		ClearDrawScreen();
+		DrawString( x,y,"緑の色段階(0～255)",GetColor( 255,255,255 ) );
+		/** 上記で表示した緑の色段階を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+		ClearDrawScreen();
+		DrawString( x,y,"青の色段階(0～255)",GetColor( 255,255,255 ) );
+		/** 上記で表示した青の色段階を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+	}
 	return  true;
 }
 
 bool ModeMainGame::OnCommandCrFeedOut( unsigned int line,std::vector<std::string>& scripts )
 {
-	crfi_list.clear();
-	auto crfo = std::make_unique<CommandCrFeedOut>( line,scripts );
-	if ( !crfo->Check() )
+	crfo_list.clear();
+	if ( state != ScriptState::EDIT )
 	{
-		return false;
+		auto crfo = std::make_unique<CommandCrFeedOut>( line,scripts );
+		if ( !crfo->Check() )
+		{
+			return false;
+		}
+		feedcount = static_cast<float>(crfo->GetoutCount());
+		crfo_list.emplace_back( std::move( crfo ) );
+		alpha = 0.0;
+		state = ScriptState::CRFEEDOUT;
 	}
-	feedcount = static_cast<float>(crfo->GetoutCount());
-	crfo_list.emplace_back( std::move( crfo ) );
-	alpha = 0.0;
-	state = ScriptState::CRFEEDOUT;
+	else
+	{
+		std::string buf = "";
+		auto cchar = const_cast<char*>(buf.c_str());
+		int x = 0,y = 0;
+		ClearDrawScreen();
+		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
+		/** 上記で表示したフレーム数を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
 
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+		ClearDrawScreen();
+		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
+		/** 上記で表示したフレーム数を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+		ClearDrawScreen();
+		DrawString( x,y,"赤の色段階(0～255)",GetColor( 255,255,255 ) );
+		/** 上記で表示した赤の色段階を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+		ClearDrawScreen();
+		DrawString( x,y,"緑の色段階(0～255)",GetColor( 255,255,255 ) );
+		/** 上記で表示した緑の色段階を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+		ClearDrawScreen();
+		DrawString( x,y,"青の色段階(0～255)",GetColor( 255,255,255 ) );
+		/** 上記で表示した青の色段階を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
+	}
 	return true;
 }
 
