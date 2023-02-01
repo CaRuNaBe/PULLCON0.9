@@ -380,6 +380,11 @@ bool ModeMainGame::OnCommandStageLabel( unsigned int line,std::vector<std::strin
 			}
 			scripts.push_back( ecommandbuf );
 		}
+		else
+		{
+			scripts.clear();
+			return false;
+		}
 	}
 	return true;
 };
@@ -394,11 +399,11 @@ bool ModeMainGame::OnCommandJumpLabel( unsigned int line,std::vector<std::string
 {
 	/** 引数として持ってきたlineのコピーを0初期化 */
 	line = 0U;
-
+	bool result = false;
 	if ( state != ScriptState::EDIT )
 	{
 		/** 成功可否(true成功、false失敗)を取得、lineにラベルコマンドで追加した文字列に対応した行数を入れる */
-		const auto result = GetLineNumber( scripts[1],line );
+		 result = GetLineNumber( scripts[1],line );
 		/** 成功した場合naw_lineにlineをいれジャンプする */
 		if ( result )
 		{
@@ -406,7 +411,7 @@ bool ModeMainGame::OnCommandJumpLabel( unsigned int line,std::vector<std::string
 		}
 		return result;
 	}
-	else
+	else/** エディットモード時処理 */
 	{
 		ClearDrawScreen();
 		std::string buf = "";
@@ -418,8 +423,10 @@ bool ModeMainGame::OnCommandJumpLabel( unsigned int line,std::vector<std::string
 		if ( maxline <= 0 )
 		{
 			is_notcant = true;
-			return false;
+			result = false;
+			return result;
 		}
+		/** 追加可能ステージ名表示 */
 		for ( unsigned int i = 0; i < maxline; i++ )
 		{
 			auto script = scripts_data->GetScriptLine( i );
@@ -430,24 +437,32 @@ bool ModeMainGame::OnCommandJumpLabel( unsigned int line,std::vector<std::string
 			}
 			DrawString( x,y,command[1].c_str(),GetColor( 255,255,255 ) );
 			y += 18;
-
 		}
+		/** 上記で表示したステージ名を記入 */
 		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
 		{
 			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
 			if ( ecommandbuf.empty() )
 			{
 				scripts.clear();
-				return false;
+				return result;
 			}
+		
 			scripts.push_back( ecommandbuf );
+			result = true;
+		}
+		else
+		{
+			scripts.clear();
+			return result;
 		}
 	}
+	return result;
 };
 
 bool ModeMainGame::OnCommandTurning( unsigned int line,std::vector<std::string>& scripts )
 {
-	
 	if ( state != ScriptState::EDIT )
 	{
 		int clear_time = (GetNowCount() - start_time) / 1000;
@@ -469,7 +484,7 @@ bool ModeMainGame::OnCommandTurning( unsigned int line,std::vector<std::string>&
 		}
 		return result;
 	}
-	else
+	else/** エディットモードの時処理 */
 	{
 		ClearDrawScreen();
 		std::string buf = "";
@@ -504,7 +519,18 @@ bool ModeMainGame::OnCommandTurning( unsigned int line,std::vector<std::string>&
 				return false;
 			}
 			scripts.push_back( ecommandbuf );
-			return true;
+		}
+		 x = 0,y = 0;
+		DrawString( x,y,"条件を入力してください",GetColor( 255,255,255 ) );
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return false;
+			}
+			scripts.push_back( ecommandbuf );
 		}
 	}
 };
