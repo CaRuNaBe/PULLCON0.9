@@ -17,13 +17,13 @@ void ActorBase3D::Init() {
 	_vRelation = { 0.f, 0.f ,0.f };
 	_vTarget = { 0.f, 0.f ,0.f };
 	_vDir = { 0.f, 0.f ,0.f };
-	_vScale = { 1.f, 1.f , 1.f };
 
 	_iFuel = 0;
 	_iLife = 0;
 	_iDamage = 0;
 	_iPieces = 0;
 	_fSpeed = 0.f;
+	_fScale = 1.f;
 	_fRotatX = 0.f;
 	_fRotatY = 0.f;
 	_coll = true;
@@ -126,7 +126,7 @@ void ActorBase3D::DrawCollisionSearch(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collisionSearch.Draw(color.x, color.y, color.z);
+	_collisionSearch.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }

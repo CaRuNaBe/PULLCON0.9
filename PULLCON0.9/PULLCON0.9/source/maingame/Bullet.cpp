@@ -43,7 +43,7 @@ bool Bullet::Update(ApplicationBase& game, ModeBase& mode) {
 
 	UpdateCollision();    // コリジョンアップデート
 
-	if (_cnt % 4 == 0) {
+	if (_cnt % 3 == 0) {
 		auto effect = std::make_shared<EffectTrail>();
 		effect->SetPosition(_vPos);
 		mode.GetObjectServer3D().Add(effect);
@@ -65,7 +65,7 @@ bool Bullet::Draw(ApplicationBase& game, ModeBase& mode) {
 	float theta = acos(_vDir.y / length3D);
 
 	// モデル拡大
-	MV1SetScale(_handle, ToDX(_vScale));
+	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	// モデル回転
 	MV1SetRotationZYAxis(_handle, VGet(_vDir.z, 0.f, -(_vDir.x)), VGet(0.f, 1.f, 0.f), theta);
 	// モデル移動

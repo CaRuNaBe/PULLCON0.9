@@ -54,7 +54,6 @@ public:
 	vector4 _vRelation;   // 位置関係
 	vector4 _vTarget;   // 目標位置
 	vector4 _vDir;   // 向き
-	vector4 _vScale;   // 大きさ
 
 	Sphere  _collision;   // 球判定
 	Sphere  _collisionEvent;   // イベント判定
@@ -65,6 +64,7 @@ public:
 	int   _iDamage;  // 与えるダメージ
 	int   _iPieces;  // 個数
 	float _fSpeed;   // 速度
+	float _fScale;   // 大きさ
 	float _fRotatX;  // X軸回転
 	float _fRotatY;  // Y軸回転
 	bool  _coll;   // コリジョン判定をするか

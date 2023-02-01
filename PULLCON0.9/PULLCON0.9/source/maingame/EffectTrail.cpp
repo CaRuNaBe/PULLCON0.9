@@ -41,7 +41,7 @@ bool EffectTrail::Update(ApplicationBase& game, ModeBase& mode) {
 bool EffectTrail::Draw(ApplicationBase& game, ModeBase& mode) {
 	base::Draw(game, mode);
 
-	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 100.0f, 0.f, _grHandle, TRUE);
+	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 200.0f, 0.f, _grHandle, TRUE);
 
 	return true;
 }

@@ -51,7 +51,7 @@ bool SupplyEria::Draw( ApplicationBase& game,ModeBase& mode )
 {
 	base::Draw( game,mode );
 	// モデル拡大
-	MV1SetScale(_handle, ToDX(_vScale));
+	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	// モデル移動
 	MV1SetPosition(_handle, ToDX(_vPos));
 	// ライティング計算

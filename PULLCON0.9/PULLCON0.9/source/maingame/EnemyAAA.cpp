@@ -21,8 +21,9 @@ void EnemyAAA::Init() {
 	base::Init();
 	_stateAAA = State::PLAY;
 
-	_collision._fRadius = 300.f;
-	_collisionEvent._fRadius = 500.f;
+	_fScale = 2.f;
+	_collision._fRadius = 300.f * _fScale;
+	_collisionEvent._fRadius = 500.f * _fScale;
 	_vEvent = { 10000.f, 10000.f, 10000.f };
 	_iLife = 50;
 
@@ -31,14 +32,17 @@ void EnemyAAA::Init() {
 	_fAxialX = 0.f;
 	_fAxialY = 0.f;
 	_have = false;
-	_ = false;
 
 	_CT = 30;
 }
 
 bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 	base::Update(game,mode);
-	
+
+	if (_iLife < 0) {
+		mode.GetObjectServer3D().Del(*this);
+	}
+
 	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kPlayer
 		 || obje->GetType() == Type::kEnemyAAA
@@ -98,6 +102,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 								_iPieces = obje->_iPieces + 1;
 								_stateAAA = State::WEAPON;
 							}
+							_iLife = obje->_iLife;
 						}
 					}
 				}
@@ -209,6 +214,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		// イベント用コリジョンを移動
 		float distance = _collision._fRadius + _collisionEvent._fRadius;
 		_vEvent = { _vPos.x, _vPos.y + distance, _vPos.z };
+		_vDir = { 1.f, 0.f, 0.f };
 	}
 
 	UpdateCollision();   // コリジョンアップデート
@@ -218,9 +224,6 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 
 void EnemyAAA::Damage(ModeBase& mode) {
 	--_iLife;
-	if (_iLife < 0) {
-		mode.GetObjectServer3D().Del(*this);
-	}
 }
 
 bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
@@ -228,8 +231,8 @@ bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
 
 	VECTOR pos = ToDX(_vPos);
 	// モデル拡大
-	MV1SetScale(_handle_body, ToDX(_vScale));
-	MV1SetScale(_handle_turret, ToDX(_vScale));
+	MV1SetScale(_handle_body, VGet(_fScale, _fScale, _fScale));
+	MV1SetScale(_handle_turret, VGet(_fScale, _fScale, _fScale));
 	// モデル回転
 	MV1SetRotationXYZ(_handle_body, VGet(0.f,_fRotatY,0.f));
 	MV1SetRotationZYAxis(_handle_turret, VGet(-(_vDir.z), 0.f, _vDir.x), VGet(0.f, 1.f, 0.f), _fRotatX);

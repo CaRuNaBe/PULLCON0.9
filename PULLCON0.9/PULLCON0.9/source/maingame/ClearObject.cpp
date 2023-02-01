@@ -23,7 +23,7 @@ void ClearObject::Init()
 	_vObjective = { _vPos.x ,_vPos.y, _vPos.z };
 	_vPos = { _vObjective.x - 5000.f, _vObjective.y, _vObjective.z };
 	_vEvent = _vPos;
-	_vScale = { 3.f,3.f,3.f };
+	_fScale = 3.f;
 	_collision._fRadius = 1400.f;
 	_collisionEvent._fRadius = _collision._fRadius * 5.f;
 
@@ -98,7 +98,7 @@ bool ClearObject::Draw( ApplicationBase& game,ModeBase& mode )
 
 	DrawSphere3D(ToDX(_vObjective), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 	// ƒ‚ƒfƒ‹Šg‘å
-	MV1SetScale(_handle, ToDX(_vScale));
+	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	// ƒ‚ƒfƒ‹‰ñ“]
 	MV1SetRotationYUseDir(_handle, ToDX(_vDir), 0.f);
 	// ƒ‚ƒfƒ‹ˆÚ“®

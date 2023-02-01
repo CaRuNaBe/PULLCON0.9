@@ -7,7 +7,7 @@
 
 namespace {
 	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置　プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
-	const vector4 CAMERADEFAULT_POS = { 0.f, 2500.f, -4000.f };   // カメラのプレイヤーを原点としたときのベクトル
+	const vector4 CAMERADEFAULT_POS = { 0.f, 2500.f, -4000.f };   // プレイヤーを原点としたときのカメラのベクトル
 }
 
 Player::Player() 
@@ -190,26 +190,13 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		if (_pull && _CT == 0) {
 			((ModeMainGame&)mode)._transparence = true;
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
+			_cam._vPos = _vPos + CAMERADEFAULT_POS;
 			_statePlayer = State::EVENT;
 		}
 
 	}
 	else if (_statePlayer == State::EVENT) {
-		vector4 move = { 0.f, 1.f, 0.f };
-		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)) {
-			if (_pull && _CT == 0) {
-				_CT = 10;
-				++_push;
-				if (_push == 6) {
-					// 引っこ抜き完了
-					ChangeVolumeSoundMem(255 * 40 / 100, _se);
-					PlaySoundMem(_se, DX_PLAYTYPE_BACK);
-					_finish = true;
-					_push = 0;
-				}
-			}
-		}
-
+		vector4 move = { 0.f, 2.f, 0.f };
 		if (_pull && _CT > 0) {
 			// 注視点の移動
 			_cam._vTarget -= move;
@@ -228,6 +215,22 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 				}
 			}
 		}
+
+		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)) {
+			if (_pull && _CT == 0) {
+				_CT = 10;
+				++_push;
+				if (_push == 6) {
+					// 引っこ抜き完了
+					ChangeVolumeSoundMem(255 * 40 / 100, _se);
+					PlaySoundMem(_se, DX_PLAYTYPE_BACK);
+					_CT = 30;
+					_finish = true;
+					_push = 0;
+				}
+			}
+		}
+		
 	}
 
 	UpdateCollision();   // コリジョン更新
@@ -267,15 +270,18 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
 	}
 	// モデル拡大
-	MV1SetScale(_handle, ToDX(_vScale));
+	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	// 位置
 	MV1SetPosition(_handle, ToDX(_vPos));
 	// ライティング計算
 	// モデル描画
 	SetUseLighting(FALSE);
 	MV1DrawModel(_handle);
+	// 対空砲の狙う位置を可視化
 	DrawSphere3D(ToDX(_vTarget), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 	SetUseLighting(TRUE);
+	// プレイヤーの弾の軌道を描画
+	DrawLine3D(ToDX(_vPos), ToDX(_vTarget), GetColor(255, 0, 0));
 
 	// コリジョン描画
 	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
@@ -370,6 +376,9 @@ void Player::EventCamera(ApplicationBase& game) {
 	// X軸回転
 	//float degree = 100.f;
 	//theta = utility::degree_to_radian(degree);
+
+	float length = 500.f;
+	length3D += length * static_cast<float>(_iPieces);
 
 	// カメラ位置
 	_cam._vPosEvent.y = _vPos.y + cos(theta) * length3D;
