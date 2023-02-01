@@ -831,20 +831,53 @@ bool ModeMainGame::OnCommandCrFeedOut( unsigned int line,std::vector<std::string
 
 bool ModeMainGame::OnCommandTimeWait( unsigned int line,std::vector<std::string>& scripts )
 {
-	auto wait = 0;
 	auto result = false;
-	const size_t SCRIPTSIZE = 2;
-	if ( scripts.size() != SCRIPTSIZE )
+	auto wait = 0;
+	if ( state != ScriptState::EDIT )
 	{
-		return result;
+		const size_t SCRIPTSIZE = 2;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+
+		if ( string::ToInt( scripts[1],wait ) )
+		{
+			wait_count = static_cast<unsigned int>(wait);
+			state = ScriptState::TIME_WAIT;
+			result = true;
+		}
 	}
-
-
-	if ( string::ToInt( scripts[1],wait ) )
+	else
 	{
-		wait_count = static_cast<unsigned int>(wait);
-		state = ScriptState::TIME_WAIT;
-		result = true;
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		std::string buf = "";
+		auto cchar = const_cast<char*>(buf.c_str());
+		int x = 0,y = 0;
+		ClearDrawScreen();
+		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
+		/** 上記で表示したフレーム数を記入 */
+		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		{
+			std::string ecommandbuf = cchar;
+			/** 何も入力してない場合失敗 */
+			if ( ecommandbuf.empty() )
+			{
+				scripts.clear();
+				return result;
+			}
+			result = true;
+			scripts.push_back( ecommandbuf );
+		}
+		else
+		{
+			scripts.clear();
+			return result;
+		}
 	}
 	return result;
 };
