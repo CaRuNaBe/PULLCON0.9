@@ -584,16 +584,18 @@ bool ModeMainGame::OnCommandLoading( unsigned int line,std::vector<std::string>&
 bool ModeMainGame::OnCommandCrFeedIn( unsigned int line,std::vector<std::string>& scripts )
 {
 	crfo_list.clear();
-	auto crfi = std::make_unique<CommandCrFeedIn>( line,scripts );
-	if ( !crfi->Check() )
+	if ( state != ScriptState::EDIT )
 	{
-		return false;
+		auto crfi = std::make_unique<CommandCrFeedIn>( line,scripts );
+		if ( !crfi->Check() )
+		{
+			return false;
+		}
+		feedcount = static_cast<float>(crfi->GetinCount());
+		crfi_list.emplace_back( std::move( crfi ) );
+		alpha = 255.0;
+		state = ScriptState::CRFEEDIN;
 	}
-	feedcount = static_cast<float>(crfi->GetinCount());
-	crfi_list.emplace_back( std::move( crfi ) );
-	alpha = 255.0;
-	state = ScriptState::CRFEEDIN;
-
 	return  true;
 }
 
