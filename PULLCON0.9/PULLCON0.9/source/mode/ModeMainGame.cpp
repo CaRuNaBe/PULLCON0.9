@@ -520,8 +520,9 @@ bool ModeMainGame::OnCommandTurning( unsigned int line,std::vector<std::string>&
 			}
 			scripts.push_back( ecommandbuf );
 		}
-		 x = 0,y = 0;
-		DrawString( x,y,"条件を入力してください",GetColor( 255,255,255 ) );
+		x = 0,y = 0;
+		ClearDrawScreen();
+		DrawString( x,y,"条件を入力してください(何秒以下でそのステージラベルに飛びます)",GetColor( 255,255,255 ) );
 		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
 		{
 			std::string ecommandbuf = cchar;
