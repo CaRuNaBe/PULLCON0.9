@@ -539,7 +539,7 @@ bool ModeMainGame::OnCommandTurning( unsigned int line,std::vector<std::string>&
 bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& scripts )
 {
 	const size_t SCRIPTSIZE = 1;
-	if ( scripts.size() > SCRIPTSIZE )
+	if ( scripts.size() >= SCRIPTSIZE )
 	{
 		return false;
 	}
@@ -554,8 +554,8 @@ bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& s
 
 bool ModeMainGame::OnCommandEnd( unsigned int line,std::vector<std::string>& scripts )
 {
-	const size_t SCRIPTSIZE = 2;
-	if ( scripts.size() != SCRIPTSIZE )
+	const size_t SCRIPTSIZE = 1;
+	if ( scripts.size() >= SCRIPTSIZE )
 	{
 		return false;
 	}
