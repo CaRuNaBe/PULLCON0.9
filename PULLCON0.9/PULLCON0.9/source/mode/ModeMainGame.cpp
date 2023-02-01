@@ -119,7 +119,9 @@ void ModeMainGame::Destroy()
 {
 	/** stateをPREPARSINGにしておく */
 	state = ScriptState::PREPARSING;
-	/**  */
+#if _DUBUG
+
+#endif
 	max_line = 0;
 	now_line = 0;
 	wait_count = 0;
@@ -216,14 +218,33 @@ void ModeMainGame::Parsing()
 		const auto& command = (script[0]);
 		std::string string_comand{command};
 
-		(this->*comand_funcs[string_comand])(now_line,script);
-		if ( string_comand == COMMAND_GAMESTART )
+		if ( string_comand == COMMAND_STAGELABEL )
 		{
-			stop_parsing = true;
-			state = ScriptState::GAME;
+			++now_line;
 		}
-		++now_line;
+		else
+		{
+			if ( string_comand == COMMAND_LOADING || 
+					 string_comand == COMMAND_GAMESTART || 
+					 string_comand == COMMAND_FEEDIN || 
+					 string_comand == COMMAND_FEEDOUT||
+					 string_comand == COMMAND_TIMEWAIT ||
+					 string_comand == COMMAND_STORY )
+			{
+				stop_parsing = (this->*comand_funcs[string_comand])(now_line,script);
+			}else{
+				(this->*comand_funcs[string_comand])(now_line,script);
+			}
+
+			if ( string_comand == COMMAND_GAMESTART )
+			{
+				state = ScriptState::GAME;
+			}
+			++now_line;
+		}
 	}
+
+
 	if ( max_line <= date_empty )
 	{
 		state = ScriptState::EDIT;
@@ -576,6 +597,7 @@ bool ModeMainGame::OnCommandLoading( unsigned int line,std::vector<std::string>&
 	}
 	if ( state != ScriptState::EDIT )
 	{
+		state = ScriptState::LOADING;
 		auto loading = std::make_shared<ModeResourceRoad>( _game,20 );
 		_game.GetModeServer()->Add( loading );
 	}
@@ -936,6 +958,7 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
+		state = ScriptState::STORY;
 		auto story = std::make_shared<ModeSclipt>( _game,30,scripts[1] );
 		_game.GetModeServer()->Add( story );
 		result = true;
