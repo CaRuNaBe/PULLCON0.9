@@ -1483,20 +1483,19 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 		}
 		std::array < std::string,13 > input_str =
 		{
-	 "x座標",
-	 "y座標",
-	 "z座標",
-	 "スケール",
-	 "オブジェクトid最低値(番号)",
-	 "オブジェクトid最高値(番号)",
-	 "円の範囲",
-	 "対空砲の間隔",
-	 "下に重なっている対空砲の最小値",
-	 "下に重なっている対空砲の最大値",
-	 "map赤の色段階",
-	 "map緑の色段階",
-	 "map青の色段階"
-
+			"x座標",
+			"y座標",
+			"z座標",
+			"スケール",
+			"オブジェクトid最低値(番号)",
+			"オブジェクトid最高値(番号)",
+			"円の範囲",
+			"対空砲の間隔",
+			"下に重なっている対空砲の最小値",
+			"下に重なっている対空砲の最大値",
+			"map赤の色段階",
+			"map緑の色段階",
+			"map青の色段階"
 		};
 		result = true;
 		for ( int i = 0; i < input_str.size(); i++ )
@@ -1513,305 +1512,489 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 
 bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& scripts )
 {
-	vector4 posi;
-	float scale = 1.0f;
-	int object_id = 0;
-	int collision_id = 1;
-	const size_t SCRIPTSIZE = 7;
-	if ( scripts.size() != SCRIPTSIZE )
+	bool result = false;
+	if ( state != ScriptState::EDIT )
 	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[1],posi.x )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[2],posi.y )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[3],posi.z )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[4],scale )) )
-	{
-		return false;
-	}
-	if ( scale <= 0.0f )
-	{
-		return false;
-	}
-	if ( !(string::ToInt( scripts[5],object_id )) )
-	{
-		return false;//文字列からintに変換
-	};
-	if ( !(string::ToInt( scripts[6],collision_id )) )
-	{
-		return false;//文字列からintに変換
-	};
+		vector4 posi;
+		float scale = 1.0f;
+		int object_id = 0;
+		int collision_id = 1;
+		const size_t SCRIPTSIZE = 7;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[1],posi.x )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[2],posi.y )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[3],posi.z )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[4],scale )) )
+		{
+			return result;
+		}
+		if ( scale <= 0.0f )
+		{
+			return result;
+		}
+		if ( !(string::ToInt( scripts[5],object_id )) )
+		{
+			return result;//文字列からintに変換
+		};
+		if ( !(string::ToInt( scripts[6],collision_id )) )
+		{
+			return result;//文字列からintに変換
+		};
 
-	auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
-	object->SetPosition( posi );
-	//object->SetScale( scale );
-	_3D_objectServer.Add( object );
-	return true;
+		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
+		object->SetPosition( posi );
+		//object->SetScale( scale );
+		_3D_objectServer.Add( object );
+		result = true;
+	}
+	else
+	{
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		std::array < std::string,6 > input_str =
+		{
+			"x座標",
+			"y座標",
+			"z座標",
+			"スケール",
+			"オブジェクトid(番号)",
+			"コリジョン有無(1有; 0無)"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
+			{
+				result = false;
+				break;
+			};
+		}
+	}
+	return result;
 };
 
 bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>& scripts )
 {
+	bool result = false;
+	if ( state != ScriptState::EDIT )
+	{
 	/** エリアのポジション */
-	vector4 posi;
-	/** scriptsの中にある数値や文字列の数 */
-	const size_t SCRIPTSIZE = 10;
-	/** 大きさ */
-	float scale = 1.0f;
-	/** 配置するものの範囲 */
-	float range = 0.0f;
-	/** 配置するものの間隔 */
-	float interval = 0.0f;
-	/** 呼び込む3dモデルのid */
-	int object_id = 0;
-	/** コリジョン有無(1有;0無) */
-	int collision_id = 1;
-	/** 円状に配置か正方形状に配置か。1円状,0正方形状 */
-	int is_circular = 0;
-	if ( scripts.size() != SCRIPTSIZE )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[1],posi.x )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[2],posi.y )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[3],posi.z )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[4],scale )) )
-	{
-		return false;
-	}
-	if ( scale <= 0.0f )
-	{
-		return false;
-	}
-	if ( !(string::ToInt( scripts[5],object_id )) )
-	{
-		return false;//文字列からintに変換
-	};
-	if ( !(string::ToInt( scripts[6],collision_id )) )
-	{
-		return false;//文字列からintに変換
-	};
-	if ( !(string::ToInt( scripts[7],is_circular )) )
-	{
-		return false;//文字列からintに変換
-	};
-	if ( !(string::ToFloat( scripts[8],range )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[9],interval )) )
-	{
-		return false;
-	}
-
-	std::vector<math::vector4>posivec;
-	int num_while = 0;
-	auto x_posi_max = posi.x + std::abs( range );
-	auto x_posi_min = posi.x - std::abs( range );
-	auto z_posi_max = posi.z + std::abs( range );
-	auto z_posi_min = posi.z - std::abs( range );
-	while ( true )
-	{
-		auto posi_rand_x = static_cast<float>(utility::get_random( static_cast<int>(x_posi_min),static_cast<int>(x_posi_max) ));
-		auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
-
-		vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
-		//
-		int in_range_nim = 0;
-
-		for ( auto&& set_pos : posivec )
+		vector4 posi;
+		/** scriptsの中にある数値や文字列の数 */
+		const size_t SCRIPTSIZE = 10;
+		/** 大きさ */
+		float scale = 1.0f;
+		/** 配置するものの範囲 */
+		float range = 0.0f;
+		/** 配置するものの間隔 */
+		float interval = 0.0f;
+		/** 呼び込む3dモデルのid */
+		int object_id = 0;
+		/** コリジョン有無(1有;0無) */
+		int collision_id = 1;
+		/** 円状に配置か正方形状に配置か。1円状,0正方形状 */
+		int is_circular = 0;
+		if ( scripts.size() != SCRIPTSIZE )
 		{
-			auto pos = set_pos - rand_posi;
-			if ( pos.Lenght() < interval )
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[1],posi.x )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[2],posi.y )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[3],posi.z )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[4],scale )) )
+		{
+			return result;
+		}
+		if ( scale <= 0.0f )
+		{
+			return result;
+		}
+		if ( !(string::ToInt( scripts[5],object_id )) )
+		{
+			return result;//文字列からintに変換
+		};
+		if ( !(string::ToInt( scripts[6],collision_id )) )
+		{
+			return result;//文字列からintに変換
+		};
+		if ( !(string::ToInt( scripts[7],is_circular )) )
+		{
+			return result;//文字列からintに変換
+		};
+		if ( !(string::ToFloat( scripts[8],range )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[9],interval )) )
+		{
+			return result;
+		}
+
+		std::vector<math::vector4>posivec;
+		int num_while = 0;
+		auto x_posi_max = posi.x + std::abs( range );
+		auto x_posi_min = posi.x - std::abs( range );
+		auto z_posi_max = posi.z + std::abs( range );
+		auto z_posi_min = posi.z - std::abs( range );
+		while ( true )
+		{
+			auto posi_rand_x = static_cast<float>(utility::get_random( static_cast<int>(x_posi_min),static_cast<int>(x_posi_max) ));
+			auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
+
+			vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
+			//
+			int in_range_nim = 0;
+
+			for ( auto&& set_pos : posivec )
 			{
-				in_range_nim++;
+				auto pos = set_pos - rand_posi;
+				if ( pos.Lenght() < interval )
+				{
+					in_range_nim++;
+				}
 			}
-		}
 
-		if ( num_while > 100 )
-		{
-			break;
-		}
-		num_while++;
-		if ( in_range_nim > 0 )
-		{
-			continue;
-		}
-
-		auto pos = rand_posi - posi;
-		if ( is_circular )
-		{
-			if ( pos.Lenght() > range )
+			if ( num_while > 100 )
+			{
+				break;
+			}
+			num_while++;
+			if ( in_range_nim > 0 )
 			{
 				continue;
 			}
+
+			auto pos = rand_posi - posi;
+			if ( is_circular )
+			{
+				if ( pos.Lenght() > range )
+				{
+					continue;
+				}
+			}
+			posivec.push_back( rand_posi );
+
+
 		}
-		posivec.push_back( rand_posi );
 
-
+		for ( auto&& set_pos : posivec )
+		{
+			auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
+			object->SetPosition( set_pos );
+			//object->SetScale( scale );
+			_3D_objectServer.Add( object );
+		}
+		result = true;
 	}
-
-	for ( auto&& set_pos : posivec )
+	else
 	{
-		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
-		object->SetPosition( set_pos );
-		//object->SetScale( scale );
-		_3D_objectServer.Add( object );
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		std::array < std::string,9 > input_str =
+		{
+			"x座標",
+			"y座標",
+			"z座標",
+			"スケール",
+			"オブジェクトid(番号)",
+			"コリジョン有無(1有;0無)",
+			"円か四角選択(1円;0四角)",
+			"円の範囲",
+			"オブジェクトの間隔"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
+			{
+				result = false;
+				break;
+			};
+		}
 	}
-	return true;
+	return result;
 };
 
 bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,std::vector<std::string>& scripts )
 {
-	vector4 posi;
-	int spawn_id = 0;
-	int spawn_fream = 0;
-	const size_t SCRIPTSIZE = 6;
-	if ( scripts.size() != SCRIPTSIZE )
+	bool result = false;
+	if ( state != ScriptState::EDIT )
 	{
-		return false;
+		vector4 posi;
+		int spawn_id = 0;
+		int spawn_fream = 0;
+		const size_t SCRIPTSIZE = 6;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[1],posi.x )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[2],posi.y )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[3],posi.z )) )
+		{
+			return result;
+		}
+		if ( !(string::ToInt( scripts[4],spawn_fream )) )
+		{
+			return result;//文字列からintに変換
+		};
+		if ( !(string::ToInt( scripts[5],spawn_id )) )
+		{
+			return result;//文字列からintに変換
+		};
+		auto spawn_eria = std::make_shared<EnemySpawnEria>( _game,*this,spawn_fream,spawn_id );
+		spawn_eria->SetPosition( posi );
+		_3D_objectServer.Add( spawn_eria );
+		result = true;
 	}
-	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	else
 	{
-		return false;
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		std::array < std::string,5> input_str =
+		{
+			"x座標",
+			"y座標",
+			"z座標",
+			"スポーン間隔(フレーム数)",
+			"敵の種類(1スカイハンターズ; 2コバエーズ; 3両方)"
+
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
+			{
+				result = false;
+				break;
+			};
+		}
 	}
-	if ( !(string::ToFloat( scripts[2],posi.y )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[3],posi.z )) )
-	{
-		return false;
-	}
-	if ( !(string::ToInt( scripts[4],spawn_fream )) )
-	{
-		return false;//文字列からintに変換
-	};
-	if ( !(string::ToInt( scripts[5],spawn_id )) )
-	{
-		return false;//文字列からintに変換
-	};
-	auto spawn_eria = std::make_shared<EnemySpawnEria>( _game,*this,spawn_fream,spawn_id );
-	spawn_eria->SetPosition( posi );
-	_3D_objectServer.Add( spawn_eria );
-	return true;
+	return result;
 };
 
 bool ModeMainGame::OnCommandSupply( unsigned int line,std::vector<std::string>& scripts )
 {
-	vector4 posi;
-	float radius = 0.0f;
-	const size_t SCRIPTSIZE = 5;
-	if ( scripts.size() != SCRIPTSIZE )
+	bool result = false;
+	if ( state != ScriptState::EDIT )
 	{
-		return false;
+		vector4 posi;
+		float radius = 0.0f;
+		const size_t SCRIPTSIZE = 5;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[1],posi.x )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[2],posi.y )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[3],posi.z )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[4],radius )) )
+		{
+			return result;
+		}
+		auto supplyeria = std::make_shared<SupplyEria>( _game,*this,radius );
+		supplyeria->SetPosition( posi );
+		_3D_objectServer.Add( supplyeria );
+		result = true;
 	}
-	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	else
 	{
-		return false;
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		std::array < std::string,4> input_str =
+		{
+			"x座標",
+			"y座標",
+			"z座標",
+			"球の半径"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
+			{
+				result = false;
+				break;
+			};
+		}
 	}
-	if ( !(string::ToFloat( scripts[2],posi.y )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[3],posi.z )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[4],radius )) )
-	{
-		return false;
-	}
-	auto supplyeria = std::make_shared<SupplyEria>( _game,*this,radius );
-	supplyeria->SetPosition( posi );
-	_3D_objectServer.Add( supplyeria );
-	return true;
+	return result;
 };
 
 bool ModeMainGame::OnCommandCommunication( unsigned int line,std::vector<std::string>& scripts )
 {
-	vector4 posi;
-	float radius = 0.0f;
+	bool result = false;
+	if ( state != ScriptState::EDIT )
+	{
+		vector4 posi;
+		float radius = 0.0f;
 
-	const size_t SCRIPTSIZE = 6;
-	if ( scripts.size() != SCRIPTSIZE )
-	{
-		return false;
+		const size_t SCRIPTSIZE = 6;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[1],posi.x )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[2],posi.y )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[3],posi.z )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[4],radius )) )
+		{
+			return result;
+		}
+		std::string story_name = scripts[5];
+		auto commu_aria = std::make_shared<CommunicationAria>( _game,*this,radius,story_name );
+		commu_aria->SetPosition( posi );
+		_3D_objectServer.Add( commu_aria );
+		result = true;
 	}
-	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	else
 	{
-		return false;
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		std::array < std::string,5> input_str =
+		{
+			"x座標",
+			"y座標",
+			"z座標",
+			"球の半径",
+			"ストーリーid"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
+			{
+				result = false;
+				break;
+			};
+		}
 	}
-	if ( !(string::ToFloat( scripts[2],posi.y )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[3],posi.z )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[4],radius )) )
-	{
-		return false;
-	}
-	std::string story_name = scripts[5];
-	auto commu_aria = std::make_shared<CommunicationAria>( _game,*this,radius,story_name );
-	commu_aria->SetPosition( posi );
-	_3D_objectServer.Add( commu_aria );
-	return true;
+	return result;
 };
 
 bool ModeMainGame::OnCommandNoEntry( unsigned int line,std::vector<std::string>& scripts )
 {
-	vector4 posi;
-	float radius = 0.0f;
-	float height = 0.0f;
-	const size_t SCRIPTSIZE = 6;
-	if ( scripts.size() != SCRIPTSIZE )
+	bool result = false;
+	if ( state != ScriptState::EDIT )
 	{
-		return false;
+		vector4 posi;
+		float radius = 0.0f;
+		float height = 0.0f;
+		const size_t SCRIPTSIZE = 6;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return false;
+		}
+		if ( !(string::ToFloat( scripts[1],posi.x )) )
+		{
+			return false;
+		}
+		if ( !(string::ToFloat( scripts[2],posi.y )) )
+		{
+			return false;
+		}
+		if ( !(string::ToFloat( scripts[3],posi.z )) )
+		{
+			return false;
+		}
+		if ( !(string::ToFloat( scripts[4],radius )) )
+		{
+			return false;
+		}
+		if ( !(string::ToFloat( scripts[5],height )) )
+		{
+			return false;
+		}
+		auto no_entry = std::make_shared<AreaNoEntry>( _game,*this,radius,height );
+		no_entry->SetPosition( posi );
+		_3D_objectServer.Add( no_entry );
+		result = true;
 	}
-	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	else
 	{
-		return false;
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return result;
+		}
+		std::array < std::string,4> input_str =
+		{
+			"x座標",
+			"y座標",
+			"z座標",
+			"球の半径"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
+			{
+				result = false;
+				break;
+			};
+		}
 	}
-	if ( !(string::ToFloat( scripts[2],posi.y )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[3],posi.z )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[4],radius )) )
-	{
-		return false;
-	}
-	if ( !(string::ToFloat( scripts[5],height )) )
-	{
-		return false;
-	}
-	auto no_entry = std::make_shared<AreaNoEntry>( _game,*this,radius,height );
-	no_entry->SetPosition( posi );
-	_3D_objectServer.Add( no_entry );
-	return true;
+	return result;
 };
 
 bool ModeMainGame::Draw()
