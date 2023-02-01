@@ -1943,27 +1943,27 @@ bool ModeMainGame::OnCommandNoEntry( unsigned int line,std::vector<std::string>&
 		const size_t SCRIPTSIZE = 6;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
-			return false;
+			return result;
 		}
 		if ( !(string::ToFloat( scripts[1],posi.x )) )
 		{
-			return false;
+			return result;
 		}
 		if ( !(string::ToFloat( scripts[2],posi.y )) )
 		{
-			return false;
+			return result;
 		}
 		if ( !(string::ToFloat( scripts[3],posi.z )) )
 		{
-			return false;
+			return result;
 		}
 		if ( !(string::ToFloat( scripts[4],radius )) )
 		{
-			return false;
+			return result;
 		}
 		if ( !(string::ToFloat( scripts[5],height )) )
 		{
-			return false;
+			return result;
 		}
 		auto no_entry = std::make_shared<AreaNoEntry>( _game,*this,radius,height );
 		no_entry->SetPosition( posi );
