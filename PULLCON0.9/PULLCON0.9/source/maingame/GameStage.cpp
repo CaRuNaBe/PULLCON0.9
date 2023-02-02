@@ -11,23 +11,15 @@ GameStage::GameStage( ApplicationBase& game,ModeBase& mode,int stageid )
 	:base( game,mode )
 {
 
-	switch ( stageid )
-	{
-		case STAGE_1:
+	//switch ( stageid )
+	//{
+		//case STAGE_1:
 			_handle = MV1LoadModel( "res/stage/stage_file_1/mv1/stage1/cg_stage1.mv1" );
-			break;
-		case STAGE_2:
-			_handle = MV1LoadModel( "res/stage/stage_file_1/mv1/stage1/cg_stage1.mv1" );
-			break;
-		case STAGE_3:
-			_handle = MV1LoadModel( "res/stage/stage_file_1/mv1/stage1/cg_stage1.mv1" );
-			break;
-		case STAGE_4:
-			_handle = MV1LoadModel( "res/stage/stage_file_1/mv1/stage1/cg_stage1.mv1" );
-			break;
-		default:
-			break;
-	}
+
+		//	break;
+	//	default:
+		//	break;
+//	}
 
 	Init();
 }
