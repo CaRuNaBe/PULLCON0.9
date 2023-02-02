@@ -1343,7 +1343,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		float scale = 1.0f;
 		int object_id = 0;
 		int collision_id = 1;
-		const size_t SCRIPTSIZE = 7;
+		const size_t SCRIPTSIZE = 8;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -1390,14 +1390,16 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		}
-		std::array < std::string,6 > input_str =
+		std::array < std::string,7 > input_str =
 		{
 			"x座標",
 			"y座標",
 			"z座標",
 			"スケール",
+			"当たり判定球の半径",
 			"オブジェクトid(番号)",
 			"コリジョン有無(1有; 0無)"
+
 		};
 		result = true;
 		for ( int i = 0; i < input_str.size(); i++ )
@@ -1420,7 +1422,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 	/** エリアのポジション */
 		vector4 posi;
 		/** scriptsの中にある数値や文字列の数 */
-		const size_t SCRIPTSIZE = 10;
+		const size_t SCRIPTSIZE = 11;
 		/** 大きさ */
 		float scale = 1.0f;
 		/** 配置するものの範囲 */
@@ -1541,12 +1543,13 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		{
 			return result;
 		}
-		std::array < std::string,9 > input_str =
+		std::array < std::string,10 > input_str =
 		{
 			"x座標",
 			"y座標",
 			"z座標",
 			"スケール",
+			"当たり判定球の半径",
 			"オブジェクトid(番号)",
 			"コリジョン有無(1有;0無)",
 			"円か四角選択(1円;0四角)",
@@ -2122,7 +2125,7 @@ bool ModeMainGame::CommandInputString( int posix,int posiy,std::string inputname
 	ClearDrawScreen();
 	DrawString( posix,posiy,inputname.c_str(),GetColor( 255,255,255 ) );
 	/** 上記で表示したオブジェクトidを記入 */
-	if ( KeyInputSingleCharString( posix,posiy + 500,20,cchar,TRUE ) == 1 )
+	if ( KeyInputSingleCharString( posix,posiy + 500,50,cchar,TRUE ) == 1 )
 	{
 		std::string ecommandbuf = cchar;
 		/** 何も入力してない場合失敗 */
