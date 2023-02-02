@@ -21,13 +21,13 @@ public:
 		WEAPON//•ºŠí‰»
 	};
 
-	virtual void Init();
+	virtual void Init(int pile_num);
 	virtual bool Update();
 	virtual bool Draw();
 
-	virtual void Damage(ModeBase& mode);
-	void AddBullet(ModeBase& mode);
-	void AddPieces(ModeBase& mode);
+	virtual void Damage();
+	void AddBullet();
+	void AddPieces(int pile_num);
 
 protected:
 	State   _stateAAA;

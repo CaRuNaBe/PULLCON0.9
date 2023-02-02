@@ -1266,7 +1266,7 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 
 		for ( auto&& set_pos : posivec )
 		{
-			auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ) );
+			auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ));
 			enemyAAA->SetPosition( std::get<0>( set_pos ) );
 			//enemyAAA->SetScale( scale );
 			_3D_objectServer.Add( enemyAAA );
@@ -1801,7 +1801,6 @@ bool ModeMainGame::Draw()
 	ModeBase::Draw();
 	_3D_objectServer.Draw();
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
-	_3D_objectServer.Draw( _game,*this );
 	DrawBox(0, 100, _iFuel * 2, 140, GetColor(255, 0, 0), TRUE);
 
 	if (_clear) {

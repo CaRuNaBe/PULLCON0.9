@@ -41,7 +41,7 @@ bool ClearObject::Update(  )
 		_pull = !_pull;
 	}
 
-	for (auto&& obje : mode.GetObjectServer3D().GetObjects()) {
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kPlayer
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kPlayer) {
@@ -93,7 +93,7 @@ void ClearObject::Damage(ModeBase& mode) {
 
 bool ClearObject::Draw(  )
 {
-	base::Draw( game,mode );
+	base::Draw();
 
 	DrawSphere3D(ToDX(_vObjective), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 	// ƒ‚ƒfƒ‹Šg‘å

@@ -53,7 +53,7 @@ bool SupplyEria::Update()
 
 bool SupplyEria::Draw()
 {
-	base::Draw( game,mode );
+	base::Draw();
 	// モデル拡大
 	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	// モデル移動
@@ -65,7 +65,7 @@ bool SupplyEria::Draw()
 	SetUseLighting(TRUE);
 
 	// コリジョン描画
-	if (!((ModeMainGame&)mode)._dbgCollisionDraw) {
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		vector4 color = { 255, 255, 255 };
 		DrawCollisionEvent(color);
 		if (_event) {
