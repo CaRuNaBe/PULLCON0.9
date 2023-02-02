@@ -18,7 +18,7 @@ void SupplyEria::Init()
 {
 	base::Init();
 	_vPos = {7000.f, 100.f, 7000.f};
-	_collisionEvent._fRadius = 5000.0f;
+	_collisionEvent._fRadius = 5000.0f * _fScale;
 
 }
 
@@ -45,6 +45,7 @@ bool SupplyEria::Update()
 		}
 	}
 
+	_collisionEvent._fRadius = 5000.0f * _fScale;
 	_vEvent = _vPos;
 	UpdateCollision();  // コリジョン更新
 

@@ -22,7 +22,7 @@ void Bullet::Init() {
 	_fSpeed = 400.f;
 	_animeNo = 0;
 
-	_collision._fRadius = 50.f;
+	_collision._fRadius = 50.f * _fScale;
 
 	_CT = 10;
 	_ST = 90;
@@ -41,6 +41,7 @@ bool Bullet::Update() {
 	_vd *= _fSpeed;
 	_vPos += _vd;
 
+	_collision._fRadius = 50.f * _fScale;
 	UpdateCollision();    // コリジョンアップデート
 
 	if (_cnt % 4 == 0) {

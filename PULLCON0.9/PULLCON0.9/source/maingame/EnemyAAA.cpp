@@ -3,14 +3,14 @@
 #include "Bullet.h"
 #include "../mode/ModeMainGame.h"
 
-EnemyAAA::EnemyAAA( ApplicationBase& game,ModeBase& mode,int min_id,int max_id,int pile_num )
+EnemyAAA::EnemyAAA( ApplicationBase& game,ModeBase& mode,int min_id,int max_id,int pile_num,vector4 _vPosi )
 	:base( game,mode )
 {
 
 	_handle_body = MV1LoadModel( "res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_dodai.mv1" );
 	_handle_turret = MV1LoadModel( "res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_houtou.mv1" );
 
-	Init(pile_num);
+	Init(pile_num, _vPosi);
 	AddPieces(pile_num);
 }
 
@@ -19,11 +19,11 @@ EnemyAAA::~EnemyAAA()
 
 }
 
-void EnemyAAA::Init(int pile_num)
+void EnemyAAA::Init(int pile_num, vector4 _vPosi)
 {
 	base::Init();
 	_stateAAA = State::PLAY;
-
+	_vPos = _vPosi;
 	_fScale = 2.f;
 	_collision._fRadius = 300.f * _fScale;
 	_collisionEvent._fRadius = 500.f * _fScale;
@@ -44,7 +44,7 @@ bool EnemyAAA::Update()
 	base::Update();
 
 	if (_iLife < 0) {
-		_mode.GetObjectServer3D().Del(*this);
+		//_mode.GetObjectServer3D().Del(*this);
 	}
 
 	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
@@ -132,10 +132,6 @@ bool EnemyAAA::Update()
 		float distance = _collision._fRadius + _collisionEvent._fRadius;
 		_vEvent = {_vPos.x, _vPos.y + distance, _vPos.z};
 
-		if (!_have && _iPossession > 0) {
-			
-			_have = true;
-		}
 
 		// 三次元極座標(r(length3D),θ(theta),φ(rad))
 		float sx = _vTarget.x - _vPos.x;
@@ -224,6 +220,8 @@ bool EnemyAAA::Update()
 		_vDir = { 1.f, 0.f, 0.f };
 	}
 
+	_collision._fRadius = 300.f * _fScale;
+	_collisionEvent._fRadius = 500.f * _fScale;
 	UpdateCollision();   // コリジョンアップデート
 
 	return true;
@@ -286,8 +284,7 @@ void EnemyAAA::AddBullet() {
 void EnemyAAA::AddPieces(int pile_num) {
 	for (auto i = 0; i < pile_num; ++i) {
 		vector4 vPiece = { _vPos.x, _vPos.y - _collision._fRadius * static_cast<float>(i + 1), _vPos.z};
-		auto piece = std::make_shared<EnemyAAA>(_game, _mode, 0, 0, 0);
-		piece->SetPosition(vPiece);
+		auto piece = std::make_shared<EnemyAAA>(_game, _mode, 0, 0, 0, vPiece);
 		piece->_stateAAA = State::NUM;
 		piece->_coll = false;
 		piece->_iPart = i + 1;
