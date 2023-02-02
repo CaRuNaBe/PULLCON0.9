@@ -61,12 +61,14 @@ public:
 
 	Sphere  _collision;   // 球判定
 	Sphere  _collisionEvent;   // イベント判定
-	Sphere  _collisionSearch;   // イベント判定
+	Sphere  _collisionSearch;   // 索敵判定
 
 	int   _iFuel;    // 燃料
 	int   _iLife;    // ライフ
 	int   _iDamage;  // 与えるダメージ
+	int   _iPieces;  // 個数
 	float _fSpeed;   // 速度
+	float _fScale;   // 大きさ
 	float _fRotatX;  // X軸回転
 	float _fRotatY;  // Y軸回転
 	bool  _coll;   // コリジョン判定をするか
@@ -74,6 +76,7 @@ public:
 	bool  _event;   // イベント判定と重なったか
 	bool  _pull;    // イベント
 	bool  _finish;   // イベント完了
+	bool  _fire;    // 発砲
 
 	int _cnt;  // 動作カウント
 	int _CT;   // クールタイム

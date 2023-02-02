@@ -207,6 +207,7 @@
     <ClInclude Include="source\maingame\ClearObject.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
+    <ClInclude Include="source\mode\ModeMainGame.h" />
     <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode</Filter>
     </ClInclude>

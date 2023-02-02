@@ -19,7 +19,7 @@ void Bullet::Init() {
 	base::Init();
 
 	_iDamage = 1;
-	_fSpeed = 200.f;
+	_fSpeed = 400.f;
 	_animeNo = 0;
 
 	_collision._fRadius = 50.f;
@@ -31,15 +31,17 @@ void Bullet::Init() {
 bool Bullet::Update() {
 	base::Update();
 
+	// 生存時間
 	if (_ST == 0) {
 		Damage();
 	}
 
+	// 設定された向きに進む
 	vector4 _vd = _vDir;
 	_vd *= _fSpeed;
 	_vPos += _vd;
 
-	UpdateCollision();
+	UpdateCollision();    // コリジョンアップデート
 
 	if (_cnt % 4 == 0) {
 		auto effect = std::make_shared<EffectTrail>( _game,_mode);
@@ -62,11 +64,16 @@ bool Bullet::Draw() {
 	float rad = atan2(_vDir.z, _vDir.x);
 	float theta = acos(_vDir.y / length3D);
 
-	MV1SetScale(_handle, VGet(2.f, 2.f, 2.f));
+	// モデル拡大
+	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
+	// モデル回転
 	MV1SetRotationZYAxis(_handle, VGet(_vDir.z, 0.f, -(_vDir.x)), VGet(0.f, 1.f, 0.f), theta);
+	// モデル移動
 	MV1SetPosition(_handle, ToDX(_vPos));
+	// モデル描画
 	MV1DrawModel(_handle);
 
+	// コリジョン描画
 	vector4 color = { 255, 255, 255 };
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		if (_CT == 0) {

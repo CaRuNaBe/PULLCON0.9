@@ -7,13 +7,17 @@
 
 namespace {
 	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置　プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
-	const vector4 CAMERADEFAULT_POS = { 0.f, 2500.f, -4000.f };   // カメラのプレイヤーを原点としたときのベクトル
+	const vector4 CAMERADEFAULT_POS = { 0.f, 2500.f, -4000.f };   // プレイヤーを原点としたときのカメラのベクトル
 }
 
 Player::Player( ApplicationBase& game,ModeBase& mode )
 	:base( game,mode )
 {
 	_handle = MV1LoadModel("res/player/3Dmodel/mv1/cg_PlayerHelicopter.mv1");
+	_se = ResourceServer::LoadSoundMem("res/player/Audio/pull.wav");
+	_seBullet = ResourceServer::LoadSoundMem("res/player/Audio/normal_bullet_fast.wav");
+	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成
+	_handlefont = CreateFontToHandle(NULL, 40, 3);
 
 	Init();
 }
@@ -26,10 +30,11 @@ void Player::Init() {
 	base::Init();
 	_statePlayer = State::NUM;
 
-	_fSpeed = 30.f;
+	_fSpeed = 90.f;
 	_fRotatY = utility::PI;
 	_iFuel = 100;
 	_push = 0;
+	_isHit = false;
 
 	_vPos = { 0.f, 100.f,  -1000.f };
 	_collision._fRadius = 500.f;
@@ -37,14 +42,14 @@ void Player::Init() {
 	// カメラの設定
 	_cam._vPos = _vPos + CAMERADEFAULT_POS;
 	_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
-	_cam._clipNear = 2000.f;
+	_cam._clipNear = 100.f;
 	_cam._clipFar = 30000000.f;
 
 }
 
-bool Player::Update() {
-	base::Update();
-
+bool Player::Update(ApplicationBase& game, ModeBase& mode) {
+	base::Update(game, mode);
+	// NUM状態ならPLAY状態に移行する
 	if (_statePlayer == State::NUM) {
 		_cam._vPos = _vPos + CAMERADEFAULT_POS;
 		_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
@@ -56,9 +61,10 @@ bool Player::Update() {
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kEnemyAAA) {
 				if (obje->_pull == true && _pull) {
+					// オブジェクトまで移動する
 					vector4 objective = obje->_vPos;
-					objective.y += _collision._fRadius;
-					//objective.z -= obje->_collision._fRadius;
+					// 対空砲パーツの個数で変動させる
+					objective.y += _collision._fRadius + static_cast<float>(_iPieces + 1) * obje->_collision._fRadius;
 					vector4 dir = objective - _vPos;
 					dir.Normalized();
 					_vPos += dir * static_cast<float>(_CT);
@@ -67,6 +73,7 @@ bool Player::Update() {
 					}
 				}
 				if (obje->_finish == true) {
+					// 対空砲に指定位置を狙わせる
 					obje->_vTarget = _vTarget;
 				}
 				if (IsHitEvent(*obje)) {
@@ -81,7 +88,8 @@ bool Player::Update() {
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
 					if (obje->_CT == 0) {
-
+						_isHit = true;
+						_ST = 20;
 					}
 				}
 			}
@@ -89,17 +97,19 @@ bool Player::Update() {
 	}
 
 	// カメラ更新	
-	CameraUpdate();
+	CameraUpdate(game);
 
 	if(_statePlayer == State::PLAY){
 
 		_finish = false;
+		// 燃料消費
 		if (_cnt % 30 == 0) {
 			--_iFuel;
 			if (_iFuel < 0) {
 				_iFuel = 0;
 			}
 		}
+		((ModeMainGame&)mode).SetXMax(_iFuel);
 
 		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
 			_fSpeed += 30.f;
@@ -146,20 +156,32 @@ bool Player::Update() {
 		v.y = sin(_fRotatX);
 		_vDir = v;
 
+		if (game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
+			if (_cnt % 20 == 0) {
+				// SE再生
+				ChangeVolumeSoundMem(255 * 40 / 100, _seBullet);
+				PlaySoundMem(_seBullet, DX_PLAYTYPE_BACK);
+			}
+			// 弾生成
+			_fire = true;
+			AddBullet(mode);
 		if (_game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
 			AddBullet();
 		}
 
+		// 指定位置設定
 		float distance = _collision._fRadius * 2.f * 15.f;
 		v.x = cos(rad + camerad) * distance;
 		v.z = sin(rad + camerad) * distance;
 		v.y = sin(_fRotatX) * distance;
 		_vTarget = _vPos + v;
 
+		/*
 		vector4 cursor = { 0.f,0.f,0.f };
 		cursor.y = _cam._vTarget.y + sin(_fRotatX) * length3D;
 		cursor.x = _cam._vTarget.x + length3D * cos(rad + camerad);
 		cursor.z = _cam._vTarget.z + length3D * sin(rad + camerad);
+		*/
 
 		((ModeMainGame&)_mode).SetCursor(_vTarget);
 
@@ -167,29 +189,22 @@ bool Player::Update() {
 		if (_pull && _CT == 0) {
 			((ModeMainGame&)_mode)._transparence = true;
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
+			_cam._vPos = _vPos + CAMERADEFAULT_POS;
 			_statePlayer = State::EVENT;
 		}
 
 	}
 	else if (_statePlayer == State::EVENT) {
-		vector4 move = { 0.f, 1.f, 0.f };
-		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)) {
-			if (_pull && _CT == 0) {
-				_CT = 20;
-				++_push;
-				if (_push == 6) {
-					_finish = true;
-					_push = 0;
-				}
-			}
-		}
-
+		vector4 move = { 0.f, 2.f, 0.f };
 		if (_pull && _CT > 0) {
+			// 注視点の移動
 			_cam._vTarget -= move;
 			if (_finish) {
+				// 上昇させる
 				_vPos.y += _fSpeed;
 				_cam._vTarget.y += _fSpeed;
 				if (_CT == 1) {
+					// PLAY状態に遷移
 					_pull = false;
 					((ModeMainGame&)_mode)._transparence = false;
 					_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
@@ -198,42 +213,85 @@ bool Player::Update() {
 				}
 			}
 		}
+
+		if (game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)) {
+			if (_pull && _CT == 0) {
+				_CT = 10;
+				++_push;
+				if (_push == 6) {
+					// 引っこ抜き完了
+					ChangeVolumeSoundMem(255 * 40 / 100, _se);
+					PlaySoundMem(_se, DX_PLAYTYPE_BACK);
+					_CT = 30;
+					_finish = true;
+					_push = 0;
+				}
+			}
+		}
+		
 	}
 
-	UpdateCollision();
+	UpdateCollision();   // コリジョン更新
 
+	if (_ST == 0) {
+		_isHit = false;
+	}
+
+	// カメラ設定更新
+	if (_statePlayer == State::EVENT) {
+		SetCameraPositionAndTarget_UpVecY(ToDX(_cam._vPosEvent), ToDX(_cam._vTarget));
+	}
+	else {
+		SetCameraPositionAndTarget_UpVecY(ToDX(_cam._vPos), ToDX(_cam._vTarget));
+	}
+	SetCameraNearFar(_cam._clipNear, _cam._clipFar);
 
 	return true;
 }
 
-bool Player::Draw() {
-	base::Draw();
-	// カメラ設定更新
-	SetCameraPositionAndTarget_UpVecY(ToDX(_cam._vPos), ToDX(_cam._vTarget));
-	SetCameraNearFar(_cam._clipNear, _cam._clipFar);
-
+bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
+	base::Draw(game, mode);
+	
+	// 注視点を描画
 	float linelength = 100.f;
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(-linelength, 0, 0)), VAdd(ToDX(_cam._vTarget), VGet(linelength, 0, 0)), GetColor(255, 0, 0));
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(0, -linelength, 0)), VAdd(ToDX(_cam._vTarget), VGet(0, linelength, 0)), GetColor(0, 255, 0));
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(0, 0, -linelength)), VAdd(ToDX(_cam._vTarget), VGet(0, 0, linelength)), GetColor(0, 0, 255));
 
 	// モデルの回転値
-	float rX = _fRotatX + utility::degree_to_radian(5.f);   // 少し上向きに
-	MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
-	// モデルの拡大値
-	//MV1SetScale(_handle, VGet(0.3f, 0.3f, 0.3f));
+	float rX = utility::degree_to_radian(5.f);   // 少し上向きに
+	if (_statePlayer == State::EVENT) {
+		// 引っこ抜き状態
+		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
+	}
+	else {
+		rX += _fRotatX;   // カメラを動かした分プラス
+		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
+	}
+	// モデル拡大
+	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	// 位置
 	MV1SetPosition(_handle, ToDX(_vPos));
 	// ライティング計算
+	// モデル描画
 	SetUseLighting(FALSE);
 	MV1DrawModel(_handle);
+	// 対空砲の狙う位置を可視化
 	DrawSphere3D(ToDX(_vTarget), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 	SetUseLighting(TRUE);
+	// プレイヤーの弾の軌道を描画
+	DrawLine3D(ToDX(_vPos), ToDX(_vTarget), GetColor(255, 0, 0));
 
 	// コリジョン描画
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		vector4 color = { 255, 255, 255 };
+		if (_isHit) { color = { 255, 0, 0 }; }
 		DrawCollision(color);
+	}
+	VECTOR Pos = ConvWorldPosToScreenPos(ToDX(_vPos));
+	if (_isHit) {
+		// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
+		DrawStringToHandle(static_cast<int>(Pos.x), static_cast<int>(Pos.y), "H I T!!", GetColor(255, 255, 255), _handlefont);
 	}
 
 	// デバック表記
@@ -250,7 +308,8 @@ bool Player::Draw() {
 void Player::CameraUpdate() {
 
 	if (_statePlayer == State::EVENT) {
-		EventCamera();
+		// 引っこ抜き状態のカメラ
+		EventCamera(game);
 		return;
 	}
 	
@@ -263,7 +322,7 @@ void Player::CameraUpdate() {
 	float theta = acos(sy / length3D);
 
 
-	// 角度変更
+	// 角度変更  モデルも同期させる
 	// Y軸回転
 	if(_game.Getinput().GetRstickX() < -1000)
 	{
@@ -314,13 +373,16 @@ void Player::EventCamera() {
 	camerad = _fRotatY + utility::PI * 5.f / 6.f;
 
 	// X軸回転
-	float degree = 100.f;
-	theta = utility::degree_to_radian(degree);
+	//float degree = 100.f;
+	//theta = utility::degree_to_radian(degree);
+
+	float length = 500.f;
+	length3D += length * static_cast<float>(_iPieces);
 
 	// カメラ位置
-	_cam._vPos.y = _vPos.y + cos(theta) * length3D;
-	_cam._vPos.x = _vPos.x + length3D * sin(theta) * cos(camerad);
-	_cam._vPos.z = _vPos.z + length3D * sin(theta) * sin(camerad);
+	_cam._vPosEvent.y = _vPos.y + cos(theta) * length3D;
+	_cam._vPosEvent.x = _vPos.x + length3D * sin(theta) * cos(camerad);
+	_cam._vPosEvent.z = _vPos.z + length3D * sin(theta) * sin(camerad);
 
 }
 

@@ -5,6 +5,7 @@
 class Camera {
 public:
 	vector4	_vPos;					// 位置
+	vector4	_vPosEvent;			// 引っこ抜きカメラ位置
 	vector4	_vTarget;				// 注視点
 	vector4	_vMemory;				// ベクトル保存用
 	float	_clipNear, _clipFar;	// クリップ
@@ -36,11 +37,14 @@ protected:
 	// カメラ
 	Camera	_cam;
 
-	State  _statePlayer;
+	State  _statePlayer;  // プレイヤーステータス
 
-	int    _push;
+	int    _push;   // ボタン連打回数
+	bool   _isHit;  // 当たったか
 
 	int    _handle;
-	int    _cg;
+	int    _handlefont;
+	int    _se;
+	int    _seBullet;
 
 };

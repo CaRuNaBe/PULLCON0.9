@@ -31,12 +31,11 @@ public:
 	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
 
-	void SetCursor( const vector4& pos )
-	{
-		_vCursor = pos;
-	}
+	void SetCursor(const vector4& pos) { _vCursor = pos; }
+	void SetXMax(const int& i) { _iFuel = i; }
 
 	vector4 _vCursor;
+	int  _iFuel;
 	bool _transparence;
 	bool _clear;
 
@@ -160,4 +159,5 @@ private:
 
 	int _cg;
 	int _handlefont;
+	int _se;
 };

@@ -21,7 +21,9 @@ void ActorBase3D::Init() {
 	_iFuel = 0;
 	_iLife = 0;
 	_iDamage = 0;
+	_iPieces = 0;
 	_fSpeed = 0.f;
+	_fScale = 1.f;
 	_fRotatX = 0.f;
 	_fRotatY = 0.f;
 	_coll = true;
@@ -29,6 +31,7 @@ void ActorBase3D::Init() {
 	_event = false;
 	_pull = false;
 	_finish = false;
+	_fire = false;
 	_cnt = 0;
 	_ST = 0;
 
@@ -39,6 +42,7 @@ bool ActorBase3D::Update() {
 
 	_overlap = false;
 	_event = false;
+	_fire = false;
 
 	_cnt++;
 	if(_CT > 0) {
@@ -102,7 +106,7 @@ void ActorBase3D::DrawCollision(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collision.Draw(color.x, color.y, color.z);
+	_collision.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }
@@ -112,7 +116,7 @@ void ActorBase3D::DrawCollisionEvent(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collisionEvent.Draw(color.x, color.y, color.z);
+	_collisionEvent.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }
@@ -122,7 +126,7 @@ void ActorBase3D::DrawCollisionSearch(vector4 color)
 #if _DEBUG
 	// ライティング計算
 	SetUseLighting(FALSE);
-	_collisionSearch.Draw(color.x, color.y, color.z);
+	_collisionSearch.Draw(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
 	SetUseLighting(TRUE);
 #endif
 }

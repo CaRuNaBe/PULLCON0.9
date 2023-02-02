@@ -82,8 +82,10 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 #if _DEBUG
 	state = ScriptState::EDIT;
 #endif
-	////////////////////////////////////////////////////////
-	_cg = ResourceServer::LoadGraph( "res/cursor00.png" );
+	_cg = ResourceServer::LoadGraph("res/cursor00.png");
+	_se = ResourceServer::LoadSoundMem("res/sound/stage1~3 BGM/650832__timbre__weasel-damage-excerpt-of-audiomirages-freesound-647499.wav");
+	ChangeVolumeSoundMem(255 * 40 / 100, _se);
+	//PlaySoundMem(_se, DX_PLAYTYPE_LOOP);
 	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
 	// 作成したデータの識別番号を変数 FontHandle に保存する
 	_handlefont = CreateFontToHandle( NULL,40,3 );
@@ -1824,9 +1826,10 @@ bool ModeMainGame::Draw()
 	ModeBase::Draw();
 	_3D_objectServer.Draw();
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
-	///////////////////////////////////////////////////////////////
-	if ( _clear )
-	{
+	_3D_objectServer.Draw( _game,*this );
+	DrawBox(0, 100, _iFuel * 2, 140, GetColor(255, 0, 0), TRUE);
+
+	if (_clear) {
 		// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
 		DrawStringToHandle( _game.DispSizeW() / 2,_game.DispSizeH() / 2,"C L E A R!!",GetColor( 255,255,0 ),_handlefont );
 	}
