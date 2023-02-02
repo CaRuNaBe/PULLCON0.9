@@ -509,46 +509,71 @@ bool ModeMainGame::OnCommandTurning( unsigned int line,std::vector<std::string>&
 
 bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& scripts )
 {
-	const size_t SCRIPTSIZE = 1;
-	if ( scripts.size() >= SCRIPTSIZE )
-	{
-		return false;
-	}
-	/* 現在経過時間を得る */
-	start_time = GetNowCount();
 	if ( state != ScriptState::EDIT )
 	{
+		const size_t SCRIPTSIZE = 2;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return false;
+		}
+		/* 現在経過時間を得る */
+		start_time = GetNowCount();
 		state = ScriptState::GAME;
+	}
+	else
+	{
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return false;
+		}
 	}
 	return true;
 };
 
 bool ModeMainGame::OnCommandEnd( unsigned int line,std::vector<std::string>& scripts )
 {
-	const size_t SCRIPTSIZE = 1;
-	if ( scripts.size() >= SCRIPTSIZE )
-	{
-		return false;
-	}
 	if ( state != ScriptState::EDIT )
 	{
+		const size_t SCRIPTSIZE = 2;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return false;
+		}
+
 		state = ScriptState::END;
+	}
+	else
+	{
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return false;
+		}
 	}
 	return true;
 };
 
 bool ModeMainGame::OnCommandLoading( unsigned int line,std::vector<std::string>& scripts )
 {
-	const size_t SCRIPTSIZE = 2;
-	if ( scripts.size() != SCRIPTSIZE )
-	{
-		return false;
-	}
 	if ( state != ScriptState::EDIT )
 	{
+		const size_t SCRIPTSIZE = 2;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return false;
+		}
 		state = ScriptState::LOADING;
 		auto loading = std::make_shared<ModeResourceRoad>( _game,20 );
 		_game.GetModeServer()->Add( loading );
+	}
+	else
+	{
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
+		{
+			return false;
+		}
 	}
 	return true;
 };
