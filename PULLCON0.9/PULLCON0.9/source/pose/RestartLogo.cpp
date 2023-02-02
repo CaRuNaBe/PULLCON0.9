@@ -1,5 +1,5 @@
 #include "RestartLogo.h"
-RestartLogo::RestartLogo(): ActorBase2d()
+RestartLogo::RestartLogo( ApplicationBase& game,ModeBase& mode ): ActorBase2d( game,mode )
 {
 	Init();
 }
@@ -22,17 +22,17 @@ void RestartLogo::Init()
 	FontHandle = CreateFontToHandle( NULL,32,3 );
 }
 
-bool RestartLogo::Update( ApplicationBase& game,ModeBase& mode )
+bool RestartLogo::Update(  )
 {
-	ActorBase2d::Update( game,mode );
+	ActorBase2d::Update();
 	UpdateCollision();	// コリジョン更新
 	return true;
 }
 
 
-bool RestartLogo::Draw( ApplicationBase& game,ModeBase& mode )
+bool RestartLogo::Draw( )
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw( );
 	DrawStringToHandle( _pos.IntX(),_pos.IntY(),"ゲームを再開する",GetColor( 0,255,0 ),FontHandle );
 	DrawCollision();	// コリジョン描画
 	return true;

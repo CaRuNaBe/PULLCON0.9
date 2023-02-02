@@ -5,9 +5,11 @@
 #include "DxLib.h"
 #include "ObjectBase.h"
 #include "../Mode/ModeBase.h"
-ObjectBase::ObjectBase()
+ObjectBase::ObjectBase( ApplicationBase& game ,ModeBase& mode )
 	:isUpdateSkip(false)
 	,isDrawSkip(false)
+	, _game( game )
+, _mode( mode )
 {
 	Init();
 }
@@ -21,12 +23,12 @@ void ObjectBase::Init()
 	_dead = false;
 }
 
-bool ObjectBase::Update(ApplicationBase& game,ModeBase& mode )
+bool ObjectBase::Update()
 {
 	return true;
 }
 
-bool ObjectBase::Draw(ApplicationBase& game,ModeBase& mode )
+bool ObjectBase::Draw()
 {
 	return true;
 }

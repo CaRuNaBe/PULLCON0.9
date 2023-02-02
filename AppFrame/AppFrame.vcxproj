@@ -190,11 +190,12 @@
     <ClInclude Include="source\Object\ObjectServer.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
     <ClInclude Include="source\Math\vector2.h" />
-    <ClInclude Include="source\ScliptEngin\command_base.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfi.h" />
-    <ClInclude Include="source\ScliptEngin\command_crfo.h" />
-    <ClInclude Include="source\ScliptEngin\scripts_data.h" />
-    <ClInclude Include="source\ScliptEngin\scripts_string.h" />
+    <ClInclude Include="source\Script\CommandBase.h" />
+    <ClInclude Include="source\Script\CommandLabel.h" />
+    <ClInclude Include="source\Script\CommandCrFeedIn.h" />
+    <ClInclude Include="source\Script\CommandCrFeedOut.h" />
+    <ClInclude Include="source\Script\scripts_data.h" />
+    <ClInclude Include="source\Script\scripts_string.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\ScliptFlagManager.cpp" />
@@ -219,10 +220,11 @@
     <ClCompile Include="source\Object\ObjectServer.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
     <ClCompile Include="source\Math\vector2.cpp" />
-    <ClCompile Include="source\ScliptEngin\command_crfi.cpp" />
-    <ClCompile Include="source\ScliptEngin\command_crfo.cpp" />
-    <ClCompile Include="source\ScliptEngin\scripts_data.cpp" />
-    <ClCompile Include="source\ScliptEngin\scripts_string.cpp" />
+    <ClCompile Include="source\Script\CommandLabel.cpp" />
+    <ClCompile Include="source\Script\CommandCrFeedIn.cpp" />
+    <ClCompile Include="source\Script\CommandCrFeedOut.cpp" />
+    <ClCompile Include="source\Script\scripts_data.cpp" />
+    <ClCompile Include="source\Script\scripts_string.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

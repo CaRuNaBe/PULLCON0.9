@@ -14,7 +14,7 @@ public:
 class Player : public ActorBase3D {
 	typedef ActorBase3D base;
 public:
-	Player();
+	Player( ApplicationBase& game,ModeBase& mode );
 	virtual ~Player();
 	virtual Type GetType() { return Type::kPlayer; }
 	// プレイヤーの状態
@@ -26,12 +26,12 @@ public:
 	};
 
 	virtual void Init();
-	virtual bool Update(ApplicationBase& game, ModeBase& mode);
-	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
+	virtual bool Update();
+	virtual bool Draw();
 
-	void CameraUpdate(ApplicationBase& game);    // カメラ更新
-	void EventCamera(ApplicationBase& game);    // カメラ
-	void AddBullet(ModeBase& mode);
+	void CameraUpdate();    // カメラ更新
+	void EventCamera();    // カメラ
+	void AddBullet();
 
 protected:
 	// カメラ

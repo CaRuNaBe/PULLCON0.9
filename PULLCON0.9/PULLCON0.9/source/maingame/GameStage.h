@@ -4,15 +4,15 @@ class GameStage:public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	GameStage();
+	GameStage( ApplicationBase& game,ModeBase& mode,int stageid );
 	virtual ~GameStage();
 	virtual Type GetType()
 	{
 		return Type::kGameStage;
 	}
 	virtual void Init();
-	virtual bool Update( ApplicationBase& game,ModeBase& mode );
-	virtual bool Draw( ApplicationBase& game,ModeBase& mode );
+	virtual bool Update();
+	virtual bool Draw();
 
 protected:
 	int    _handle;

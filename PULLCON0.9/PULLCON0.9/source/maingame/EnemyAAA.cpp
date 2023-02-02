@@ -3,21 +3,23 @@
 #include "Bullet.h"
 #include "../mode/ModeMainGame.h"
 
-EnemyAAA::EnemyAAA()
-	:base()
-
+EnemyAAA::EnemyAAA( ApplicationBase& game,ModeBase& mode,int min_id,int max_id,int pile_num )
+	:base( game,mode )
 {
-	_handle_body = MV1LoadModel("res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_dodai.mv1");
-	_handle_turret = MV1LoadModel("res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_houtou.mv1");
+
+	_handle_body = MV1LoadModel( "res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_dodai.mv1" );
+	_handle_turret = MV1LoadModel( "res/enemy/AAA/canon_mk1/mvi/cg_Canon_Mk1_houtou.mv1" );
 
 	Init();
 }
 
-EnemyAAA::~EnemyAAA() {
+EnemyAAA::~EnemyAAA()
+{
 
 }
 
-void EnemyAAA::Init() {
+void EnemyAAA::Init()
+{
 	base::Init();
 	_stateAAA = State::PLAY;
 
@@ -36,8 +38,9 @@ void EnemyAAA::Init() {
 	_CT = 30;
 }
 
-bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
-	base::Update(game,mode);
+bool EnemyAAA::Update()
+{
+	base::Update();
 
 	if (_iLife < 0) {
 		mode.GetObjectServer3D().Del(*this);
@@ -107,9 +110,12 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 					}
 				}
 			}
-			if (obje->GetType() == Type::kBullet) {
-				if (IsHitObject(*obje)) {
-					if (obje->_CT == 0) {
+			if ( obje->GetType() == Type::kBullet )
+			{
+				if ( IsHitObject( *obje ) )
+				{
+					if ( obje->_CT == 0 )
+					{
 						_CT = 10;
 						_overlap = true;
 						obje->Damage(mode);
@@ -123,7 +129,7 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 	if(_stateAAA == State::PLAY){
 		// イベント用コリジョンを移動
 		float distance = _collision._fRadius + _collisionEvent._fRadius;
-		_vEvent = { _vPos.x, _vPos.y + distance, _vPos.z };
+		_vEvent = {_vPos.x, _vPos.y + distance, _vPos.z};
 
 		if (!_have && _iPossession > 0) {
 			AddPieces(mode);
@@ -134,9 +140,9 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		float sx = _vTarget.x - _vPos.x;
 		float sy = _vTarget.y - _vPos.y;
 		float sz = _vTarget.z - _vPos.z;
-		float length3D = sqrt(sx * sx + sy * sy + sz * sz);
-		float rad = atan2(sz, sx);
-		float theta = acos(sy / length3D);
+		float length3D = sqrt( sx * sx + sy * sy + sz * sz );
+		float rad = atan2( sz,sx );
+		float theta = acos( sy / length3D );
 
 		// プレイヤーを狙わない対空砲
 		if (_iType == 1) {
@@ -187,9 +193,9 @@ bool EnemyAAA::Update(ApplicationBase& game, ModeBase& mode) {
 		float sx = _vTarget.x - _vPos.x;
 		float sy = _vTarget.y - _vPos.y;
 		float sz = _vTarget.z - _vPos.z;
-		float length3D = sqrt(sx *sx +sy * sy + sz * sz);
-		float rad = atan2(sz, sx);
-		float theta = acos(sy / length3D);
+		float length3D = sqrt( sx * sx + sy * sy + sz * sz );
+		float rad = atan2( sz,sx );
+		float theta = acos( sy / length3D );
 
 		// 弾の進行方向の向きを設定する
 		_vDir.x = cos(rad);
@@ -226,8 +232,9 @@ void EnemyAAA::Damage(ModeBase& mode) {
 	--_iLife;
 }
 
-bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
-	base::Draw(game, mode);
+bool EnemyAAA::Draw()
+{
+	base::Draw();
 
 	VECTOR pos = ToDX(_vPos);
 	// モデル拡大
@@ -251,13 +258,15 @@ bool EnemyAAA::Draw(ApplicationBase& game, ModeBase& mode) {
 			if (!_finish) {
 				DrawCollisionEvent(color);
 			}
-			if (_overlap) {
-				color = { 255, 0, 0 };
-				DrawCollision(color);
+			if ( _overlap )
+			{
+				color = {255, 0, 0};
+				DrawCollision( color );
 			}
-			if (_event) {
-				color = { 0, 255, 0 };
-				DrawCollisionEvent(color);
+			if ( _event )
+			{
+				color = {0, 255, 0};
+				DrawCollisionEvent( color );
 			}
 		}
 	}

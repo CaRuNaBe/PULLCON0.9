@@ -1,12 +1,13 @@
 #include "ActorBase2d.h"
 
-ActorBase2d::ActorBase2d():base()
+ActorBase2d::ActorBase2d( ApplicationBase& game,ModeBase& mode ):base(game,mode )
 {
 	Init();
 }
 
 ActorBase2d::~ActorBase2d()
-{}
+{
+}
 
 void ActorBase2d::Init()
 {
@@ -20,9 +21,9 @@ void ActorBase2d::Init()
 	_spd = 0.0f;
 }
 
-bool ActorBase2d::Update( ApplicationBase& game,ModeBase& mode )
+bool ActorBase2d::Update(  )
 {
-	base::Update( game,mode );
+	base::Update( );
 	_cnt++;
 	return true;
 }
@@ -43,9 +44,9 @@ bool	ActorBase2d::IsHitObject( ActorBase2d& object )
 	return false;
 }
 
-bool ActorBase2d::Draw( ApplicationBase& game,ModeBase& mode )
+bool ActorBase2d::Draw(  )
 {
-	base::Draw( game,mode );
+	base::Draw(  );
 	return true;
 }
 

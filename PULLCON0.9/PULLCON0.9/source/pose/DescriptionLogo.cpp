@@ -1,5 +1,5 @@
 #include "DescriptionLogo.h"
-DescriptionLogo::DescriptionLogo(): ActorBase2d()
+DescriptionLogo::DescriptionLogo( ApplicationBase& game,ModeBase& mode ): ActorBase2d( game,mode )
 {
 	Init();
 }
@@ -22,18 +22,18 @@ void DescriptionLogo::Init()
 	FontHandle = CreateFontToHandle( NULL,32,3 );
 }
 
-bool DescriptionLogo::Update( ApplicationBase& game,ModeBase& mode )
+bool DescriptionLogo::Update()
 {
-	ActorBase2d::Update( game,mode );
+	ActorBase2d::Update();
 	//ChangeFontType( フォントタイプ );
 	UpdateCollision();	// コリジョン更新
 	return true;
 }
 
 
-bool DescriptionLogo::Draw( ApplicationBase& game,ModeBase& mode )
+bool DescriptionLogo::Draw()
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw();
 	DrawStringToHandle( _pos.IntX(),_pos.IntY(),"操作説明",GetColor( 0,255,0 ),FontHandle );
 	DrawCollision();	// コリジョン描画
 	return true;

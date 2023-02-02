@@ -14,15 +14,15 @@ namespace math
 		float x = a._vCenter.x - b._vCenter.x;
 		float y = a._vCenter.y - b._vCenter.y;
 		float z = a._vCenter.z - b._vCenter.z;
-		float r = x * x + y * y + z * z;
+		float r = x * x + y * y + z * z;//‹…“¯m‚Ì‹——£‚ğ‹‚ß‚é
 		float sum_radius = a._fRadius + b._fRadius;
 
 		if (r <= sum_radius * sum_radius)
 		{
-			return true;
+			return true;//“–‚½‚Á‚Ä‚é
 		}
 		
-		return false;
+		return false;//ŠO‚ê‚Ä‚é
 
 	}
 

@@ -2,8 +2,8 @@
 #include "TitlePlayer.h"
 
 
-TitlePlayer::TitlePlayer()
-	: ActorBase2d()
+TitlePlayer::TitlePlayer( ApplicationBase& game,ModeBase& mode )
+	: ActorBase2d( game,mode )
 {
 	cg_player = ResourceServer::LoadGraph( "res/title/cg_Heli.png" );
 	cg_ui[0] = ResourceServer::LoadGraph( "res/title/ui_push_guide_1.png" );
@@ -15,7 +15,8 @@ TitlePlayer::TitlePlayer()
 }
 
 TitlePlayer::~TitlePlayer()
-{}
+{
+}
 
 void TitlePlayer::Init()
 {
@@ -43,12 +44,12 @@ void TitlePlayer::Init()
 	PlayerState = State::MOVE;//動いているに初期化
 }
 
-bool TitlePlayer::Update( ApplicationBase& game,ModeBase& mode )
+bool TitlePlayer::Update()
 {
-	ActorBase2d::Update( game,mode );
+	ActorBase2d::Update();
 	// キー入力を判定して、主人公を移動させる
 	// Vector2を利用して斜め移動でも問題ないように
-	Vector2 dir = {game.Getinput().GetLstickX(),-(game.Getinput().GetLstickY())};		// 方向を指定
+	Vector2 dir = {_game.Getinput().GetLstickX(),-(_game.Getinput().GetLstickY())};		// 方向を指定
 
 	if ( dir.x != 0 || dir.y != 0 )
 	{
@@ -71,22 +72,22 @@ bool TitlePlayer::Update( ApplicationBase& game,ModeBase& mode )
 	{
 		_pos.x = 0;
 	}
-	if ( _pos.x + _size.x > game.DispSizeW() )
+	if ( _pos.x + _size.x > _game.DispSizeW() )
 	{
-		_pos.x = game.DispSizeW() - _size.x;
+		_pos.x = _game.DispSizeW() - _size.x;
 	}
 	if ( _pos.y < 0 )
 	{
 		_pos.y = 0;
 	}
-	if ( _pos.y + _size.y > game.DispSizeH() )
+	if ( _pos.y + _size.y > _game.DispSizeH() )
 	{
-		_pos.y = game.DispSizeH() - _size.y;
+		_pos.y = _game.DispSizeH() - _size.y;
 	}
 
 	isUidraw = false;
 
-	for ( auto&& obje : mode.Get2DobjectServer().GetObjects() )
+	for ( auto&& obje : _mode.Get2DobjectServer().GetObjects() )
 	{
 		if ( (obje->GetType() == ActorBase2d::Type::KGAMESTARTLOGO) || (obje->GetType() == ActorBase2d::Type::KCREDITLOGO) || (obje->GetType() == ActorBase2d::Type::KENDLOGO) )
 		{
@@ -95,7 +96,7 @@ bool TitlePlayer::Update( ApplicationBase& game,ModeBase& mode )
 				isUidraw = true;
 				if ( !isRight )
 				{
-					if ( game.Getinput().GetKeyXinput( XINPUT_BUTTON_X ) )
+					if ( _game.Getinput().GetKeyXinput( XINPUT_BUTTON_X ) )
 					{
 						dir = {0,0};
 						_pos.x = obje->GetPosition().x + 10.0f;
@@ -105,7 +106,7 @@ bool TitlePlayer::Update( ApplicationBase& game,ModeBase& mode )
 				}
 				if ( isRight )
 				{
-					if ( game.Getinput().GetKeyXinput( XINPUT_BUTTON_X ) )
+					if ( _game.Getinput().GetKeyXinput( XINPUT_BUTTON_X ) )
 					{
 						dir = {0,0};
 						_pos.x = obje->GetPosition().x - 100.0f;
@@ -144,9 +145,9 @@ bool TitlePlayer::Update( ApplicationBase& game,ModeBase& mode )
 	return true;
 }
 
-bool TitlePlayer::Draw( ApplicationBase& game,ModeBase& mode )
+bool TitlePlayer::Draw()
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw();
 	if ( !isRight )
 	{
 		DrawGraph( _pos.IntX(),_pos.IntY(),cg_player,TRUE );
@@ -165,17 +166,17 @@ bool TitlePlayer::Draw( ApplicationBase& game,ModeBase& mode )
 		{
 			uiposi.x = 0.0f;
 		}
-		if ( uiposi.x + UISIZE.x > game.DispSizeW() )
+		if ( uiposi.x + UISIZE.x > _game.DispSizeW() )
 		{
-			uiposi.x = static_cast <float>(game.DispSizeW()) - uiposi.x;
+			uiposi.x = static_cast <float>(_game.DispSizeW()) - uiposi.x;
 		}
 		if ( uiposi.y < 0.0f )
 		{
 			uiposi.y = 0.0f;
 		}
-		if ( uiposi.y + UISIZE.y > static_cast <float>(game.DispSizeH()) )
+		if ( uiposi.y + UISIZE.y > static_cast <float>(_game.DispSizeH()) )
 		{
-			uiposi.y = game.DispSizeH() - UISIZE.y;
+			uiposi.y = _game.DispSizeH() - UISIZE.y;
 		}
 		DrawTurnGraph( uiposi.IntX(),uiposi.IntY(),cg_ui[_cnt % cg_ui.size()],TRUE );
 	}

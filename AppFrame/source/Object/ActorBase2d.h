@@ -36,13 +36,13 @@ public:
 	};
 	virtual Type GetType() = 0;
 
-	ActorBase2d();
+	ActorBase2d( ApplicationBase& game,ModeBase& mode );
 	virtual ~ActorBase2d();
 
 	virtual void	Init();/*èâä˙âª*/
-	virtual bool	Update( ApplicationBase& game,ModeBase& mode );//
+	virtual bool	Update(  );//
 	virtual void	UpdateCollision();
-	virtual bool	Draw( ApplicationBase& game,ModeBase& mode );
+	virtual bool	Draw( );
 	virtual void	DrawCollision();
 
 	virtual AABB& GetCollision()

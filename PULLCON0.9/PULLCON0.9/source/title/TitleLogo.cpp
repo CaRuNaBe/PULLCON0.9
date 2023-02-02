@@ -1,7 +1,7 @@
 #include "TitleLogo.h"
 #include "Dxlib.h"
-TitleLogo::TitleLogo()
-	: ActorBase2d()
+TitleLogo::TitleLogo( ApplicationBase& game,ModeBase& mode )
+	: ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_Logo.png" );
 
@@ -9,7 +9,8 @@ TitleLogo::TitleLogo()
 }
 
 TitleLogo::~TitleLogo()
-{}
+{
+}
 
 void TitleLogo::Init()
 {
@@ -26,14 +27,14 @@ void TitleLogo::Init()
 	_easing = Easing::GetMode( "Linear" );
 }
 
-bool TitleLogo::Update( ApplicationBase& game,ModeBase& mode )
+bool TitleLogo::Update()
 {
-	ActorBase2d::Update( game,mode );
+	ActorBase2d::Update();
 	float start = 100.f;
 	float stop = 300.f;
 
 	auto a = math::utility::TwoPi / 120.f;
-	float b = std::sin( static_cast <float>(a*_cnt));
+	float b = std::sin( static_cast <float>(a * _cnt) );
 	b *= 5;
 	_pos.y = _easing( b,start,stop,60.f );
 	UpdateCollision();	// コリジョン更新
@@ -41,9 +42,9 @@ bool TitleLogo::Update( ApplicationBase& game,ModeBase& mode )
 }
 
 
-bool TitleLogo::Draw( ApplicationBase& game,ModeBase& mode )
+bool TitleLogo::Draw()
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw();
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	DrawCollision();	// コリジョン描画
 	return true;

@@ -5,18 +5,18 @@ class SupplyEria:
 {
 	using base = ActorBase3D;
 public:
-	SupplyEria();
+	SupplyEria( ApplicationBase& game,ModeBase& mode , float _radius );
 	virtual ~SupplyEria();
 	virtual Type GetType()
 	{
 		return Type::kSupplyEria;
 	}
 	virtual void Init();
-	virtual bool Update( ApplicationBase& game,ModeBase& mode );
-	virtual bool Draw( ApplicationBase& game,ModeBase& mode );
+	virtual bool Update();
+	virtual bool Draw();
 
 protected:
 	int    _handle;
-	
+	float radius;
 };
 

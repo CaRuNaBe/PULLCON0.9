@@ -1,25 +1,34 @@
+/*****************************************************************//**
+ * @file   ModeMainGame.h
+ * @brief  ゲームスクリプト定義
+ *
+ * @author 阿部健太郎
+ * @date   January 2023
+ *********************************************************************/
 #pragma once
 #include "appframe.h"
-#include<vector>
-#include<memory>
-#include<string>
+#include <vector>
+#include <memory>
+#include <string>
+#include <array>
 
 class ApplicationMain;
-class CommandCrfi;
-class CommandCrfo;
-
+class CommandLabel;
+class CommandChoice;
 class ModeMainGame:public ModeBase
 {
 public:
+	/** コンストラクタ */
 	ModeMainGame( ApplicationMain& game,int layer );
+	/** デストラクタ */
 	virtual ~ModeMainGame();
-
+	/** 初期化 コンストラクタ時よぶ */
 	void Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname );
-
-	virtual bool Update(); // 更新
-
-	virtual bool Draw();	// 描画
-
+	/** 計算 毎フレーム呼ばれる */
+	virtual bool Update();
+	/** 描画 毎フレーム呼ばれる */
+	virtual bool Draw();
+	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
 
 	void SetCursor(const vector4& pos) { _vCursor = pos; }
@@ -53,46 +62,96 @@ private:
 	void PreParsing();
 	void Parsing();
 
-	bool OnCommandAddPLayer( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandAddStage( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandAddSkySphere( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandAddClearObject( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandAddAreaSupply( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandAddEnemyAAA( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandAddAreaEnemyAAA( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandStart( unsigned int line,const std::vector<std::string>& scripts );
-	//bool OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts );
-	//bool OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandStageLabel( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandJumpLabel( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandTurning( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandStart( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandEnd( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandLoading( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandCrFeedIn( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandCrFeedOut( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandTimeWait( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandBgm( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandStory( unsigned int line,std::vector<std::string>& scripts );
 
-	/** エディットモード関係関数 */
-	void Edit();//エディットモードの時に入る関数
 
-	bool CheckInputString( std::string command );//実際使えるか
 
-	bool OnEditCommandAdd();//追加コマンド
-	bool OnEditCommandDelete();//消去コマンド
-	bool OnEditCommandClear();//初期化コマンド
-	bool OnEditCommandSave( );//保存コマンド
-	bool OnEditCommandJunp(  );//編集地点変更コマンド
+	bool OnCommandStage( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandSkySphere( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandPLayer( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandGunShip( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandEnemyAAA( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandAreaAAA( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandObject( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandAreaObj( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandAreaSpawn( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandSupply( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandCommunication( unsigned int line,std::vector<std::string>& scripts );
+	bool OnCommandNoEntry( unsigned int line,std::vector<std::string>& scripts );
 
+
+
+
+	/** エディットモードの時に入る関数 */
+	void Edit();
+	/** 入力されたコマンドがゲームで使われるか確認 */
+	bool CheckInputString( std::string& command,std::vector < std::string >& _sclipt );
+	/** 汎用入力関数 */
+	bool CommandInputString( int posix,int posiy,std::string inputname,std::vector<std::string>& _script );
+	/** 追加コマンドに使われる関数 */
+	bool OnEditCommandAdd( const std::string& command );
+	/** 消去コマンドに使われる関数 */
+	bool OnEditCommandDelete( const std::string& command );
+	/** 初期化コマンドに使われる関数 */
+	bool OnEditCommandClear( const std::string& command );
+	/** 保存コマンドに使われる関数 */
+	bool OnEditCommandSave( const std::string& command );
+	/** 編集地点変更コマンドに使われる関数 */
+	bool OnEditCommandJunp( const std::string& command );
+
+
+
+	/** フレーム数待つ時に使われるUpdate */
 	void TimeWait();
-	void ClickWait();
+	/** 文字列に対応した行数を取得 */
+	bool GetLineNumber( const std::string& str,unsigned int& line ) const;
+	/** フェードイン時に使われるUpdate */
 	void CrfiUpdate();
+	/** フェードアウト時に使われるUpdate */
 	void CrfoUpdate();
-	//void DrawFeedin( ApplicationBase& game )const;
-	//void DrawFeedout( ApplicationBase& game )const;
+	/** フェードイン描画 */
+	void DrawFeedIn()const;
+	/** フェードアウト描画 */
+	void DrawFeedOut()const;
 
+	/** ScriptsDataにアクセスするポインタ */
 	std::unique_ptr<ScriptsData> scripts_data;
-	//std::vector<std::unique_ptr<CommandCrfi>> crfi_list;
-	//std::vector<std::unique_ptr<CommandCrfo>> crfo_list;
+	/** ステージ名を格納するvector */
+	std::vector<std::unique_ptr<CommandLabel>> label_list;
+	std::vector < std::unique_ptr < CommandCrFeedIn>> crfi_list;
+	std::vector < std::unique_ptr < CommandCrFeedOut>> crfo_list;
+
+
+	/** ゲームのステータス */
 	ScriptState state;
-	using FunctionGameCommand = std::map<std::string,bool(ModeMainGame::*)(unsigned int,const std::vector<std::string>& scripts)>;
-	using FunctionEditCommand = std::map<std::string,bool(ModeMainGame::*)()>;
+	/** ゲームコマンドに使われる文字列をキーとした関数ポインタ */
+	using FunctionGameCommand = std::map<std::string,bool(ModeMainGame::*)(unsigned int,std::vector<std::string>&)>;
+	/** エディットコマンドの時に使われる文字列をキーとした関数ポインタ */
+	using FunctionEditCommand = std::map<std::string,bool(ModeMainGame::*)(const std::string&)>;
+	/** スクリプトの最大行数 */
 	unsigned int max_line;
+	/** 今の行数 */
 	unsigned int now_line;
+	/** 待つ時間 */
 	unsigned int wait_count;
-	double _Alpha;
-	double feedcount;
+	/** フェードアウトインするときに使うα値 */
+	float alpha;
+	/** フェードアウトインするときに使うフレーム数 */
+	float feedcount;
+	/** ステージ名 */
+	std::string  stage_name;
+	/** ゲームスタート時間 */
+	int start_time;
 
 	bool is_notcant;
 	bool is_notcommand;

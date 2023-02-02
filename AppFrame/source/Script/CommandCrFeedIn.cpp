@@ -1,12 +1,12 @@
 /*****************************************************************//**
- * \file   command_crfo.cpp
- * \brief  'fi' スクリプトを処理するクラス実装
+ * @file   CommandCrFeedIn.cpp
+ * @brief  'CrFeedIn' スクリプトを処理するクラス実装
  *
  *
- * \author 阿部健太郎
- * \date   August 2022
+ * @author 阿部健太郎
+ * @date   August 2022
  *********************************************************************/
-#include "command_crfi.h"
+#include "CommandCrFeedIn.h"
 #include "scripts_string.h"
 
 namespace
@@ -14,7 +14,7 @@ namespace
 	constexpr size_t SCRIPT_NUM = 5;
 }
 
-CommandCrfi::CommandCrfi ( unsigned int line , const std::vector<std::string>& script )
+CommandCrFeedIn::CommandCrFeedIn( unsigned int line , const std::vector<std::string>& script )
 	: CommandBase ( line , script )
 {
 	in_count = 0;
@@ -23,7 +23,7 @@ CommandCrfi::CommandCrfi ( unsigned int line , const std::vector<std::string>& s
 	in_blue = 0;
 }
 
-bool CommandCrfi::Check ()
+bool CommandCrFeedIn::Check ()
 {
 	const auto size = script.size ();
 

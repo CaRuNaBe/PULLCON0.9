@@ -1,8 +1,24 @@
 #include "SkySphere.h"
-SkySphere::SkySphere()
-	:base()
+namespace
 {
-	_handle = MV1LoadModel( "res/stage/skysphere/mv1/cg_stageSkymap_1.mv1" );
+	const auto SUNNY = 1;
+	const auto CLOUDY = 2;
+}
+SkySphere::SkySphere( ApplicationBase& game,ModeBase& mode,int objectid )
+	:base( game,mode )
+{
+	switch ( objectid )
+	{
+		case SUNNY:
+			_handle = MV1LoadModel( "res/stage/skysphere/mv1/cg_stageSkymap_1.mv1" );
+			break;
+		case CLOUDY:
+			_handle = MV1LoadModel( "res/stage/skysphere/mv1/cg_stageSkymap_1.mv1" );
+			break;
+		default:
+			break;
+	}
+
 
 	Init();
 }
@@ -19,21 +35,21 @@ void SkySphere::Init()
 
 }
 
-bool SkySphere::Update( ApplicationBase& game,ModeBase& mode )
+bool SkySphere::Update()
 {
-	base::Update( game,mode );
+	base::Update();
 
 
 
 	return true;
 }
 
-bool SkySphere::Draw( ApplicationBase& game,ModeBase& mode )
+bool SkySphere::Draw()
 {
-	base::Draw( game,mode );
+	base::Draw();
 	MV1SetScale( _handle,VGet( 35.0f,35.0f,35.0f ) );
-	SetUseLighting(FALSE);
-	MV1DrawModel(_handle);
-	SetUseLighting(TRUE);
+	SetUseLighting( FALSE );
+	MV1DrawModel( _handle );
+	SetUseLighting( TRUE );
 	return true;
 }

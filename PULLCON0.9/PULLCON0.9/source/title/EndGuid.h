@@ -12,7 +12,7 @@ class EndGuid:public ActorBase2d
 		PULLED//ˆø‚Á’£‚ç‚ê‚Ä‚¢‚é
 	};
 public:
-	EndGuid();
+	EndGuid( ApplicationBase& game,ModeBase& mode );
 	~EndGuid();
 	virtual Type	GetType()//©•ª‚ª‰½Ò‚©
 	{
@@ -20,8 +20,8 @@ public:
 	}
 
 	void	Init();//‰Šú‰»
-	bool	Update( ApplicationBase& game,ModeBase& mode );
-	bool	Draw( ApplicationBase& game,ModeBase& mode );
+	bool	Update();
+	bool	Draw();
 
 private:
 	int		_cg;		// ‰æ‘œ

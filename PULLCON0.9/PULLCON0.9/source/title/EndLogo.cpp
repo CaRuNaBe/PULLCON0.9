@@ -1,7 +1,7 @@
 #include "EndLogo.h"
 #include "Dxlib.h"
-EndLogo::EndLogo()
-	: ActorBase2d()
+EndLogo::EndLogo( ApplicationBase& game,ModeBase& mode )
+	: ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_EndLogo.png" );
 
@@ -9,7 +9,8 @@ EndLogo::EndLogo()
 }
 
 EndLogo::~EndLogo()
-{}
+{
+}
 
 void EndLogo::Init()
 {
@@ -25,16 +26,16 @@ void EndLogo::Init()
 	_spd = 0;
 }
 
-bool EndLogo::Update( ApplicationBase& game,ModeBase& mode )
+bool EndLogo::Update()
 {
-	ActorBase2d::Update( game,mode );
-	for ( auto&& obje : mode.Get2DobjectServer().GetObjects() )
+	ActorBase2d::Update();
+	for ( auto&& obje : _mode.Get2DobjectServer().GetObjects() )
 	{
 		if ( (obje->GetType() == ActorBase2d::Type::KPLAYER) )
 		{
 			if ( IsHitObject( *obje ) )
 			{
-				if ( game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
+				if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
 				{
 					_spd = static_cast<float>(utility::get_random( 5,20 ));
 					_pos.y -= _spd;		// ˆÊ’u‚ð“®‚©‚·  
@@ -47,9 +48,9 @@ bool EndLogo::Update( ApplicationBase& game,ModeBase& mode )
 }
 
 
-bool EndLogo::Draw( ApplicationBase& game,ModeBase& mode )
+bool EndLogo::Draw()
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw();
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	DrawCollision();	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	return true;

@@ -1,7 +1,7 @@
 #include "StartLogo.h"
 #include "Dxlib.h"
-StartLogo::StartLogo()
-	: ActorBase2d()
+StartLogo::StartLogo( ApplicationBase& game,ModeBase& mode )
+	: ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_StartLogo.png" );
 
@@ -9,7 +9,8 @@ StartLogo::StartLogo()
 }
 
 StartLogo::~StartLogo()
-{}
+{
+}
 
 void StartLogo::Init()
 {
@@ -23,16 +24,16 @@ void StartLogo::Init()
 	_spd = 0;
 }
 
-bool StartLogo::Update( ApplicationBase& game,ModeBase& mode )
+bool StartLogo::Update()
 {
-	ActorBase2d::Update( game,mode );
-	for ( auto&& obje : mode.Get2DobjectServer().GetObjects() )
+	ActorBase2d::Update();
+	for ( auto&& obje : _mode.Get2DobjectServer().GetObjects() )
 	{
 		if ( (obje->GetType() == ActorBase2d::Type::KPLAYER) )
 		{
 			if ( IsHitObject( *obje ) )
 			{
-				if ( game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
+				if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
 				{
 					_spd = static_cast<float>(utility::get_random( 5,20 ));
 					_pos.y -= _spd;		// ˆÊ’u‚ð“®‚©‚·  
@@ -46,9 +47,9 @@ bool StartLogo::Update( ApplicationBase& game,ModeBase& mode )
 }
 
 
-bool StartLogo::Draw( ApplicationBase& game,ModeBase& mode )
+bool StartLogo::Draw()
 {
-	ActorBase2d::Draw( game,mode );
+	ActorBase2d::Draw();
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	DrawCollision();	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	return true;

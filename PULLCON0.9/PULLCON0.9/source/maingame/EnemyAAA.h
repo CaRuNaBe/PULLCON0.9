@@ -2,13 +2,17 @@
 #include "appframe.h"
 
 
-class EnemyAAA : public ActorBase3D {
+class EnemyAAA: public ActorBase3D
+{
 	typedef ActorBase3D base;
 public:
-	EnemyAAA();
+	EnemyAAA( ApplicationBase& game,ModeBase& mode,int min_id,int max_id,int pile_num );
 	virtual ~EnemyAAA();
-	virtual Type GetType() { return Type::kEnemyAAA; }
-	// ‘Î‹ó–C‚Ìó‘Ô
+	virtual Type GetType()
+	{
+		return Type::kEnemyAAA;
+	}
+// ‘Î‹ó–C‚Ìó‘Ô
 	enum class State
 	{
 		NUM,//’n‰º‚Ì‘Î‹ó–C
@@ -18,8 +22,8 @@ public:
 	};
 
 	virtual void Init();
-	virtual bool Update(ApplicationBase& game, ModeBase& mode);
-	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
+	virtual bool Update();
+	virtual bool Draw();
 
 	virtual void Damage(ModeBase& mode);
 	void AddBullet(ModeBase& mode);

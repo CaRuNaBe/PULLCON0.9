@@ -6,7 +6,7 @@ using namespace math;
 class ActorBase3D : public ObjectBase {
 	typedef ObjectBase base;
 public:
-	ActorBase3D();
+	ActorBase3D( ApplicationBase& game,ModeBase& mode );
 	virtual ~ActorBase3D();
 
 	enum class Type {  // 種別の列挙型
@@ -18,14 +18,18 @@ public:
 		kSkySphere,     // 6 スカイスフィア
 		kGameStage,     // 7 ゲームステージ
 		kSupplyEria,    // 8 補給地点
+		kStageObject,   // 9 ステージオブジェクト
+		kEnemySpawnEria,// 10 敵スポーンエリア
+		kCommunicationAria,//11　会話スクリプト起動エリア
+		kAreaNoEntry,   // 12 侵入不能エリア
 		kEffect,        // n エフェクト
 	};
 	virtual Type GetType() = 0;
 
 	virtual void Init();
-	virtual bool Update(ApplicationBase& game, ModeBase& mode);
+	virtual bool Update();
 	virtual void	UpdateCollision();
-	virtual bool Draw(ApplicationBase& game, ModeBase& mode);
+	virtual bool Draw();
 	virtual void	DrawCollision(vector4 color);
 	virtual void	DrawCollisionEvent(vector4 color);
 	virtual void	DrawCollisionSearch(vector4 color);
@@ -34,7 +38,7 @@ public:
 	virtual bool	IsHitEvent(ActorBase3D& object);	// イベントスフィアと当たっているか
 	virtual bool	IsSearch(ActorBase3D& object);	  // サーチスフィアと当たっているか
 
-	virtual void Damage(ModeBase& mode) {}
+	virtual void Damage() {}
 
 	virtual Sphere& GetCollision() { return _collision; }
 	virtual Sphere& GetCollisionEvent() { return _collisionEvent; }

@@ -27,11 +27,11 @@ public:
 	ScriptsData& operator=( const ScriptsData& right ) = default;
 	ScriptsData& operator=( ScriptsData&& right ) noexcept = default;
 
-	bool LoadJson( std::string filepath,std::string storyname,std::string filename );
+	bool LoadJson( std::string filepath,std::string storyname,std::string filename = ".json" );
 	bool WriteJson( std::string newfilename,std::string storyname );
 	std::vector<std::string> GetScript( const unsigned int index ) const;
 	unsigned int GetScriptNum()  const;
-	bool ScriptAdd( std::string Sclipts );
+	bool ScriptAdd( std::string& Sclipts );
 	bool ScriptDelete( int line );
 	bool ScriptClear();
 	std::string GetScriptLine( const unsigned int index ) const;

@@ -2,7 +2,6 @@
 #include "AppFrame.h"
 #include "ApplicationMain.h"
 #include "mode/ModePause.h"
-#include "mode/ModeGame.h"
 #include "mode/ModeMainGame.h"
 #include "mode/ModeTitle.h"
 // ŽÀ‘Ì
