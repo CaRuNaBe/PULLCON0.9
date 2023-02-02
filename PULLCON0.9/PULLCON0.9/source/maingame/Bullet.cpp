@@ -7,7 +7,7 @@ Bullet::Bullet( ApplicationBase& game,ModeBase& mode)
 	:base(game,mode)
 {
 	//_handle = MV1LoadModel("res/bullet/model/normalammo/cg_NormalAmmo.mv1");
-	_handle = 0;
+	_cg = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Green.png");
 	Init();
 }
 
@@ -20,7 +20,6 @@ void Bullet::Init() {
 
 	_iDamage = 1;
 	_fSpeed = 400.f;
-	_animeNo = 0;
 
 	_collision._fRadius = 50.f * _fScale;
 
@@ -65,7 +64,7 @@ bool Bullet::Draw() {
 	float rad = atan2(_vDir.z, _vDir.x);
 	float theta = acos(_vDir.y / length3D);
 
-	// ƒ‚ƒfƒ‹Šg‘å
+	/*// ƒ‚ƒfƒ‹Šg‘å
 	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	// ƒ‚ƒfƒ‹‰ñ“]
 	MV1SetRotationZYAxis(_handle, VGet(_vDir.z, 0.f, -(_vDir.x)), VGet(0.f, 1.f, 0.f), theta);
@@ -73,6 +72,9 @@ bool Bullet::Draw() {
 	MV1SetPosition(_handle, ToDX(_vPos));
 	// ƒ‚ƒfƒ‹•`‰æ
 	MV1DrawModel(_handle);
+	*/
+
+	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 150.f, 0.f, _cg, TRUE);
 
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	vector4 color = { 255, 255, 255 };

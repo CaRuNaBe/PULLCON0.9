@@ -24,8 +24,8 @@ void ClearObject::Init()
 	_vPos = { _vObjective.x - 5000.f, _vObjective.y, _vObjective.z };
 	_vEvent = _vPos;
 	_fScale = 3.f;
-	_collision._fRadius = 1400.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 5.f * _fScale;
+	_collision._fRadius = 500.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 2.f * _fScale;
 
 	_iLife = 100;
 
