@@ -80,7 +80,7 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	scripts_data = std::make_unique<ScriptsData>();
 	state = ScriptState::PARSING;
 #if _DEBUG
-	state = ScriptState::EDIT;
+	//state = ScriptState::EDIT;
 #endif
 	_cg = ResourceServer::LoadGraph("res/cursor00.png");
 	_se = ResourceServer::LoadSoundMem("res/sound/stage1~3 BGM/650832__timbre__weasel-damage-excerpt-of-audiomirages-freesound-647499.wav");
@@ -890,7 +890,7 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 		vector4 posi;
 		float scale = 1.0f;
 		float speed = 30.0f;
-		const size_t SCRIPTSIZE = 5;
+		const size_t SCRIPTSIZE = 6;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -921,8 +921,8 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 		}
 		auto player = std::make_shared<Player>( _game,*this );
 		player->SetPosition( posi );
-		//player->SetScale( scale );
-		//player->SerSpeed( speed );
+		player->SetScale( scale );
+		//player->SetSpeed( speed );
 		_3D_objectServer.Add( player );
 		result = true;
 	}
@@ -1086,12 +1086,12 @@ bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,std::vector<std::string>
 		{
 			return result;
 		}
-		auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,pile_num );
-		enemyAAA->SetPosition( posi );
-		//enemyAAA->SetScale( scale );
-		//enemyAAA->SetAxialX( x_rad );
-		//enemyAAA->SetAxialY( y_rad );
-		//enemyAAA->SetAim( aim_player );
+		auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,pile_num,posi );
+
+		enemyAAA->SetScale( scale );
+		enemyAAA->SetAxialX( x_rad );
+		enemyAAA->SetAxialY( y_rad );
+		enemyAAA->SetType( aim_player );
 		_3D_objectServer.Add( enemyAAA );
 		result = true;
 	}
@@ -1255,7 +1255,7 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 			auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
 			int pile_num = utility::get_random( pile_min_num,pile_max_num );
 			vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
-			//
+			
 			int in_range_nim = 0;
 
 			for ( auto&& set_pos : posivec )
@@ -1291,9 +1291,9 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 
 		for ( auto&& set_pos : posivec )
 		{
-			auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ));
-			enemyAAA->SetPosition( std::get<0>( set_pos ) );
-			//enemyAAA->SetScale( scale );
+			auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ), std::get<0>(set_pos));
+		
+			enemyAAA->SetScale( scale );
 			_3D_objectServer.Add( enemyAAA );
 		}
 		result = true;
@@ -1379,7 +1379,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 
 		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 		object->SetPosition( posi );
-		//object->SetScale( scale );
+		object->SetScale( scale );
 		_3D_objectServer.Add( object );
 		result = true;
 	}
@@ -1490,7 +1490,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 			auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
 
 			vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
-			//
+			
 			int in_range_nim = 0;
 
 			for ( auto&& set_pos : posivec )
@@ -1529,7 +1529,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		{
 			auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 			object->SetPosition( set_pos );
-			//object->SetScale( scale );
+			object->SetScale( scale );
 			_3D_objectServer.Add( object );
 		}
 		result = true;

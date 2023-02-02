@@ -18,6 +18,5 @@ public:
 
 protected:
 	int    _handle;
-	bool is_coll;
 };
 
