@@ -1,6 +1,6 @@
-#include "ModeSclipt.h"
+#include "ModeSpeakScript.h"
 
-ModeSclipt::ModeSclipt( ApplicationBase& game,int layer,std::string storyname )
+ModeSpeakScript::ModeSpeakScript( ApplicationBase& game,int layer,std::string storyname )
 	: ModeBase( game,layer )
 {
 	Tem_image = ResourceServer::LoadGraph( "res/通信起動中.png" );
@@ -8,12 +8,12 @@ ModeSclipt::ModeSclipt( ApplicationBase& game,int layer,std::string storyname )
 	story_name = storyname;
 }
 
-ModeSclipt::~ModeSclipt()
+ModeSpeakScript::~ModeSpeakScript()
 {
 }
 
 // 更新
-bool ModeSclipt::Update()
+bool ModeSpeakScript::Update()
 {
 	ModeBase::Update();
 	timer--;
@@ -25,7 +25,7 @@ bool ModeSclipt::Update()
 }
 
 // 描画
-bool ModeSclipt::Draw()
+bool ModeSpeakScript::Draw()
 {
 	ModeBase::Draw();
 	DrawBox( 0,0,_game.DispSizeW(),_game.DispSizeH(),GetColor( 255,0,0 ),TRUE );

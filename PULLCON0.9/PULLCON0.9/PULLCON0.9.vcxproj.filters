@@ -112,7 +112,7 @@
     <ClCompile Include="source\maingame\EnemyAAA.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeSclipt.cpp">
+    <ClCompile Include="source\mode\ModeSpeakScript.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
     <ClCompile Include="source\mode\ModeResourceRoad.cpp">
@@ -210,7 +210,7 @@
     <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeSclipt.h">
+    <ClInclude Include="source\mode\ModeSpeakScript.h">
       <Filter>source\mode</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModeResourceRoad.h">

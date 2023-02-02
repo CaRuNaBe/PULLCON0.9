@@ -21,7 +21,7 @@
 #include "../maingame/EnemySpawnEria.h"
 #include "../maingame/CommunicationAria.h"
 #include "../maingame/AreaNoEntry.h"
-#include "ModeSclipt.h"
+#include "ModeSpeakScript.h"
 
 namespace
 {
@@ -59,7 +59,8 @@ namespace
 	const std::string ECOMMAND_CLEAR = "clear";//初期化コマンド
 	const std::string ECOMMAND_SAVE = "save";//保存コマンド
 	const std::string ECOMMAND_JUNP = "jump";//編集地点変更コマンド
-
+	//文字列分割用
+	const std::string DELIMITER = ",";
 	//jsonファイル関係
 	const std::string FILENAME = "pullcon0.9.json";//ファイル名
 	const std::string FILEPASS = "res/script/gamescript/" + FILENAME;//ファイルパス
@@ -119,8 +120,8 @@ void ModeMainGame::Destroy()
 {
 	/** stateをPREPARSINGにしておく */
 	state = ScriptState::PREPARSING;
-#if _DUBUG
-
+#if _DEBUG
+	scripts_data->WriteJson( FILENAME,GAMESCRIPT );
 #endif
 	max_line = 0;
 	now_line = 0;
@@ -224,15 +225,17 @@ void ModeMainGame::Parsing()
 		}
 		else
 		{
-			if ( string_comand == COMMAND_LOADING || 
-					 string_comand == COMMAND_GAMESTART || 
-					 string_comand == COMMAND_FEEDIN || 
-					 string_comand == COMMAND_FEEDOUT||
+			if ( string_comand == COMMAND_LOADING ||
+					 string_comand == COMMAND_GAMESTART ||
+					 string_comand == COMMAND_FEEDIN ||
+					 string_comand == COMMAND_FEEDOUT ||
 					 string_comand == COMMAND_TIMEWAIT ||
 					 string_comand == COMMAND_STORY )
 			{
 				stop_parsing = (this->*comand_funcs[string_comand])(now_line,script);
-			}else{
+			}
+			else
+			{
 				(this->*comand_funcs[string_comand])(now_line,script);
 			}
 
@@ -373,42 +376,41 @@ bool ModeMainGame::GetLineNumber( const std::string& str,unsigned int& line ) co
 
 bool ModeMainGame::OnCommandStageLabel( unsigned int line,std::vector<std::string>& scripts )
 {
+	bool result = false;
 	if ( state != ScriptState::EDIT )
 	{
 		auto label = std::make_unique<CommandLabel>( line,scripts );
 
 		if ( !label->Check() )
 		{
-			return false;
+			return result;
 		}
 
 		label_list.emplace_back( std::move( label ) );
+		result = true;
 	}
 	else
 	{
-		ClearDrawScreen();
-		std::string buf = "";
-		auto cchar = const_cast<char*>(buf.c_str());
-		int x = 0,y = 0;
-		DrawString( x,y,"ステージ名を入力してください",GetColor( 255,255,255 ) );
-
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
 		{
-			std::string ecommandbuf = cchar;
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-			scripts.push_back( ecommandbuf );
+			return result;
 		}
-		else
+		std::array < std::string,1 > input_str =
 		{
-			scripts.clear();
-			return false;
+			"ステージ名の入力"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
+			{
+				result = false;
+				break;
+			};
 		}
 	}
-	return true;
+	return result;
 };
 /**
  * @fn bool ModeMainGame::OnCommandJunpLabel.
@@ -426,58 +428,32 @@ bool ModeMainGame::OnCommandJumpLabel( unsigned int line,std::vector<std::string
 	{
 		/** 成功可否(true成功、false失敗)を取得、lineにラベルコマンドで追加した文字列に対応した行数を入れる */
 		result = GetLineNumber( scripts[1],line );
-	 /** 成功した場合naw_lineにlineをいれジャンプする */
+		/** 成功した場合naw_lineにlineをいれジャンプする */
 		if ( result )
 		{
 			now_line = line;
 		}
 		return result;
 	}
-	else/** エディットモード時処理 */
+	else
 	{
-		ClearDrawScreen();
-		std::string buf = "";
-		auto cchar = const_cast<char*>(buf.c_str());
-		int x = 0,y = 0;
-		DrawString( x,y,"ステージ名を入力してください\n追加可能ステージ名",GetColor( 255,255,255 ) );
-		y += 38;
-		auto maxline = scripts_data->GetScriptNum();
-		if ( maxline <= 0 )
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
 		{
-			is_notcant = true;
-			result = false;
 			return result;
 		}
-		/** 追加可能ステージ名表示 */
-		for ( unsigned int i = 0; i < maxline; i++ )
+		std::array < std::string,1 > input_str =
 		{
-			auto script = scripts_data->GetScriptLine( i );
-			auto command = string::Split( script,"," );
-			if ( command[0] != COMMAND_STAGELABEL )
+			"ジャンプ先のステージ名"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
 			{
-				continue;
-			}
-			DrawString( x,y,command[1].c_str(),GetColor( 255,255,255 ) );
-			y += 18;
-		}
-		/** 上記で表示したステージ名を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return result;
-			}
-
-			scripts.push_back( ecommandbuf );
-			result = true;
-		}
-		else
-		{
-			scripts.clear();
-			return result;
+				result = false;
+				break;
+			};
 		}
 	}
 	return result;
@@ -485,77 +461,50 @@ bool ModeMainGame::OnCommandJumpLabel( unsigned int line,std::vector<std::string
 
 bool ModeMainGame::OnCommandTurning( unsigned int line,std::vector<std::string>& scripts )
 {
+	auto result = false;
 	if ( state != ScriptState::EDIT )
 	{
 		int clear_time = (GetNowCount() - start_time) / 1000;
 		int turning_time = 0;
 
 		line = 0U;
-		const auto result = GetLineNumber( scripts[1],line );
+		if ( !GetLineNumber( scripts[1],line ) )
+		{
+			return result;
+		};
 		if ( !(string::ToInt( scripts[2],turning_time )) )
 		{
-			return false;
+			return result;
 		}
-
-		if ( result )
+		if ( clear_time < turning_time )
 		{
-			if ( clear_time < turning_time )
-			{
-				now_line = line;
-			}
+			now_line = line;
 		}
-		return result;
+		result = true;
 	}
-	else/** エディットモードの時処理 */
+	else
 	{
-		ClearDrawScreen();
-		std::string buf = "";
-		auto cchar = const_cast<char*>(buf.c_str());
-		int x = 0,y = 0;
-		DrawString( x,y,"ステージ名を入力してください\n追加可能ステージ名",GetColor( 255,255,255 ) );
-		y += 38;
-		auto maxline = scripts_data->GetScriptNum();
-		if ( maxline <= 0 )
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
 		{
-			is_notcant = true;
-			return false;
+			return result;
 		}
-		for ( unsigned int i = 0; i < maxline; i++ )
+		std::array < std::string,2 > input_str =
 		{
-			auto script = scripts_data->GetScriptLine( i );
-			auto command = string::Split( script,"," );
-			if ( command[0] != COMMAND_STAGELABEL )
-			{
-				continue;
-			}
-			DrawString( x,y,command[1].c_str(),GetColor( 255,255,255 ) );
-			y += 18;
-
-		}
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+			"ステージ名",
+			"クリア秒数(この秒数以下だとそこのステージにいく)"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
 		{
-			std::string ecommandbuf = cchar;
-			if ( ecommandbuf.empty() )
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
 			{
-				scripts.clear();
-				return false;
-			}
-			scripts.push_back( ecommandbuf );
-		}
-		x = 0,y = 0;
-		ClearDrawScreen();
-		DrawString( x,y,"条件を入力してください(何秒以下でそのステージラベルに飛びます)",GetColor( 255,255,255 ) );
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-			scripts.push_back( ecommandbuf );
+				result = false;
+				break;
+			};
 		}
 	}
+	return result;
 };
 
 bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& scripts )
@@ -607,257 +556,98 @@ bool ModeMainGame::OnCommandLoading( unsigned int line,std::vector<std::string>&
 bool ModeMainGame::OnCommandCrFeedIn( unsigned int line,std::vector<std::string>& scripts )
 {
 	crfi_list.clear();
+	auto result = false;
 	if ( state != ScriptState::EDIT )
 	{
 		auto crfi = std::make_unique<CommandCrFeedIn>( line,scripts );
 		if ( !crfi->Check() )
 		{
-			return false;
+			return result;
 		}
 		feedcount = static_cast<float>(crfi->GetinCount());
 		crfi_list.emplace_back( std::move( crfi ) );
 		alpha = 255.0;
 		state = ScriptState::CRFEEDIN;
+		result = true;
 	}
 	else
 	{
-		std::string buf = "";
-		auto cchar = const_cast<char*>(buf.c_str());
-		int x = 0,y = 0;
-		ClearDrawScreen();
-		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
-		/** 上記で表示したフレーム数を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
 		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
+			return result;
+		}
+		std::array < std::string,4 > input_str =
+		{
+			"フレーム数(消えるまでの時間)",
+			"赤の色段階(0~255)",
+			"緑の色段階(0~255)",
+			"青の色段階(0~255)"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
 			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
-		}
-		ClearDrawScreen();
-		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
-		/** 上記で表示したフレーム数を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
-		}
-		ClearDrawScreen();
-		DrawString( x,y,"赤の色段階(0～255)",GetColor( 255,255,255 ) );
-		/** 上記で表示した赤の色段階を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
-		}
-		ClearDrawScreen();
-		DrawString( x,y,"緑の色段階(0～255)",GetColor( 255,255,255 ) );
-		/** 上記で表示した緑の色段階を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
-		}
-		ClearDrawScreen();
-		DrawString( x,y,"青の色段階(0～255)",GetColor( 255,255,255 ) );
-		/** 上記で表示した青の色段階を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
+				result = false;
+				break;
+			};
 		}
 	}
-	return  true;
+
+	return  result;
 }
 
 bool ModeMainGame::OnCommandCrFeedOut( unsigned int line,std::vector<std::string>& scripts )
 {
 	crfo_list.clear();
+	auto result = false;
 	if ( state != ScriptState::EDIT )
 	{
 		auto crfo = std::make_unique<CommandCrFeedOut>( line,scripts );
 		if ( !crfo->Check() )
 		{
-			return false;
+			return result;
 		}
 		feedcount = static_cast<float>(crfo->GetoutCount());
 		crfo_list.emplace_back( std::move( crfo ) );
 		alpha = 0.0;
 		state = ScriptState::CRFEEDOUT;
+		result = true;
 	}
 	else
 	{
-		std::string buf = "";
-		auto cchar = const_cast<char*>(buf.c_str());
-		int x = 0,y = 0;
-		ClearDrawScreen();
-		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
-		/** 上記で表示したフレーム数を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		const size_t SCRIPTSIZE = 1;
+		if ( scripts.size() != SCRIPTSIZE )
 		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
+			return result;
+		}
+		std::array < std::string,4 > input_str =
+		{
+			"フレーム数(消えるまでの時間)",
+			"赤の色段階(0~255)",
+			"緑の色段階(0~255)",
+			"青の色段階(0~255)"
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
 			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
-		}
-		ClearDrawScreen();
-		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
-		/** 上記で表示したフレーム数を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
-		}
-		ClearDrawScreen();
-		DrawString( x,y,"赤の色段階(0～255)",GetColor( 255,255,255 ) );
-		/** 上記で表示した赤の色段階を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
-		}
-		ClearDrawScreen();
-		DrawString( x,y,"緑の色段階(0～255)",GetColor( 255,255,255 ) );
-		/** 上記で表示した緑の色段階を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
-		}
-		ClearDrawScreen();
-		DrawString( x,y,"青の色段階(0～255)",GetColor( 255,255,255 ) );
-		/** 上記で表示した青の色段階を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
-		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
-			{
-				scripts.clear();
-				return false;
-			}
-
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
+				result = false;
+				break;
+			};
 		}
 	}
-	return true;
-}
+	return result;
+};
 
 bool ModeMainGame::OnCommandTimeWait( unsigned int line,std::vector<std::string>& scripts )
 {
 	auto result = false;
-	auto wait = 0;
 	if ( state != ScriptState::EDIT )
 	{
+		auto wait = 0;
 		const size_t SCRIPTSIZE = 2;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
@@ -878,74 +668,58 @@ bool ModeMainGame::OnCommandTimeWait( unsigned int line,std::vector<std::string>
 		{
 			return result;
 		}
-		std::string buf = "";
-		auto cchar = const_cast<char*>(buf.c_str());
-		int x = 0,y = 0;
-		ClearDrawScreen();
-		DrawString( x,y,"フレーム数の入力",GetColor( 255,255,255 ) );
-		/** 上記で表示したフレーム数を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		std::array < std::string,1 > input_str =
 		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
+			"フレーム数の入力",
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
 			{
-				scripts.clear();
-				return result;
-			}
-			result = true;
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return result;
+				result = false;
+				break;
+			};
 		}
 	}
 	return result;
 };
-
+//bgmは流せません
 bool ModeMainGame::OnCommandBgm( unsigned int line,std::vector<std::string>& scripts )
 {
+	bool result = false;
 	if ( state != ScriptState::EDIT )
 	{
 		const size_t SCRIPTSIZE = 2;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
-			return false;
+			return result;
 		}
+
+		result = true;
 	}
 	else
 	{
 		const size_t SCRIPTSIZE = 1;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
-			return false;
+			return result;
 		}
-		std::string buf = "";
-		auto cchar = const_cast<char*>(buf.c_str());
-		int x = 0,y = 0;
-		ClearDrawScreen();
-		DrawString( x,y,"音楽名(仕様書参照)",GetColor( 255,255,255 ) );
-		/** 上記で表示した音楽名を記入 */
-		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
+		std::array < std::string,1 > input_str =
 		{
-			std::string ecommandbuf = cchar;
-			/** 何も入力してない場合失敗 */
-			if ( ecommandbuf.empty() )
+			"音楽名(仕様書参照)",
+		};
+		result = true;
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
 			{
-				scripts.clear();
-				return false;
-			}
-			scripts.push_back( ecommandbuf );
-		}
-		else
-		{
-			scripts.clear();
-			return false;
+				result = false;
+				break;
+			};
 		}
 	}
-	return true;
+	return result;
 };
 
 bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& scripts )
@@ -959,7 +733,7 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 			return result;
 		}
 		state = ScriptState::STORY;
-		auto story = std::make_shared<ModeSclipt>( _game,30,scripts[1] );
+		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
 		_game.GetModeServer()->Add( story );
 		result = true;
 	}
@@ -2122,7 +1896,7 @@ void ModeMainGame::Edit()
 		std::string buf = "";
 		auto cchar = const_cast<char*>(buf.c_str());
 
-		DrawString( x,y,"コマンドを入力してください\nESCで戻る\nadd:オブジェクトの追加\ndelete,ステージ名:オブジェクトの消去\nclear,ステージ名:ステージ名の部分を削除\njump,ステージ名:編集地点変更\nsave:ファイルに書き込み",GetColor( 255,255,255 ) );
+		DrawString( x,y,"コマンドを入力してください\nESCで戻る\nadd,ステージ名:オブジェクトの追加\ndelete,ステージ名:オブジェクトの消去\nclear,ステージ名:ステージ名の部分を削除\njump,ステージ名:編集地点変更\nsave:ファイルに書き込み",GetColor( 255,255,255 ) );
 		if ( is_notcant )
 		{
 			is_notcant = false;
@@ -2142,7 +1916,7 @@ void ModeMainGame::Edit()
 		if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
 		{
 			std::string ecommandbuf = cchar;
-			auto editcommand_Stagename = string::Split( ecommandbuf,"," );
+			auto editcommand_Stagename = string::Split( ecommandbuf,DELIMITER );
 
 			ClearDrawScreen();
 			if ( editcommand_Stagename.empty() )
@@ -2155,6 +1929,7 @@ void ModeMainGame::Edit()
 				is_notcommand = true;
 				return;
 			}
+
 			(this->*editCommand[ecommandbuf])(editcommand_Stagename[1]);
 		}
 		else
@@ -2168,26 +1943,30 @@ void ModeMainGame::Edit()
 
 bool ModeMainGame::OnEditCommandAdd( const std::string& command )
 {
-	int x,y;
-	x = y = 0;
+	/** 文字を表示する座標の初期化 */
+	int	x = 0,y = 0;
+	/** 文字列バッファ用 */
 	std::string buf;
-	const std::string DELIMITER = ",";
+	auto cchar = const_cast<char*>(buf.c_str());
+	/** 追加していくのの格納 */
 	std::vector < std::string >_script;
+	/** 追加出来るゲームコマンドの読み込み */
 	const std::string FILEPASS = "res/script/gamescript/gamecommand.json";
 	const std::string ARREYNAME = "gamecommand";
 	auto adddate = std::make_unique<ScriptsData>();
 	adddate->LoadJson( FILEPASS,ARREYNAME );
 	auto maxline = adddate->GetScriptNum();
-	auto cchar = const_cast<char*>(buf.c_str());
+
 	DrawString( x,y,"何を追加しますか\n追加できるもの",GetColor( 255,255,255 ) );
 	y += 38;
 	for ( unsigned int line = 0; line < maxline; line++ )
 	{
-		auto command = string::Split( adddate->GetScriptLine( line ),"," );
+		auto command = string::Split( adddate->GetScriptLine( line ),DELIMITER );
 
 		DrawString( x,y,command[0].c_str(),GetColor( 255,255,255 ) );
 		y += 16;
 	}
+
 	/** 追加するゲームコマンド入力 */
 	if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
 	{

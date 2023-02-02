@@ -2,11 +2,11 @@
 #include "appframe.h"
 #include"string"
 
-class ModeSclipt:public ModeBase
+class ModeSpeakScript:public ModeBase
 {
 public:
-	ModeSclipt(ApplicationBase& game,int layer,std::string storyname);
-	virtual ~ModeSclipt();
+	ModeSpeakScript(ApplicationBase& game,int layer,std::string storyname);
+	virtual ~ModeSpeakScript();
 
 	virtual bool Update();  // çXêV
 	virtual bool Draw();	// ï`âÊ
