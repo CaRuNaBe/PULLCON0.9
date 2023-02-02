@@ -1343,6 +1343,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		float scale = 1.0f;
 		int object_id = 0;
 		int collision_id = 1;
+		float radius = 0.0f;
 		const size_t SCRIPTSIZE = 8;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
@@ -1368,17 +1369,22 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		}
+		if ( !(string::ToFloat( scripts[5],radius )) )
+		{
+			return result;//文字列からintに変換
+		};
 		if ( !(string::ToInt( scripts[5],object_id )) )
 		{
 			return result;//文字列からintに変換
 		};
 		if ( !(string::ToInt( scripts[6],collision_id )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
 
 		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 		object->SetPosition( posi );
+		//object->SetRadius( radius );
 		//object->SetScale( scale );
 		_3D_objectServer.Add( object );
 		result = true;
@@ -1419,12 +1425,14 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 	bool result = false;
 	if ( state != ScriptState::EDIT )
 	{
-	/** エリアのポジション */
+		/** エリアのポジション */
 		vector4 posi;
 		/** scriptsの中にある数値や文字列の数 */
 		const size_t SCRIPTSIZE = 11;
 		/** 大きさ */
 		float scale = 1.0f;
+		/**  */
+		float radous = 1.0f;
 		/** 配置するものの範囲 */
 		float range = 0.0f;
 		/** 配置するものの間隔 */
@@ -1459,23 +1467,27 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		{
 			return result;
 		}
-		if ( !(string::ToInt( scripts[5],object_id )) )
+		if ( !(string::ToFloat( scripts[5],radius )) )
 		{
 			return result;//文字列からintに変換
 		};
-		if ( !(string::ToInt( scripts[6],collision_id )) )
+		if ( !(string::ToInt( scripts[6],object_id )) )
 		{
 			return result;//文字列からintに変換
 		};
-		if ( !(string::ToInt( scripts[7],is_circular )) )
+		if ( !(string::ToInt( scripts[7],collision_id )) )
 		{
 			return result;//文字列からintに変換
 		};
-		if ( !(string::ToFloat( scripts[8],range )) )
+		if ( !(string::ToInt( scripts[8],is_circular )) )
+		{
+			return result;//文字列からintに変換
+		};
+		if ( !(string::ToFloat( scripts[9],range )) )
 		{
 			return result;
 		}
-		if ( !(string::ToFloat( scripts[9],interval )) )
+		if ( !(string::ToFloat( scripts[10],interval )) )
 		{
 			return result;
 		}
@@ -1531,6 +1543,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		{
 			auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 			object->SetPosition( set_pos );
+				//object->SetRadius( radius );
 			//object->SetScale( scale );
 			_3D_objectServer.Add( object );
 		}
@@ -1566,6 +1579,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 			};
 		}
 	}
+
 	return result;
 };
 
@@ -1767,7 +1781,7 @@ bool ModeMainGame::OnCommandNoEntry( unsigned int line,std::vector<std::string>&
 		vector4 posi;
 		float radius = 0.0f;
 		float height = 0.0f;
-		const size_t SCRIPTSIZE = 6;
+		const size_t SCRIPTSIZE = 5;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -1788,10 +1802,7 @@ bool ModeMainGame::OnCommandNoEntry( unsigned int line,std::vector<std::string>&
 		{
 			return result;
 		}
-		if ( !(string::ToFloat( scripts[5],height )) )
-		{
-			return result;
-		}
+
 		auto no_entry = std::make_shared<AreaNoEntry>( _game,*this,radius,height );
 		no_entry->SetPosition( posi );
 		_3D_objectServer.Add( no_entry );
