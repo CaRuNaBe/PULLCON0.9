@@ -239,11 +239,6 @@ bool Player::Update(ApplicationBase& game, ModeBase& mode) {
 		_isHit = false;
 	}
 
-	return true;
-}
-
-bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
-	base::Draw(game, mode);
 	// カメラ設定更新
 	if (_statePlayer == State::EVENT) {
 		SetCameraPositionAndTarget_UpVecY(ToDX(_cam._vPosEvent), ToDX(_cam._vTarget));
@@ -253,6 +248,12 @@ bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
 	}
 	SetCameraNearFar(_cam._clipNear, _cam._clipFar);
 
+	return true;
+}
+
+bool Player::Draw(ApplicationBase& game, ModeBase& mode) {
+	base::Draw(game, mode);
+	
 	// 注視点を描画
 	float linelength = 100.f;
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(-linelength, 0, 0)), VAdd(ToDX(_cam._vTarget), VGet(linelength, 0, 0)), GetColor(255, 0, 0));
