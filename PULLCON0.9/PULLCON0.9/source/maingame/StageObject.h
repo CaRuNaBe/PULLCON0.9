@@ -12,6 +12,7 @@ public:
 	{
 		return Type::kStageObject;
 	}
+
 	virtual void Init();
 	virtual bool Update(  );
 	virtual bool Draw( );

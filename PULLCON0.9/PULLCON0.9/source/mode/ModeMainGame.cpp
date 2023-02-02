@@ -82,9 +82,10 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 #if _DEBUG
 	//state = ScriptState::EDIT;
 #endif
-	_cg = ResourceServer::LoadGraph("res/cursor00.png");
-	_se = ResourceServer::LoadSoundMem("res/sound/stage1~3 BGM/650832__timbre__weasel-damage-excerpt-of-audiomirages-freesound-647499.wav");
-	ChangeVolumeSoundMem(255 * 40 / 100, _se);
+	///////////////////////////////////////////////////////
+	_cg = ResourceServer::LoadGraph( "res/cursor00.png" );
+	_se = ResourceServer::LoadSoundMem( "res/sound/stage1~3 BGM/650832__timbre__weasel-damage-excerpt-of-audiomirages-freesound-647499.wav" );
+	ChangeVolumeSoundMem( 255 * 40 / 100,_se );
 	//PlaySoundMem(_se, DX_PLAYTYPE_LOOP);
 	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
 	// 作成したデータの識別番号を変数 FontHandle に保存する
@@ -800,18 +801,18 @@ bool ModeMainGame::OnCommandStage( unsigned int line,std::vector<std::string>& s
 	bool result = false;
 	if ( state != ScriptState::EDIT )
 	{
-		const size_t SCRIPTSIZE = 2;//scriptsに入ってる文字列の最大数
+		const size_t SCRIPTSIZE = 2;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
-			return result;//scripts入ってる物が指定数入っているか確認
+			return result;
 		}
-		int object_id = 0;//呼び込むステージのid
+		int object_id = 0;
 		if ( !(string::ToInt( scripts[1],object_id )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
-		auto stage = std::make_shared<GameStage>( _game,*this,object_id );//ステージ土台のインスタンス作成
-		_3D_objectServer.Add( stage );//サーバーに追加
+		auto stage = std::make_shared<GameStage>( _game,*this,object_id );
+		_3D_objectServer.Add( stage );
 		result = true;
 	}
 	else
@@ -843,19 +844,19 @@ bool ModeMainGame::OnCommandSkySphere( unsigned int line,std::vector<std::string
 	bool result = false;
 	if ( state != ScriptState::EDIT )
 	{
-		const size_t SCRIPTSIZE = 2;//scriptsに入ってる文字列の最大数
+		const size_t SCRIPTSIZE = 2;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
-			return result;//scripts入ってる物が指定数入っているか確認
+			return result;
 		}
-		int object_id = 0;//呼び込むステージのid
+		int object_id = 0;
 		if ( !(string::ToInt( scripts[1],object_id )) )
 		{
-			return result; // 文字列からintに変換
+			return result;
 		};
 
-		auto skysphere = std::make_shared<SkySphere>( _game,*this,object_id );//スカイスフィアのインスタンス作成
-		_3D_objectServer.Add( skysphere );//サーバーに追加
+		auto skysphere = std::make_shared<SkySphere>( _game,*this,object_id );
+		_3D_objectServer.Add( skysphere );
 		result = true;
 	}
 	else
@@ -922,7 +923,7 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 		auto player = std::make_shared<Player>( _game,*this );
 		player->SetPosition( posi );
 		player->SetScale( scale );
-		//player->SetSpeed( speed );
+		player->SetSpeed( speed );
 		_3D_objectServer.Add( player );
 		result = true;
 	}
@@ -962,7 +963,7 @@ bool ModeMainGame::OnCommandGunShip( unsigned int line,std::vector<std::string>&
 	{
 		vector4 posi;
 		float radius = 0.0f;
-		const size_t SCRIPTSIZE = 5;
+		const size_t SCRIPTSIZE = 6;
 
 		if ( scripts.size() != SCRIPTSIZE )
 		{
@@ -1037,51 +1038,63 @@ bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,std::vector<std::string>
 		{
 			return result;
 		}
+		/** 文字列をx座標に変換 */
 		if ( !(string::ToFloat( scripts[1],posi.x )) )
 		{
-			return result;//文字列をx座標に変換
+			return result;
 		}
+		/** 文字列をy座標に変換 */
 		if ( !(string::ToFloat( scripts[2],posi.y )) )
 		{
-			return result;//文字列をy座標に変換
+			return result;
 		}
+		/** 文字列をz座標に変換 */
 		if ( !(string::ToFloat( scripts[3],posi.z )) )
 		{
-			return result;//文字列をz座標に変換
+			return result;
 		}
+		/** 文字列をスケールに変換 */
 		if ( !(string::ToFloat( scripts[4],scale )) )
 		{
-			return result;//文字列をスケールに変換
+			return result;
 		}
+		/** scaleが0以下だったら返す */
 		if ( scale <= 0.0f )
 		{
-			return result;//scaleが0以下だったら返す
+			return result;
 		}
+		/** 砲台が生成されるときランダムに生成されるため、あらかじめ決めておいた呼び込む砲台のidの最低値 */
 		if ( !(string::ToInt( scripts[5],object_min_id )) )
 		{
-			return result;//砲台が生成されるときランダムに生成されるため、あらかじめ決めておいた呼び込む砲台のidの最低値
+			return result;
 		};
+		/** 砲台が生成されるときランダムに生成されるため、あらかじめ決めておいた呼び込む砲台のidの最高値 */
 		if ( !(string::ToInt( scripts[6],object_max_id )) )
 		{
-			return result;//砲台が生成されるときランダムに生成されるため、あらかじめ決めておいた呼び込む砲台のidの最高値
+			return result;
 		};
+		/** y軸砲台の傾きの初期位置 */
 		if ( !(string::ToFloat( scripts[7],y_rad )) )
 		{
-			return result;//y軸砲台の傾きの初期位置
+			return result;
 		}
+		/** z軸砲台の傾きの初期位置 */
 		if ( !(string::ToFloat( scripts[8],x_rad )) )
 		{
-			return result;//z軸砲台の傾きの初期位置
+			return result;
 		}
+		/** 下に重なる砲台の個数の最低値 */
 		if ( !(string::ToInt( scripts[9],pile_min_num )) )
 		{
-			return result;//下に重なる砲台の個数の最低値
+			return result;
 		}
+		/** 下に重なる砲台の個数の最高値 */
 		if ( !(string::ToInt( scripts[10],pile_max_num )) )
 		{
-			return result;//下に重なる砲台の個数の最高値
+			return result;
 		}
-		pile_num = utility::get_random( pile_min_num,pile_max_num );//ランダム値取得
+		/** ランダム値取得 */
+		pile_num = utility::get_random( pile_min_num,pile_max_num );
 		if ( !(string::ToInt( scripts[11],aim_player )) )
 		{
 			return result;
@@ -1255,7 +1268,7 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 			auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
 			int pile_num = utility::get_random( pile_min_num,pile_max_num );
 			vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
-			
+
 			int in_range_nim = 0;
 
 			for ( auto&& set_pos : posivec )
@@ -1291,8 +1304,8 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 
 		for ( auto&& set_pos : posivec )
 		{
-			auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ), std::get<0>(set_pos));
-		
+			auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ),std::get<0>( set_pos ) );
+
 			enemyAAA->SetScale( scale );
 			_3D_objectServer.Add( enemyAAA );
 		}
@@ -1371,11 +1384,11 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		}
 		if ( !(string::ToFloat( scripts[5],radius )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
 		if ( !(string::ToInt( scripts[5],object_id )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
 		if ( !(string::ToInt( scripts[6],collision_id )) )
 		{
@@ -1385,6 +1398,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 		object->SetPosition( posi );
 		object->SetScale( scale );
+		object->SetRadius( radius );
 		_3D_objectServer.Add( object );
 		result = true;
 	}
@@ -1431,7 +1445,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		/** 大きさ */
 		float scale = 1.0f;
 		/**  */
-		float radous = 1.0f;
+		float radius = 1.0f;
 		/** 配置するものの範囲 */
 		float range = 0.0f;
 		/** 配置するものの間隔 */
@@ -1468,19 +1482,19 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		}
 		if ( !(string::ToFloat( scripts[5],radius )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
 		if ( !(string::ToInt( scripts[6],object_id )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
 		if ( !(string::ToInt( scripts[7],collision_id )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
 		if ( !(string::ToInt( scripts[8],is_circular )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
 		if ( !(string::ToFloat( scripts[9],range )) )
 		{
@@ -1503,7 +1517,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 			auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
 
 			vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
-			
+
 			int in_range_nim = 0;
 
 			for ( auto&& set_pos : posivec )
@@ -1543,6 +1557,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 			auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 			object->SetPosition( set_pos );
 			object->SetScale( scale );
+			object->SetRadius( radius );
 			_3D_objectServer.Add( object );
 		}
 		result = true;
@@ -1608,11 +1623,11 @@ bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,std::vector<std::string
 		}
 		if ( !(string::ToInt( scripts[4],spawn_fream )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
 		if ( !(string::ToInt( scripts[5],spawn_id )) )
 		{
-			return result;//文字列からintに変換
+			return result;
 		};
 		auto spawn_eria = std::make_shared<EnemySpawnEria>( _game,*this,spawn_fream,spawn_id );
 		spawn_eria->SetPosition( posi );
@@ -1838,10 +1853,11 @@ bool ModeMainGame::Draw()
 	ModeBase::Draw();
 	_3D_objectServer.Draw();
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
-	DrawBox(0, 100, _iFuel * 2, 140, GetColor(255, 0, 0), TRUE);
-
-	if (_clear) {
-		// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
+	DrawBox( 0,100,_iFuel * 2,140,GetColor( 255,0,0 ),TRUE );
+	/////////////////////////////////////////////////////////////////////////////
+	if ( _clear )
+	{
+// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
 		DrawStringToHandle( _game.DispSizeW() / 2,_game.DispSizeH() / 2,"C L E A R!!",GetColor( 255,255,0 ),_handlefont );
 	}
 	if ( !_transparence )
@@ -1924,7 +1940,7 @@ void ModeMainGame::Edit()
 
 	if ( (state == ScriptState::EDIT) && (CheckHitKey( KEY_INPUT_RETURN ) == 1) )
 	{
-		FunctionEditCommand editCommand;//文字列でのスイッチ文
+		FunctionEditCommand editCommand;
 		editCommand.insert( std::make_pair( ECOMMAND_ADD,&ModeMainGame::OnEditCommandAdd ) );
 		editCommand.insert( std::make_pair( ECOMMAND_DELETE,&ModeMainGame::OnEditCommandDelete ) );
 		editCommand.insert( std::make_pair( ECOMMAND_CLEAR,&ModeMainGame::OnEditCommandClear ) );

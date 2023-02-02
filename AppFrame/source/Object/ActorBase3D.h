@@ -52,6 +52,14 @@ public:
 	void SetDir(const vector4& dir) { _vDir = dir; }
 	void SetDir(float x, float y, float z) { _vDir.x = x; _vDir.y = y; _vDir.z = z; }
 	void SetScale(float _scale) { _fScale = _scale; };
+	void SetRadius( float _radius )
+	{
+		_collision._fRadius = _radius;
+	};
+	void SetSpeed( float _speed )
+	{
+		_fSpeed = _speed;
+	};
 public:
 	vector4 _vPos;   // 位置
 	vector4 _vEvent;   // イベント位置

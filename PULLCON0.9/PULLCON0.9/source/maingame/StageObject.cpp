@@ -30,7 +30,6 @@ void StageObject::Init()
 {
 	base::Init();
 
-
 }
 
 bool StageObject::Update(  )
