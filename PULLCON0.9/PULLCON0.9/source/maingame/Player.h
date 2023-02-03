@@ -31,7 +31,7 @@ public:
 
 	void CameraUpdate();    // カメラ更新
 	void EventCamera();    // カメラ
-	void AddBullet();
+	void AddBullet(vector4 pos);
 
 protected:
 	// カメラ

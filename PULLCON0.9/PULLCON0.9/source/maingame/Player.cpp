@@ -8,6 +8,7 @@
 namespace {
 	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置　プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
 	const vector4 CAMERADEFAULT_POS = { 0.f, 2500.f, -4000.f };   // プレイヤーを原点としたときのカメラのベクトル
+	const float PLAYERLENGTH = 2000.f;   // プレイヤーの奥行きの長さ
 }
 
 Player::Player(ApplicationBase& game, ModeBase& mode)
@@ -36,7 +37,6 @@ void Player::Init() {
 	_push = 0;
 	_isHit = false;
 
-	_vPos = { 0.f, 100.f,  -1000.f };
 	_collision._fRadius = 500.f * _fScale;
 
 	// カメラの設定
@@ -111,6 +111,7 @@ bool Player::Update() {
 		}
 		((ModeMainGame&)_mode).SetXMax(_iFuel);
 
+		 // スティック押し込みで速度操作
 		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
 			_fSpeed += 30.f;
 		}
@@ -151,9 +152,16 @@ bool Player::Update() {
 		// 弾丸の向きベクトル設定
 		vector4 v = { -1.f, 0.f, 0.f };
 		rad = atan2(v.z, v.x);
-		v.x = cos(rad + camerad);
-		v.z = sin(rad + camerad);
-		v.y = sin(_fRotatX);
+		// 弾にバラつきを持たせる
+		float randomDeg = static_cast<float>(utility::get_random(-3, 3));
+		float randomRad = utility::degree_to_radian(randomDeg);
+		v.x = cos(rad + camerad + randomRad);
+		v.z = sin(rad + camerad + randomRad);
+		// 弾にバラつきを持たせる
+		randomDeg = static_cast<float>(utility::get_random(-3, 3));
+		randomRad = utility::degree_to_radian(randomDeg);
+		v.y = sin(_fRotatX + randomRad);
+		// 弾の向きベクトル
 		_vDir = v;
 
 		if (_game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
@@ -164,10 +172,10 @@ bool Player::Update() {
 			}
 			// 弾生成
 			_fire = true;
-			AddBullet();
-			if (_game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
-				AddBullet();
-			}
+			vector4 vBullet = { _vPos.x, _vPos.y, _vPos.z };
+			vBullet.x += cos(rad + camerad) * PLAYERLENGTH / 2.f;  // プレイヤーの少し前方に生成する
+			vBullet.z += sin(rad + camerad) * PLAYERLENGTH / 2.f;  
+			AddBullet(vBullet);
 		}
 
 		// 指定位置設定
@@ -223,7 +231,7 @@ bool Player::Update() {
 					// 引っこ抜き完了
 					ChangeVolumeSoundMem(255 * 40 / 100, _se);
 					PlaySoundMem(_se, DX_PLAYTYPE_BACK);
-					_CT = 30;
+					_CT = 50;
 					_finish = true;
 					_push = 0;
 				}
@@ -292,7 +300,7 @@ bool Player::Draw() {
 	}
 	VECTOR Pos = ConvWorldPosToScreenPos(ToDX(_vPos));
 	if (_isHit) {
-		// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
+		// 作成したフォントで画面左上に『HIT!!』と白の文字列を描画する
 		DrawStringToHandle(static_cast<int>(Pos.x), static_cast<int>(Pos.y), "H I T!!", GetColor(255, 255, 255), _handlefont);
 	}
 
@@ -389,10 +397,9 @@ void Player::EventCamera() {
 
 }
 
-void Player::AddBullet() {
-	vector4 vBullet = { _vPos.x, _vPos.y, _vPos.z };
+void Player::AddBullet(vector4 pos) {
 	auto bullet = std::make_shared<Bullet>(_game, _mode);
-	bullet->SetPosition(vBullet);
+	bullet->SetPosition(pos);
 	bullet->SetDir(_vDir);
 	_mode.GetObjectServer3D().Add(bullet);
 }

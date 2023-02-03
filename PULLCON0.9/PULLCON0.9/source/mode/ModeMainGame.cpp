@@ -91,6 +91,8 @@ ModeMainGame::ModeMainGame(ApplicationMain& game, int layer)
 	_handlefont = CreateFontToHandle(NULL, 40, 3);
 	_vCursor = { 0.0f, 0.0f, 0.0f };
 	_clear = false;
+	_dbgCollisionDraw = false;
+	_transparence = false;
 	///////////////////////////////////////////////////////
 	start_time = 0;
 	max_line = 0;
