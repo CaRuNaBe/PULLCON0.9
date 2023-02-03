@@ -56,7 +56,7 @@ aボタン押すまで待ちます。押した場合決定音がなります
 */
 
 
-#include "ModeSpeakScrip.h"
+#include "ModeSpeakScript.h"
 
 #include "scripts_data.h"
 
@@ -145,7 +145,7 @@ namespace
 	unsigned int message_string_color = 0;
 }
 
-ScriptEngine::ScriptEngine( Game& game,std::string storyname,ModeBase& base )
+ModeSpeakScript::ModeSpeakScript( Game& game,std::string storyname,ModeBase& base )
 	:_game( game )
 	,_base( base )
 {
@@ -173,7 +173,7 @@ ScriptEngine::ScriptEngine( Game& game,std::string storyname,ModeBase& base )
 	is_amime_skip = false;
 }
 
-ScriptEngine::~ScriptEngine()
+ModeSpeakScript::~ModeSpeakScript()
 {
 	Destroy();
 }
@@ -183,7 +183,7 @@ ScriptEngine::~ScriptEngine()
 //! @brief スクリプトエンジン用文字列描画の初期化
 //! @return 処理の成否
 //!
-bool ScriptEngine::InitializeStrings()
+bool ModeSpeakScript::InitializeStrings()
 {
 	SetFontSize( FONT_SIZE );
 
@@ -205,7 +205,7 @@ bool ScriptEngine::InitializeStrings()
 //! @details 無理に呼び出す必要はありませんが
 //! インスタンスを再利用したい場合などに呼び出します。
 //!
-void ScriptEngine::Destroy()
+void ModeSpeakScript::Destroy()
 {
 	movie_play.reset();
 	scripts_data.reset();
@@ -233,7 +233,7 @@ void ScriptEngine::Destroy()
 //! @brief スクリプトエンジンの更新処理
 //! @details 毎フレーム呼び出す必要があります。
 //!
-void ScriptEngine::Update()
+void ModeSpeakScript::Update()
 {
 	auto is_update_message = false;
 
@@ -295,7 +295,7 @@ void ScriptEngine::Update()
 //! @fn void ScriptEngine::UpdateMessage()
 //! @brief 文字列を 1 文字づつ表示させる処理
 //!
-void ScriptEngine::UpdateMessage()
+void ModeSpeakScript::UpdateMessage()
 {
 	is_click_wait_visible = false;
 
@@ -335,7 +335,7 @@ void ScriptEngine::UpdateMessage()
  * 予め全て処理してリスト化します。
  *?return void
  */
-void ScriptEngine::PreParsing()
+void ModeSpeakScript::PreParsing()
 {
 	funcs_type comand_funcs;
 	comand_funcs.insert( std::make_pair( COMMAND_I,&ScriptEngine::OnCommandImage ) );
@@ -367,7 +367,7 @@ void ScriptEngine::PreParsing()
 //! @details スクリプトを 1 行単位で処理します。
 //! (インタープリタ方式)
 //!
-void ScriptEngine::Parsing()
+void ModeSpeakScript::Parsing()
 {
 	is_hide = false;
 	is_finishdraw = false;
@@ -427,7 +427,7 @@ void ScriptEngine::Parsing()
  * @fn void  ScriptEngine::feed_draw ().
  * @brief di doコマンド計算処理
  */
-void  ScriptEngine::feed_draw()
+void  ModeSpeakScript::feed_draw()
 {
 	for ( auto&& drawin : drawin_list )
 	{
@@ -485,7 +485,7 @@ void  ScriptEngine::feed_draw()
  *?brief 会話をスキップする
  *?return void
  */
-void  ScriptEngine::Speak_skip()
+void  ModeSpeakScript::Speak_skip()
 {
 	if ( _game._key & PAD_INPUT_A )
 	{
@@ -511,7 +511,7 @@ void  ScriptEngine::Speak_skip()
  *?brief スクリプト自体をスキップする
  *?return void
  */
-void ScriptEngine::Script_skip()
+void ModeSpeakScript::Script_skip()
 {
 	if ( _game._key & PAD_INPUT_X )
 	{
@@ -540,7 +540,7 @@ void ScriptEngine::Script_skip()
  *?brief
  *?return void
  */
-void ScriptEngine::Hide_Message()
+void ModeSpeakScript::Hide_Message()
 {
 	if ( (_game._trg & PAD_INPUT_B) && is_hide )
 	{
@@ -558,7 +558,7 @@ void ScriptEngine::Hide_Message()
  * @fn void ScriptEngine::CrfiUpdate ()
  * @brief スクリプトの "fi" コマンド時の計算処理
  */
-void ScriptEngine::CrfiUpdate()
+void ModeSpeakScript::CrfiUpdate()
 {
 	auto i = 255 / feedcount;
 
@@ -581,7 +581,7 @@ void ScriptEngine::CrfiUpdate()
  * @fn void ScriptEngine::CrfoUpdate ()
  * @brief スクリプトの "fo" コマンド時の計算処理
  */
-void ScriptEngine::CrfoUpdate()
+void ModeSpeakScript::CrfoUpdate()
 {
 	auto i = 255.0 / feedcount;
 
@@ -604,7 +604,7 @@ void ScriptEngine::CrfoUpdate()
 //! @fn void ScriptEngine::ClickWait()
 //! @brief クリック待ち処理
 //!
-void ScriptEngine::ClickWait()
+void ModeSpeakScript::ClickWait()
 {
 	if ( is_message_output )
 	{
@@ -628,7 +628,7 @@ void ScriptEngine::ClickWait()
 //! @fn void ScriptEngine::TimeWait()
 //! @brief 時間待ち処理
 //!
-void ScriptEngine::TimeWait()
+void ModeSpeakScript::TimeWait()
 {
 	if ( is_message_output )
 	{
@@ -652,7 +652,7 @@ void ScriptEngine::TimeWait()
  *@fn void ScriptEngine::Playprocess ().
  * @brief アニメ再生中処理
  */
-void ScriptEngine::PlayUpdate()
+void ModeSpeakScript::PlayUpdate()
 {
 	Anime_count++;
 	if ( Anime_count > ANIME_SKIP_OK_TIME )
@@ -681,7 +681,7 @@ void ScriptEngine::PlayUpdate()
 //! これは左側から 1 文字づつ表示していく仕様の為です。
 //! 実際の右側の値は right_goal に格納します。
 //!
-bool ScriptEngine::CalculateMessageArea( const std::string& message,Rect& area,int& right_goal )
+bool ModeSpeakScript::CalculateMessageArea( const std::string& message,Rect& area,int& right_goal )
 {
 	if ( message.empty() )
 	{
@@ -709,7 +709,7 @@ bool ScriptEngine::CalculateMessageArea( const std::string& message,Rect& area,i
 //! @details 画像ハンドルは、DX ライブラリの
 //! 画像ロード関数で得られる描画用の値です。
 //!
-bool ScriptEngine::GetImageHandle( const std::string& str,int& handle ) const
+bool ModeSpeakScript::GetImageHandle( const std::string& str,int& handle ) const
 {
 	for ( auto&& image : image_list )
 	{
@@ -733,7 +733,7 @@ bool ScriptEngine::GetImageHandle( const std::string& str,int& handle ) const
  * @details 画像ハンドルは、DX ライブラリの
  * 音ロード関数で得られる描画用の値です。.
  */
-bool ScriptEngine::GetSeHandle( const std::string& str,int& handle ) const
+bool ModeSpeakScript::GetSeHandle( const std::string& str,int& handle ) const
 {
 	for ( auto&& se : se_list )
 	{
@@ -755,7 +755,7 @@ bool ScriptEngine::GetSeHandle( const std::string& str,int& handle ) const
  * \param scripts
  * \return 処理の是非
  */
-bool ScriptEngine::OnCommandPlayanime( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandPlayanime( unsigned int line,const std::vector<std::string>& scripts )
 {
 	movie_play = std::make_unique<CommandMovieplay>( line,scripts );
 	if ( !movie_play->Check() )
@@ -785,7 +785,7 @@ bool ScriptEngine::OnCommandPlayanime( unsigned int line,const std::vector<std::
  * \param scripts
  * \return 処理の是非
  */
-bool ScriptEngine::OnCommandMusicloop( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandMusicloop( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  mgloop = std::make_unique<CommandMusicloop>( line,scripts );
 	if ( !mgloop->Check() )
@@ -810,7 +810,7 @@ bool ScriptEngine::OnCommandMusicloop( unsigned int line,const std::vector<std::
  * \param scripts
  * \return 処理の是非
  */
-bool ScriptEngine::OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  mgbag = std::make_unique<CommandMusicbag>( line,scripts );
 	if ( !mgbag->Check() )
@@ -836,7 +836,7 @@ bool ScriptEngine::OnCommandMusicbag( unsigned int line,const std::vector<std::s
  * \param scripts
  * \return 処理の是非
  */
-bool ScriptEngine::OnCommandMusicstop( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandMusicstop( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  mgstop = std::make_unique<CommandMusicstop>( line,scripts );
 	if ( !mgstop->Check() )
@@ -859,7 +859,7 @@ bool ScriptEngine::OnCommandMusicstop( unsigned int line,const std::vector<std::
 //! @fn void ScriptEngine::OnCommandClick()
 //! @brief スクリプトの '@' コマンドを処理
 //!
-bool ScriptEngine::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
 {
 	if ( _game._trg & PAD_INPUT_A )
 	{
@@ -880,7 +880,7 @@ bool ScriptEngine::OnCommandClick( unsigned int line,const std::vector<std::stri
 //! @param[in] scripts スクリプトの内容
 //! @return 処理の成否
 //!
-bool ScriptEngine::OnCommandWait( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandWait( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto wait = 0;
 	auto result = false;
@@ -902,7 +902,7 @@ bool ScriptEngine::OnCommandWait( unsigned int line,const std::vector<std::strin
  * \param scripts
  * \return 処理の成否
  */
-bool ScriptEngine::OnCommandScliptend( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandScliptend( unsigned int line,const std::vector<std::string>& scripts )
 {
 	_game.isEndsclipt = true;
 	for ( auto&& se : se_list )
@@ -920,7 +920,7 @@ bool ScriptEngine::OnCommandScliptend( unsigned int line,const std::vector<std::
 //! @param[in] scripts スクリプトの内容
 //! @return 処理の成否
 //!
-bool ScriptEngine::OnCommandImage( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandImage( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  image = std::make_unique<CommandImageload>( line,scripts );
 	if ( !image->Check() )
@@ -940,7 +940,7 @@ bool ScriptEngine::OnCommandImage( unsigned int line,const std::vector<std::stri
  * @param[in] scripts スクリプトの内容
  * \return 処理の成否
  */
-bool ScriptEngine::OnCommandSe( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandSe( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  se = std::make_unique<CommandSeload>( line,scripts );
 	if ( !se->Check() )
@@ -960,7 +960,7 @@ bool ScriptEngine::OnCommandSe( unsigned int line,const std::vector<std::string>
 //! @param[in] scripts スクリプトの内容
 //! @return 処理の成否
 //!
-bool ScriptEngine::OnCommandMessage( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandMessage( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto message = std::make_unique < CommandMessage >( line,scripts );
 	if ( !message->Check() )
@@ -1001,7 +1001,7 @@ bool ScriptEngine::OnCommandMessage( unsigned int line,const std::vector<std::st
  * \param scripts スクリプトの内容
  * \return 処理の成否
  */
-bool ScriptEngine::OnCommandDrawin( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandDrawin( unsigned int line,const std::vector<std::string>& scripts )
 {
 
 	auto drawin = std::make_unique<CommandDrawin>( line,scripts );
@@ -1051,7 +1051,7 @@ bool ScriptEngine::OnCommandDrawin( unsigned int line,const std::vector<std::str
  * \param scripts スクリプトの内容
  * \return 処理の成否
  */
-bool ScriptEngine::OnCommandDrawout( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandDrawout( unsigned int line,const std::vector<std::string>& scripts )
 {
 
 	drawin_list.clear();
@@ -1103,7 +1103,7 @@ bool ScriptEngine::OnCommandDrawout( unsigned int line,const std::vector<std::st
  * \param [in] scripts スクリプトの内容
  * \return 処理の成否
  */
-bool ScriptEngine::OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts )
 {
 	crfo_list.clear();
 	auto crfi = std::make_unique<CommandCrfi>( line,scripts );
@@ -1126,7 +1126,7 @@ bool ScriptEngine::OnCommandCrfi( unsigned int line,const std::vector<std::strin
  * \param [in] scripts スクリプトの内容
  * \return 処理の成否
  */
-bool ScriptEngine::OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts )
 {
 	crfi_list.clear();
 	auto crfo = std::make_unique<CommandCrfo>( line,scripts );
@@ -1147,7 +1147,7 @@ bool ScriptEngine::OnCommandCrfo( unsigned int line,const std::vector<std::strin
  * 毎フレーム呼び出す必要があります。
  *?return void
  */
-void ScriptEngine::Render() const
+void ModeSpeakScript::Render() const
 {
 	RenderImage();//イラスト描画
 	RenderFeedin();//フェードイン時描画
@@ -1164,7 +1164,7 @@ void ScriptEngine::Render() const
  *?brief "di""do" コマンドによる画像描画
  *?return void
  */
-void ScriptEngine::RenderImage() const
+void ModeSpeakScript::RenderImage() const
 {
 	if ( _game.isBlackbackground )//必要に応じてスクリプトの後ろに映っているモノを隠す描画
 	{
@@ -1196,7 +1196,7 @@ void ScriptEngine::RenderImage() const
  *?brief "m" コマンドによる文字列描画
  *?return void
  */
-void ScriptEngine::RenderMessage() const
+void ModeSpeakScript::RenderMessage() const
 {
 
 	for ( auto&& message : message_list )
@@ -1232,7 +1232,7 @@ void ScriptEngine::RenderMessage() const
  *?brief メッセージウィンドウの描画
  *?return void
  */
-void ScriptEngine::RenderMessageWindow() const
+void ModeSpeakScript::RenderMessageWindow() const
 {
 	if ( (message_list.empty()) )
 	{
@@ -1248,7 +1248,7 @@ void ScriptEngine::RenderMessageWindow() const
  *?brief "fi" コマンドによる描画
  *?return void
  */
-void ScriptEngine::RenderFeedin()const
+void ModeSpeakScript::RenderFeedin()const
 {
 	for ( auto&& crfi : crfi_list )
 	{
@@ -1263,7 +1263,7 @@ void ScriptEngine::RenderFeedin()const
  *?brief "fo" コマンドによる描画
  *?return void
  */
-void ScriptEngine::RenderFeedout()const
+void ModeSpeakScript::RenderFeedout()const
 {
 	for ( auto&& crfo : crfo_list )
 	{
@@ -1280,7 +1280,7 @@ void ScriptEngine::RenderFeedout()const
  *?brief "ve" コマンドによる描画
  *?return void
  */
-void ScriptEngine::RenderAnime()const
+void ModeSpeakScript::RenderAnime()const
 {
 	if ( state == ScriptState::PLAY_ANIME )
 	{

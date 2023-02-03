@@ -21,7 +21,7 @@
 #include "../maingame/EnemySpawnEria.h"
 #include "../maingame/CommunicationAria.h"
 #include "../maingame/AreaNoEntry.h"
-#include "ModeSpeakScript.h"
+//#include "ModeSpeakScript.h"
 
 namespace
 {
@@ -35,7 +35,6 @@ namespace
 	const std::string COMMAND_FEEDIN = "CrFeedIn";//フェードイン
 	const std::string COMMAND_FEEDOUT = "CrFeedOut";//フェードアウト
 	const std::string COMMAND_TIMEWAIT = "TimeWait";//フレーム数待つ
-	const std::string COMMAND_BGM = "Bgm";//bgm再生
 	const std::string COMMAND_STORY = "Story";//ストーリー再生
 
 	const std::string COMMAND_STAGE = "Stage";//ステージ土台決定
@@ -78,7 +77,7 @@ ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
 	: ModeBase( game,layer )
 {
 	scripts_data = std::make_unique<ScriptsData>();
-	state = ScriptState::PARSING;
+	state = ScriptState::PREPARSING;
 #if _DEBUG
 	//state = ScriptState::EDIT;
 #endif
@@ -161,30 +160,22 @@ void ModeMainGame::PreParsing()
 	FunctionGameCommand comand_funcs;
 	comand_funcs.insert( std::make_pair( COMMAND_STAGELABEL,&ModeMainGame::OnCommandStageLabel ) );
 
-	while ( now_line >= 0 && now_line < max_line )
-	{
-		auto script = scripts_data->GetScript( now_line );
-		const auto& command = (script[0]);
-		std::string string_comand{command};
-		if ( string_comand == COMMAND_STAGELABEL )
-		{
-			(this->*comand_funcs[string_comand])(now_line,script);
-			++now_line;
-		}
-		else
-		{
-			++now_line;
-		}
-	}
 
-	now_line = 0;
+	auto script = scripts_data->GetScript( now_line );
+	const auto& command = (script[0]);
+	std::string string_comand{command};
+	if ( string_comand == COMMAND_STAGELABEL )
+	{
+		(this->*comand_funcs[string_comand])(now_line,script);
+	}
+	now_line++;
+	if ( now_line >= max_line )
+	{
+		now_line = 0;
+		state = ScriptState::PARSING;
+	}
 }
-/**
- * @fn void ModeMainGame::Parsing.
- * @brief スクリプト呼び込み処理
- * 　　　
- * @return void
- */
+
 void ModeMainGame::Parsing()
 {
 	auto stop_parsing = false;
@@ -198,7 +189,6 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrFeedIn ) );
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrFeedOut ) );
 	comand_funcs.insert( std::make_pair( COMMAND_TIMEWAIT,&ModeMainGame::OnCommandTimeWait ) );
-	comand_funcs.insert( std::make_pair( COMMAND_BGM,&ModeMainGame::OnCommandBgm ) );
 	comand_funcs.insert( std::make_pair( COMMAND_STORY,&ModeMainGame::OnCommandStory ) );
 
 
@@ -216,7 +206,7 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_NOENTRY,&ModeMainGame::OnCommandNoEntry ) );
 
 
-	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
+	while ( !(stop_parsing) && (now_line >= 0) && (now_line < max_line) )
 	{
 		auto script = scripts_data->GetScript( now_line );
 		const auto& command = (script[0]);
@@ -249,12 +239,6 @@ void ModeMainGame::Parsing()
 			++now_line;
 		}
 	}
-
-
-	if ( max_line <= date_empty )
-	{
-		state = ScriptState::EDIT;
-	}
 }
 
 bool ModeMainGame::Update()
@@ -267,6 +251,7 @@ bool ModeMainGame::Update()
 		_dbgCollisionDraw = !_dbgCollisionDraw;
 	}
 
+	
 	switch ( state )
 	{
 		case ScriptState::EDIT:
@@ -301,8 +286,6 @@ bool ModeMainGame::Update()
 		case ScriptState::TIME_WAIT:
 			TimeWait();
 			break;
-
-
 
 		case ScriptState::LOADING:
 			break;
@@ -712,43 +695,6 @@ bool ModeMainGame::OnCommandTimeWait( unsigned int line,std::vector<std::string>
 	}
 	return result;
 };
-//bgmは流せません
-bool ModeMainGame::OnCommandBgm( unsigned int line,std::vector<std::string>& scripts )
-{
-	bool result = false;
-	if ( state != ScriptState::EDIT )
-	{
-		const size_t SCRIPTSIZE = 2;
-		if ( scripts.size() != SCRIPTSIZE )
-		{
-			return result;
-		}
-
-		result = true;
-	}
-	else
-	{
-		const size_t SCRIPTSIZE = 1;
-		if ( scripts.size() != SCRIPTSIZE )
-		{
-			return result;
-		}
-		std::array < std::string,1 > input_str =
-		{
-			"音楽名(仕様書参照)",
-		};
-		result = true;
-		for ( int i = 0; i < input_str.size(); i++ )
-		{
-			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
-			{
-				result = false;
-				break;
-			};
-		}
-	}
-	return result;
-};
 
 bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& scripts )
 {
@@ -761,8 +707,8 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 			return result;
 		}
 		state = ScriptState::STORY;
-		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
-		_game.GetModeServer()->Add( story );
+		//auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
+		//_game.GetModeServer()->Add( story );
 		result = true;
 	}
 	else
@@ -1991,6 +1937,7 @@ void ModeMainGame::Edit()
 		{
 			now_line = 0;
 			max_line = scripts_data->GetScriptNum();
+			_3D_objectServer.Clear();
 			state = ScriptState::PREPARSING;
 		};
 	}
@@ -2105,7 +2052,6 @@ bool ModeMainGame::CheckInputString( std::string& command,std::vector < std::str
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDIN,&ModeMainGame::OnCommandCrFeedIn ) );
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrFeedOut ) );
 	comand_funcs.insert( std::make_pair( COMMAND_TIMEWAIT,&ModeMainGame::OnCommandTimeWait ) );
-	comand_funcs.insert( std::make_pair( COMMAND_BGM,&ModeMainGame::OnCommandBgm ) );
 	comand_funcs.insert( std::make_pair( COMMAND_STORY,&ModeMainGame::OnCommandStory ) );
 
 

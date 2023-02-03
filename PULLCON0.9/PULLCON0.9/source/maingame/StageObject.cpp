@@ -46,7 +46,7 @@ bool StageObject::Draw()
 	MV1SetScale( _handle,VGet( _fScale,_fScale,_fScale ) );
 	// ƒ‚ƒfƒ‹•`‰æ
 	MV1DrawModel( _handle );
-
+	MV1SetPosition( _handle,math::ToDX(_vPos) );
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	vector4 color = {255, 255, 255};
 	if ( !_coll )
