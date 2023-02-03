@@ -211,7 +211,7 @@
       <Filter>source\mode</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModeMainGame.h">
-      <Filter>source\mode</Filter>
+      <Filter>source\mode\script</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode\script</Filter>

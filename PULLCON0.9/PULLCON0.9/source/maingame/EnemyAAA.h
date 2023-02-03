@@ -27,7 +27,7 @@ public:
 
 	virtual void Damage();
 	void AddBullet();
-	void AddPieces(int pile_num);
+	void AddPieces( int min_id,int max_id,int pile_num );
 
 	void SetAxialX(float _x_rad) { _fAxialX = _x_rad; }
 	void SetAxialY(float _y_rad) { _fAxialY = _y_rad; }

@@ -3,13 +3,7 @@ EnemySpawnEria::EnemySpawnEria( ApplicationBase& game,ModeBase& mode,int spawnfr
 	:base( game,mode )
 {
 	spawn_fream = spawnfream;
-	/*
-	switch ( typeenemy )
-	{
-		default:
-			break;
-	}
-	*/
+
 	Init();
 };
 EnemySpawnEria::~EnemySpawnEria()

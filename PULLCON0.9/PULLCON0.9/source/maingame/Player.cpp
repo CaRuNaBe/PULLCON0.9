@@ -8,12 +8,18 @@
 namespace {
 	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置　プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
 	const vector4 CAMERADEFAULT_POS = { 0.f, 2500.f, -4000.f };   // プレイヤーを原点としたときのカメラのベクトル
+	constexpr int PLAYER_ID = 0;
 }
 
 Player::Player(ApplicationBase& game, ModeBase& mode)
 	:base(game, mode)
 {
-	_handle = MV1LoadModel("res/player/3Dmodel/mv1/cg_PlayerHelicopter.mv1");
+	auto file_pass_data = std::make_unique<ScriptsData>();
+	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
+	const std::string ARRYNAME = "ObjectId";
+	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
+
+	_handle = MV1LoadModel( file_pass_data ->GetScriptLine( PLAYER_ID ).c_str());
 	_se = ResourceServer::LoadSoundMem("res/player/Audio/pull.wav");
 	_seBullet = ResourceServer::LoadSoundMem("res/player/Audio/normal_bullet_fast.wav");
 	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成

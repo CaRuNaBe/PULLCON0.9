@@ -7,17 +7,13 @@ namespace
 SkySphere::SkySphere( ApplicationBase& game,ModeBase& mode,int objectid )
 	:base( game,mode )
 {
-	switch ( objectid )
-	{
-		case SUNNY:
-			_handle = MV1LoadModel( "res/stage/skysphere/mv1/cg_stageSkymap_1.mv1" );
-			break;
-		case CLOUDY:
-			_handle = MV1LoadModel( "res/stage/skysphere/mv1/cg_stageSkymap_1.mv1" );
-			break;
-		default:
-			break;
-	}
+	auto file_pass_data = std::make_unique<ScriptsData>();
+	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
+	const std::string ARRYNAME = "ObjectId";
+	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
+
+	_handle = MV1LoadModel( file_pass_data->GetScriptLine( objectid ).c_str() );
+
 
 
 	Init();

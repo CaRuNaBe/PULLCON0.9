@@ -234,7 +234,7 @@ void ModeMainGame::Parsing()
 
 			if ( string_comand == COMMAND_GAMESTART )
 			{
-				state = ScriptState::GAME;
+				state = ScriptState::EDIT;
 			}
 			++now_line;
 		}
@@ -909,6 +909,7 @@ bool ModeMainGame::OnCommandGunShip( unsigned int line,std::vector<std::string>&
 	{
 		vector4 posi;
 		float radius = 0.0f;
+		float scale = 1.0f;
 		const size_t SCRIPTSIZE = 6;
 
 		if ( scripts.size() != SCRIPTSIZE )
@@ -927,12 +928,17 @@ bool ModeMainGame::OnCommandGunShip( unsigned int line,std::vector<std::string>&
 		{
 			return result;
 		}
-		if ( !(string::ToFloat( scripts[4],radius )) )
+		if ( !(string::ToFloat( scripts[4],scale )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[5],radius )) )
 		{
 			return result;
 		}
 		auto clearobject = std::make_shared<ClearObject>( _game,*this,radius );
 		clearobject->SetPosition( posi );
+		clearobject->SetScale( scale );
 		_3D_objectServer.Add( clearobject );
 		result = true;
 	}
