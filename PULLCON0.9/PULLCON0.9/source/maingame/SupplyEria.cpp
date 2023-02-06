@@ -3,7 +3,7 @@
 #include "../mode/ModeMainGame.h"
 namespace
 {
-	constexpr int SUPPLY_ID = 36;
+	constexpr int SUPPLY_ID = 37;
 }
 SupplyEria::SupplyEria( ApplicationBase& game,ModeBase& mode,float _radius )
 	:base( game,mode )
