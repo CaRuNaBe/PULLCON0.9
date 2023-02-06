@@ -23,7 +23,7 @@ public:
 
 	bool Check () override;
 
-	inline void Initialize ( Rect&& area , const int goal )
+	inline void Initialize (Rect&& area , const int goal )
 	{
 		this->area = area;
 		right_goal = goal;
