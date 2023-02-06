@@ -6,19 +6,19 @@
  * \date   August 2022
  *********************************************************************/
 #pragma once
-#include "command_base.h"
+#include "CommandBase.h"
 #include <string>
-class CommandMusicbag :public CommandBase
+class CommandMusicBack :public CommandBase
 {
 public:
-	CommandMusicbag ( unsigned int line , const std::vector<std::string>& script );
-	CommandMusicbag ( const CommandMusicbag& ) = default;
-	CommandMusicbag ( CommandMusicbag&& ) noexcept = default;
+	CommandMusicBack( unsigned int line , const std::vector<std::string>& script );
+	CommandMusicBack( const CommandMusicBack& ) = default;
+	CommandMusicBack( CommandMusicBack&& ) noexcept = default;
 
-	virtual ~CommandMusicbag () = default;
+	virtual ~CommandMusicBack() = default;
 
-	CommandMusicbag& operator=( const CommandMusicbag& right ) = default;
-	CommandMusicbag& operator=( CommandMusicbag&& right ) noexcept = default;
+	CommandMusicBack& operator=( const CommandMusicBack& right ) = default;
+	CommandMusicBack& operator=( CommandMusicBack&& right ) noexcept = default;
 
 	bool Check () override;
 

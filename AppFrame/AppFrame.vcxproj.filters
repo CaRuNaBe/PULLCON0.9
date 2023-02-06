@@ -86,10 +86,10 @@
     <ClInclude Include="source\Application\ScliptFlagManager.h">
       <Filter>source\Application</Filter>
     </ClInclude>
-    <ClInclude Include="source\Script\scripts_data.h">
+    <ClInclude Include="source\Script\ScriptsData.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
-    <ClInclude Include="source\Script\scripts_string.h">
+    <ClInclude Include="source\Script\ScriptsString.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
     <ClInclude Include="source\Object\ActorBase2d.h">
@@ -113,6 +113,15 @@
     <ClInclude Include="source\Script\CommandCrFeedIn.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
+    <ClInclude Include="source\Script\CommandDrawIn.h" />
+    <ClInclude Include="source\Script\CommandDrawOut.h" />
+    <ClInclude Include="source\Script\CommandImageLoad.h" />
+    <ClInclude Include="source\Script\CommandMessage.h" />
+    <ClInclude Include="source\Script\CommandMoviePlay.h" />
+    <ClInclude Include="source\Script\CommandMusicBack.h" />
+    <ClInclude Include="source\Script\CommandMusicLoop.h" />
+    <ClInclude Include="source\Script\CommandMusicStop.h" />
+    <ClInclude Include="source\Script\CommandSeLoad.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -170,10 +179,10 @@
     <ClCompile Include="source\Application\ScliptFlagManager.cpp">
       <Filter>source\Application</Filter>
     </ClCompile>
-    <ClCompile Include="source\Script\scripts_data.cpp">
+    <ClCompile Include="source\Script\ScriptsData.cpp">
       <Filter>source\Sclipt</Filter>
     </ClCompile>
-    <ClCompile Include="source\Script\scripts_string.cpp">
+    <ClCompile Include="source\Script\ScriptsString.cpp">
       <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Object\ActorBase2d.cpp">
@@ -193,6 +202,33 @@
     </ClCompile>
     <ClCompile Include="source\Script\CommandCrFeedIn.cpp">
       <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawIn.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawOut.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandImageLoad.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMessage.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMoviePlay.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMusicBack.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMusicLoop.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMusicstop.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandSeLoad.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

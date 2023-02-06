@@ -7,8 +7,8 @@
  * \date   August 2022
  *********************************************************************/
 
-#include "Scripts_Data.h"
-#include "scripts_string.h"
+#include "ScriptsData.h"
+#include "ScriptsString.h"
 #include <windows.h>
 #include <fstream>
 #include "picojson.h"

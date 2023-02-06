@@ -1,84 +1,68 @@
-//!
+ï»¿//!
 //! @file script_engine.cpp
 //!
-//! @brief ƒXƒNƒŠƒvƒgƒGƒ“ƒWƒ“‚ÌÀ‘•
+//! @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚¨ãƒ³ã‚¸ãƒ³ã®å®Ÿè£…
 //!
-//! @details ƒXƒNƒŠƒvƒg‚Ì‰ğà
+//! @details ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®è§£èª¬
 //!
-/*ƒRƒ}ƒ“ƒhˆê——
-///////////// ‚¢‚Ü1ƒtƒŒ[ƒ€1/60•b‚È‚Ì‚Å60‚Æ‚È‚é‚Æ‚P•b‚É‚È‚è‚Ü‚·//////////////////
-////////////¡‚Ì‰æ–Êİ’è‚Í1920–1080‚È‚Ì‚Åˆê”Ô¶ã‚ÌÀ•W‚ªi0,0jˆê”Ô‰E‰º‚ªi1920,1080j‚É‚È‚è‚Ü‚·//////////
-/// ŒÄ‚Ñ‚İ‚ÍƒXƒNƒŠƒvƒgˆê”ÔÅ‰‚É‘‚¢‚Ä‚­‚¾‚³‚¢‚¤‚Ü‚­“®‚©‚È‚¢ê‡‚ª‚ ‚è‚Ü‚·//
-/// ƒpƒX‚ğ“ü—Í‚·‚é‚Æ‚«./resourcefile/‚ğ‘‚¢‚Ä‚©‚çƒtƒ@ƒCƒ‹–¼‚ğ‘‚¢‚Ä‚­‚¾‚³‚¢‚¤‚Ü‚­ŒÄ‚Ñ‚ß‚Ü‚¹‚ñ///
-‰æ‘œA“®‰æŒÄ‚Ñ‚İ
-"i,‰æ‘œ–¼,‰æ‘œƒpƒX",
-¦—áF"i,ƒeƒLƒXƒgƒ{ƒbƒNƒX,./resourcefile/text_box.png",
-‰¹ŒnŒÄ‚Ñ‚İ
-"im,‰¹–¼,‰¹ƒpƒX",
-¦—áF"im,Œˆ’è‰¹,./resourcefile/se/yes_effect.mp3",
-ƒJƒ‰[ƒtƒF[ƒhƒCƒ“
-"fi, ƒtƒŒ[ƒ€”,Ô‚ÌF’iŠK,—Î‚ÌF’iŠK,Â‚ÌF’iŠK",
-¦—áF"fi,120,255,0,0",‚±‚¤‚·‚é‚Æ‰æ–Ê‚ª2•b‚©‚¯‚Ä‚¾‚ñ‚¾‚ñÔ‚­‚È‚Á‚Äs‚«‚Ü‚·
-ƒJƒ‰[ƒtƒF[ƒhƒAƒEƒg
-"fo, ƒtƒŒ[ƒ€”,Ô‚ÌF’iŠK,—Î‚ÌF’iŠK,Â‚ÌF’iŠK",
-¦—áF"fo,60,0,0,0",‚±‚¤‚·‚é‚Æ‰æ–Ê‚ª1•b‚©‚¯‚Ä‰æ–Ê‚ª•‚©‚ç“§–¾‚É‚È‚Á‚Äs‚«‚Ü‚·
-‰æ‘œƒtƒF[ƒhƒCƒ“
-"di,•`‰æ‚·‚é‡”Ô,‚˜À•W,‚™À•W,ƒtƒŒ[ƒ€”,‰æ‘œ–¼",
-¦—áF"di,0,0,0,60,ƒeƒLƒXƒgƒ{ƒbƒNƒX",‚±‚¤‚·‚é‚Æ‰æ–ÊÀ•Wi0,0jƒŒƒCƒ„[‚P”Ô–Ú‚ÌŠ‚É1•b‚©‚¯‚ÄoŒ»‚µ‚Ü‚·‹t‚É0‚É‚·‚é‚Æ‚¢‚«‚È‚èoŒ»‚µ‚Ü‚·
-‰æ‘œƒtƒF[ƒhƒAƒEƒg
-"do,•`‰æ‚·‚é‡”Ô,xÀ•W,yÀ•W,ƒtƒŒ[ƒ€”,‰æ‘œ–¼",
-¦—áF"di,2,60,60,120,ƒeƒLƒXƒgƒ{ƒbƒNƒX",‚±‚¤‚·‚é‚Æ‰æ–ÊÀ•Wi60,60jƒŒƒCƒ„[3”Ô–Ú‚ÌŠ‚É2•b‚©‚¯‚ÄÁ‚¦‚Ü‚·‹t‚É0‚É‚·‚é‚Æ‚¢‚«‚È‚èÁ‚¦‚Ü‚·B
-‚Ü‚½diƒRƒ}ƒ“ƒh‚Å“o˜^‚µ‚½‰æ‘œ‚ğ‘SÁ‹‚µ‚Ü‚·
-ƒZƒŠƒt
-"m,’N‚ª‚µ‚á‚×‚é‚©,ƒZƒŠƒt",
-¦—áF"m,ƒC[ƒŠƒX,ƒZƒŠƒt",‚±‚¤‚·‚é‚ÆƒC[ƒŠƒX‚ª‚µ‚á‚×‚Á‚½Š´‚¶‚É‚È‚è‚Ü‚·‹t‚É–¼‘O‚ª‚È‚¢ê‡‚Ì•\‹L‚à‰Â”\‚Å‚·
-“ü—Í‘Ò‚¿
-"—",
-aƒ{ƒ^ƒ“‰Ÿ‚·‚Ü‚Å‘Ò‚¿‚Ü‚·B‰Ÿ‚µ‚½ê‡Œˆ’è‰¹‚ª‚È‚è‚Ü‚·
-‘Ò‚Â
-"w, ƒtƒŒ[ƒ€”",
-¦—áF"w, 300",‚±‚¤‚·‚é‚Æ5•b~‚Ü‚Á‚Ä‚©‚çŸ‚Éi‚İ‚Ü‚·
-ƒ‹[ƒvÄ¶//bgm‚Ég—p
-"bg,‰¹–¼",
-¦—áF"bg,Œˆ’è‰¹",Œˆ’è‰¹‚ª–³ŒÀƒ‹[ƒv‚µ‚Ü‚·‰¹‚ğ~‚ß‚é‚Ü‚Å‚¸‚Á‚Æ‚È‚è‚Ü‚·
-ˆê‰ñÄ¶//ƒLƒƒƒ‰‚ª‚µ‚á‚×‚é‚âŒø‰Ê‰¹‚Ég—p
-"fg,‰¹–¼",
-¦—áF"fg,Œˆ’è‰¹",Œˆ’è‰¹‚ªˆê‰ñÄ¶‚µ‚Ü‚·
-‰¹‚ğ~‚ß‚é//bgm‚ğ~‚ß‚½‚¢‚Æ‚«‚Ég—p
-"gs,‰¹–¼",
-‰¹‚ğ~‚ß‚Ü‚·
-ƒ€[ƒr[Ä¶//
-"ve,‰æ‘œ–¼",
-¦—áF"ve,ƒI[ƒvƒjƒ“ƒO",ƒI[ƒvƒjƒ“ƒO‚ªÄ¶‚µ‚Ü‚·BI‚í‚é‚©ƒXƒ^[ƒgƒ{ƒ^ƒ“‚ğ‚¨‚µ‚½‚Æ‚«Ÿ‚Éi‚İ‚Ü‚·
-ƒRƒ}ƒ“ƒhI—¹//
+/*ã‚³ãƒãƒ³ãƒ‰ä¸€è¦§
+///////////// ã„ã¾1ãƒ•ãƒ¬ãƒ¼ãƒ 1/60ç§’ãªã®ã§60ã¨ãªã‚‹ã¨ï¼‘ç§’ã«ãªã‚Šã¾ã™//////////////////
+////////////ä»Šã®ç”»é¢è¨­å®šã¯1920ï¼Š1080ãªã®ã§ä¸€ç•ªå·¦ä¸Šã®åº§æ¨™ãŒï¼ˆ0,0ï¼‰ä¸€ç•ªå³ä¸‹ãŒï¼ˆ1920,1080ï¼‰ã«ãªã‚Šã¾ã™//////////
+/// å‘¼ã³è¾¼ã¿ã¯ã‚¹ã‚¯ãƒªãƒ—ãƒˆä¸€ç•ªæœ€åˆã«æ›¸ã„ã¦ãã ã•ã„ã†ã¾ãå‹•ã‹ãªã„å ´åˆãŒã‚ã‚Šã¾ã™//
+/// ãƒ‘ã‚¹ã‚’å…¥åŠ›ã™ã‚‹ã¨ã./resourcefile/ã‚’æ›¸ã„ã¦ã‹ã‚‰ãƒ•ã‚¡ã‚¤ãƒ«åã‚’æ›¸ã„ã¦ãã ã•ã„ã†ã¾ãå‘¼ã³è¾¼ã‚ã¾ã›ã‚“///
+ç”»åƒã€å‹•ç”»å‘¼ã³è¾¼ã¿
+"i,ç”»åƒå,ç”»åƒãƒ‘ã‚¹",
+â€»ä¾‹ï¼š"i,ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹,./resourcefile/text_box.png",
+éŸ³ç³»å‘¼ã³è¾¼ã¿
+"im,éŸ³å,éŸ³ãƒ‘ã‚¹",
+â€»ä¾‹ï¼š"im,æ±ºå®šéŸ³,./resourcefile/se/yes_effect.mp3",
+ã‚«ãƒ©ãƒ¼ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
+"fi, ãƒ•ãƒ¬ãƒ¼ãƒ æ•°,èµ¤ã®è‰²æ®µéš,ç·‘ã®è‰²æ®µéš,é’ã®è‰²æ®µéš",
+â€»ä¾‹ï¼š"fi,120,255,0,0",ã“ã†ã™ã‚‹ã¨ç”»é¢ãŒ2ç§’ã‹ã‘ã¦ã ã‚“ã ã‚“èµ¤ããªã£ã¦è¡Œãã¾ã™
+ã‚«ãƒ©ãƒ¼ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
+"fo, ãƒ•ãƒ¬ãƒ¼ãƒ æ•°,èµ¤ã®è‰²æ®µéš,ç·‘ã®è‰²æ®µéš,é’ã®è‰²æ®µéš",
+â€»ä¾‹ï¼š"fo,60,0,0,0",ã“ã†ã™ã‚‹ã¨ç”»é¢ãŒ1ç§’ã‹ã‘ã¦ç”»é¢ãŒé»’ã‹ã‚‰é€æ˜ã«ãªã£ã¦è¡Œãã¾ã™
+ç”»åƒãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
+"di,æç”»ã™ã‚‹é †ç•ª,ï½˜åº§æ¨™,ï½™åº§æ¨™,ãƒ•ãƒ¬ãƒ¼ãƒ æ•°,ç”»åƒå",
+â€»ä¾‹ï¼š"di,0,0,0,60,ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹",ã“ã†ã™ã‚‹ã¨ç”»é¢åº§æ¨™ï¼ˆ0,0ï¼‰ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼‘ç•ªç›®ã®æ‰€ã«1ç§’ã‹ã‘ã¦å‡ºç¾ã—ã¾ã™é€†ã«0ã«ã™ã‚‹ã¨ã„ããªã‚Šå‡ºç¾ã—ã¾ã™
+ç”»åƒãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
+"do,æç”»ã™ã‚‹é †ç•ª,xåº§æ¨™,yåº§æ¨™,ãƒ•ãƒ¬ãƒ¼ãƒ æ•°,ç”»åƒå",
+â€»ä¾‹ï¼š"di,2,60,60,120,ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹",ã“ã†ã™ã‚‹ã¨ç”»é¢åº§æ¨™ï¼ˆ60,60ï¼‰ãƒ¬ã‚¤ãƒ¤ãƒ¼3ç•ªç›®ã®æ‰€ã«2ç§’ã‹ã‘ã¦æ¶ˆãˆã¾ã™é€†ã«0ã«ã™ã‚‹ã¨ã„ããªã‚Šæ¶ˆãˆã¾ã™ã€‚
+ã¾ãŸdiã‚³ãƒãƒ³ãƒ‰ã§ç™»éŒ²ã—ãŸç”»åƒã‚’å…¨æ¶ˆå»ã—ã¾ã™
+ã‚»ãƒªãƒ•
+"m,èª°ãŒã—ã‚ƒã¹ã‚‹ã‹,ã‚»ãƒªãƒ•",
+â€»ä¾‹ï¼š"m,ã‚¤ãƒ¼ãƒªã‚¹,ã‚»ãƒªãƒ•",ã“ã†ã™ã‚‹ã¨ã‚¤ãƒ¼ãƒªã‚¹ãŒã—ã‚ƒã¹ã£ãŸæ„Ÿã˜ã«ãªã‚Šã¾ã™é€†ã«åå‰ãŒãªã„å ´åˆã®è¡¨è¨˜ã‚‚å¯èƒ½ã§ã™
+å…¥åŠ›å¾…ã¡
+"ï¼ ",
+aãƒœã‚¿ãƒ³æŠ¼ã™ã¾ã§å¾…ã¡ã¾ã™ã€‚æŠ¼ã—ãŸå ´åˆæ±ºå®šéŸ³ãŒãªã‚Šã¾ã™
+å¾…ã¤
+"w, ãƒ•ãƒ¬ãƒ¼ãƒ æ•°",
+â€»ä¾‹ï¼š"w, 300",ã“ã†ã™ã‚‹ã¨5ç§’æ­¢ã¾ã£ã¦ã‹ã‚‰æ¬¡ã«é€²ã¿ã¾ã™
+ãƒ«ãƒ¼ãƒ—å†ç”Ÿ//bgmã«ä½¿ç”¨
+"bg,éŸ³å",
+â€»ä¾‹ï¼š"bg,æ±ºå®šéŸ³",æ±ºå®šéŸ³ãŒç„¡é™ãƒ«ãƒ¼ãƒ—ã—ã¾ã™éŸ³ã‚’æ­¢ã‚ã‚‹ã¾ã§ãšã£ã¨ãªã‚Šã¾ã™
+ä¸€å›å†ç”Ÿ//ã‚­ãƒ£ãƒ©ãŒã—ã‚ƒã¹ã‚‹æ™‚ã‚„åŠ¹æœéŸ³ã«ä½¿ç”¨
+"fg,éŸ³å",
+â€»ä¾‹ï¼š"fg,æ±ºå®šéŸ³",æ±ºå®šéŸ³ãŒä¸€å›å†ç”Ÿã—ã¾ã™
+éŸ³ã‚’æ­¢ã‚ã‚‹//bgmã‚’æ­¢ã‚ãŸã„ã¨ãã«ä½¿ç”¨
+"gs,éŸ³å",
+éŸ³ã‚’æ­¢ã‚ã¾ã™
+ãƒ ãƒ¼ãƒ“ãƒ¼å†ç”Ÿ//
+"ve,ç”»åƒå",
+â€»ä¾‹ï¼š"ve,ã‚ªãƒ¼ãƒ—ãƒ‹ãƒ³ã‚°",ã‚ªãƒ¼ãƒ—ãƒ‹ãƒ³ã‚°ãŒå†ç”Ÿã—ã¾ã™ã€‚çµ‚ã‚ã‚‹ã‹ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³ã‚’ãŠã—ãŸã¨ãæ¬¡ã«é€²ã¿ã¾ã™
+ã‚³ãƒãƒ³ãƒ‰çµ‚äº†//
 "e",
-ƒXƒNƒŠƒvƒg‚ªI‚í‚é‚Æ‚«g—p
+ã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒçµ‚ã‚ã‚‹ã¨ãä½¿ç”¨
 */
 
-
-#include "ModeSpeakScrip.h"
-
-#include "scripts_data.h"
-
-#include "command_imageload.h"
-#include "command_seload.h"
-#include "command_crfi.h"
-#include "command_crfo.h"
-#include "command_drawin.h"
-#include "command_drawout.h"
-#include "command_musicloop.h"
-#include "command_musicbag.h"
-#include "command_musicstop.h"
-#include "command_movieplay.h"
-#include "command_message.h"
-#include "scripts_string.h"
+#include "ModeSpeakScript.h"
 #include <algorithm>
-#include<utility>
-#include<stdio.h>
+#include <utility>
+#include <stdio.h>
 
 namespace
 {
-// ƒXƒNƒŠƒvƒg ƒRƒ}ƒ“ƒh
+// ã‚¹ã‚¯ãƒªãƒ—ãƒˆ ã‚³ãƒãƒ³ãƒ‰
 	std::string COMMAND_I = "i";
 	std::string COMMAND_IM = "im";
 	std::string COMMAND_FI = "fi";
@@ -94,7 +78,7 @@ namespace
 	std::string COMMAND_VE = "ve";
 	std::string COMMAND_E = "e";
 
-//•¶šİ’è
+//æ–‡å­—è¨­å®š
 	constexpr auto FONT_SIZE = 34;
 
 	constexpr auto SPEAK_SKIP = 30;
@@ -112,7 +96,7 @@ namespace
 	constexpr auto MSG_SET_X = MSG_SPEAKER_SET_X + (FONT_SIZE / 2);
 	constexpr auto MSG_SET_Y = MSG_SPEAKER_SET_Y + FONT_SIZE + 10;
 
-	//ƒƒbƒZ[ƒWƒEƒBƒ“ƒhƒEİ’è
+	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¨­å®š
 	constexpr auto MSG_WINDOW_WIDTH = 1480;
 	constexpr auto MSG_WINDOW_HEIGHT = 270;
 
@@ -121,41 +105,58 @@ namespace
 	constexpr auto MSG_WINDOW_TOP = 755;
 	constexpr auto MSG_WINDOW_BOTTOM = MSG_WINDOW_TOP + MSG_WINDOW_HEIGHT;
 
-	//–¼‘O‚Ì‰º‚Ìƒ‰ƒCƒ“•\¦’è”
+	//åå‰ã®ä¸‹ã®ãƒ©ã‚¤ãƒ³è¡¨ç¤ºå®šæ•°
 	constexpr auto LINE_THICKNESS = 5;
 	constexpr auto LINE_POSITION_LEFT = MSG_SPEAKER_SET_X;
 	constexpr auto LINE_POSITION_TOP = MSG_SPEAKER_SET_Y + FONT_SIZE;
 	constexpr auto LINE_POSITION_BOTTOM = LINE_POSITION_TOP + LINE_THICKNESS;
 
-	//ƒNƒŠƒbƒN‘Ò‚¿‰æ‘œ‚Ìƒ|ƒWƒVƒ‡ƒ“
+	//ã‚¯ãƒªãƒƒã‚¯å¾…ã¡ç”»åƒã®ãƒã‚¸ã‚·ãƒ§ãƒ³
 	constexpr auto CLICK_WAIT_X = 1600;
 	constexpr auto CLICK_WAIT_Y = 900;
 
-	//ƒXƒLƒbƒvİ’è
+	//ã‚¹ã‚­ãƒƒãƒ—è¨­å®š
 	constexpr auto SCRIPT_SKIP_TIME = 200;
 	constexpr auto ANIME_SKIP_OK_TIME = 120;
 
-		// ˆê“xŒvZ‚µ‚½‚çŒÅ’è’l‚È•¨
-	int screen_width = SCREEN_W;
-	int screen_height = SCREEN_H;
+		// ä¸€åº¦è¨ˆç®—ã—ãŸã‚‰å›ºå®šå€¤ãªç‰©
+	int screen_width = 1920;
+	int screen_height = 1080;
 
 	int screen_center_x = screen_width / 2;
 	int screen_center_y = screen_height / 2;
 
 	unsigned int message_string_color = 0;
+	//scriptç”¨ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+	std::string FILE_PASS = "res/script/";
+	std::string FILE_NAME = ".json";
 }
 
-ScriptEngine::ScriptEngine( Game& game,std::string storyname,ModeBase& base )
-	:_game( game )
-	,_base( base )
+ModeSpeakScript::ModeSpeakScript( ApplicationBase& game,int layer,std::string storyname )
+	:ModeBase( game,layer )
+{
+	auto character_story = string::Split( storyname,"/" );
+	FILE_PASS += character_story[0];
+	FILE_NAME = character_story[1] + FILE_NAME;
+	FILE_PASS += FILE_NAME;
+	Initialize( FILE_PASS,character_story[1],FILE_NAME );
+	InitializeStrings();
+}
+
+ModeSpeakScript::~ModeSpeakScript()
+{
+	Destroy();
+}
+
+void ModeSpeakScript::Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname )
 {
 	movie_play.reset();
+
 	scripts_data.reset();
 	scripts_data = std::make_unique<ScriptsData>();
-	scripts_data->LoadJson( storyname );
+	scripts_data->LoadJson( jsonpath,scriptsname,jsonname );
+
 	max_line = scripts_data->GetScriptNum();
-	PreParsing();
-	InitializeStrings();
 	state = ScriptState::PREPARSING;
 	feedcount = 0.0;
 	_Alpha = 0;
@@ -171,19 +172,13 @@ ScriptEngine::ScriptEngine( Game& game,std::string storyname,ModeBase& base )
 	is_finishdraw = false;
 	is_hide = false;
 	is_amime_skip = false;
-}
-
-ScriptEngine::~ScriptEngine()
-{
-	Destroy();
-}
-
+};
 //!
 //! @fn bool ScriptEngine::InitializeStrings()
-//! @brief ƒXƒNƒŠƒvƒgƒGƒ“ƒWƒ“—p•¶š—ñ•`‰æ‚Ì‰Šú‰»
-//! @return ˆ—‚Ì¬”Û
+//! @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚¨ãƒ³ã‚¸ãƒ³ç”¨æ–‡å­—åˆ—æç”»ã®åˆæœŸåŒ–
+//! @return å‡¦ç†ã®æˆå¦
 //!
-bool ScriptEngine::InitializeStrings()
+bool ModeSpeakScript::InitializeStrings()
 {
 	SetFontSize( FONT_SIZE );
 
@@ -201,11 +196,11 @@ bool ScriptEngine::InitializeStrings()
 
 //!
 //! @fn void ScriptEngine::Destroy()
-//! @brief –¾¦“I‚ÈƒXƒNƒŠƒvƒgƒGƒ“ƒWƒ“‚ÌI—¹ˆ—
-//! @details –³—‚ÉŒÄ‚Ño‚·•K—v‚Í‚ ‚è‚Ü‚¹‚ñ‚ª
-//! ƒCƒ“ƒXƒ^ƒ“ƒX‚ğÄ—˜—p‚µ‚½‚¢ê‡‚È‚Ç‚ÉŒÄ‚Ño‚µ‚Ü‚·B
+//! @brief æ˜ç¤ºçš„ãªã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚¨ãƒ³ã‚¸ãƒ³ã®çµ‚äº†å‡¦ç†
+//! @details ç„¡ç†ã«å‘¼ã³å‡ºã™å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ãŒ
+//! ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å†åˆ©ç”¨ã—ãŸã„å ´åˆãªã©ã«å‘¼ã³å‡ºã—ã¾ã™ã€‚
 //!
-void ScriptEngine::Destroy()
+void ModeSpeakScript::Destroy()
 {
 	movie_play.reset();
 	scripts_data.reset();
@@ -230,10 +225,10 @@ void ScriptEngine::Destroy()
 
 //!
 //! @fn void ScriptEngine::Update()
-//! @brief ƒXƒNƒŠƒvƒgƒGƒ“ƒWƒ“‚ÌXVˆ—
-//! @details –ˆƒtƒŒ[ƒ€ŒÄ‚Ño‚·•K—v‚ª‚ ‚è‚Ü‚·B
+//! @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚¨ãƒ³ã‚¸ãƒ³ã®æ›´æ–°å‡¦ç†
+//! @details æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã³å‡ºã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 //!
-void ScriptEngine::Update()
+bool ModeSpeakScript::Update()
 {
 	auto is_update_message = false;
 
@@ -271,7 +266,7 @@ void ScriptEngine::Update()
 			is_update_message = true;
 			break;
 		case ScriptState::SCRIPT_END:
-			_game.isEndsclipt = true;
+			//_game.isEndsclipt = true;
 			break;
 	}
 
@@ -293,9 +288,9 @@ void ScriptEngine::Update()
 
 //!
 //! @fn void ScriptEngine::UpdateMessage()
-//! @brief •¶š—ñ‚ğ 1 •¶š‚Ã‚Â•\¦‚³‚¹‚éˆ—
+//! @brief æ–‡å­—åˆ—ã‚’ 1 æ–‡å­—ã¥ã¤è¡¨ç¤ºã•ã›ã‚‹å‡¦ç†
 //!
-void ScriptEngine::UpdateMessage()
+void ModeSpeakScript::UpdateMessage()
 {
 	is_click_wait_visible = false;
 
@@ -304,22 +299,22 @@ void ScriptEngine::UpdateMessage()
 		const auto area = message->GetArea();
 		const auto right_goal = message->GetRightGoal();
 
-		// ƒNƒŠƒbƒN‚³‚ê‚½‚ç‘SƒƒbƒZ[ƒW‚ğ•\¦
+		// ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã‚‰å…¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤º
 		if ( _game._trg & PAD_INPUT_A || is_Click_on )
 		{
 			message->UpdateAreaRight( right_goal );
 			continue;
 		}
 
-		// ‰EI’[(‘S•¶š—ñ)‚É‚È‚é‚Ü‚Å 1 •¶šƒTƒCƒY•ª‚Ã‚Â‘«‚µ‚Äs‚­
+		// å³çµ‚ç«¯(å…¨æ–‡å­—åˆ—)ã«ãªã‚‹ã¾ã§ 1 æ–‡å­—ã‚µã‚¤ã‚ºåˆ†ã¥ã¤è¶³ã—ã¦è¡Œã
 		if ( area.right < right_goal )
 		{
 			message->UpdateAreaRight( area.right + (FONT_SIZE / 2) );
-			return; // 1 •¶š•ªˆ—‚µ‚½‚çƒƒ\ƒbƒhI—¹
+			return; // 1 æ–‡å­—åˆ†å‡¦ç†ã—ãŸã‚‰ãƒ¡ã‚½ãƒƒãƒ‰çµ‚äº†
 		}
 	}
 
-	// return ‚¹‚¸‚É for •¶‚ªI‚í‚Á‚½‚È‚ç‘S•¶š—ñ‚ğ•\¦‚µ‚Ä‚¢‚é
+	// return ã›ãšã« for æ–‡ãŒçµ‚ã‚ã£ãŸãªã‚‰å…¨æ–‡å­—åˆ—ã‚’è¡¨ç¤ºã—ã¦ã„ã‚‹
 	is_message_output = false;
 
 	if ( state == ScriptState::CLICK_WAIT )
@@ -329,17 +324,17 @@ void ScriptEngine::UpdateMessage()
 }
 
 /**
- *?fn void script_engine.cpp::PreParsing.
- * @brief ƒXƒNƒŠƒvƒg‚Ì–‘O‰ğÍ
- * im' ƒRƒ}ƒ“ƒh(ƒ‰ƒxƒ‹)‚Æ 'i' ƒRƒ}ƒ“ƒh(ƒCƒ[ƒW)‚ğ
- * —\‚ß‘S‚Äˆ—‚µ‚ÄƒŠƒXƒg‰»‚µ‚Ü‚·B
- *?return void
+ *Â¥fn void script_engine.cpp::PreParsing.
+ * @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®äº‹å‰è§£æ
+ * im' ã‚³ãƒãƒ³ãƒ‰(ãƒ©ãƒ™ãƒ«)ã¨ 'i' ã‚³ãƒãƒ³ãƒ‰(ã‚¤ãƒ¡ãƒ¼ã‚¸)ã‚’
+ * äºˆã‚å…¨ã¦å‡¦ç†ã—ã¦ãƒªã‚¹ãƒˆåŒ–ã—ã¾ã™ã€‚
+ *Â¥return void
  */
-void ScriptEngine::PreParsing()
+void ModeSpeakScript::PreParsing()
 {
 	funcs_type comand_funcs;
-	comand_funcs.insert( std::make_pair( COMMAND_I,&ScriptEngine::OnCommandImage ) );
-	comand_funcs.insert( std::make_pair( COMMAND_IM,&ScriptEngine::OnCommandSe ) );
+	comand_funcs.insert( std::make_pair( COMMAND_I,&ModeSpeakScript::OnCommandImage ) );
+	comand_funcs.insert( std::make_pair( COMMAND_IM,&ModeSpeakScript::OnCommandSe ) );
 
 	const auto script = scripts_data->GetScript( now_line );
 	const auto char_command = (script[0]);
@@ -363,11 +358,11 @@ void ScriptEngine::PreParsing()
 
 //!
 //! @fn void ScriptEngine::Parsing()
-//! @brief ƒXƒNƒŠƒvƒg‚Ì‰ğÍ
-//! @details ƒXƒNƒŠƒvƒg‚ğ 1 s’PˆÊ‚Åˆ—‚µ‚Ü‚·B
-//! (ƒCƒ“ƒ^[ƒvƒŠƒ^•û®)
+//! @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®è§£æ
+//! @details ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ 1 è¡Œå˜ä½ã§å‡¦ç†ã—ã¾ã™ã€‚
+//! (ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ—ãƒªã‚¿æ–¹å¼)
 //!
-void ScriptEngine::Parsing()
+void ModeSpeakScript::Parsing()
 {
 	is_hide = false;
 	is_finishdraw = false;
@@ -376,18 +371,18 @@ void ScriptEngine::Parsing()
 	movie_play.reset();
 	auto stop_parsing = false;
 	funcs_type comand_funcs;
-	comand_funcs.insert( std::make_pair( COMMAND_FI,&ScriptEngine::OnCommandCrfi ) );
-	comand_funcs.insert( std::make_pair( COMMAND_FO,&ScriptEngine::OnCommandCrfo ) );
-	comand_funcs.insert( std::make_pair( COMMAND_DI,&ScriptEngine::OnCommandDrawin ) );
-	comand_funcs.insert( std::make_pair( COMMAND_DO,&ScriptEngine::OnCommandDrawout ) );
-	comand_funcs.insert( std::make_pair( COMMAND_M,&ScriptEngine::OnCommandMessage ) );
-	comand_funcs.insert( std::make_pair( COMMAND_A,&ScriptEngine::OnCommandClick ) );
-	comand_funcs.insert( std::make_pair( COMMAND_W,&ScriptEngine::OnCommandWait ) );
-	comand_funcs.insert( std::make_pair( COMMAND_BG,&ScriptEngine::OnCommandMusicloop ) );
-	comand_funcs.insert( std::make_pair( COMMAND_FG,&ScriptEngine::OnCommandMusicbag ) );
-	comand_funcs.insert( std::make_pair( COMMAND_GS,&ScriptEngine::OnCommandMusicstop ) );
-	comand_funcs.insert( std::make_pair( COMMAND_VE,&ScriptEngine::OnCommandPlayanime ) );
-	comand_funcs.insert( std::make_pair( COMMAND_E,&ScriptEngine::OnCommandScliptend ) );
+	comand_funcs.insert( std::make_pair( COMMAND_FI,&ModeSpeakScript::OnCommandCrfi ) );
+	comand_funcs.insert( std::make_pair( COMMAND_FO,&ModeSpeakScript::OnCommandCrfo ) );
+	comand_funcs.insert( std::make_pair( COMMAND_DI,&ModeSpeakScript::OnCommandDrawin ) );
+	comand_funcs.insert( std::make_pair( COMMAND_DO,&ModeSpeakScript::OnCommandDrawout ) );
+	comand_funcs.insert( std::make_pair( COMMAND_M,&ModeSpeakScript::OnCommandMessage ) );
+	comand_funcs.insert( std::make_pair( COMMAND_A,&ModeSpeakScript::OnCommandClick ) );
+	comand_funcs.insert( std::make_pair( COMMAND_W,&ModeSpeakScript::OnCommandWait ) );
+	comand_funcs.insert( std::make_pair( COMMAND_BG,&ModeSpeakScript::OnCommandMusicloop ) );
+	comand_funcs.insert( std::make_pair( COMMAND_FG,&ModeSpeakScript::OnCommandMusicbag ) );
+	comand_funcs.insert( std::make_pair( COMMAND_GS,&ModeSpeakScript::OnCommandMusicstop ) );
+	comand_funcs.insert( std::make_pair( COMMAND_VE,&ModeSpeakScript::OnCommandPlayanime ) );
+	comand_funcs.insert( std::make_pair( COMMAND_E,&ModeSpeakScript::OnCommandScriptend ) );
 
 	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
 	{
@@ -425,9 +420,9 @@ void ScriptEngine::Parsing()
 
 /**
  * @fn void  ScriptEngine::feed_draw ().
- * @brief di doƒRƒ}ƒ“ƒhŒvZˆ—
+ * @brief di doã‚³ãƒãƒ³ãƒ‰è¨ˆç®—å‡¦ç†
  */
-void  ScriptEngine::feed_draw()
+void  ModeSpeakScript::feed_draw()
 {
 	for ( auto&& drawin : drawin_list )
 	{
@@ -481,11 +476,11 @@ void  ScriptEngine::feed_draw()
 };
 
 /**
- *?fn void script_engine.cpp::Speakskip.
- *?brief ‰ï˜b‚ğƒXƒLƒbƒv‚·‚é
- *?return void
+ *Â¥fn void script_engine.cpp::Speakskip.
+ *Â¥brief ä¼šè©±ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
+ *Â¥return void
  */
-void  ScriptEngine::Speak_skip()
+void  ModeSpeakScript::Speak_skip()
 {
 	if ( _game._key & PAD_INPUT_A )
 	{
@@ -507,11 +502,11 @@ void  ScriptEngine::Speak_skip()
 };
 
 /**
- *?fn void script_engine.cpp::Scriptskip.
- *?brief ƒXƒNƒŠƒvƒg©‘Ì‚ğƒXƒLƒbƒv‚·‚é
- *?return void
+ *Â¥fn void script_engine.cpp::Scriptskip.
+ *Â¥brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆè‡ªä½“ã‚’ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹
+ *Â¥return void
  */
-void ScriptEngine::Script_skip()
+void ModeSpeakScript::Script_skip()
 {
 	if ( _game._key & PAD_INPUT_X )
 	{
@@ -536,11 +531,11 @@ void ScriptEngine::Script_skip()
 };
 
 /**
- *?fn void script_engine::Hide_Message.
- *?brief
- *?return void
+ *Â¥fn void script_engine::Hide_Message.
+ *Â¥brief
+ *Â¥return void
  */
-void ScriptEngine::Hide_Message()
+void ModeSpeakScript::Hide_Message()
 {
 	if ( (_game._trg & PAD_INPUT_B) && is_hide )
 	{
@@ -556,9 +551,9 @@ void ScriptEngine::Hide_Message()
 
 /**
  * @fn void ScriptEngine::CrfiUpdate ()
- * @brief ƒXƒNƒŠƒvƒg‚Ì "fi" ƒRƒ}ƒ“ƒh‚ÌŒvZˆ—
+ * @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "fi" ã‚³ãƒãƒ³ãƒ‰æ™‚ã®è¨ˆç®—å‡¦ç†
  */
-void ScriptEngine::CrfiUpdate()
+void ModeSpeakScript::CrfiUpdate()
 {
 	auto i = 255 / feedcount;
 
@@ -579,9 +574,9 @@ void ScriptEngine::CrfiUpdate()
 
 /**
  * @fn void ScriptEngine::CrfoUpdate ()
- * @brief ƒXƒNƒŠƒvƒg‚Ì "fo" ƒRƒ}ƒ“ƒh‚ÌŒvZˆ—
+ * @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "fo" ã‚³ãƒãƒ³ãƒ‰æ™‚ã®è¨ˆç®—å‡¦ç†
  */
-void ScriptEngine::CrfoUpdate()
+void ModeSpeakScript::CrfoUpdate()
 {
 	auto i = 255.0 / feedcount;
 
@@ -602,9 +597,9 @@ void ScriptEngine::CrfoUpdate()
 
 //!
 //! @fn void ScriptEngine::ClickWait()
-//! @brief ƒNƒŠƒbƒN‘Ò‚¿ˆ—
+//! @brief ã‚¯ãƒªãƒƒã‚¯å¾…ã¡å‡¦ç†
 //!
-void ScriptEngine::ClickWait()
+void ModeSpeakScript::ClickWait()
 {
 	if ( is_message_output )
 	{
@@ -626,9 +621,9 @@ void ScriptEngine::ClickWait()
 
 //!
 //! @fn void ScriptEngine::TimeWait()
-//! @brief ŠÔ‘Ò‚¿ˆ—
+//! @brief æ™‚é–“å¾…ã¡å‡¦ç†
 //!
-void ScriptEngine::TimeWait()
+void ModeSpeakScript::TimeWait()
 {
 	if ( is_message_output )
 	{
@@ -650,9 +645,9 @@ void ScriptEngine::TimeWait()
 
 /**
  *@fn void ScriptEngine::Playprocess ().
- * @brief ƒAƒjƒÄ¶’†ˆ—
+ * @brief ã‚¢ãƒ‹ãƒ¡å†ç”Ÿä¸­å‡¦ç†
  */
-void ScriptEngine::PlayUpdate()
+void ModeSpeakScript::PlayUpdate()
 {
 	Anime_count++;
 	if ( Anime_count > ANIME_SKIP_OK_TIME )
@@ -670,18 +665,18 @@ void ScriptEngine::PlayUpdate()
 
 //!
 //! @fn bool ScriptEngine::CalculateMessageArea(const std::string& message, Rect& area, int& right_goal)
-//! @brief ƒƒbƒZ[ƒW•¶š—ñ‚æ‚è•\¦ƒGƒŠƒA‚â‰EI’[‚ğŒvZ‚·‚é
-//! @param[in] message ƒƒbƒZ[ƒW•¶š—ñ
-//! @param[out] area ƒƒbƒZ[ƒW•\¦ƒGƒŠƒA
-//! @param[out] right_goal ƒƒbƒZ[ƒW‰EI’[
-//! @return ˆ—‚Ì¬”Û
-//! @details ƒƒbƒZ[ƒW‚Ì‡”Ô‚â•¶š”‚æ‚è•\¦ƒGƒŠƒA‚ğŒvZ‚µ‚Ü‚·B
-//! •\¦ƒGƒŠƒA‚Ì‰E‘¤‚ÍA‰Šú’l‚Í¶‘¤‚Æ“¯’l‚Æ‚µ‚Ü‚·B
-//! (”Šw“I‚É‚ÍƒGƒŠƒA‚Í–ÊÏ‚ğ‚½‚È‚¢)
-//! ‚±‚ê‚Í¶‘¤‚©‚ç 1 •¶š‚Ã‚Â•\¦‚µ‚Ä‚¢‚­d—l‚Ìˆ×‚Å‚·B
-//! ÀÛ‚Ì‰E‘¤‚Ì’l‚Í right_goal ‚ÉŠi”[‚µ‚Ü‚·B
+//! @brief ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ–‡å­—åˆ—ã‚ˆã‚Šè¡¨ç¤ºã‚¨ãƒªã‚¢ã‚„å³çµ‚ç«¯ã‚’è¨ˆç®—ã™ã‚‹
+//! @param[in] message ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ–‡å­—åˆ—
+//! @param[out] area ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤ºã‚¨ãƒªã‚¢
+//! @param[out] right_goal ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å³çµ‚ç«¯
+//! @return å‡¦ç†ã®æˆå¦
+//! @details ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®é †ç•ªã‚„æ–‡å­—æ•°ã‚ˆã‚Šè¡¨ç¤ºã‚¨ãƒªã‚¢ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
+//! è¡¨ç¤ºã‚¨ãƒªã‚¢ã®å³å´ã¯ã€åˆæœŸå€¤ã¯å·¦å´ã¨åŒå€¤ã¨ã—ã¾ã™ã€‚
+//! (æ•°å­¦çš„ã«ã¯ã‚¨ãƒªã‚¢ã¯é¢ç©ã‚’æŒãŸãªã„)
+//! ã“ã‚Œã¯å·¦å´ã‹ã‚‰ 1 æ–‡å­—ã¥ã¤è¡¨ç¤ºã—ã¦ã„ãä»•æ§˜ã®ç‚ºã§ã™ã€‚
+//! å®Ÿéš›ã®å³å´ã®å€¤ã¯ right_goal ã«æ ¼ç´ã—ã¾ã™ã€‚
 //!
-bool ScriptEngine::CalculateMessageArea( const std::string& message,Rect& area,int& right_goal )
+bool ModeSpeakScript::CalculateMessageArea( const std::string& message,Rect& area,int& right_goal )
 {
 	if ( message.empty() )
 	{
@@ -702,14 +697,14 @@ bool ScriptEngine::CalculateMessageArea( const std::string& message,Rect& area,i
 
 //!
 //! @fn bool ScriptEngine::GetImageHandle(const std::string& str, int& handle) const
-//! @brief ‰æ‘œƒ‰ƒxƒ‹•¶š—ñ‚æ‚è‰æ‘œƒnƒ“ƒhƒ‹‚ğæ“¾
-//! @param[in] str ‰æ‘œƒ‰ƒxƒ‹•¶š—ñ
-//! @param[out] handle ‰æ‘œƒnƒ“ƒhƒ‹
-//! @return ˆ—‚Ì¬”Û
-//! @details ‰æ‘œƒnƒ“ƒhƒ‹‚ÍADX ƒ‰ƒCƒuƒ‰ƒŠ‚Ì
-//! ‰æ‘œƒ[ƒhŠÖ”‚Å“¾‚ç‚ê‚é•`‰æ—p‚Ì’l‚Å‚·B
+//! @brief ç”»åƒãƒ©ãƒ™ãƒ«æ–‡å­—åˆ—ã‚ˆã‚Šç”»åƒãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
+//! @param[in] str ç”»åƒãƒ©ãƒ™ãƒ«æ–‡å­—åˆ—
+//! @param[out] handle ç”»åƒãƒãƒ³ãƒ‰ãƒ«
+//! @return å‡¦ç†ã®æˆå¦
+//! @details ç”»åƒãƒãƒ³ãƒ‰ãƒ«ã¯ã€DX ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®
+//! ç”»åƒãƒ­ãƒ¼ãƒ‰é–¢æ•°ã§å¾—ã‚‰ã‚Œã‚‹æç”»ç”¨ã®å€¤ã§ã™ã€‚
 //!
-bool ScriptEngine::GetImageHandle( const std::string& str,int& handle ) const
+bool ModeSpeakScript::GetImageHandle( const std::string& str,int& handle ) const
 {
 	for ( auto&& image : image_list )
 	{
@@ -726,14 +721,14 @@ bool ScriptEngine::GetImageHandle( const std::string& str,int& handle ) const
 
 /**
  * @fn bool ScriptEngine::GetseHandle ( const std::string& str, int& handle ) const
- * @brief ‰¹ƒ‰ƒxƒ‹•¶š—ñ‚æ‚è‰æ‘œƒnƒ“ƒhƒ‹‚ğæ“¾
- * @param[in] str ‰¹ƒ‰ƒxƒ‹•¶š—ñ
- * @param[out] handle ‰¹ƒnƒ“ƒhƒ‹
- * @return ˆ—‚Ì¬”Û
- * @details ‰æ‘œƒnƒ“ƒhƒ‹‚ÍADX ƒ‰ƒCƒuƒ‰ƒŠ‚Ì
- * ‰¹ƒ[ƒhŠÖ”‚Å“¾‚ç‚ê‚é•`‰æ—p‚Ì’l‚Å‚·B.
+ * @brief éŸ³ãƒ©ãƒ™ãƒ«æ–‡å­—åˆ—ã‚ˆã‚Šç”»åƒãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
+ * @param[in] str éŸ³ãƒ©ãƒ™ãƒ«æ–‡å­—åˆ—
+ * @param[out] handle éŸ³ãƒãƒ³ãƒ‰ãƒ«
+ * @return å‡¦ç†ã®æˆå¦
+ * @details ç”»åƒãƒãƒ³ãƒ‰ãƒ«ã¯ã€DX ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®
+ * éŸ³ãƒ­ãƒ¼ãƒ‰é–¢æ•°ã§å¾—ã‚‰ã‚Œã‚‹æç”»ç”¨ã®å€¤ã§ã™ã€‚.
  */
-bool ScriptEngine::GetSeHandle( const std::string& str,int& handle ) const
+bool ModeSpeakScript::GetSeHandle( const std::string& str,int& handle ) const
 {
 	for ( auto&& se : se_list )
 	{
@@ -750,12 +745,12 @@ bool ScriptEngine::GetSeHandle( const std::string& str,int& handle ) const
 
 /**
  * ScriptEngine::OnCommandPlayanime ( unsigned int line, const std::vector<std::string>& scripts ).
- * brief@ƒXƒNƒŠƒvƒg‚Ì "ve" ƒRƒ}ƒ“ƒh‚ğˆ—
+ * briefã€€ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "ve" ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
  * \param line
  * \param scripts
- * \return ˆ—‚Ì¥”ñ
+ * \return å‡¦ç†ã®æ˜¯é
  */
-bool ScriptEngine::OnCommandPlayanime( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandPlayanime( unsigned int line,const std::vector<std::string>& scripts )
 {
 	movie_play = std::make_unique<CommandMovieplay>( line,scripts );
 	if ( !movie_play->Check() )
@@ -780,12 +775,12 @@ bool ScriptEngine::OnCommandPlayanime( unsigned int line,const std::vector<std::
 
 /**
  * bool ScriptEngine::OnCommandMusicloop( unsigned int line, const std::vector<std::string>& scripts ).
- * brief@ƒXƒNƒŠƒvƒg‚Ì "bg" ƒRƒ}ƒ“ƒh‚ğˆ—
+ * briefã€€ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "bg" ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
  * \param line
  * \param scripts
- * \return ˆ—‚Ì¥”ñ
+ * \return å‡¦ç†ã®æ˜¯é
  */
-bool ScriptEngine::OnCommandMusicloop( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandMusicloop( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  mgloop = std::make_unique<CommandMusicloop>( line,scripts );
 	if ( !mgloop->Check() )
@@ -805,12 +800,12 @@ bool ScriptEngine::OnCommandMusicloop( unsigned int line,const std::vector<std::
 
 /**
  * bool ScriptEngine::OnCommandMusicbag ( unsigned int line, const std::vector<std::string>& scripts ).
- * brief@ƒXƒNƒŠƒvƒg‚Ì "fg" ƒRƒ}ƒ“ƒh‚ğˆ—
+ * briefã€€ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "fg" ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
  * \param line
  * \param scripts
- * \return ˆ—‚Ì¥”ñ
+ * \return å‡¦ç†ã®æ˜¯é
  */
-bool ScriptEngine::OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  mgbag = std::make_unique<CommandMusicbag>( line,scripts );
 	if ( !mgbag->Check() )
@@ -831,12 +826,12 @@ bool ScriptEngine::OnCommandMusicbag( unsigned int line,const std::vector<std::s
 
 /**
  * bool ScriptEngine::OnCommandMusicstop ( unsigned int line, const std::vector<std::string>& scripts ).
- * brief@ƒXƒNƒŠƒvƒg‚Ì "gs" ƒRƒ}ƒ“ƒh‚ğˆ—
+ * briefã€€ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "gs" ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
  * \param line
  * \param scripts
- * \return ˆ—‚Ì¥”ñ
+ * \return å‡¦ç†ã®æ˜¯é
  */
-bool ScriptEngine::OnCommandMusicstop( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandMusicstop( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  mgstop = std::make_unique<CommandMusicstop>( line,scripts );
 	if ( !mgstop->Check() )
@@ -857,9 +852,9 @@ bool ScriptEngine::OnCommandMusicstop( unsigned int line,const std::vector<std::
 
 //!
 //! @fn void ScriptEngine::OnCommandClick()
-//! @brief ƒXƒNƒŠƒvƒg‚Ì '@' ƒRƒ}ƒ“ƒh‚ğˆ—
+//! @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® '@' ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
 //!
-bool ScriptEngine::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
 {
 	if ( _game._trg & PAD_INPUT_A )
 	{
@@ -876,11 +871,11 @@ bool ScriptEngine::OnCommandClick( unsigned int line,const std::vector<std::stri
 
 //!
 //! @fn bool ScriptEngine::OnCommandWait(const std::vector<std::string>& scripts)
-//! @brief ƒXƒNƒŠƒvƒg‚Ì 'w' ƒRƒ}ƒ“ƒh‚ğˆ—
-//! @param[in] scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
-//! @return ˆ—‚Ì¬”Û
+//! @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® 'w' ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
+//! @param[in] scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+//! @return å‡¦ç†ã®æˆå¦
 //!
-bool ScriptEngine::OnCommandWait( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandWait( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto wait = 0;
 	auto result = false;
@@ -897,14 +892,14 @@ bool ScriptEngine::OnCommandWait( unsigned int line,const std::vector<std::strin
 
 /**
  * @fn bool ScriptEngine::OnCommandscliptend(const std::vector<std::string>& scripts).
- * @brief ƒXƒNƒŠƒvƒg‚Ì "e" ƒRƒ}ƒ“ƒh‚ğˆ—
+ * @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "e" ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
  * \param line
  * \param scripts
- * \return ˆ—‚Ì¬”Û
+ * \return å‡¦ç†ã®æˆå¦
  */
-bool ScriptEngine::OnCommandScliptend( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandScriptend( unsigned int line,const std::vector<std::string>& scripts )
 {
-	_game.isEndsclipt = true;
+//	_game.isEndsclipt = true;
 	for ( auto&& se : se_list )
 	{
 		StopSoundMem( se->GetHandle() );
@@ -915,12 +910,12 @@ bool ScriptEngine::OnCommandScliptend( unsigned int line,const std::vector<std::
 
 //!
 //! @fn bool ScriptEngine::OnCommandImage(unsigned int line, const std::vector<std::string>& scripts)
-//! @brief ƒXƒNƒŠƒvƒg‚Ì 'i' ƒRƒ}ƒ“ƒh‚ğˆ—
-//! @param[in] line ƒXƒNƒŠƒvƒg‚Ìs”
-//! @param[in] scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
-//! @return ˆ—‚Ì¬”Û
+//! @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® 'i' ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
+//! @param[in] line ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®è¡Œæ•°
+//! @param[in] scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+//! @return å‡¦ç†ã®æˆå¦
 //!
-bool ScriptEngine::OnCommandImage( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandImage( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  image = std::make_unique<CommandImageload>( line,scripts );
 	if ( !image->Check() )
@@ -935,12 +930,12 @@ bool ScriptEngine::OnCommandImage( unsigned int line,const std::vector<std::stri
 
 /**
  * @fn bool ScriptEngine::OnCommandSe ( unsigned int line, const std::vector<std::string>& scripts )
- * @brief ƒXƒNƒŠƒvƒg‚Ì 'im' ƒRƒ}ƒ“ƒh‚ğˆ—
- * @param[in] line ƒXƒNƒŠƒvƒg‚Ìs”
- * @param[in] scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
- * \return ˆ—‚Ì¬”Û
+ * @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® 'im' ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
+ * @param[in] line ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®è¡Œæ•°
+ * @param[in] scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+ * \return å‡¦ç†ã®æˆå¦
  */
-bool ScriptEngine::OnCommandSe( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandSe( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  se = std::make_unique<CommandSeload>( line,scripts );
 	if ( !se->Check() )
@@ -955,12 +950,12 @@ bool ScriptEngine::OnCommandSe( unsigned int line,const std::vector<std::string>
 
 //!
 //! @fn bool ScriptEngine::OnCommandMessage(unsigned int line, const std::vector<std::string>& scripts)
-//! @brief ƒXƒNƒŠƒvƒg‚Ì 'm' ƒRƒ}ƒ“ƒh‚ğˆ—
-//! @param[in] line ƒXƒNƒŠƒvƒg‚Ìs”
-//! @param[in] scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
-//! @return ˆ—‚Ì¬”Û
+//! @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® 'm' ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
+//! @param[in] line ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®è¡Œæ•°
+//! @param[in] scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+//! @return å‡¦ç†ã®æˆå¦
 //!
-bool ScriptEngine::OnCommandMessage( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandMessage( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto message = std::make_unique < CommandMessage >( line,scripts );
 	if ( !message->Check() )
@@ -980,7 +975,7 @@ bool ScriptEngine::OnCommandMessage( unsigned int line,const std::vector<std::st
 
 	const auto size = static_cast<int>(message_list.size());
 
-	// Å‘åƒƒbƒZ[ƒWƒ‰ƒCƒ“”‚ğ’´‚¦‚½‚çæ“ª(ƒCƒ“ƒfƒbƒNƒX 0 )‚ğíœ
+	// æœ€å¤§ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ©ã‚¤ãƒ³æ•°ã‚’è¶…ãˆãŸã‚‰å…ˆé ­(ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ 0 )ã‚’å‰Šé™¤
 	if ( size > MSG_LINE_MAX )
 	{
 		message_list.erase( message_list.begin() + 0 );
@@ -988,7 +983,7 @@ bool ScriptEngine::OnCommandMessage( unsigned int line,const std::vector<std::st
 
 	message_list.emplace_back( std::move( message ) );
 
-	// ƒƒbƒZ[ƒWƒRƒ}ƒ“ƒh‚ğˆ—‚µ‚½‚çƒƒbƒZ[ƒW•\¦‚ğ—LŒø‚É‚·‚é
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†ã—ãŸã‚‰ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤ºã‚’æœ‰åŠ¹ã«ã™ã‚‹
 	is_message_output = true;
 
 	return true;
@@ -996,12 +991,12 @@ bool ScriptEngine::OnCommandMessage( unsigned int line,const std::vector<std::st
 
 /**
  * .
- * @brief ƒXƒNƒŠƒvƒg‚Ì "di" ƒRƒ}ƒ“ƒh‚ğˆ—
- * \param line ƒXƒNƒŠƒvƒg‚Ìs”
- * \param scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
- * \return ˆ—‚Ì¬”Û
+ * @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "di" ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
+ * \param line ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®è¡Œæ•°
+ * \param scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+ * \return å‡¦ç†ã®æˆå¦
  */
-bool ScriptEngine::OnCommandDrawin( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandDrawin( unsigned int line,const std::vector<std::string>& scripts )
 {
 
 	auto drawin = std::make_unique<CommandDrawin>( line,scripts );
@@ -1019,7 +1014,7 @@ bool ScriptEngine::OnCommandDrawin( unsigned int line,const std::vector<std::str
 
 	drawin->SetHandle( handle );
 
-	// “¯‚¶ Index ‚Ì Draw ƒRƒ}ƒ“ƒh‚ğÁ‚·(ã‘‚«d—l)
+	// åŒã˜ Index ã® Draw ã‚³ãƒãƒ³ãƒ‰ã‚’æ¶ˆã™(ä¸Šæ›¸ãä»•æ§˜)
 	const auto index = drawin->GetIndex();
 	const auto check = [index]( const auto& element ) -> bool
 	{
@@ -1030,7 +1025,7 @@ bool ScriptEngine::OnCommandDrawin( unsigned int line,const std::vector<std::str
 	drawin_list.erase( remove,drawin_list.end() );
 	drawin_list.emplace_back( std::move( drawin ) );
 
-	// •`‰æƒŠƒXƒg‚ª•¡”‚ ‚é‚È‚ç Index ‚Åƒ\[ƒg‚·‚é
+	// æç”»ãƒªã‚¹ãƒˆãŒè¤‡æ•°ã‚ã‚‹ãªã‚‰ Index ã§ã‚½ãƒ¼ãƒˆã™ã‚‹
 	if ( drawin_list.size() >= 2 )
 	{
 		const auto sort = []( const auto& lh,const auto& rh ) -> bool
@@ -1046,12 +1041,12 @@ bool ScriptEngine::OnCommandDrawin( unsigned int line,const std::vector<std::str
 
 /**
  * .
- * @brief ƒXƒNƒŠƒvƒg‚Ì "do" ƒRƒ}ƒ“ƒh‚ğˆ—
- * \param line ƒXƒNƒŠƒvƒg‚Ìs”
- * \param scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
- * \return ˆ—‚Ì¬”Û
+ * @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "do" ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
+ * \param line ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®è¡Œæ•°
+ * \param scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+ * \return å‡¦ç†ã®æˆå¦
  */
-bool ScriptEngine::OnCommandDrawout( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandDrawout( unsigned int line,const std::vector<std::string>& scripts )
 {
 
 	drawin_list.clear();
@@ -1071,7 +1066,7 @@ bool ScriptEngine::OnCommandDrawout( unsigned int line,const std::vector<std::st
 
 	drawout->SetHandle( handle );
 
-	// “¯‚¶ Index ‚Ì Draw ƒRƒ}ƒ“ƒh‚ğÁ‚·(ã‘‚«d—l)
+	// åŒã˜ Index ã® Draw ã‚³ãƒãƒ³ãƒ‰ã‚’æ¶ˆã™(ä¸Šæ›¸ãä»•æ§˜)
 	const auto index = drawout->GetIndex();
 	const auto check = [index]( const auto& element ) -> bool
 	{
@@ -1082,7 +1077,7 @@ bool ScriptEngine::OnCommandDrawout( unsigned int line,const std::vector<std::st
 	drawout_list.erase( remove,drawout_list.end() );
 	drawout_list.emplace_back( std::move( drawout ) );
 
-	// •`‰æƒŠƒXƒg‚ª•¡”‚ ‚é‚È‚ç Index ‚Åƒ\[ƒg‚·‚é
+	// æç”»ãƒªã‚¹ãƒˆãŒè¤‡æ•°ã‚ã‚‹ãªã‚‰ Index ã§ã‚½ãƒ¼ãƒˆã™ã‚‹
 	if ( drawout_list.size() >= 2 )
 	{
 		const auto sort = []( const auto& lh,const auto& rh ) -> bool
@@ -1098,12 +1093,12 @@ bool ScriptEngine::OnCommandDrawout( unsigned int line,const std::vector<std::st
 
 /**
  * @fn bool ScriptEngine::OnCommandCrfi(unsigned int line, const std::vector<std::string>& scripts)
- * @brief ƒXƒNƒŠƒvƒg‚Ì 'fi' ƒRƒ}ƒ“ƒh‚ğˆ—
- * \param [in] scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
- * \param [in] scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
- * \return ˆ—‚Ì¬”Û
+ * @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® 'fi' ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
+ * \param [in] scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+ * \param [in] scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+ * \return å‡¦ç†ã®æˆå¦
  */
-bool ScriptEngine::OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts )
 {
 	crfo_list.clear();
 	auto crfi = std::make_unique<CommandCrfi>( line,scripts );
@@ -1121,12 +1116,12 @@ bool ScriptEngine::OnCommandCrfi( unsigned int line,const std::vector<std::strin
 
 /**
  * @fn bool ScriptEngine::OnCommandCrfo(unsigned int line, const std::vector<std::string>& scripts)
- * @brief ƒXƒNƒŠƒvƒg‚Ì "fo" ƒRƒ}ƒ“ƒh‚ğˆ—
- * \param [in] scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
- * \param [in] scripts ƒXƒNƒŠƒvƒg‚Ì“à—e
- * \return ˆ—‚Ì¬”Û
+ * @brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® "fo" ã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†
+ * \param [in] scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+ * \param [in] scripts ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å†…å®¹
+ * \return å‡¦ç†ã®æˆå¦
  */
-bool ScriptEngine::OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts )
 {
 	crfi_list.clear();
 	auto crfo = std::make_unique<CommandCrfo>( line,scripts );
@@ -1142,15 +1137,15 @@ bool ScriptEngine::OnCommandCrfo( unsigned int line,const std::vector<std::strin
 }
 
 /**
- *?fn void script_engine::Render.
- *?brief ƒXƒNƒŠƒvƒg‚Ì‘S‚Ä‚Ì•`‰æˆ—
- * –ˆƒtƒŒ[ƒ€ŒÄ‚Ño‚·•K—v‚ª‚ ‚è‚Ü‚·B
- *?return void
+ *Â¥fn void script_engine::Render.
+ *Â¥brief ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å…¨ã¦ã®æç”»å‡¦ç†
+ * æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã³å‡ºã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+ *Â¥return void
  */
-void ScriptEngine::Render() const
+bool ModeSpeakScript::Draw()
 {
-	RenderImage();//ƒCƒ‰ƒXƒg•`‰æ
-	RenderFeedin();//ƒtƒF[ƒhƒCƒ“•`‰æ
+	RenderImage();//ã‚¤ãƒ©ã‚¹ãƒˆæç”»
+	RenderFeedin();//ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³æ™‚æç”»
 	RenderFeedout();
 	SetDrawBlendMode( DX_BLENDMODE_ALPHA,Hide_point );
 	RenderMessageWindow();
@@ -1160,13 +1155,13 @@ void ScriptEngine::Render() const
 }
 
 /**
- *?fn void script_engine::RenderImage.
- *?brief "di""do" ƒRƒ}ƒ“ƒh‚É‚æ‚é‰æ‘œ•`‰æ
- *?return void
+ *Â¥fn void script_engine::RenderImage.
+ *Â¥brief "di""do" ã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚‹ç”»åƒæç”»
+ *Â¥return void
  */
-void ScriptEngine::RenderImage() const
+void ModeSpeakScript::RenderImage() const
 {
-	if ( _game.isBlackbackground )//•K—v‚É‰‚¶‚ÄƒXƒNƒŠƒvƒg‚ÌŒã‚ë‚É‰f‚Á‚Ä‚¢‚éƒ‚ƒm‚ğ‰B‚·•`‰æ
+	if ( _game.isBlackbackground )//å¿…è¦ã«å¿œã˜ã¦ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å¾Œã‚ã«æ˜ ã£ã¦ã„ã‚‹ãƒ¢ãƒã‚’éš ã™æç”»
 	{
 		if ( state == ScriptState::CRFEEDIN || !(drawout_list.empty()) )
 		{
@@ -1176,14 +1171,14 @@ void ScriptEngine::RenderImage() const
 			DrawBox( BASICS_X,BASICS_Y,SCREEN_W,SCREEN_H,_game._CrBrack,TRUE );
 		}
 	}
-	for ( auto&& drawin : drawin_list )//Œ»‚ê‚é•`‰æ
+	for ( auto&& drawin : drawin_list )//ç¾ã‚Œã‚‹æç”»
 	{
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA,static_cast<int>(drawin->GetDrawAlphain()) );
 		DrawGraph( drawin->GetX(),drawin->GetY(),drawin->GetHandle(),TRUE );
 		SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
 	}
 
-	for ( auto&& drawout : drawout_list )//Á‚¦‚Ä‚¢‚­•`‰æ
+	for ( auto&& drawout : drawout_list )//æ¶ˆãˆã¦ã„ãæç”»
 	{
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA,static_cast<int>(drawout->GetDrawAlphaout()) );
 		DrawGraph( drawout->GetX(),drawout->GetY(),drawout->GetHandle(),TRUE );
@@ -1192,11 +1187,11 @@ void ScriptEngine::RenderImage() const
 }
 
 /**
- *?fn void script_engine::RenderMessage.
- *?brief "m" ƒRƒ}ƒ“ƒh‚É‚æ‚é•¶š—ñ•`‰æ
- *?return void
+ *Â¥fn void script_engine::RenderMessage.
+ *Â¥brief "m" ã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚‹æ–‡å­—åˆ—æç”»
+ *Â¥return void
  */
-void ScriptEngine::RenderMessage() const
+void ModeSpeakScript::RenderMessage() const
 {
 
 	for ( auto&& message : message_list )
@@ -1205,11 +1200,11 @@ void ScriptEngine::RenderMessage() const
 		DrawBox( LINE_POSITION_LEFT,LINE_POSITION_TOP,LINE_POSITION_RIGHT,LINE_POSITION_BOTTOM,message_string_color,TRUE );
 		DrawString( MSG_SPEAKER_SET_X,MSG_SPEAKER_SET_Y,message->Whospeak().c_str(),message_string_color );
 		const auto area = message->GetArea();
-		// •\¦ƒGƒŠƒA‚ğ§Œä‚µ‚Ä 1•¶š‚Ã‚Â•`‰æ‚·‚é
+		// è¡¨ç¤ºã‚¨ãƒªã‚¢ã‚’åˆ¶å¾¡ã—ã¦ 1æ–‡å­—ã¥ã¤æç”»ã™ã‚‹
 		SetDrawArea( area.left,area.top,area.right,area.bottom );
 		DrawString( area.left,area.top,message->GetMessageA().c_str(),message_string_color );
 	}
-	// •\¦ƒGƒŠƒA‚ğ‘S‰æ–Ê‚É–ß‚·
+	// è¡¨ç¤ºã‚¨ãƒªã‚¢ã‚’å…¨ç”»é¢ã«æˆ»ã™
 	SetDrawArea( 0,0,screen_width,screen_height );
 
 	//
@@ -1228,11 +1223,11 @@ void ScriptEngine::RenderMessage() const
 }
 
 /**
- *?fn void script_engine::RenderMessageWindow.
- *?brief ƒƒbƒZ[ƒWƒEƒBƒ“ƒhƒE‚Ì•`‰æ
- *?return void
+ *Â¥fn void script_engine::RenderMessageWindow.
+ *Â¥brief ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æç”»
+ *Â¥return void
  */
-void ScriptEngine::RenderMessageWindow() const
+void ModeSpeakScript::RenderMessageWindow() const
 {
 	if ( (message_list.empty()) )
 	{
@@ -1244,11 +1239,11 @@ void ScriptEngine::RenderMessageWindow() const
 }
 
 /**
- *?fn void script_engine::RenderFeedin.
- *?brief "fi" ƒRƒ}ƒ“ƒh‚É‚æ‚é•`‰æ
- *?return void
+ *Â¥fn void script_engine::RenderFeedin.
+ *Â¥brief "fi" ã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚‹æç”»
+ *Â¥return void
  */
-void ScriptEngine::RenderFeedin()const
+void ModeSpeakScript::RenderFeedin()const
 {
 	for ( auto&& crfi : crfi_list )
 	{
@@ -1259,11 +1254,11 @@ void ScriptEngine::RenderFeedin()const
 }
 
 /**
- *?fn void script_engine::RenderFeedout.
- *?brief "fo" ƒRƒ}ƒ“ƒh‚É‚æ‚é•`‰æ
- *?return void
+ *Â¥fn void script_engine::RenderFeedout.
+ *Â¥brief "fo" ã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚‹æç”»
+ *Â¥return void
  */
-void ScriptEngine::RenderFeedout()const
+void ModeSpeakScript::RenderFeedout()const
 {
 	for ( auto&& crfo : crfo_list )
 	{
@@ -1276,11 +1271,11 @@ void ScriptEngine::RenderFeedout()const
 }
 
 /**
- *?fn void script_engine::RenderAnime.
- *?brief "ve" ƒRƒ}ƒ“ƒh‚É‚æ‚é•`‰æ
- *?return void
+ *Â¥fn void script_engine::RenderAnime.
+ *Â¥brief "ve" ã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚‹æç”»
+ *Â¥return void
  */
-void ScriptEngine::RenderAnime()const
+void ModeSpeakScript::RenderAnime()const
 {
 	if ( state == ScriptState::PLAY_ANIME )
 	{

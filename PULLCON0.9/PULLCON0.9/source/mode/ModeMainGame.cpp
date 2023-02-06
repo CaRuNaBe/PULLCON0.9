@@ -74,7 +74,7 @@ namespace
  * @param layer 何番目に移すか
  * @return void
  */
-ModeMainGame::ModeMainGame( ApplicationMain& game,int layer )
+ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	: ModeBase( game,layer )
 {
 	scripts_data = std::make_unique<ScriptsData>();

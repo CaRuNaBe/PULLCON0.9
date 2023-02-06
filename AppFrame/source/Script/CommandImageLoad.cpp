@@ -4,7 +4,7 @@
 //! @brief 'i' スクリプトを処理するクラス実装
 //!
 #include "dxlib.h"
-#include "command_imageload.h"
+#include "CommandImageLoad.h"
 #include"../ResourceServer/ResourceServer.h"
 
 namespace
@@ -12,13 +12,13 @@ namespace
 	constexpr size_t SCRIPT_NUM = 3;
 }
 
-CommandImageload::CommandImageload ( unsigned int line , const std::vector<std::string>& script )
+CommandImageLoad::CommandImageLoad( unsigned int line , const std::vector<std::string>& script )
 	: CommandBase ( line , script )
 {
 	handle = -1;
 }
 
-bool CommandImageload::Check ()
+bool CommandImageLoad::Check ()
 {
 	const auto size = script.size ();
 

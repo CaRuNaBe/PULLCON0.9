@@ -1,9 +1,19 @@
-#pragma once
+﻿#pragma once
 #include "appframe.h"
-#include"string"
+#include <tchar.h>
+#include <vector>
+#include <string>
+#include <memory>
+#include <map>
+
+
+class ScriptsData;
+
+
 
 class ModeSpeakScript:public ModeBase
 {
+
 public:
 	ModeSpeakScript( ApplicationBase& game,int layer,std::string storyname );
 	ModeSpeakScript( const ModeSpeakScript& ) = default;
@@ -14,11 +24,14 @@ public:
 	ModeSpeakScript& operator=( const ModeSpeakScript& right ) = default;
 	ModeSpeakScript& operator=( ModeSpeakScript&& right ) noexcept = default;
 
+	/** 初期化 コンストラクタ時よぶ */
+	virtual void Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname );
+	/** 計算 毎フレーム呼ばれる */
+	virtual bool Update();
+	/** 描画 毎フレーム呼ばれる */
+	virtual bool Draw();
+	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
-
-	void Update();
-	void Render() const;
-
 private:
 	enum class ScriptState
 	{
@@ -64,7 +77,7 @@ private:
 	bool OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMusicstop( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandPlayanime( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandScliptend( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandScriptend( unsigned int line,const std::vector<std::string>& scripts );
 
 	bool OnCommandImage( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandSe( unsigned int line,const std::vector<std::string>& scripts );
@@ -81,22 +94,20 @@ private:
 	void RenderAnime()const;
 
 	std::unique_ptr<ScriptsData> scripts_data;
-	std::unique_ptr<CommandMovieplay>movie_play;
+	std::unique_ptr<CommandMoviePlay>movie_play;
 
-	std::vector<std::unique_ptr<CommandImageload>> image_list;
-	std::vector<std::unique_ptr<CommandSeload>> se_list;
-	std::vector < std::unique_ptr < CommandCrfi>> crfi_list;
-	std::vector < std::unique_ptr < CommandCrfo>> crfo_list;
-	std::vector<std::unique_ptr<CommandDrawin>> drawin_list;
-	std::vector<std::unique_ptr<CommandDrawout>> drawout_list;
+	std::vector<std::unique_ptr<CommandImageLoad>> image_list;
+	std::vector<std::unique_ptr<CommandSeLoad>> se_list;
+	std::vector < std::unique_ptr < CommandCrFeedIn>> crfi_list;
+	std::vector < std::unique_ptr < CommandCrFeedOut>> crfo_list;
+	std::vector<std::unique_ptr<CommandDrawIn>> drawin_list;
+	std::vector<std::unique_ptr<CommandDrawOut>> drawout_list;
 	std::vector<std::unique_ptr<CommandMessage>> message_list;
 
 
-	typedef std::map<std::string,bool(ScriptEngine::*)(unsigned int,const std::vector<std::string>& scripts)> funcs_type;
+	typedef std::map<std::string,bool(ModeSpeakScript::*)(unsigned int,const std::vector<std::string>& scripts)> funcs_type;
 
 	ScriptState state;
-	Game& _game;
-	ModeBase& _base;
 
 
 	unsigned int max_line;//

@@ -6,14 +6,14 @@
  * \date   August 2022
  *********************************************************************/
 
-#include "command_drawin.h"
-#include "scripts_string.h"
+#include "CommandDrawIn.h"
+#include "ScriptsString.h"
 namespace
 {
 	constexpr size_t SCRIPT_NUM = 6;
 }
 
-CommandDrawin::CommandDrawin ( unsigned int line , const std::vector<std::string>& script )
+CommandDrawIn::CommandDrawIn( unsigned int line , const std::vector<std::string>& script )
 	: CommandBase ( line , script )
 {
 	index = 0;
@@ -25,7 +25,7 @@ CommandDrawin::CommandDrawin ( unsigned int line , const std::vector<std::string
 	isdrawincomplete = true;
 }
 
-bool CommandDrawin::Check ()
+bool CommandDrawIn::Check ()
 {
 	const auto size = script.size ();
 

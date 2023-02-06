@@ -194,8 +194,17 @@
     <ClInclude Include="source\Script\CommandLabel.h" />
     <ClInclude Include="source\Script\CommandCrFeedIn.h" />
     <ClInclude Include="source\Script\CommandCrFeedOut.h" />
-    <ClInclude Include="source\Script\scripts_data.h" />
-    <ClInclude Include="source\Script\scripts_string.h" />
+    <ClInclude Include="source\Script\CommandDrawIn.h" />
+    <ClInclude Include="source\Script\CommandDrawOut.h" />
+    <ClInclude Include="source\Script\CommandImageLoad.h" />
+    <ClInclude Include="source\Script\CommandMessage.h" />
+    <ClInclude Include="source\Script\CommandMoviePlay.h" />
+    <ClInclude Include="source\Script\CommandMusicBack.h" />
+    <ClInclude Include="source\Script\CommandMusicLoop.h" />
+    <ClInclude Include="source\Script\CommandMusicStop.h" />
+    <ClInclude Include="source\Script\CommandSeLoad.h" />
+    <ClInclude Include="source\Script\ScriptsData.h" />
+    <ClInclude Include="source\Script\ScriptsString.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\ScliptFlagManager.cpp" />
@@ -223,8 +232,17 @@
     <ClCompile Include="source\Script\CommandLabel.cpp" />
     <ClCompile Include="source\Script\CommandCrFeedIn.cpp" />
     <ClCompile Include="source\Script\CommandCrFeedOut.cpp" />
-    <ClCompile Include="source\Script\scripts_data.cpp" />
-    <ClCompile Include="source\Script\scripts_string.cpp" />
+    <ClCompile Include="source\Script\CommandDrawIn.cpp" />
+    <ClCompile Include="source\Script\CommandDrawOut.cpp" />
+    <ClCompile Include="source\Script\CommandImageLoad.cpp" />
+    <ClCompile Include="source\Script\CommandMessage.cpp" />
+    <ClCompile Include="source\Script\CommandMoviePlay.cpp" />
+    <ClCompile Include="source\Script\CommandMusicBack.cpp" />
+    <ClCompile Include="source\Script\CommandMusicLoop.cpp" />
+    <ClCompile Include="source\Script\CommandMusicstop.cpp" />
+    <ClCompile Include="source\Script\CommandSeLoad.cpp" />
+    <ClCompile Include="source\Script\ScriptsData.cpp" />
+    <ClCompile Include="source\Script\ScriptsString.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

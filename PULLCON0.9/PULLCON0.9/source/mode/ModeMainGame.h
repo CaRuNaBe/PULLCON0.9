@@ -15,22 +15,23 @@
 class ApplicationMain;
 class CommandLabel;
 class CommandChoice;
+
 class ModeMainGame:public ModeBase
 {
 public:
 	/** コンストラクタ */
-	ModeMainGame( ApplicationMain& game,int layer );
+	ModeMainGame( ApplicationBase& game,int layer );
 	/** デストラクタ */
 	virtual ~ModeMainGame();
 	/** 初期化 コンストラクタ時よぶ */
-	void Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname );
+	virtual void Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname );
 	/** 計算 毎フレーム呼ばれる */
 	virtual bool Update();
 	/** 描画 毎フレーム呼ばれる */
 	virtual bool Draw();
 	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
-
+	
 	void SetCursor(const vector4& pos) { _vCursor = pos; }
 	void SetXMax(const int& i) { _iFuel = i; }
 

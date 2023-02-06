@@ -3,7 +3,7 @@
 //!
 //! @brief 'm' スクリプトを処理するクラス実装
 //!
-#include "command_message.h"
+#include "CommandMessage.h"
 
 namespace
 {

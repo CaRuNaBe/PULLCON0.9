@@ -6,19 +6,19 @@
  * \date   August 2022
  *********************************************************************/
 #pragma once
-#include "command_base.h"
+#include "CommandBase.h"
 #include <string>
-class CommandDrawin : public CommandBase
+class CommandDrawIn: public CommandBase
 {
 public:
-	CommandDrawin ( unsigned int line , const std::vector<std::string>& script );
-	CommandDrawin ( const CommandDrawin& ) = default;
-	CommandDrawin ( CommandDrawin&& ) noexcept = default;
+	CommandDrawIn ( unsigned int line , const std::vector<std::string>& script );
+	CommandDrawIn( const CommandDrawIn& ) = default;
+	CommandDrawIn( CommandDrawIn&& ) noexcept = default;
 
-	virtual ~CommandDrawin () = default;
+	virtual ~CommandDrawIn() = default;
 
-	CommandDrawin& operator=( const CommandDrawin& right ) = default;
-	CommandDrawin& operator=( CommandDrawin&& right ) noexcept = default;
+	CommandDrawIn& operator=( const CommandDrawIn& right ) = default;
+	CommandDrawIn& operator=( CommandDrawIn&& right ) noexcept = default;
 
 	bool Check () override;
 

@@ -5,14 +5,14 @@
  * \author ˆ¢•”Œ’‘¾˜Y
  * \date   August 2022
  *********************************************************************/
-#include "command_drawout.h"
-#include "scripts_string.h"
+#include "CommandDrawOut.h"
+#include "ScriptsString.h"
 namespace
 {
 	constexpr size_t SCRIPT_NUM = 6;
 }
 
-CommandDrawout::CommandDrawout ( unsigned int line , const std::vector<std::string>& script )
+CommandDrawOut::CommandDrawOut( unsigned int line , const std::vector<std::string>& script )
 	: CommandBase ( line , script )
 {
 	index = 0;
@@ -24,7 +24,7 @@ CommandDrawout::CommandDrawout ( unsigned int line , const std::vector<std::stri
 	isdrawoutcomplete = true;
 }
 
-bool CommandDrawout::Check ()
+bool CommandDrawOut::Check ()
 {
 	const auto size = script.size ();
 

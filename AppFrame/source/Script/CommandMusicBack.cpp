@@ -1,16 +1,17 @@
-#include "command_musicstop.h"
+
+#include "CommandMusicBack.h"
 namespace
 {
 	constexpr size_t SCRIPT_NUM = 2;
 }
 
-CommandMusicstop::CommandMusicstop ( unsigned int line , const std::vector<std::string>& script )
+CommandMusicBack::CommandMusicBack( unsigned int line , const std::vector<std::string>& script )
 	: CommandBase ( line , script )
 {
 	mghandle = 0;
 }
 
-bool CommandMusicstop::Check ()
+bool CommandMusicBack::Check ()
 {
 	const auto size = script.size ();
 
@@ -18,6 +19,7 @@ bool CommandMusicstop::Check ()
 	{
 		return false;
 	}
+
 
 	return true;
 }

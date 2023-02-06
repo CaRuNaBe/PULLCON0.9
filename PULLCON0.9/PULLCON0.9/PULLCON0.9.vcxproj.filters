@@ -20,6 +20,9 @@
     <Filter Include="source\object\game">
       <UniqueIdentifier>{b0781283-a4ea-4ce3-b3ee-9edb1e405b8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\mode\script">
+      <UniqueIdentifier>{8f5aa987-b5b8-45b3-bdb2-86faa5addbb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\mode\ModeTitle.cpp">
@@ -106,14 +109,17 @@
     <ClCompile Include="source\maingame\ClearObject.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeMainGame.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
     <ClCompile Include="source\maingame\EnemyAAA.cpp">
       <Filter>source\object\game</Filter>
     </ClCompile>
     <ClCompile Include="source\mode\ModeResourceRoad.cpp">
       <Filter>source\mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeMainGame.cpp">
+      <Filter>source\mode\script</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeSpeakScript.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,12 +210,15 @@
     <ClInclude Include="source\maingame\ClearObject.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeMainGame.h" />
-    <ClInclude Include="source\mode\ModeMainGame.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
     <ClInclude Include="source\mode\ModeResourceRoad.h">
       <Filter>source\mode</Filter>
     </ClInclude>
+    <ClInclude Include="source\mode\ModeMainGame.h">
+      <Filter>source\mode\script</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeMainGame.h">
+      <Filter>source\mode\script</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeSpeakScript.h" />
   </ItemGroup>
 </Project>

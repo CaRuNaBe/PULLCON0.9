@@ -6,18 +6,18 @@
  * \date   August 2022
  *********************************************************************/
 #pragma once
-#include "command_base.h"
-class CommandMovieplay :public CommandBase
+#include "CommandBase.h"
+class CommandMoviePlay :public CommandBase
 {
 public:
-	CommandMovieplay ( unsigned int line , const std::vector<std::string>& script );
-	CommandMovieplay ( const  CommandMovieplay& ) = default;
-	CommandMovieplay ( CommandMovieplay&& ) noexcept = default;
+	CommandMoviePlay( unsigned int line , const std::vector<std::string>& script );
+	CommandMoviePlay( const  CommandMoviePlay& ) = default;
+	CommandMoviePlay( CommandMoviePlay&& ) noexcept = default;
 
-	virtual ~CommandMovieplay () = default;
+	virtual ~CommandMoviePlay() = default;
 
-	CommandMovieplay& operator=( const  CommandMovieplay& right ) = default;
-	CommandMovieplay& operator=( CommandMovieplay&& right ) noexcept = default;
+	CommandMoviePlay& operator=( const  CommandMoviePlay& right ) = default;
+	CommandMoviePlay& operator=( CommandMoviePlay&& right ) noexcept = default;
 
 	bool Check () override;
 

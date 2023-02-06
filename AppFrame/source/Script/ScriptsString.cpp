@@ -1,12 +1,4 @@
-/*****************************************************************//**
- * \file   scripts_string.cpp
- * \brief std::string に対してのユーティリティ処理実装
- *
- *
- * \author 真中先生
- * \date   August 2022
- *********************************************************************/
-#include "scripts_string.h"
+#include "ScriptsString.h"
 
 namespace string
 {

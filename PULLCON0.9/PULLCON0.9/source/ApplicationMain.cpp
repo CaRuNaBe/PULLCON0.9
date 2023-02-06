@@ -4,6 +4,7 @@
 #include "mode/ModePause.h"
 #include "mode/ModeMainGame.h"
 #include "mode/ModeTitle.h"
+#include "mode/ModeSpeakScript.h"
 // é¿ëÃ
 ApplicationMain				g_oApplicationMain;
 
@@ -11,7 +12,7 @@ bool ApplicationMain::Initialize(HINSTANCE hInstance) {
 	if (!base::Initialize(hInstance)) { return false; }
 
 	// ÉÇÅ[ÉhÇÃìoò^
-	auto game = std::make_shared<ModeMainGame>(*this,1);
+	auto game = std::make_shared<ModeSpeakScript>(*this,1);
 	base::GetInstance()->GetModeServer()->Add(game);
 
 	return true;

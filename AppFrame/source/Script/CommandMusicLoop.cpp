@@ -1,23 +1,23 @@
 /*****************************************************************//**
- * \file   command_movieplay.cpp
- * \brief   've' スクリプトを処理するクラス実装
+ * \file   command_musicloop.cpp
+ * \brief  'bg' スクリプトを処理するクラス実装
  *
  * \author 阿部健太郎
  * \date   August 2022
  *********************************************************************/
-#include "command_movieplay.h"
+#include "CommandMusicLoop.h"
 namespace
 {
 	constexpr size_t SCRIPT_NUM = 2;
 }
 
-CommandMovieplay::CommandMovieplay ( unsigned int line , const std::vector<std::string>& script )
+CommandMusicLoop::CommandMusicLoop( unsigned int line , const std::vector<std::string>& script )
 	: CommandBase ( line , script )
 {
-	mvhandle = 0;
+	mghandle = 0;
 }
 
-bool CommandMovieplay::Check ()
+bool CommandMusicLoop::Check ()
 {
 	const auto size = script.size ();
 
