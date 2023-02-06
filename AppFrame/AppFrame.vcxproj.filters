@@ -20,9 +20,6 @@
     <Filter Include="source\Math">
       <UniqueIdentifier>{adb50178-8503-4cd3-aa02-1f3d5bc8a761}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\gamesclipt">
-      <UniqueIdentifier>{7408e4e2-6577-4b49-8611-bc96a769bfb9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\Sclipt">
       <UniqueIdentifier>{f7001ca2-cb2e-4783-9ea9-7242b31127b5}</UniqueIdentifier>
     </Filter>
@@ -113,15 +110,33 @@
     <ClInclude Include="source\Script\CommandCrFeedIn.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
-    <ClInclude Include="source\Script\CommandDrawIn.h" />
-    <ClInclude Include="source\Script\CommandDrawOut.h" />
-    <ClInclude Include="source\Script\CommandImageLoad.h" />
-    <ClInclude Include="source\Script\CommandMessage.h" />
-    <ClInclude Include="source\Script\CommandMoviePlay.h" />
-    <ClInclude Include="source\Script\CommandMusicBack.h" />
-    <ClInclude Include="source\Script\CommandMusicLoop.h" />
-    <ClInclude Include="source\Script\CommandMusicStop.h" />
-    <ClInclude Include="source\Script\CommandSeLoad.h" />
+    <ClInclude Include="source\Script\CommandDrawIn.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandDrawOut.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandImageLoad.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMessage.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMoviePlay.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMusicBack.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMusicLoop.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMusicStop.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandSeLoad.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -204,31 +219,31 @@
       <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandDrawIn.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandDrawOut.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandImageLoad.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandMessage.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandMoviePlay.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandMusicBack.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandMusicLoop.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandMusicstop.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandSeLoad.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

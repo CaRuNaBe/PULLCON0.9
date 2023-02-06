@@ -189,7 +189,7 @@ bool ModeSpeakScript::InitializeStrings()
 		return false;
 	}
 	is_Click_on = false;
-	message_string_color = _game._CrText;
+	message_string_color = GetColor( 0,0,0 );
 
 	return true;
 }
@@ -296,11 +296,11 @@ void ModeSpeakScript::UpdateMessage()
 
 	for ( auto&& message : message_list )
 	{
-		const auto area = message->GetArea();
+		const auto& area = message->GetArea();
 		const auto right_goal = message->GetRightGoal();
 
 		// クリックされたら全メッセージを表示
-		if ( _game._trg & PAD_INPUT_A || is_Click_on )
+		if ( _game.Getinput().XinputEveryOtherKey( XINPUT_BUTTON_A,20 ) )
 		{
 			message->UpdateAreaRight( right_goal );
 			continue;
@@ -337,7 +337,7 @@ void ModeSpeakScript::PreParsing()
 	comand_funcs.insert( std::make_pair( COMMAND_IM,&ModeSpeakScript::OnCommandSe ) );
 
 	const auto script = scripts_data->GetScript( now_line );
-	const auto char_command = (script[0]);
+	const auto& char_command = (script[0]);
 	std::string string_comand{char_command};
 
 	if ( string_comand == COMMAND_IM || string_comand == COMMAND_I )
@@ -349,7 +349,7 @@ void ModeSpeakScript::PreParsing()
 
 	if ( now_line >= max_line )
 	{
-		_game.isLoadend = true;
+		//_game.isLoadend = true;
 		now_line = 0;
 		is_Skip_ok = true;
 		state = ScriptState::PARSING;
@@ -387,7 +387,7 @@ void ModeSpeakScript::Parsing()
 	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
 	{
 		const auto script = scripts_data->GetScript( now_line );
-		const auto command = (script[0]);
+		const auto& command = (script[0]);
 		std::string string_comand{command};
 
 		bool isThrough = false;
@@ -482,7 +482,7 @@ void  ModeSpeakScript::feed_draw()
  */
 void  ModeSpeakScript::Speak_skip()
 {
-	if ( _game._key & PAD_INPUT_A )
+	if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_A ) )
 	{
 		Speak_skip_count++;
 		if ( 0 == Speak_skip_count % SPEAK_SKIP )
@@ -508,7 +508,7 @@ void  ModeSpeakScript::Speak_skip()
  */
 void ModeSpeakScript::Script_skip()
 {
-	if ( _game._key & PAD_INPUT_X )
+	if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_Y ) )
 	{
 		Script_skip_count++;
 		if ( Script_skip_count > SCRIPT_SKIP_TIME )
@@ -537,12 +537,12 @@ void ModeSpeakScript::Script_skip()
  */
 void ModeSpeakScript::Hide_Message()
 {
-	if ( (_game._trg & PAD_INPUT_B) && is_hide )
+	if ( (_game.Getinput().GetTrgXinput( XINPUT_BUTTON_B )) && is_hide )
 	{
 		is_hide = false;
 		Hide_point = 255;
 	}
-	else if ( (_game._trg & PAD_INPUT_B) && !is_hide )
+	else if ( (_game.Getinput().GetTrgXinput( XINPUT_BUTTON_B )) && !is_hide )
 	{
 		is_hide = true;
 		Hide_point = 0;
@@ -607,13 +607,9 @@ void ModeSpeakScript::ClickWait()
 	}
 	if ( is_finishdraw )
 	{
-		if ( _game._trg & PAD_INPUT_A || is_Click_on )
+		if ( _game.Getinput().XinputEveryOtherKey( XINPUT_BUTTON_A,2 ) )
 		{
-			auto pop = std::make_unique<EffectPop>( _game,_base );
-			_game.GetObjectServer().Add( std::move( pop ) );
-
 			is_finishdraw = false;
-			PlaySoundMem( _game._se["yes"],DX_PLAYTYPE_BACK );
 			state = ScriptState::PARSING;
 		}
 	}
@@ -654,7 +650,7 @@ void ModeSpeakScript::PlayUpdate()
 	{
 		is_amime_skip = true;
 	}
-	if ( is_amime_skip && (_game._trg & PAD_INPUT_A || (GetMovieStateToGraph( movie_play->GetMvHandle() ) == 0)) )
+	if ( is_amime_skip && (_game.Getinput().GetTrgXinput( XINPUT_BUTTON_A ) || (GetMovieStateToGraph( movie_play->GetMvHandle() ) == 0)) )
 	{
 		is_amime_skip = false;
 		Anime_count = 0;
@@ -752,7 +748,7 @@ bool ModeSpeakScript::GetSeHandle( const std::string& str,int& handle ) const
  */
 bool ModeSpeakScript::OnCommandPlayanime( unsigned int line,const std::vector<std::string>& scripts )
 {
-	movie_play = std::make_unique<CommandMovieplay>( line,scripts );
+	movie_play = std::make_unique<CommandMoviePlay>( line,scripts );
 	if ( !movie_play->Check() )
 	{
 		return false;
@@ -782,7 +778,7 @@ bool ModeSpeakScript::OnCommandPlayanime( unsigned int line,const std::vector<st
  */
 bool ModeSpeakScript::OnCommandMusicloop( unsigned int line,const std::vector<std::string>& scripts )
 {
-	auto  mgloop = std::make_unique<CommandMusicloop>( line,scripts );
+	auto  mgloop = std::make_unique<CommandMusicLoop>( line,scripts );
 	if ( !mgloop->Check() )
 	{
 		return false;
@@ -807,7 +803,7 @@ bool ModeSpeakScript::OnCommandMusicloop( unsigned int line,const std::vector<st
  */
 bool ModeSpeakScript::OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts )
 {
-	auto  mgbag = std::make_unique<CommandMusicbag>( line,scripts );
+	auto  mgbag = std::make_unique<CommandMusicBack>( line,scripts );
 	if ( !mgbag->Check() )
 	{
 		return false;
@@ -833,7 +829,7 @@ bool ModeSpeakScript::OnCommandMusicbag( unsigned int line,const std::vector<std
  */
 bool ModeSpeakScript::OnCommandMusicstop( unsigned int line,const std::vector<std::string>& scripts )
 {
-	auto  mgstop = std::make_unique<CommandMusicstop>( line,scripts );
+	auto  mgstop = std::make_unique<CommandMusicStop>( line,scripts );
 	if ( !mgstop->Check() )
 	{
 		return false;
@@ -856,9 +852,9 @@ bool ModeSpeakScript::OnCommandMusicstop( unsigned int line,const std::vector<st
 //!
 bool ModeSpeakScript::OnCommandClick( unsigned int line,const std::vector<std::string>& scripts )
 {
-	if ( _game._trg & PAD_INPUT_A )
+	if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_A ) )
 	{
-		PlaySoundMem( _game._se["yes"],DX_PLAYTYPE_BACK );
+
 		image_list.clear();
 		state = ScriptState::PARSING;
 	}
@@ -917,7 +913,7 @@ bool ModeSpeakScript::OnCommandScriptend( unsigned int line,const std::vector<st
 //!
 bool ModeSpeakScript::OnCommandImage( unsigned int line,const std::vector<std::string>& scripts )
 {
-	auto  image = std::make_unique<CommandImageload>( line,scripts );
+	auto  image = std::make_unique<CommandImageLoad>( line,scripts );
 	if ( !image->Check() )
 	{
 		return false;
@@ -937,7 +933,7 @@ bool ModeSpeakScript::OnCommandImage( unsigned int line,const std::vector<std::s
  */
 bool ModeSpeakScript::OnCommandSe( unsigned int line,const std::vector<std::string>& scripts )
 {
-	auto  se = std::make_unique<CommandSeload>( line,scripts );
+	auto  se = std::make_unique<CommandSeLoad>( line,scripts );
 	if ( !se->Check() )
 	{
 		return false;
@@ -999,7 +995,7 @@ bool ModeSpeakScript::OnCommandMessage( unsigned int line,const std::vector<std:
 bool ModeSpeakScript::OnCommandDrawin( unsigned int line,const std::vector<std::string>& scripts )
 {
 
-	auto drawin = std::make_unique<CommandDrawin>( line,scripts );
+	auto drawin = std::make_unique<CommandDrawIn>( line,scripts );
 	if ( !drawin->Check() )
 	{
 		return false;
@@ -1050,7 +1046,7 @@ bool ModeSpeakScript::OnCommandDrawout( unsigned int line,const std::vector<std:
 {
 
 	drawin_list.clear();
-	auto drawout = std::make_unique<CommandDrawout>( line,scripts );
+	auto drawout = std::make_unique<CommandDrawOut>( line,scripts );
 	if ( !drawout->Check() )
 	{
 		return false;
@@ -1101,7 +1097,7 @@ bool ModeSpeakScript::OnCommandDrawout( unsigned int line,const std::vector<std:
 bool ModeSpeakScript::OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts )
 {
 	crfo_list.clear();
-	auto crfi = std::make_unique<CommandCrfi>( line,scripts );
+	auto crfi = std::make_unique<CommandCrFeedIn>( line,scripts );
 	if ( !crfi->Check() )
 	{
 		return false;
@@ -1124,7 +1120,7 @@ bool ModeSpeakScript::OnCommandCrfi( unsigned int line,const std::vector<std::st
 bool ModeSpeakScript::OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts )
 {
 	crfi_list.clear();
-	auto crfo = std::make_unique<CommandCrfo>( line,scripts );
+	auto crfo = std::make_unique<CommandCrFeedOut>( line,scripts );
 	if ( !crfo->Check() )
 	{
 		return false;
@@ -1161,14 +1157,14 @@ bool ModeSpeakScript::Draw()
  */
 void ModeSpeakScript::RenderImage() const
 {
-	if ( _game.isBlackbackground )//必要に応じてスクリプトの後ろに映っているモノを隠す描画
+	if ( _game.GetScliptFlagManager()->GetisBlackbackground() )//必要に応じてスクリプトの後ろに映っているモノを隠す描画
 	{
 		if ( state == ScriptState::CRFEEDIN || !(drawout_list.empty()) )
 		{
 		}
 		else
 		{
-			DrawBox( BASICS_X,BASICS_Y,SCREEN_W,SCREEN_H,_game._CrBrack,TRUE );
+			DrawBox( 0,0,_game.DispSizeW(),_game.DispSizeH(),GetColor( 255,255,255 ),TRUE );
 		}
 	}
 	for ( auto&& drawin : drawin_list )//現れる描画
@@ -1199,7 +1195,7 @@ void ModeSpeakScript::RenderMessage() const
 		auto LINE_POSITION_RIGHT = LINE_POSITION_LEFT + ((static_cast<int>(message->Whospeak().size())) / 2 * FONT_SIZE);
 		DrawBox( LINE_POSITION_LEFT,LINE_POSITION_TOP,LINE_POSITION_RIGHT,LINE_POSITION_BOTTOM,message_string_color,TRUE );
 		DrawString( MSG_SPEAKER_SET_X,MSG_SPEAKER_SET_Y,message->Whospeak().c_str(),message_string_color );
-		const auto area = message->GetArea();
+		const auto& area = message->GetArea();
 		// 表示エリアを制御して 1文字づつ描画する
 		SetDrawArea( area.left,area.top,area.right,area.bottom );
 		DrawString( area.left,area.top,message->GetMessageA().c_str(),message_string_color );
@@ -1207,7 +1203,7 @@ void ModeSpeakScript::RenderMessage() const
 	// 表示エリアを全画面に戻す
 	SetDrawArea( 0,0,screen_width,screen_height );
 
-	//
+
 	if ( is_click_wait_visible )
 	{
 		if ( is_hide )
@@ -1215,9 +1211,7 @@ void ModeSpeakScript::RenderMessage() const
 		}
 		else
 		{
-			SetDrawBlendMode( DX_BLENDMODE_ALPHA,_base._Modealpha );
-			DrawGraph( CLICK_WAIT_X,CLICK_WAIT_Y,_game._cgicon,TRUE );
-			SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
+
 		}
 	}
 }
@@ -1234,7 +1228,7 @@ void ModeSpeakScript::RenderMessageWindow() const
 	}
 	else
 	{
-		DrawGraph( MSG_WINDOW_LEFT,MSG_WINDOW_TOP,_game._cgTextbox,TRUE );
+		//DrawGraph( MSG_WINDOW_LEFT,MSG_WINDOW_TOP,_game._cgTextbox,TRUE );
 	}
 }
 
@@ -1248,7 +1242,7 @@ void ModeSpeakScript::RenderFeedin()const
 	for ( auto&& crfi : crfi_list )
 	{
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA,static_cast<int>(_Alpha) );
-		DrawBox( BASICS_X,BASICS_Y,SCREEN_W,SCREEN_H,GetColor( crfi->GetRed(),crfi->GetGreen(),crfi->GetBlue() ),TRUE );
+		DrawBox( 0,0,_game.DispSizeW(),_game.DispSizeH(),GetColor( crfi->GetRed(),crfi->GetGreen(),crfi->GetBlue() ),TRUE );
 		SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
 	}
 }
@@ -1265,7 +1259,7 @@ void ModeSpeakScript::RenderFeedout()const
 		auto color = GetColor( crfo->GetRed(),crfo->GetGreen(),crfo->GetBlue() );
 		auto a = static_cast<int>(_Alpha);
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA,a );
-		DrawBox( BASICS_X,BASICS_Y,SCREEN_W,SCREEN_H,color,TRUE );
+		DrawBox( 0,0,_game.DispSizeW(),_game.DispSizeH(),color,TRUE );
 		SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
 	}
 }

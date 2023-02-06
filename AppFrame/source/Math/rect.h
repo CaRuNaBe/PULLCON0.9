@@ -6,10 +6,14 @@ namespace math
 	class Rect
 	{
 	public:
-		Rect(const Vector2& lt,const Vector2& rb)
+		Rect( const Vector2& lt,const Vector2& rb )
 			:leftTop{lt}
 			,rightBottom{rb}
-		{}
+		{
+		}
+		Rect()
+		{
+		}
 		Vector2 GetLeftTop()
 		{
 			return leftTop;
