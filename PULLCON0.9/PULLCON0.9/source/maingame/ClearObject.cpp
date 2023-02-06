@@ -48,13 +48,17 @@ bool ClearObject::Update(  )
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kPlayer) {
 				if (Intersect(_collisionEvent, obje->_collision)) {
+					_coll = true;
 					_fire = true;
 					_vRelation = obje->_vPos;
 					// ’e‚Éƒoƒ‰‚Â‚«‚ğ‚½‚¹‚é
 					float randomX = static_cast<float>(utility::get_random(-700, 700));
-					float randomY = static_cast<float>(utility::get_random(-700, 700));
+					float randomY = static_cast<float>(utility::get_random(-700, 1400));
 					float randomZ = static_cast<float>(utility::get_random(-700, 700));
 					_vTarget = { _vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ };
+				}
+				else {
+					_coll = false;
 				}
 			}
 			if (obje->GetType() == Type::kBullet) {
@@ -87,7 +91,7 @@ bool ClearObject::Update(  )
 	// ˆê’èŠÔŠu‚ÅŒ‚‚Â
 	if (_fire && _CT == 0) {
 		AddBullet();
-		_CT = 10;
+		_CT = 5;
 	}
 
 	// ‹ÉÀ•W(r(length3D),ƒÆ(rad))

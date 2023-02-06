@@ -51,8 +51,11 @@ bool Player::Update() {
 	base::Update();
 	// NUMó‘Ô‚È‚çPLAYó‘Ô‚ÉˆÚs‚·‚é
 	if (_statePlayer == State::NUM) {
+		// ƒJƒƒ‰‚ÌÝ’è
 		_cam._vPos = _vPos + CAMERADEFAULT_POS;
 		_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
+		// ‘¬“x‰Šú’l‹L˜^
+		_fSpeedIint = _fSpeed;
 		_statePlayer = State::PLAY;
 	}
 
@@ -81,6 +84,7 @@ bool Player::Update() {
 					if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X) && !_pull) {
 						_pull = true;
 						obje->_pull = true;
+						obje->_coll = false;
 						_CT = 10;
 					}
 				}
@@ -101,7 +105,13 @@ bool Player::Update() {
 
 	if (_statePlayer == State::PLAY) {
 
-		_finish = false;
+		if (_finish) {
+			float speed = _fSpeedIint + _iPieces * 5.f;
+			if (_fSpeed < 250.f) {
+				_fSpeed = speed;
+			}
+			_finish = false;
+		}
 		// ”R—¿Á”ï
 		if (_cnt % 30 == 0) {
 			--_iFuel;
@@ -209,8 +219,8 @@ bool Player::Update() {
 			_cam._vTarget -= move;
 			if (_finish) {
 				// ã¸‚³‚¹‚é
-				_vPos.y += _fSpeed;
-				_cam._vTarget.y += _fSpeed;
+				_vPos.y += _fSpeed / 2.f;
+				_cam._vTarget.y += _fSpeed / 3.f;
 				if (_CT == 1) {
 					// PLAYó‘Ô‚É‘JˆÚ
 					_pull = false;
@@ -311,6 +321,8 @@ bool Player::Draw() {
 	DrawFormatString(x, y, GetColor(255, 0, 0), "  target = (%5.2f, %5.2f, %5.2f)", _cam._vTarget.x, _cam._vTarget.y, _cam._vTarget.z); y += size;
 	DrawFormatString(x, y, GetColor(255, 0, 0), "  pos    = (%5.2f, %5.2f, %5.2f)", _cam._vPos.x, _cam._vPos.y, _cam._vPos.z); y += size;
 	DrawFormatString(x, y, GetColor(255, 0, 255), "  feil = %d ", _iFuel); y += size;
+	DrawFormatString(x, y, GetColor(255, 255, 255), "  Pieces = %d ", _iPieces); y += size;
+	DrawFormatString(x, y, GetColor(255, 255, 255), "  Speed = %f ", _fSpeed); y += size;
 
 	return true;
 }

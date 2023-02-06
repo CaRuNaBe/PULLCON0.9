@@ -28,6 +28,7 @@ public:
 	virtual void Damage();
 	void AddBullet();
 	void AddPieces(int pile_num);
+	void GetSearch();
 
 	void SetAxialX(float _x_rad) { _fAxialX = _x_rad; }
 	void SetAxialY(float _y_rad) { _fAxialY = _y_rad; }
@@ -40,7 +41,7 @@ protected:
 	int    _iPart;  // 地下の対空砲パーツの番号
 	float  _fAxialY;  // Y軸回転(度数法)	
 	float  _fAxialX;  // X軸回転(度数法)
-	bool   _have;  // 持っているか
+	bool   _get;  // 持っているか
 
 	int    _handle_body;
 	int    _handle_turret;
