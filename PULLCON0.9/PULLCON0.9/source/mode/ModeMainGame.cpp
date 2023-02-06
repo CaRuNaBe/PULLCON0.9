@@ -239,6 +239,12 @@ void ModeMainGame::Parsing()
 			++now_line;
 		}
 	}
+#if _DEBUG
+	if ( now_line >= max_line )
+	{
+		state = ScriptState::EDIT;
+	}
+#endif
 }
 
 bool ModeMainGame::Update()
@@ -1338,11 +1344,11 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		};
-		if ( !(string::ToInt( scripts[5],object_id )) )
+		if ( !(string::ToInt( scripts[6],object_id )) )
 		{
 			return result;
 		};
-		if ( !(string::ToInt( scripts[6],collision_id )) )
+		if ( !(string::ToInt( scripts[7],collision_id )) )
 		{
 			return result;
 		};
