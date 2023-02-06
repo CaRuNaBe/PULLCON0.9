@@ -119,7 +119,7 @@
       <Filter>source\mode\script</Filter>
     </ClCompile>
     <ClCompile Include="source\mode\ModeSpeakScript.cpp">
-      <Filter>source</Filter>
+      <Filter>source\mode\script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +219,8 @@
     <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode\script</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeSpeakScript.h" />
+    <ClInclude Include="source\mode\ModeSpeakScript.h">
+      <Filter>source\mode\script</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
