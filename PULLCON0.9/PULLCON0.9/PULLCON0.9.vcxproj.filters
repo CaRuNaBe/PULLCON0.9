@@ -1,65 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="source">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="source\mode">
-      <UniqueIdentifier>{e5cfc242-9caf-43d8-b855-d515320f206f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object">
-      <UniqueIdentifier>{eeb7738d-37a2-4075-99e8-a493dad62396}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\title">
-      <UniqueIdentifier>{8f53cc26-d6a0-4078-949f-a8c926bd295b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\pause">
-      <UniqueIdentifier>{1c71afb1-6e1c-47a0-bd62-8e79da3a2943}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\game">
-      <UniqueIdentifier>{b0781283-a4ea-4ce3-b3ee-9edb1e405b8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\mode\script">
-      <UniqueIdentifier>{8f5aa987-b5b8-45b3-bdb2-86faa5addbb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\game\Player">
-      <UniqueIdentifier>{e41ac612-c8fe-42b1-beaa-859c23422bb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\game\Enemy">
-      <UniqueIdentifier>{80b15f16-6ba7-4a04-bf0c-8e7b6a71b9ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\game\Enemy\AAA">
-      <UniqueIdentifier>{6fcaa6af-2fa2-4a6e-8973-187aa28ba554}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\game\Enemy\Gunship">
-      <UniqueIdentifier>{038cbac1-8c65-4cc8-8031-9e378272038a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\game\Enemy\SkyHunter">
-      <UniqueIdentifier>{85807213-29e3-46dc-a59a-653cc543fba9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\game\Stage">
-      <UniqueIdentifier>{6bfae36b-8825-4f47-82f4-e6d527e3250e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\game\Area">
-      <UniqueIdentifier>{cc2b5da8-3a50-4f73-ae65-eeee31838aa6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\game\Bullet">
-      <UniqueIdentifier>{8f03ec77-c17f-4601-b8c0-8aa1a44175c0}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="source\mode\ModeTitle.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
-    <ClCompile Include="source\mode\ModePause.cpp">
+    <ClCompile Include="source\mode\ModeGameOver.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
     <ClCompile Include="source\mode\ModeGameResult.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeGameOver.cpp">
+    <ClCompile Include="source\mode\ModeMainGame.cpp">
       <Filter>source\mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModePause.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeResourceRoad.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeTitle.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\Bullet.cpp">
+      <Filter>source\object\game\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\Player.cpp">
+      <Filter>source\object\game\player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\ClearObject.cpp">
+      <Filter>source\object\game\enemy\gunship</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectTrail.cpp">
+      <Filter>source\object\game</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyAAA.cpp">
+      <Filter>source\object\game\enemy\AAA</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\GameStage.cpp">
+      <Filter>source\object\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\SkySphere.cpp">
+      <Filter>source\object\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\StageObject.cpp">
+      <Filter>source\object\game\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\SupplyEria.cpp">
+      <Filter>source\object\game\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ApplicationMain.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaNoEntry.cpp">
+      <Filter>source\object\game\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\CommunicationAria.cpp">
+      <Filter>source\object\game\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemySpawnEria.cpp">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
     </ClCompile>
     <ClCompile Include="source\title\TitlePlayer.cpp">
       <Filter>source\object\title</Filter>
@@ -67,17 +64,14 @@
     <ClCompile Include="source\title\TitleLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\title\CreditLogo.cpp">
+    <ClCompile Include="source\title\StartLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
     <ClCompile Include="source\title\EndLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\title\StartLogo.cpp">
+    <ClCompile Include="source\title\CreditGuid.cpp">
       <Filter>source\object\title</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ApplicationMain.cpp">
-      <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\title\StartGuid.cpp">
       <Filter>source\object\title</Filter>
@@ -85,13 +79,10 @@
     <ClCompile Include="source\title\EndGuid.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\title\CreditGuid.cpp">
-      <Filter>source\object\title</Filter>
-    </ClCompile>
-    <ClCompile Include="source\pose\PauseLogo.cpp">
+    <ClCompile Include="source\pose\DescriptionLogo.cpp">
       <Filter>source\object\pause</Filter>
     </ClCompile>
-    <ClCompile Include="source\pose\DescriptionLogo.cpp">
+    <ClCompile Include="source\pose\PauseLogo.cpp">
       <Filter>source\object\pause</Filter>
     </ClCompile>
     <ClCompile Include="source\pose\RestartLogo.cpp">
@@ -100,70 +91,67 @@
     <ClCompile Include="source\pose\ReturnTitleLogo.cpp">
       <Filter>source\object\pause</Filter>
     </ClCompile>
-    <ClCompile Include="source\maingame\EffectTrail.cpp">
-      <Filter>source\object\game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\mode\ModeMainGame.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
-    <ClCompile Include="source\mode\ModeSpeakScript.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
-    <ClCompile Include="source\mode\ModeResourceRoad.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\Player.cpp">
-      <Filter>source\object\game\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\EnemyAAA.cpp">
-      <Filter>source\object\game\Enemy\AAA</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\ClearObject.cpp">
-      <Filter>source\object\game\Enemy\Gunship</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\GameStage.cpp">
-      <Filter>source\object\game\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\SkySphere.cpp">
-      <Filter>source\object\game\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\StageObject.cpp">
-      <Filter>source\object\game\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\EnemySpawnEria.cpp">
-      <Filter>source\object\game\Enemy\SkyHunter</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\SupplyEria.cpp">
-      <Filter>source\object\game\Area</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\AreaNoEntry.cpp">
-      <Filter>source\object\game\Area</Filter>
-    <ClCompile Include="source\maingame\EnemyAAA.cpp">
-      <Filter>source\object\game</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\CommunicationAria.cpp">
-      <Filter>source\object\game\Area</Filter>
-    <ClCompile Include="source\mode\ModeResourceRoad.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\Bullet.cpp">
-      <Filter>source\object\game\Bullet</Filter>
-    <ClCompile Include="source\mode\ModeMainGame.cpp">
-      <Filter>source\mode\script</Filter>
+    <ClCompile Include="source\title\CreditLogo.cpp">
+      <Filter>source\object\title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\mode\ModeTitle.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModePause.h">
+    <ClInclude Include="source\mode\ModeGameOver.h">
       <Filter>source\mode</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModeGameResult.h">
       <Filter>source\mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeGameOver.h">
+    <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModePause.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeResourceRoad.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeTitle.h">
+      <Filter>source\mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\Bullet.h">
+      <Filter>source\object\game\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\Player.h">
+      <Filter>source\object\game\player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\ClearObject.h">
+      <Filter>source\object\game\enemy\gunship</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyAAA.h">
+      <Filter>source\object\game\enemy\AAA</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectTrail.h">
+      <Filter>source\object\game</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\GameStage.h">
+      <Filter>source\object\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\SkySphere.h">
+      <Filter>source\object\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\StageObject.h">
+      <Filter>source\object\game\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\SupplyEria.h">
+      <Filter>source\object\game\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ApplicationMain.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaNoEntry.h">
+      <Filter>source\object\game\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\CommunicationAria.h">
+      <Filter>source\object\game\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemySpawnEria.h">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
     </ClInclude>
     <ClInclude Include="source\title\TitlePlayer.h">
       <Filter>source\object\title</Filter>
@@ -171,17 +159,11 @@
     <ClInclude Include="source\title\TitleLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\title\CreditLogo.h">
+    <ClInclude Include="source\title\StartLogo.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
     <ClInclude Include="source\title\EndLogo.h">
       <Filter>source\object\title</Filter>
-    </ClInclude>
-    <ClInclude Include="source\title\StartLogo.h">
-      <Filter>source\object\title</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ApplicationMain.h">
-      <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="source\title\StartGuid.h">
       <Filter>source\object\title</Filter>
@@ -192,10 +174,10 @@
     <ClInclude Include="source\title\CreditGuid.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\pose\PauseLogo.h">
+    <ClInclude Include="source\pose\DescriptionLogo.h">
       <Filter>source\object\pause</Filter>
     </ClInclude>
-    <ClInclude Include="source\pose\DescriptionLogo.h">
+    <ClInclude Include="source\pose\PauseLogo.h">
       <Filter>source\object\pause</Filter>
     </ClInclude>
     <ClInclude Include="source\pose\RestartLogo.h">
@@ -204,57 +186,52 @@
     <ClInclude Include="source\pose\ReturnTitleLogo.h">
       <Filter>source\object\pause</Filter>
     </ClInclude>
-    <ClInclude Include="source\maingame\EffectTrail.h">
-      <Filter>source\object\game</Filter>
+    <ClInclude Include="source\title\CreditLogo.h">
+      <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeMainGame.h" />
-    <ClInclude Include="source\mode\ModeMainGame.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModeSpeakScript.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModeResourceRoad.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\Player.h">
-      <Filter>source\object\game\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\EnemyAAA.h">
-      <Filter>source\object\game\Enemy\AAA</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\ClearObject.h">
-      <Filter>source\object\game\Enemy\Gunship</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\GameStage.h">
-      <Filter>source\object\game\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\SkySphere.h">
-      <Filter>source\object\game\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\StageObject.h">
-      <Filter>source\object\game\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\EnemySpawnEria.h">
-      <Filter>source\object\game\Enemy\SkyHunter</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\SupplyEria.h">
-      <Filter>source\object\game\Area</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\AreaNoEntry.h">
-      <Filter>source\object\game\Area</Filter>
-    <ClInclude Include="source\mode\ModeResourceRoad.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\CommunicationAria.h">
-      <Filter>source\object\game\Area</Filter>
-    <ClInclude Include="source\mode\ModeMainGame.h">
-      <Filter>source\mode\script</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\Bullet.h">
-      <Filter>source\object\game\Bullet</Filter>
-    <ClInclude Include="source\mode\ModeMainGame.h">
-      <Filter>source\mode\script</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{8b3f72c9-ad1a-4e78-8150-55a70d9145e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\mode">
+      <UniqueIdentifier>{9ebf7dcd-6c01-4a7f-bc22-66fe123da8ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object">
+      <UniqueIdentifier>{c252e769-79e1-4da2-94b6-862552fec37b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game">
+      <UniqueIdentifier>{6179fa67-eefb-4c0e-8b7a-a6ffa04fc69c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\pause">
+      <UniqueIdentifier>{d69216c6-669c-4190-98f0-bcb0e2342c5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\title">
+      <UniqueIdentifier>{a95e8d4a-169c-49ab-8428-944b9b375c59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game\area">
+      <UniqueIdentifier>{5651a527-7f22-444b-82a5-a94fcc80efb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game\bullet">
+      <UniqueIdentifier>{ca7431d4-cc7b-4182-af23-29452d2263c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game\enemy">
+      <UniqueIdentifier>{08e1d980-5fa6-49a2-a46e-17b8d1c6b642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game\player">
+      <UniqueIdentifier>{bd330cb6-71d5-4d36-b936-896dbaa0be84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game\enemy\AAA">
+      <UniqueIdentifier>{1906606f-0415-4ac7-8936-3ebf68bc8018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game\stage">
+      <UniqueIdentifier>{ea2ea8a9-d69f-4298-bf21-b68aa34e6c2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game\enemy\gunship">
+      <UniqueIdentifier>{199ff6eb-cd93-4901-bc4a-e4c1faee092c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game\enemy\skyhunter">
+      <UniqueIdentifier>{2fda972c-462d-4341-9bc4-7861c1d25b46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
