@@ -94,6 +94,9 @@
     <ClCompile Include="source\title\CreditLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
+    <ClCompile Include="source\maingame\EnemySkyhunter.cpp">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\mode\ModeGameOver.h">
@@ -188,6 +191,9 @@
     </ClInclude>
     <ClInclude Include="source\title\CreditLogo.h">
       <Filter>source\object\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemySkyhunter.h">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

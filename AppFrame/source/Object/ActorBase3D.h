@@ -14,6 +14,7 @@ public:
 		kPlayer,        // 1 プレイヤー
 		kBullet,        // 2 弾丸
 		kEnemyAAA,      // 3 対空砲
+		kEnemySkyhunter,// 4 スカイハンター
 		kClearObject,   // 5 最終目標
 		kSkySphere,     // 6 スカイスフィア
 		kGameStage,     // 7 ゲームステージ
