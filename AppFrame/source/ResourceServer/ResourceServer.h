@@ -28,5 +28,7 @@ private:
 	static DivGraphMap _mapDivGraph;
 	static ResourceMap _mapGraph;
 	static ResourceMap _mapSound;
+	static ResourceMap _mapOriginalModel;
+
 };
 

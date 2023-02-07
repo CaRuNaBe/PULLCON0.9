@@ -33,6 +33,7 @@ void ActorBase3D::Init() {
 	_finish = false;
 	_fire = false;
 	_cnt = 0;
+	_CT = 0;
 	_ST = 0;
 
 }
@@ -88,7 +89,7 @@ bool	ActorBase3D::IsHitEvent(ActorBase3D& object)
 bool	ActorBase3D::IsSearch(ActorBase3D& object)
 {
 	// Sphere‚Å“–‚½‚è”»’è
-	if (Intersect(object.GetCollisionSearch(), _collision))
+	if (Intersect(object.GetCollision(), _collisionSearch))
 	{
 		return true;
 	}

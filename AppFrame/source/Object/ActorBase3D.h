@@ -89,4 +89,5 @@ public:
 	int _cnt;  // 動作カウント
 	int _CT;   // クールタイム
 	int _ST;   // 生存時間
+	
 };

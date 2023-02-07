@@ -31,7 +31,7 @@ public:
 
 	void CameraUpdate();    // カメラ更新
 	void EventCamera();    // カメラ
-	void AddBullet();
+	void AddBullet(vector4 pos);
 
 protected:
 	// カメラ
@@ -41,6 +41,7 @@ protected:
 
 	int    _push;   // ボタン連打回数
 	bool   _isHit;  // 当たったか
+	float  _fSpeedIint;  // プレイヤーの速度の初期値
 
 	int    _handle;
 	int    _handlefont;

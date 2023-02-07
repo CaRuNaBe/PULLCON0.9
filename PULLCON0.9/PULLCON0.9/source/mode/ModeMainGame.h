@@ -72,7 +72,6 @@ private:
 	bool OnCommandCrFeedIn( unsigned int line,std::vector<std::string>& scripts );
 	bool OnCommandCrFeedOut( unsigned int line,std::vector<std::string>& scripts );
 	bool OnCommandTimeWait( unsigned int line,std::vector<std::string>& scripts );
-	bool OnCommandBgm( unsigned int line,std::vector<std::string>& scripts );
 	bool OnCommandStory( unsigned int line,std::vector<std::string>& scripts );
 
 

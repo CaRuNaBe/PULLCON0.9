@@ -10,9 +10,12 @@ StageObject::StageObject( ApplicationBase& game,ModeBase& mode,int objectid,int 
 	{
 		_coll = false;
 	}
+	auto file_pass_data = std::make_unique<ScriptsData>();
+	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
+	const std::string ARRYNAME = "ObjectId";
+	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
 
-
-	_handle = MV1LoadModel( "res/stage/stage_file_1/4sApart/4sApart.mv1" );
+	_handle = MV1LoadModel( file_pass_data->GetScriptLine( objectid ).c_str() );
 
 
 	Init();
@@ -46,7 +49,7 @@ bool StageObject::Draw()
 	MV1SetScale( _handle,VGet( _fScale,_fScale,_fScale ) );
 	// ƒ‚ƒfƒ‹•`‰æ
 	MV1DrawModel( _handle );
-
+	MV1SetPosition( _handle,math::ToDX(_vPos) );
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	vector4 color = {255, 255, 255};
 	if ( !_coll )

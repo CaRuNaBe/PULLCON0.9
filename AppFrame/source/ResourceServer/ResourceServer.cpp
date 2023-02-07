@@ -101,7 +101,6 @@ int		ResourceServer::LoadDivGraph(std::string FileName,int AllNum,int XNum,int Y
 	return err;
 }
 
-
 int		ResourceServer::LoadSoundMem(std::string FileName)
 {
 	// ƒL[‚ÌŒŸõ

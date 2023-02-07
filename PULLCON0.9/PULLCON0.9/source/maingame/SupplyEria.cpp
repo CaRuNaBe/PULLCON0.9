@@ -1,10 +1,19 @@
 
 #include "SupplyEria.h"
 #include "../mode/ModeMainGame.h"
+namespace
+{
+	constexpr int SUPPLY_ID = 37;
+}
 SupplyEria::SupplyEria( ApplicationBase& game,ModeBase& mode,float _radius )
 	:base( game,mode )
 {
-	_handle = MV1LoadModel( "res/HelicopterBody.mv1" );
+	auto file_pass_data = std::make_unique<ScriptsData>();
+	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
+	const std::string ARRYNAME = "ObjectId";
+	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
+
+	_handle = MV1LoadModel( file_pass_data->GetScriptLine( SUPPLY_ID ).c_str() );
 	radius = _radius;
 	Init();
 }
