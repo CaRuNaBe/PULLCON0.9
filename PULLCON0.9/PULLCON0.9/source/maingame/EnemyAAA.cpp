@@ -39,14 +39,15 @@ void EnemyAAA::Init( int pile_num,vector4 _vPosi )
 	_fScale = 2.f;
 	_collision._fRadius = 300.f * _fScale;
 	_collisionEvent._fRadius = 500.f * _fScale;
-	_vEvent = {10000.f, 10000.f, 10000.f};
+	_collisionSearch._fRadius = _collision._fRadius * 70.f;
+	_vEvent = { 10000.f, 10000.f, 10000.f };
 	_iLife = 50;
 
 	_iType = 0;
 	_iPossession = pile_num;
 	_fAxialX = 0.f;
 	_fAxialY = 0.f;
-	_have = false;
+	_get = false;
 
 	_CT = 30;
 }
@@ -60,21 +61,18 @@ bool EnemyAAA::Update()
 //_mode.GetObjectServer3D().Del(*this);
 	}
 
-	for ( auto&& obje : _mode.GetObjectServer3D().GetObjects() )
-	{
-		if ( obje->GetType() == Type::kPlayer
-				 || obje->GetType() == Type::kEnemyAAA
-				 || obje->GetType() == Type::kBullet )
-		{
-			if ( obje->GetType() == Type::kPlayer )
-			{
-				if ( !_finish )
-				{
-					if ( _stateAAA != State::NUM )
-					{
-						if ( Intersect( obje->_collision,_collisionEvent ) )
-						{
-// イベント状態に移行させる
+	GetSearch();
+
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
+		if (obje->GetType() == Type::kPlayer
+		 || obje->GetType() == Type::kEnemyAAA
+		 || obje->GetType() == Type::kBullet) {
+			if (!_get) { break; }
+			if (obje->GetType() == Type::kPlayer) {
+				if(!_finish){
+					if (_stateAAA != State::NUM) {
+						if (Intersect(obje->_collision, _collisionEvent)) {
+							// イベント状態に移行させる
 							_event = true;
 							_stateAAA = State::EVENT;
 						}
@@ -82,25 +80,24 @@ bool EnemyAAA::Update()
 						{
 				// 起動状態に移行
 							_stateAAA = State::PLAY;
-							if ( _iType == 0 )
-							{
+							_coll = true;
+							if (_iType == 0) {
 								_vRelation = obje->_vPos;
 								// 弾にバラつきを持たせる
-								float randomX = static_cast<float>(utility::get_random( -700,700 ));
-								float randomY = static_cast<float>(utility::get_random( -700,700 ));
-								float randomZ = static_cast<float>(utility::get_random( -700,700 ));
-								_vTarget = {_vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ};
+								float randomX = static_cast<float>(utility::get_random(-700, 700));
+								float randomY = static_cast<float>(utility::get_random(0, 1000));
+								float randomZ = static_cast<float>(utility::get_random(-700, 700));
+								_vTarget = { _vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ };
 							}
 						}
-						if ( !_pull )
-						{
+						// 対空砲の数を合わせる
+						if (!_pull) {
 							_iPieces = obje->_iPieces;
 						}
 					}
-					else
-					{
-						if ( obje->_pull == false )
-						{
+					else {
+						if (obje->_pull == false) {
+							// 何個目かの対空砲か記録する
 							_iPieces = obje->_iPieces + _iPart;
 						}
 					}
@@ -262,6 +259,7 @@ bool EnemyAAA::Update()
 
 	_collision._fRadius = 300.f * _fScale;
 	_collisionEvent._fRadius = 500.f * _fScale;
+	_collisionSearch._fRadius = _collision._fRadius * 70.f;
 	UpdateCollision();   // コリジョンアップデート
 
 	return true;
@@ -312,9 +310,34 @@ bool EnemyAAA::Draw()
 				DrawCollisionEvent( color );
 			}
 		}
+		else {
+			if (_stateAAA != State::NUM) {
+				vector4 color = { 255, 255, 255 };
+				DrawCollisionSearch(color);
+			}
+		}
 	}
 
 	return true;
+}
+
+void EnemyAAA::GetSearch() {
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
+		if (obje->GetType() == Type::kPlayer) {
+			if (IsSearch(*obje)) {
+				_get = true;
+			}
+			else {
+				_get = false;
+			}
+		}
+	}
+	if (!_get) {
+		_coll = false;
+		if (_stateAAA != State::NUM) {
+			_stateAAA = State::EVENT;
+		}
+	}
 }
 
 void EnemyAAA::AddBullet()
@@ -334,7 +357,7 @@ void EnemyAAA::AddPieces( int min_id,int max_id,int pile_num )
 		auto piece = std::make_shared<EnemyAAA>( _game,_mode,min_id,max_id,0,vPiece );
 		piece->_stateAAA = State::NUM;
 		piece->_coll = false;
-		piece->_iPart = i + 1;
-		_mode.GetObjectServer3D().Add( piece );
+		piece->_iPart = i + 1;   // それぞれが何個目かを記憶
+		_mode.GetObjectServer3D().Add(piece);
 	}
 }
