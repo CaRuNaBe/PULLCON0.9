@@ -52,7 +52,6 @@ private:
 	void UpdateMessage();
 	void Hide_Message();
 	void feed_draw();
-	void Speak_skip();
 	void Script_skip();
 	bool CalculateMessageArea( const std::string& message,Rect& area,int& right_goal );
 
@@ -110,7 +109,7 @@ private:
 	ScriptState state;
 
 
-	unsigned int max_line;//
+	unsigned int max_line;
 	unsigned int now_line;
 	unsigned int wait_count;
 	double _Alpha;

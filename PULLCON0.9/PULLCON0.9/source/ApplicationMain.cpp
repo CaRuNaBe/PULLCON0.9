@@ -11,7 +11,7 @@ bool ApplicationMain::Initialize(HINSTANCE hInstance) {
 	if (!base::Initialize(hInstance)) { return false; }
 
 	// ÉÇÅ[ÉhÇÃìoò^
-	auto game = std::make_shared<ModeSpeakScript>(*this,1,"none");
+	auto game = std::make_shared<ModeSpeakScript>(*this,1,"dmitry/opening");
 	base::GetInstance()->GetModeServer()->Add(game);
 
 	return true;
