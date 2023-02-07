@@ -1,5 +1,4 @@
 #pragma once
-#include	"Math.h"
 #include "Dxlib.h"
 class ApplicationBase;
 class ModeBase;

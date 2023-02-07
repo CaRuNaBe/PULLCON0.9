@@ -8,14 +8,14 @@ ModePause::ModePause( ApplicationBase& game,int layer )
 	:base( game,layer )
 {
 	auto poselogo = std::make_shared<PauseLogo>( game,*this );
-	_objectServer.Add( poselogo );
+	object_out_game.Add( poselogo );
 
 	auto descriptionlogo = std::make_shared<DescriptionLogo>( game,*this );
-	_objectServer.Add( descriptionlogo );
+	object_out_game.Add( descriptionlogo );
 	auto restartlogo = std::make_shared<RestartLogo>( game,*this );
-	_objectServer.Add( restartlogo );
+	object_out_game.Add( restartlogo );
 	auto returntitleLogo = std::make_shared<ReturnTitleLogo>( game,*this );
-	_objectServer.Add( returntitleLogo );
+	object_out_game.Add( returntitleLogo );
 };
 
 ModePause::~ModePause()
@@ -33,14 +33,14 @@ bool ModePause::Initialize()
 bool ModePause::Update()
 {
 	base::Update();
-	_objectServer.Update( );
+	object_out_game.Update( );
 	return true;
 }
 
 bool ModePause::Draw()
 {
 	base::Draw();
-	_objectServer.Draw( );
+	object_out_game.Draw( );
 	return true;
 }
 

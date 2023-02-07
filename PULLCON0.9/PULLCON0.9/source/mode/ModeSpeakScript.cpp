@@ -153,6 +153,8 @@ bool ModeSpeakScript::Update()
 {
 	auto is_update_message = false;
 
+	speak_object.Update();
+
 	switch ( state )
 	{
 		case ScriptState::PREPARSING:
@@ -721,6 +723,7 @@ bool ModeSpeakScript::OnCommandCrfo( unsigned int line,const std::vector<std::st
 
 bool ModeSpeakScript::Draw()
 {
+	speak_object.Draw();
 	DrawImage();
 	DrawFeedIn();
 	DrawFeedOut();
@@ -731,6 +734,7 @@ bool ModeSpeakScript::Draw()
 
 void ModeSpeakScript::DrawImage() const
 {
+
 	for ( auto&& drawin : drawin_list )
 	{
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA,static_cast<int>(drawin->GetDrawAlphain()) );

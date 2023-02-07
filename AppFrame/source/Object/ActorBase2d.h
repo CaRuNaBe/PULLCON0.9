@@ -14,7 +14,7 @@ class ActorBase2d:public ObjectBase
 	using base = ObjectBase;
 public:
 	enum class Type
-	{  
+	{
 		// 種別の列挙型
 		/** タイトル画面 */
 		KBASE,			     // 0 アクター
@@ -40,23 +40,16 @@ public:
 	virtual ~ActorBase2d();
 
 	virtual void	Init();/*初期化*/
-	virtual bool	Update(  );//
+	virtual bool	Update();//
 	virtual void	UpdateCollision();
-	virtual bool	Draw( );
+	virtual bool	Draw();
 	virtual void	DrawCollision();
 
 	virtual AABB& GetCollision()
 	{
 		return _collision;
 	}
-	virtual bool	IsDead()
-	{
-		return _dead;
-	}
-	virtual void	Dead()
-	{
-		_dead = true;
-	}
+
 	virtual Vector2& GetPosition()
 	{
 		return _pos;

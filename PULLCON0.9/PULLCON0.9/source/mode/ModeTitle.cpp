@@ -14,24 +14,24 @@ ModeTitle::ModeTitle(ApplicationBase& game,int layer)
 	:base(game,layer)
 {
 	auto titlelogo = std::make_shared<TitleLogo>(game,*this);
-	_objectServer.Add( titlelogo );
+	object_out_game.Add( titlelogo );
 
 	auto creditlogo = std::make_shared<CreditLogo>( game,*this );
-	_objectServer.Add( creditlogo );
+	object_out_game.Add( creditlogo );
 	auto startlogo = std::make_shared<StartLogo>( game,*this );
-	_objectServer.Add( startlogo );
+	object_out_game.Add( startlogo );
 	auto endlogo = std::make_shared<EndLogo>( game,*this );
-	_objectServer.Add( endlogo );
+	object_out_game.Add( endlogo );
 
 	auto creditguid = std::make_shared<CreditGuid>( game,*this );
-	_objectServer.Add( creditguid );
+	object_out_game.Add( creditguid );
 	auto startguid = std::make_shared<StartGuid>( game,*this );
-	_objectServer.Add( startguid );
+	object_out_game.Add( startguid );
 	auto endguid = std::make_shared<EndGuid>( game,*this );
-	_objectServer.Add( endguid );
+	object_out_game.Add( endguid );
 
 	auto player = std::make_shared<TitlePlayer>( game,*this );
-	_objectServer.Add( player );
+	object_out_game.Add( player );
 	};
 
 ModeTitle::~ModeTitle()
@@ -49,13 +49,13 @@ bool ModeTitle::Initialize()
 bool ModeTitle::Update()
 {
 	base::Update();
-	_objectServer.Update();
+	object_out_game.Update();
 	return true;
 }
 
 bool ModeTitle::Draw()
 {
 	base::Draw();
-	_objectServer.Draw( );
+	object_out_game.Draw( );
 	return true;
 }

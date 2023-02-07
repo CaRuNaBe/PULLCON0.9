@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\Object\ActorBaseSpeak.h" />
     <ClInclude Include="source\Math\3dCollision.h" />
     <ClInclude Include="source\Math\Easing.h" />
     <ClInclude Include="source\Math\rect.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="source\Script\ScriptsString.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Object\ActorBaseSpeak.cpp" />
     <ClCompile Include="source\Math\3dCollision.cpp" />
     <ClCompile Include="source\Math\Easing.cpp" />
     <ClCompile Include="source\Math\rect.cpp" />

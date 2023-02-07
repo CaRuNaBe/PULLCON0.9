@@ -134,6 +134,9 @@
     <ClInclude Include="source\Script\CommandMessage.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
+    <ClInclude Include="source\Object\ActorBaseSpeak.h">
+      <Filter>source\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -238,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="source\Script\CommandMessage.cpp">
       <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Object\ActorBaseSpeak.cpp">
+      <Filter>source\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

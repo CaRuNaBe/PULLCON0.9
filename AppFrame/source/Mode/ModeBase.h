@@ -4,6 +4,8 @@
 class ApplicationBase;
 class ActorBase2d;
 class ActorBase3D;
+class ActorBaseSpeak;
+
 class ModeBase
 {
 public:
@@ -38,18 +40,24 @@ public:
 	}
 	ObjectServer<ActorBase2d>& Get2DobjectServer()
 	{
-		return _objectServer;
+		return object_out_game;
 	}
 
 	ObjectServer<ActorBase3D>& GetObjectServer3D()
 	{
-		return _3D_objectServer;
+		return object_main_game;
 	}
 
+	ObjectServer<ActorBaseSpeak>& GetObjectServerSpeak()
+	{
+		return speak_object;
+	}
 protected:
 	ApplicationBase& _game;
-	ObjectServer<ActorBase2d>_objectServer;
-	ObjectServer<ActorBase3D> _3D_objectServer;
+
+	ObjectServer<ActorBase2d> object_out_game;
+	ObjectServer<ActorBase3D> object_main_game;
+	ObjectServer<ActorBaseSpeak> speak_object;
 
 	bool	_dead;
 	bool _isModeSkip;
