@@ -9,7 +9,7 @@
 #include "../../AppFrame/source/Math/Math.h"
 #include "../source/Object/ActorBase2d.h"
 #include "../source/Object/ActorBase3D.h"
-#include"Object/ObjectServer.h"
+#include "Object/ObjectServer.h"
 
 #include "Script/ScriptsData.h"
 #include "Script/ScriptsString.h"

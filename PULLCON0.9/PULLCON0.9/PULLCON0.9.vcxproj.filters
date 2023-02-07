@@ -115,9 +115,6 @@
     <ClCompile Include="source\mode\ModeResourceRoad.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeMainGame.cpp">
-      <Filter>source\mode\script</Filter>
-    </ClCompile>
     <ClCompile Include="source\mode\ModeSpeakScript.cpp">
       <Filter>source\mode\script</Filter>
     </ClCompile>
@@ -212,12 +209,6 @@
     </ClInclude>
     <ClInclude Include="source\mode\ModeResourceRoad.h">
       <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModeMainGame.h">
-      <Filter>source\mode\script</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModeMainGame.h">
-      <Filter>source\mode\script</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModeSpeakScript.h">
       <Filter>source\mode\script</Filter>

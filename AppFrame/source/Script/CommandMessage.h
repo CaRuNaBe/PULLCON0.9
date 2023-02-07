@@ -1,55 +1,50 @@
-﻿//!
-//! @file command_message.h
-//!
-//! @brief 'm' スクリプトを処理するクラス定義
-//!
-#pragma once
+﻿#pragma once
 
 #include "CommandBase.h"
 #include "../Math/math.h"
 #include <string>
-
-class CommandMessage final : public CommandBase
+using namespace math;
+class CommandMessage final: public CommandBase
 {
 public:
-	CommandMessage ( unsigned int line , const std::vector<std::string>& script );
-	CommandMessage ( const CommandMessage& ) = default;
-	CommandMessage ( CommandMessage&& ) noexcept = default;
+	CommandMessage( unsigned int line,const std::vector<std::string>& script );
+	CommandMessage( const CommandMessage& ) = default;
+	CommandMessage( CommandMessage&& ) noexcept = default;
 
-	virtual ~CommandMessage () = default;
+	virtual ~CommandMessage() = default;
 
 	CommandMessage& operator=( const CommandMessage& right ) = default;
 	CommandMessage& operator=( CommandMessage&& right ) noexcept = default;
 
-	bool Check () override;
+	bool Check() override;
 
-	inline void Initialize (Rect&& area , const int goal )
+	inline void Initialize( Rect&& area,const int goal )
 	{
 		this->area = area;
 		right_goal = goal;
 	}
 
-	inline std::string Whospeak () const
+	inline std::string Whospeak() const
 	{
-		return script [ 1 ];
+		return script[1];
 	}
 
-	inline std::string GetMessageA () const
+	inline std::string GetMessageA() const
 	{
-		return script [ 2 ];
+		return script[2];
 	}
-	inline const Rect& GetArea () const
+	inline const Rect& GetArea() const
 	{
 		return area;
 	}
-	inline int GetRightGoal () const
+	inline int GetRightGoal() const
 	{
 		return right_goal;
 	}
 
-	inline void UpdateAreaRight ( const int right )
+	inline void UpdateAreaRight( const int right )
 	{
-		area.right = right;
+		area.rightBottom.x = static_cast <float>(right);
 	}
 
 private:

@@ -163,8 +163,8 @@ void ModeMainGame::PreParsing()
 
 	while ( now_line >= 0 && now_line < max_line )
 	{
-		auto script = scripts_data->GetScript( now_line );
-		const auto& command = (script[0]);
+		auto script = scripts_data->GetScript( now_line ,DELIMITER );
+		const auto& command = script[0];
 		std::string string_comand{command};
 		if ( string_comand == COMMAND_STAGELABEL )
 		{
@@ -218,7 +218,7 @@ void ModeMainGame::Parsing()
 
 	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
 	{
-		auto script = scripts_data->GetScript( now_line );
+		auto script = scripts_data->GetScript( now_line,DELIMITER );
 		const auto& command = (script[0]);
 		std::string string_comand{command};
 

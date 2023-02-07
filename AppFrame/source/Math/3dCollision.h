@@ -12,15 +12,18 @@ namespace math
 	class Sphere
 	{
 	public:
-		void SetSphere(vector4 pos, float r) { _vCenter = pos, _fRadius = r; }
+		void SetSphere( vector4 pos,float r )
+		{
+			_vCenter = pos,_fRadius = r;
+		}
 
 		vector4 _vCenter;
 		float   _fRadius;
-		void Draw(int red, int green, int blue) const;
+		void Draw( int red,int green,int blue ) const;
 	};
 
 	// Sphere‚ÆSphere‚ÌŒğ·”»’è
-	bool Intersect(const Sphere& a, const Sphere& b);
+	bool Intersect( const Sphere& a,const Sphere& b );
 
 
 }

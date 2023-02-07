@@ -1,7 +1,7 @@
 ﻿/*****************************************************************//**
  * @file   ModeSpeakScript.cpp
  * @brief  会話用スクリプト
- * 
+ *
  * @author 阿部健太郎
  * @date   February 2023
  *********************************************************************/
@@ -130,6 +130,8 @@ namespace
 	//script用ファイルパス
 	std::string FILE_PASS = "res/script/";
 	std::string FILE_NAME = ".json";
+		//文字列分割用
+	const std::string DELIMITER = ",";
 }
 
 ModeSpeakScript::ModeSpeakScript( ApplicationBase& game,int layer,std::string storyname )
@@ -284,6 +286,7 @@ bool ModeSpeakScript::Update()
 	{
 		UpdateMessage();
 	}
+	return true;
 }
 
 //!
@@ -307,9 +310,9 @@ void ModeSpeakScript::UpdateMessage()
 		}
 
 		// 右終端(全文字列)になるまで 1 文字サイズ分づつ足して行く
-		if ( area.right < right_goal )
+		if ( area.rightBottom.x < right_goal )
 		{
-			message->UpdateAreaRight( area.right + (FONT_SIZE / 2) );
+			message->UpdateAreaRight( static_cast <int>(area.rightBottom.x) + (FONT_SIZE / 2) );
 			return; // 1 文字分処理したらメソッド終了
 		}
 	}
@@ -336,7 +339,7 @@ void ModeSpeakScript::PreParsing()
 	comand_funcs.insert( std::make_pair( COMMAND_I,&ModeSpeakScript::OnCommandImage ) );
 	comand_funcs.insert( std::make_pair( COMMAND_IM,&ModeSpeakScript::OnCommandSe ) );
 
-	const auto script = scripts_data->GetScript( now_line );
+	const auto script = scripts_data->GetScript( now_line,DELIMITER );
 	const auto& char_command = (script[0]);
 	std::string string_comand{char_command};
 
@@ -386,7 +389,7 @@ void ModeSpeakScript::Parsing()
 
 	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
 	{
-		const auto script = scripts_data->GetScript( now_line );
+		const auto script = scripts_data->GetScript( now_line,DELIMITER );
 		const auto& command = (script[0]);
 		std::string string_comand{command};
 
@@ -1148,6 +1151,7 @@ bool ModeSpeakScript::Draw()
 	RenderMessage();
 	SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
 	RenderAnime();
+	return true;
 }
 
 /**
@@ -1189,7 +1193,6 @@ void ModeSpeakScript::RenderImage() const
  */
 void ModeSpeakScript::RenderMessage() const
 {
-
 	for ( auto&& message : message_list )
 	{
 		auto LINE_POSITION_RIGHT = LINE_POSITION_LEFT + ((static_cast<int>(message->Whospeak().size())) / 2 * FONT_SIZE);
@@ -1197,8 +1200,15 @@ void ModeSpeakScript::RenderMessage() const
 		DrawString( MSG_SPEAKER_SET_X,MSG_SPEAKER_SET_Y,message->Whospeak().c_str(),message_string_color );
 		const auto& area = message->GetArea();
 		// 表示エリアを制御して 1文字づつ描画する
-		SetDrawArea( area.left,area.top,area.right,area.bottom );
-		DrawString( area.left,area.top,message->GetMessageA().c_str(),message_string_color );
+		SetDrawArea( static_cast<int>(area.leftTop.x),
+								 static_cast<int>(area.leftTop.y),
+								 static_cast<int>(area.rightBottom.x),
+								 static_cast<int>(area.rightBottom.y) );
+
+		DrawString( static_cast<int>(area.leftTop.x),
+								static_cast<int>(area.leftTop.y),
+								message->GetMessageA().c_str(),
+								message_string_color );
 	}
 	// 表示エリアを全画面に戻す
 	SetDrawArea( 0,0,screen_width,screen_height );

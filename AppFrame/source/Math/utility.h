@@ -18,25 +18,25 @@ namespace math
 		static constexpr float TwoPi = PI * 2.0f;
 		static constexpr float PiOver2 = PI / 2.0f;
 
-		static float degree_to_radian(float degree)
+		static float degree_to_radian( float degree )
 		{
 			return degree * PI / DEGREES_180;
 		}
 
-		static float radian_to_degree(float radion)
+		static float radian_to_degree( float radion )
 		{
 			return radion * DEGREES_180 / PI;
 		}
 
-		static int get_random(const int min,const int max);
+		static int get_random( const int min,const int max );
 		static bool get_random()
 		{
-			return get_random(1,2) == 1 ? true : false;
+			return get_random( 1,2 ) == 1 ? true : false;
 		}
 
 
 	private:
 		utility() = default;
 	};
-	
+
 }

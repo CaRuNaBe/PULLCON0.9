@@ -16,13 +16,17 @@ namespace math
 		// コンストラクタ
 		vector4();
 		vector4( float x,float y,float z ): x( x ),y( y ),z( z ),w( 1.0 )
-		{}
+		{
+		}
 		vector4( float x,float y,float z,float w ): x( x ),y( y ),z( z ),w( w )
-		{}
+		{
+		}
 		vector4( int x,int y,int z ): x( static_cast<float>(x) ),y( static_cast<float>(y) ),z( static_cast<float>(z) ),w( 1.0 )
-		{}
+		{
+		}
 		vector4( int x,int y,int z,int w ): x( static_cast<float>(x) ),y( static_cast<float>(y) ),z( static_cast<float>(z) ),w( static_cast<float>(w) )
-		{}
+		{
+		}
 		vector4( const vector4& ) = default; // コピー
 		vector4( vector4&& ) = default; // ムーブ
 

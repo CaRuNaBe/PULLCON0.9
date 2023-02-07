@@ -9,22 +9,22 @@
 namespace math
 {
 	// AABB‚ÌŒğ·”»’è
-	bool Intersect(const AABB& a,const AABB& b)
+	bool Intersect( const AABB& a,const AABB& b )
 	{
 		// ®‚ªˆê‚Â‚Å‚àtrue‚È‚çŒğ·‚µ‚Ä‚¢‚È‚¢
-		if(a.max.x < b.min.x)
+		if ( a.max.x < b.min.x )
 		{
 			return false;
 		}
-		if(b.max.x < a.min.x)
+		if ( b.max.x < a.min.x )
 		{
 			return false;
 		}
-		if(a.max.y < b.min.y)
+		if ( a.max.y < b.min.y )
 		{
 			return false;
 		}
-		if(b.max.y < a.min.y)
+		if ( b.max.y < a.min.y )
 		{
 			return false;
 		}
@@ -39,14 +39,14 @@ namespace math
 	}
 
 	// AABB‚Ì•`‰æ
-	void AABB::Draw(int red,int green,int blue) const
+	void AABB::Draw( int red,int green,int blue ) const
 	{
-		DrawBoxAA(min.x,min.y,max.x,max.y,GetColor(red,green,blue),FALSE);
+		DrawBoxAA( min.x,min.y,max.x,max.y,GetColor( red,green,blue ),FALSE );
 	}
 
 	// ü•ª‚Ì•`‰æ
-	void LineSegment::Draw(int red,int green,int blue) const
+	void LineSegment::Draw( int red,int green,int blue ) const
 	{
-		DrawLineAA(start.x,start.y,end.x,end.y,GetColor(red,green,blue),5);
+		DrawLineAA( start.x,start.y,end.x,end.y,GetColor( red,green,blue ),5 );
 	}
 }

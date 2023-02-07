@@ -15,10 +15,12 @@ namespace math
 		// コンストラクタ
 		Vector2() noexcept = default;
 		constexpr Vector2( float ax,float ay ) noexcept: x{ax},y{ay}
-		{}
+		{
+		}
 
 		constexpr Vector2( int ax,int ay ) noexcept: x{static_cast<float>(ax)},y{static_cast<float>(ay)}
-		{}
+		{
+		}
 		Vector2( const Vector2& ) = default; // コピー
 		Vector2( Vector2&& ) = default; // ムーブ
 

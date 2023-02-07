@@ -12,6 +12,8 @@ namespace math
 		{
 		}
 		Rect()
+			:leftTop{0,0}
+			,rightBottom{0,0}
 		{
 		}
 		Vector2 GetLeftTop()
@@ -30,8 +32,21 @@ namespace math
 		{
 			return rightBottom.y - leftTop.y;
 		}
-	private:
+		void Set( int left,int top,int right,int bottom )
+		{
+			leftTop = {static_cast<float>(left),static_cast<float>(top)};
+			rightBottom = {static_cast<float>(right),static_cast<float>(bottom)};
+		}
+		void Set( Vector2 lefttop,Vector2 rightbottom )
+		{
+			leftTop = lefttop;
+			rightBottom = rightbottom;
+		}
+
+
 		Vector2 leftTop;			// ãÈå`ÇÃç∂è„
 		Vector2 rightBottom;	// ãÈå`ÇÃâEâ∫
+
+
 	};
 }

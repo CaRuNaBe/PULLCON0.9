@@ -119,9 +119,6 @@
     <ClInclude Include="source\Script\CommandImageLoad.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
-    <ClInclude Include="source\Script\CommandMessage.h">
-      <Filter>source\Sclipt</Filter>
-    </ClInclude>
     <ClInclude Include="source\Script\CommandMoviePlay.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
@@ -137,6 +134,7 @@
     <ClInclude Include="source\Script\CommandSeLoad.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
+    <ClInclude Include="source\Script\CommandMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -227,9 +225,6 @@
     <ClCompile Include="source\Script\CommandImageLoad.cpp">
       <Filter>source\Sclipt</Filter>
     </ClCompile>
-    <ClCompile Include="source\Script\CommandMessage.cpp">
-      <Filter>source\Sclipt</Filter>
-    </ClCompile>
     <ClCompile Include="source\Script\CommandMoviePlay.cpp">
       <Filter>source\Sclipt</Filter>
     </ClCompile>
@@ -244,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="source\Script\CommandSeLoad.cpp">
       <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMessage.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

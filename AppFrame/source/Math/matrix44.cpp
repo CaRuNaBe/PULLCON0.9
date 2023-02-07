@@ -10,24 +10,24 @@ namespace math
 		unit();
 	}
 
-	matrix44::matrix44(const matrix_array values)
+	matrix44::matrix44( const matrix_array values )
 	{
 		this->row_column = values;
 	}
 
-	void matrix44::zero(matrix_array& target) const
+	void matrix44::zero( matrix_array& target ) const
 	{
-		for(auto i = 0; i < column_max; ++i)
+		for ( auto i = 0; i < column_max; ++i )
 		{
-			target[i].fill(0.0);
+			target[i].fill( 0.0 );
 		}
 	}
 
 	void matrix44::unit()
 	{
-		zero(row_column);
+		zero( row_column );
 
-		for(auto i = 0; i < column_max; ++i)
+		for ( auto i = 0; i < column_max; ++i )
 		{
 			row_column[i][i] = 1.0;
 		}
@@ -38,18 +38,18 @@ namespace math
 		// 上三角行列を作成して行列式を求める
 		matrix_array upper_triangular = row_column;
 
-		for(auto i = 0; i < column_max; ++i)
+		for ( auto i = 0; i < column_max; ++i )
 		{
-			for(auto j = 0; j < row_max; ++j)
+			for ( auto j = 0; j < row_max; ++j )
 			{
-				if(i >= j)
+				if ( i >= j )
 				{
 					continue;
 				}
 
 				auto coefficient = upper_triangular[j][i] / upper_triangular[i][i];
 
-				for(auto k = 0; k < row_max; ++k)
+				for ( auto k = 0; k < row_max; ++k )
 				{
 					upper_triangular[j][k] -= upper_triangular[i][k] * coefficient;
 				}
@@ -58,7 +58,7 @@ namespace math
 
 		auto determinant = 1.0f;
 
-		for(auto i = 0; i < column_max; ++i)
+		for ( auto i = 0; i < column_max; ++i )
 		{
 			determinant *= upper_triangular[i][i];
 		}
@@ -72,26 +72,26 @@ namespace math
 		matrix_array inverse{{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
 		matrix_array temporary = row_column;
 
-		for(auto i = 0; i < column_max; ++i)
+		for ( auto i = 0; i < column_max; ++i )
 		{
 			auto coefficient = 1.0f / temporary[i][i];
 
-			for(auto j = 0; j < row_max; ++j)
+			for ( auto j = 0; j < row_max; ++j )
 			{
 				temporary[i][j] *= coefficient;
 				inverse[i][j] *= coefficient;
 			}
 
-			for(auto j = 0; j < row_max; ++j)
+			for ( auto j = 0; j < row_max; ++j )
 			{
-				if(i == j)
+				if ( i == j )
 				{
 					continue;
 				}
 
 				coefficient = temporary[j][i];
 
-				for(auto k = 0; k < row_max; ++k)
+				for ( auto k = 0; k < row_max; ++k )
 				{
 					temporary[j][k] -= temporary[i][k] * coefficient;
 					inverse[j][k] -= inverse[i][k] * coefficient;
@@ -99,15 +99,15 @@ namespace math
 			}
 		}
 
-		return matrix44(inverse);
+		return matrix44( inverse );
 	}
 
 	// 本来はカメラに属する処理だが便宜上実装する
-	void matrix44::look_at(const vector4& position,const vector4& target,const vector4& up)
+	void matrix44::look_at( const vector4& position,const vector4& target,const vector4& up )
 	{
 		auto axis_z = target - position;
-		auto axis_x = up.Cross(axis_z);
-		auto axis_y = axis_z.Cross(axis_x);
+		auto axis_x = up.Cross( axis_z );
+		auto axis_y = axis_z.Cross( axis_x );
 
 		axis_x.Normalized();
 		axis_y.Normalized();
@@ -128,19 +128,19 @@ namespace math
 		row_column[2][2] = axis_z.z;
 		row_column[2][3] = 0.0;
 
-		row_column[3][0] = -axis_x.Dot(position);
-		row_column[3][1] = -axis_y.Dot(position);
-		row_column[3][2] = -axis_z.Dot(position);
+		row_column[3][0] = -axis_x.Dot( position );
+		row_column[3][1] = -axis_y.Dot( position );
+		row_column[3][2] = -axis_z.Dot( position );
 		row_column[3][3] = 1.0;
 	}
 
-	void matrix44::perspective(const float fov_y,const float aspect,const float near_z,const float far_z)
+	void matrix44::perspective( const float fov_y,const float aspect,const float near_z,const float far_z )
 	{
-		auto cot = 1.0f / tan(fov_y * 0.5f);
+		auto cot = 1.0f / tan( fov_y * 0.5f );
 		auto range = far_z - near_z;
 		auto temp = far_z / range;
 
-		zero(row_column);
+		zero( row_column );
 
 		row_column[0][0] = cot * aspect;
 		row_column[1][1] = cot;
@@ -149,7 +149,7 @@ namespace math
 		row_column[3][2] = -near_z * temp;
 	}
 
-	void matrix44::viewport(const float width,const float height)
+	void matrix44::viewport( const float width,const float height )
 	{
 		auto w = width * 0.5f;
 		auto h = height * 0.5f;
@@ -162,29 +162,29 @@ namespace math
 		row_column[3][1] = h;
 	}
 
-	const matrix44 matrix44::operator *(const matrix44 rhs) const
+	const matrix44 matrix44::operator *( const matrix44 rhs ) const
 	{
 		matrix_array result{{{0.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 0.0f}}};
 
-		for(auto i = 0; i < column_max; ++i)
+		for ( auto i = 0; i < column_max; ++i )
 		{
-			for(auto j = 0; j < row_max; ++j)
+			for ( auto j = 0; j < row_max; ++j )
 			{
 				auto m = 0.0f;
 
-				for(auto k = 0; k < 4; ++k)
+				for ( auto k = 0; k < 4; ++k )
 				{
-					m += row_column[i][k] * rhs.get_value(k,j);
+					m += row_column[i][k] * rhs.get_value( k,j );
 				}
 
 				result[i][j] = m;
 			}
 		}
 
-		return matrix44(result);
+		return matrix44( result );
 	}
 
-	const matrix44 matrix44::operator +(const vector4 rhs) const
+	const matrix44 matrix44::operator +( const vector4 rhs ) const
 	{
 		matrix_array result = row_column;
 
@@ -192,12 +192,12 @@ namespace math
 		result[3][1] += rhs.y;
 		result[3][2] += rhs.z;
 
-		return matrix44(result);
+		return matrix44( result );
 	}
 
-	void matrix44::transfer(const float x,const float y,const float z,bool make)
+	void matrix44::transfer( const float x,const float y,const float z,bool make )
 	{
-		if(make)
+		if ( make )
 		{
 			unit();
 		}
@@ -207,9 +207,9 @@ namespace math
 		row_column[3][2] += z;
 	}
 
-	void matrix44::scale(const float x,const float y,const float z,bool make)
+	void matrix44::scale( const float x,const float y,const float z,bool make )
 	{
-		if(make)
+		if ( make )
 		{
 			unit();
 		}
@@ -219,13 +219,13 @@ namespace math
 		row_column[2][2] *= z;
 	}
 
-	void matrix44::rotate_x(const float degree,bool make)
+	void matrix44::rotate_x( const float degree,bool make )
 	{
-		auto sin_cos = get_sin_cos(degree);
-		auto sin = std::get<0>(sin_cos);
-		auto cos = std::get<1>(sin_cos);
+		auto sin_cos = get_sin_cos( degree );
+		auto sin = std::get<0>( sin_cos );
+		auto cos = std::get<1>( sin_cos );
 
-		if(make)
+		if ( make )
 		{
 			unit();
 
@@ -237,19 +237,19 @@ namespace math
 		else
 		{
 			matrix_array array{{{1, 0, 0, 0}, {0, cos, sin, 0}, {0, -sin, cos, 0}, {0, 0, 0, 1}}};
-			matrix44 rot_x(array);
+			matrix44 rot_x( array );
 
 			*this = *this * rot_x;
 		}
 	}
 
-	void matrix44::rotate_y(const float degree,bool make)
+	void matrix44::rotate_y( const float degree,bool make )
 	{
-		auto sin_cos = get_sin_cos(degree);
-		auto sin = std::get<0>(sin_cos);
-		auto cos = std::get<1>(sin_cos);
+		auto sin_cos = get_sin_cos( degree );
+		auto sin = std::get<0>( sin_cos );
+		auto cos = std::get<1>( sin_cos );
 
-		if(make)
+		if ( make )
 		{
 			unit();
 
@@ -261,19 +261,19 @@ namespace math
 		else
 		{
 			matrix_array array{{{cos, 0, -sin, 0}, {0, 1, 0, 0}, {sin, 0, cos, 0}, {0, 0, 0, 1}}};
-			matrix44 rot_y(array);
+			matrix44 rot_y( array );
 
 			*this = *this * rot_y;
 		}
 	}
 
-	void matrix44::rotate_z(const float degree,bool make)
+	void matrix44::rotate_z( const float degree,bool make )
 	{
-		auto sin_cos = get_sin_cos(degree);
-		auto sin = std::get<0>(sin_cos);
-		auto cos = std::get<1>(sin_cos);
+		auto sin_cos = get_sin_cos( degree );
+		auto sin = std::get<0>( sin_cos );
+		auto cos = std::get<1>( sin_cos );
 
-		if(make)
+		if ( make )
 		{
 			unit();
 
@@ -285,7 +285,7 @@ namespace math
 		else
 		{
 			matrix_array array{{{cos, sin, 0, 0}, {-sin, cos, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}};
-			matrix44 rot_z(array);
+			matrix44 rot_z( array );
 
 			*this = *this * rot_z;
 		}
@@ -299,14 +299,14 @@ namespace math
 		none_transfer[3][1] = 0.0;
 		none_transfer[3][2] = 0.0;
 
-		return matrix44(none_transfer);
+		return matrix44( none_transfer );
 	}
 
-	std::tuple<float,float> matrix44::get_sin_cos(const float degree) const
+	std::tuple<float,float> matrix44::get_sin_cos( const float degree ) const
 	{
-		auto radian = utility::degree_to_radian(degree);
+		auto radian = utility::degree_to_radian( degree );
 
-		return std::make_tuple(std::sin(radian),std::cos(radian));
+		return std::make_tuple( std::sin( radian ),std::cos( radian ) );
 	}
 
 }

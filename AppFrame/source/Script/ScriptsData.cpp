@@ -264,14 +264,14 @@ std::string ScriptsData::GetScriptLine( const unsigned int index ) const
 //! の様なフォーマットになっています。
 //! それを ',' で区切った vector の string 配列として返します。
 //!
-std::vector<std::string> ScriptsData::GetScript( const unsigned int index ) const
+std::vector<std::string> ScriptsData::GetScript( const unsigned int index ,const std::string delimiter ) const
 {
 	const auto line = GetScriptLine( index );
 
-	return string::Split( line,DELIMITER );
+	return string::Split( line,delimiter );
 }
 
-bool ScriptsData::ScriptAdd( std::string& Sclipts )
+bool ScriptsData::ScriptAdd( std::string Sclipts )
 {
 	scripts->emplace_back( Sclipts );
 	return true;
