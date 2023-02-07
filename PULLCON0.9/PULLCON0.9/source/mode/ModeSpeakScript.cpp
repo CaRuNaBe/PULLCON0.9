@@ -77,65 +77,32 @@ namespace
 	const std::string COMMAND_VE = "video";
 	const std::string COMMAND_E = "end";
 
-	constexpr auto FONT_SIZE = 34;
-
-	constexpr auto SPEAK_SKIP = 30;
-	constexpr auto MSG_WORD_MAX = 100;
-
-	constexpr auto MSG_LINE_MAX = 3;
-	constexpr auto MSG_LINE_WIDTH = MSG_WORD_MAX * FONT_SIZE;
-	constexpr auto MSG_LINE_HEIGHT = 35;
-	constexpr auto MSG_LINE_GAP_HEIGHT = 15;
-	constexpr auto MSG_LINE_GRID_HEIGHT = MSG_LINE_HEIGHT + MSG_LINE_GAP_HEIGHT;
 
 	constexpr auto MSG_SPEAKER_SET_X = 360;
-	constexpr auto MSG_SPEAKER_SET_Y = 790;
+	constexpr auto MSG_SPEAKER_SET_Y = 0;
 
-	constexpr auto MSG_SET_X = MSG_SPEAKER_SET_X + (FONT_SIZE / 2);
-	constexpr auto MSG_SET_Y = MSG_SPEAKER_SET_Y + FONT_SIZE + 10;
-
-	constexpr auto MSG_WINDOW_WIDTH = 1480;
-	constexpr auto MSG_WINDOW_HEIGHT = 270;
-
-	constexpr auto MSG_WINDOW_LEFT = 255;
-	constexpr auto MSG_WINDOW_RIGHT = MSG_WINDOW_LEFT + MSG_WINDOW_WIDTH;
-	constexpr auto MSG_WINDOW_TOP = 755;
-	constexpr auto MSG_WINDOW_BOTTOM = MSG_WINDOW_TOP + MSG_WINDOW_HEIGHT;
-
-	constexpr auto LINE_THICKNESS = 5;
-	constexpr auto LINE_POSITION_LEFT = MSG_SPEAKER_SET_X;
-	constexpr auto LINE_POSITION_TOP = MSG_SPEAKER_SET_Y + FONT_SIZE;
-	constexpr auto LINE_POSITION_BOTTOM = LINE_POSITION_TOP + LINE_THICKNESS;
-
-	constexpr auto CLICK_WAIT_X = 1600;
-	constexpr auto CLICK_WAIT_Y = 900;
-
-	constexpr auto SCRIPT_SKIP_TIME = 200;
 	constexpr auto ANIME_SKIP_OK_TIME = 120;
 
-	int screen_width = 1920;
-	int screen_height = 1080;
 
-	int screen_center_x = screen_width / 2;
-	int screen_center_y = screen_height / 2;
 
 	unsigned int message_string_color = 0;
 	std::string FILE_PASS = "res/script/";
 	std::string FILE_NAME = ".json";
 	const std::string DELIMITER = ",";
-
+	constexpr auto namecharacter = 0;
+	constexpr auto namestory = 1;
 }
 
 ModeSpeakScript::ModeSpeakScript( ApplicationBase& game,int layer,std::string storyname )
 	:ModeBase( game,layer )
 {
 	auto character_story = string::Split( storyname,"/" );
-	FILE_PASS += character_story[0];
-	FILE_NAME = character_story[1] + FILE_NAME;
+
+	FILE_PASS += character_story[namecharacter];
+	FILE_NAME = character_story[namestory] + FILE_NAME;
 	FILE_PASS += "/";
 	FILE_PASS += FILE_NAME;
 	Initialize( FILE_PASS,character_story[1],FILE_NAME );
-	InitializeStrings();
 }
 
 ModeSpeakScript::~ModeSpeakScript()
@@ -153,35 +120,15 @@ void ModeSpeakScript::Initialize( std::string jsonpath,std::string scriptsname,s
 
 	max_line = scripts_data->GetScriptNum();
 	state = ScriptState::PREPARSING;
-	feedcount = 0.0;
-	_Alpha = 0;
+
+	feed_count = 0.0;
+	alpha = 0;
 	now_line = 0;
 	wait_count = 0;
-	Speak_skip_count = 0;
-	Script_skip_count = 0;
-	Anime_count = 0;
-	Hide_point = 255;
-	is_Skip_ok = false;
-	is_click_wait_visible = false;
-	is_message_output = false;
+	anime_count = 0;
 	is_finishdraw = false;
-	is_hide = false;
-	is_amime_skip = false;
-};
-bool ModeSpeakScript::InitializeStrings()
-{
-
-	auto screen_depth = 0;
-
-	if ( GetScreenState( &screen_width,&screen_height,&screen_depth ) != 0 )
-	{
-		return false;
-	}
-	is_Click_on = false;
 	message_string_color = GetColor( 0,255,0 );
-
-	return true;
-}
+};
 
 void ModeSpeakScript::Destroy()
 {
@@ -193,10 +140,6 @@ void ModeSpeakScript::Destroy()
 	max_line = 0;
 	now_line = 0;
 	wait_count = 0;
-
-	is_click_wait_visible = false;
-	is_message_output = false;
-	is_Skip_ok = false;
 
 	image_list.clear();
 	se_list.clear();
@@ -244,55 +187,14 @@ bool ModeSpeakScript::Update()
 			is_update_message = true;
 			break;
 		case ScriptState::SCRIPT_END:
+			_game.GetModeServer()->Del( *this );
 			break;
 	}
 
-	feed_draw();
+	FeedDraw();
 
-	if ( is_Skip_ok )
-	{
-		Script_skip();
-		Hide_Message();
-	}
-
-
-	if ( is_update_message )
-	{
-		UpdateMessage();
-	}
 	return true;
 }
-
-void ModeSpeakScript::UpdateMessage()
-{
-	is_click_wait_visible = false;
-
-	for ( auto&& message : message_list )
-	{
-		const auto& area = message->GetArea();
-		const auto right_goal = message->GetRightGoal();
-
-		if ( _game.Getinput().XinputEveryOtherKey( XINPUT_BUTTON_A,20 ) )
-		{
-			message->UpdateAreaRight( right_goal );
-			continue;
-		}
-
-		if ( area.rightBottom.x < right_goal )
-		{
-			message->UpdateAreaRight( static_cast <int>(area.rightBottom.x) + (FONT_SIZE / 2) );
-			return;   
-		}
-	}
-
-	is_message_output = false;
-
-	if ( state == ScriptState::CLICK_WAIT )
-	{
-		is_click_wait_visible = true;
-	}
-}
-
 
 void ModeSpeakScript::PreParsing()
 {
@@ -314,24 +216,21 @@ void ModeSpeakScript::PreParsing()
 	if ( now_line >= max_line )
 	{
 		now_line = 0;
-		is_Skip_ok = true;
 		state = ScriptState::PARSING;
 	}
 }
 
 void ModeSpeakScript::Parsing()
 {
-	is_hide = false;
 	is_finishdraw = false;
-	Hide_point = 255;
 	message_list.clear();
 	movie_play.reset();
 	auto stop_parsing = false;
 	funcs_type comand_funcs;
 	comand_funcs.insert( std::make_pair( COMMAND_FI,&ModeSpeakScript::OnCommandCrfi ) );
 	comand_funcs.insert( std::make_pair( COMMAND_FO,&ModeSpeakScript::OnCommandCrfo ) );
-	comand_funcs.insert( std::make_pair( COMMAND_DI,&ModeSpeakScript::OnCommandDrawin ) );
-	comand_funcs.insert( std::make_pair( COMMAND_DO,&ModeSpeakScript::OnCommandDrawout ) );
+	comand_funcs.insert( std::make_pair( COMMAND_DI,&ModeSpeakScript::OnCommandDrawIn ) );
+	comand_funcs.insert( std::make_pair( COMMAND_DO,&ModeSpeakScript::OnCommandDrawOut ) );
 	comand_funcs.insert( std::make_pair( COMMAND_M,&ModeSpeakScript::OnCommandMessage ) );
 	comand_funcs.insert( std::make_pair( COMMAND_A,&ModeSpeakScript::OnCommandClick ) );
 	comand_funcs.insert( std::make_pair( COMMAND_W,&ModeSpeakScript::OnCommandWait ) );
@@ -373,9 +272,13 @@ void ModeSpeakScript::Parsing()
 		}
 		++now_line;
 	}
+	if ( now_line > max_line )
+	{
+		state = ScriptState::SCRIPT_END;
+	}
 }
 
-void  ModeSpeakScript::feed_draw()
+void  ModeSpeakScript::FeedDraw()
 {
 	for ( auto&& drawin : drawin_list )
 	{
@@ -428,90 +331,40 @@ void  ModeSpeakScript::feed_draw()
 	is_finishdraw = true;
 };
 
-
-
-void ModeSpeakScript::Script_skip()
-{
-	if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_Y ) )
-	{
-		Script_skip_count++;
-		if ( Script_skip_count > SCRIPT_SKIP_TIME )
-		{
-			if ( state == ScriptState::PLAY_ANIME )
-			{
-				PauseMovieToGraph( movie_play->GetMvHandle() );
-			}
-			for ( auto&& se : se_list )
-			{
-				StopSoundMem( se->GetHandle() );
-			}
-			state = ScriptState::SCRIPT_END;
-		}
-	}
-	else
-	{
-		Script_skip_count = 0;
-	}
-};
-
-void ModeSpeakScript::Hide_Message()
-{
-	if ( (_game.Getinput().GetTrgXinput( XINPUT_BUTTON_B )) && is_hide )
-	{
-		is_hide = false;
-		Hide_point = 255;
-	}
-	else if ( (_game.Getinput().GetTrgXinput( XINPUT_BUTTON_B )) && !is_hide )
-	{
-		is_hide = true;
-		Hide_point = 0;
-	}
-};
-
 void ModeSpeakScript::CrfiUpdate()
 {
-	auto i = 255 / feedcount;
+	auto i = 255.0f / feed_count;
 
-	if ( is_message_output )
+	if ( alpha > 0.0f )
 	{
-		return;
-	}
-	if ( _Alpha > 0.0 )
-	{
-		_Alpha -= i;
+		alpha -= i;
 	}
 	else
 	{
-		_Alpha = 0.0;
+		alpha = 0.0f;
 		state = ScriptState::PARSING;
 	}
 }
 
 void ModeSpeakScript::CrfoUpdate()
 {
-	auto i = 255.0 / feedcount;
+	auto i = 255.0f / feed_count;
 
-	if ( is_message_output )
+	if ( alpha < 255.0f )
 	{
-		return;
-	}
-	if ( _Alpha < 255.0 )
-	{
-		_Alpha += i;
+		alpha += i;
 	}
 	else
 	{
-		_Alpha = 255.0;
+		alpha = 255.0f;
 		state = ScriptState::PARSING;
 	}
+
 }
 
 void ModeSpeakScript::ClickWait()
 {
-	if ( is_message_output )
-	{
-		return;
-	}
+
 	if ( is_finishdraw )
 	{
 		if ( _game.Getinput().XinputEveryOtherKey( XINPUT_BUTTON_A,2 ) )
@@ -524,10 +377,7 @@ void ModeSpeakScript::ClickWait()
 
 void ModeSpeakScript::TimeWait()
 {
-	if ( is_message_output )
-	{
-		return;
-	}
+
 	if ( wait_count > 0 )
 	{
 		--wait_count;
@@ -544,38 +394,20 @@ void ModeSpeakScript::TimeWait()
 
 void ModeSpeakScript::PlayUpdate()
 {
-	Anime_count++;
-	if ( Anime_count > ANIME_SKIP_OK_TIME )
+	anime_count++;
+	bool is_amime_skip = false;
+	if ( anime_count > ANIME_SKIP_OK_TIME )
 	{
 		is_amime_skip = true;
 	}
 	if ( is_amime_skip && (_game.Getinput().GetTrgXinput( XINPUT_BUTTON_A ) || (GetMovieStateToGraph( movie_play->GetMvHandle() ) == 0)) )
 	{
 		is_amime_skip = false;
-		Anime_count = 0;
+		anime_count = 0;
 		PauseMovieToGraph( movie_play->GetMvHandle() );
 		state = ScriptState::PARSING;
 	}
 };
-
-bool ModeSpeakScript::CalculateMessageArea( const std::string& message,Rect& area,int& right_goal )
-{
-	if ( message.empty() )
-	{
-		return false;
-	}
-	const auto line_index = static_cast<int>(message_list.size());
-	const auto message_top = MSG_SET_Y + MSG_LINE_GRID_HEIGHT * line_index;
-	const auto message_bottom = message_top + MSG_LINE_HEIGHT;
-
-	area.Set( MSG_SET_X,message_top,MSG_SET_X,message_bottom );
-
-	const auto string_lenght = static_cast<int>(std::strlen( message.c_str() ));
-
-	right_goal = MSG_SET_X + ((string_lenght + 2) * (FONT_SIZE / 2));
-
-	return true;
-}
 
 bool ModeSpeakScript::GetImageHandle( const std::string& str,int& handle ) const
 {
@@ -690,7 +522,6 @@ bool ModeSpeakScript::OnCommandClick( unsigned int line,const std::vector<std::s
 {
 	if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_A ) )
 	{
-
 		image_list.clear();
 		state = ScriptState::PARSING;
 	}
@@ -759,34 +590,23 @@ bool ModeSpeakScript::OnCommandMessage( unsigned int line,const std::vector<std:
 	{
 		return false;
 	}
+	auto string_lenght = (static_cast<int>(std::strlen( message->GetMessageA().c_str() )) / 2) * _game.GetFuntSize();
 
-	Rect rect;
-	int right_goal = 0;
+	auto posi_x = ((_game.DispSizeW() - string_lenght) / 2);
 
-	if ( !CalculateMessageArea( message->GetMessageA(),rect,right_goal ) )
-	{
-		return false;
-	}
+	auto posi_y = _game.GetFuntSize() * static_cast<int>(message_list.size());
 
-	message->Initialize( std::move( rect ),right_goal );
+	math::Vector2 posi = {posi_x,posi_y};
 
-	const auto size = static_cast<int>(message_list.size());
-
-	if ( size > MSG_LINE_MAX )
-	{
-		message_list.erase( message_list.begin() + 0 );
-	}
+	message->SetPosition( posi );
 
 	message_list.emplace_back( std::move( message ) );
-
-	is_message_output = true;
 
 	return true;
 }
 
-bool ModeSpeakScript::OnCommandDrawin( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandDrawIn( unsigned int line,const std::vector<std::string>& scripts )
 {
-
 	auto drawin = std::make_unique<CommandDrawIn>( line,scripts );
 	if ( !drawin->Check() )
 	{
@@ -825,7 +645,7 @@ bool ModeSpeakScript::OnCommandDrawin( unsigned int line,const std::vector<std::
 	return true;
 };
 
-bool ModeSpeakScript::OnCommandDrawout( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandDrawOut( unsigned int line,const std::vector<std::string>& scripts )
 {
 
 	drawin_list.clear();
@@ -876,9 +696,9 @@ bool ModeSpeakScript::OnCommandCrfi( unsigned int line,const std::vector<std::st
 	{
 		return false;
 	}
-	feedcount = static_cast<double>(crfi->GetinCount());
+	feed_count = static_cast<float>(crfi->GetinCount());
 	crfi_list.emplace_back( std::move( crfi ) );
-	_Alpha = 255.0;
+	alpha = 255.0;
 	state = ScriptState::CRFEEDIN;
 
 	return  true;
@@ -892,38 +712,25 @@ bool ModeSpeakScript::OnCommandCrfo( unsigned int line,const std::vector<std::st
 	{
 		return false;
 	}
-	feedcount = static_cast<double>(crfo->GetoutCount());
+	feed_count = static_cast<float>(crfo->GetoutCount());
 	crfo_list.emplace_back( std::move( crfo ) );
-	_Alpha = 0.0;
+	alpha = 0.0;
 	state = ScriptState::CRFEEDOUT;
 	return true;
 }
 
 bool ModeSpeakScript::Draw()
 {
-	RenderImage();
-	RenderFeedin();
-	RenderFeedout();
-	SetDrawBlendMode( DX_BLENDMODE_ALPHA,Hide_point );
-	RenderMessageWindow();
-	RenderMessage();
-	SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
-	RenderAnime();
+	DrawImage();
+	DrawFeedIn();
+	DrawFeedOut();
+	DrawMessage();
+	DrawAnime();
 	return true;
 }
 
-void ModeSpeakScript::RenderImage() const
+void ModeSpeakScript::DrawImage() const
 {
-	if ( _game.GetScliptFlagManager()->GetisBlackbackground() )
-	{
-		if ( state == ScriptState::CRFEEDIN || !(drawout_list.empty()) )
-		{
-		}
-		else
-		{
-			DrawBox( 0,0,_game.DispSizeW(),_game.DispSizeH(),GetColor( 255,255,255 ),TRUE );
-		}
-	}
 	for ( auto&& drawin : drawin_list )
 	{
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA,static_cast<int>(drawin->GetDrawAlphain()) );
@@ -939,65 +746,43 @@ void ModeSpeakScript::RenderImage() const
 	}
 }
 
-void ModeSpeakScript::RenderMessage() const
+void ModeSpeakScript::DrawMessage() const
 {
 	for ( auto&& message : message_list )
 	{
-		auto LINE_POSITION_RIGHT = LINE_POSITION_LEFT + ((static_cast<int>(message->Whospeak().size())) / 2 * FONT_SIZE);
-		DrawBox( LINE_POSITION_LEFT,LINE_POSITION_TOP,LINE_POSITION_RIGHT,LINE_POSITION_BOTTOM,message_string_color,TRUE );
-		DrawString( MSG_SPEAKER_SET_X,MSG_SPEAKER_SET_Y,message->Whospeak().c_str(),message_string_color );
-		const auto& area = message->GetArea();
-		DrawString( static_cast<int>(area.leftTop.x),
-								static_cast<int>(area.leftTop.y),
-								message->GetMessageA().c_str(),
-								message_string_color );
-	}
-
-	if ( is_click_wait_visible )
-	{
-		if ( is_hide )
-		{
-		}
-		else
-		{
-
-		}
+		auto string_lenght = (static_cast<int>(std::strlen( message->WhoSpeak().c_str() )) / 2) * _game.GetFuntSize();
+		auto posi_x = ((_game.DispSizeW() - string_lenght) / 2);
+		DrawStringToHandle( posi_x,MSG_SPEAKER_SET_Y,message->WhoSpeak().c_str(),message_string_color,_game.GetFontHandle() );
+		DrawStringToHandle( message->GetPosition().IntX(),
+												message->GetPosition().IntY() + _game.GetFuntSize() ,
+												message->GetMessageA().c_str(),message_string_color,
+												_game.GetFontHandle() );
 	}
 }
 
-void ModeSpeakScript::RenderMessageWindow() const
-{
-	if ( (message_list.empty()) )
-	{
-	}
-	else
-	{
-	}
-}
-
-void ModeSpeakScript::RenderFeedin()const
+void ModeSpeakScript::DrawFeedIn()const
 {
 	for ( auto&& crfi : crfi_list )
 	{
-		SetDrawBlendMode( DX_BLENDMODE_ALPHA,static_cast<int>(_Alpha) );
+		SetDrawBlendMode( DX_BLENDMODE_ALPHA,static_cast<int>(alpha) );
 		DrawBox( 0,0,_game.DispSizeW(),_game.DispSizeH(),GetColor( crfi->GetRed(),crfi->GetGreen(),crfi->GetBlue() ),TRUE );
 		SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
 	}
 }
 
-void ModeSpeakScript::RenderFeedout()const
+void ModeSpeakScript::DrawFeedOut()const
 {
 	for ( auto&& crfo : crfo_list )
 	{
 		auto color = GetColor( crfo->GetRed(),crfo->GetGreen(),crfo->GetBlue() );
-		auto a = static_cast<int>(_Alpha);
+		auto a = static_cast<int>(alpha);
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA,a );
 		DrawBox( 0,0,_game.DispSizeW(),_game.DispSizeH(),color,TRUE );
 		SetDrawBlendMode( DX_BLENDMODE_NOBLEND,0 );
 	}
 }
 
-void ModeSpeakScript::RenderAnime()const
+void ModeSpeakScript::DrawAnime()const
 {
 	if ( state == ScriptState::PLAY_ANIME )
 	{

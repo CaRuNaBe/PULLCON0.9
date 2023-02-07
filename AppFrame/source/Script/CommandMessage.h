@@ -1,9 +1,7 @@
 ﻿#pragma once
-
 #include "CommandBase.h"
-#include "../Math/math.h"
 #include <string>
-using namespace math;
+#include "../Math/math.h"
 class CommandMessage final: public CommandBase
 {
 public:
@@ -18,36 +16,25 @@ public:
 
 	bool Check() override;
 
-	inline void Initialize( Rect&& area,const int goal )
-	{
-		this->area = area;
-		right_goal = goal;
-	}
 
-	inline std::string Whospeak() const
+	std::string WhoSpeak() const
 	{
 		return script[1];
 	}
 
-	inline std::string GetMessageA() const
+	std::string GetMessageA() const
 	{
 		return script[2];
 	}
-	inline const Rect& GetArea() const
-	{
-		return area;
-	}
-	inline int GetRightGoal() const
-	{
-		return right_goal;
-	}
 
-	inline void UpdateAreaRight( const int right )
+	void SetPosition(math::Vector2 set_vec)
 	{
-		area.rightBottom.x = static_cast <float>(right);
+		posi.Set( set_vec );
 	}
-
-private:
-	Rect area;
-	int right_goal;
+	math::Vector2 GetPosition()
+	{
+		return posi;
+	}
+protected:
+	math::Vector2 posi;
 };

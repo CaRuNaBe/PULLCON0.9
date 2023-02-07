@@ -80,9 +80,6 @@
     <ClInclude Include="source\Math\Easing.h">
       <Filter>source\Math</Filter>
     </ClInclude>
-    <ClInclude Include="source\Application\ScliptFlagManager.h">
-      <Filter>source\Application</Filter>
-    </ClInclude>
     <ClInclude Include="source\Script\ScriptsData.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
@@ -134,7 +131,9 @@
     <ClInclude Include="source\Script\CommandSeLoad.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
-    <ClInclude Include="source\Script\CommandMessage.h" />
+    <ClInclude Include="source\Script\CommandMessage.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -189,9 +188,6 @@
     <ClCompile Include="source\Math\Easing.cpp">
       <Filter>source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="source\Application\ScliptFlagManager.cpp">
-      <Filter>source\Application</Filter>
-    </ClCompile>
     <ClCompile Include="source\Script\ScriptsData.cpp">
       <Filter>source\Sclipt</Filter>
     </ClCompile>
@@ -241,7 +237,7 @@
       <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandMessage.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

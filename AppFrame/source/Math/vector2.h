@@ -33,6 +33,13 @@ namespace math
 		{
 			return static_cast<int>(y);
 		}
+
+		void Set( Vector2 vec2 )
+		{
+			x = vec2.x;
+			y = vec2.y;
+		}
+
 		Vector2& operator =( const Vector2& ) = default; // コピー
 		Vector2& operator =( Vector2&& ) = default; // ムーブ
 		// ベクトルの加算 a + b ※外部関数

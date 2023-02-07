@@ -45,15 +45,10 @@ private:
 		SCRIPT_END
 	};
 
-	bool InitializeStrings();
 
 	void PreParsing();
 	void Parsing();
-	void UpdateMessage();
-	void Hide_Message();
-	void feed_draw();
-	void Script_skip();
-	bool CalculateMessageArea( const std::string& message,Rect& area,int& right_goal );
+	void FeedDraw();
 
 
 	void PlayUpdate();;
@@ -69,8 +64,8 @@ private:
 	bool OnCommandWait( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandDrawin( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandDrawout( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandDrawIn( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandDrawOut( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMessage( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMusicloop( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts );
@@ -81,16 +76,11 @@ private:
 	bool OnCommandImage( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandSe( unsigned int line,const std::vector<std::string>& scripts );
 
-
-
-
-
-	void RenderImage() const;
-	void RenderMessageWindow() const;
-	void RenderMessage() const;
-	void RenderFeedin()const;
-	void RenderFeedout()const;
-	void RenderAnime()const;
+	void DrawImage() const;
+	void DrawMessage() const;
+	void DrawFeedIn()const;
+	void DrawFeedOut()const;
+	void DrawAnime()const;
 
 	std::unique_ptr<ScriptsData> scripts_data;
 	std::unique_ptr<CommandMoviePlay>movie_play;
@@ -108,22 +98,15 @@ private:
 
 	ScriptState state;
 
-
 	unsigned int max_line;
 	unsigned int now_line;
+
 	unsigned int wait_count;
-	double _Alpha;
-	double feedcount;
-	int Speak_skip_count;
-	int Script_skip_count;
-	int Anime_count;
-	int Hide_point;
+
+	float alpha;
+	float feed_count;
+	int anime_count;
 
 	bool is_finishdraw;
-	bool is_click_wait_visible;
-	bool is_message_output;
-	bool is_Skip_ok;
-	bool 	is_Click_on;
-	bool is_hide;
-	bool is_amime_skip;
+
 };
