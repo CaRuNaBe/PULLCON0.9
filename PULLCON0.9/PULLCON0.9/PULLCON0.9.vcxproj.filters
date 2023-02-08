@@ -34,9 +34,6 @@
     <ClCompile Include="source\mode\ModeGameResult.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeMainGame.cpp">
-      <Filter>source\mode</Filter>
-    </ClCompile>
     <ClCompile Include="source\mode\ModePause.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
@@ -163,15 +160,15 @@
     <ClCompile Include="SpeakScriptObject.cpp">
       <Filter>source\object\speakscript</Filter>
     </ClCompile>
+    <ClCompile Include="source\mode\ModeGameOver.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\mode\ModeGameOver.h">
       <Filter>source\mode</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModeGameResult.h">
-      <Filter>source\mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModePause.h">
@@ -299,6 +296,9 @@
     </ClInclude>
     <ClInclude Include="SpeakScriptObject.h">
       <Filter>source\object\speakscript</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\CreditLogo.h">
+      <Filter>source\object\title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

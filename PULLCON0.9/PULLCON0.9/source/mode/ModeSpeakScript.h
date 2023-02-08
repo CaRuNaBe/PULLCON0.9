@@ -87,8 +87,8 @@ private:
 
 	std::vector<std::unique_ptr<CommandImageLoad>> image_list;
 	std::vector<std::unique_ptr<CommandSeLoad>> se_list;
-	std::vector < std::unique_ptr < CommandCrFeedIn>> crfi_list;
-	std::vector < std::unique_ptr < CommandCrFeedOut>> crfo_list;
+	std::vector<std::unique_ptr<CommandCrFeedIn>> crfi_list;
+	std::vector<std::unique_ptr<CommandCrFeedOut>> crfo_list;
 	std::vector<std::unique_ptr<CommandDrawIn>> drawin_list;
 	std::vector<std::unique_ptr<CommandDrawOut>> drawout_list;
 	std::vector<std::unique_ptr<CommandMessage>> message_list;

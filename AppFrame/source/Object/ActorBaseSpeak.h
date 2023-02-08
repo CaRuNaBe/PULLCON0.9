@@ -11,7 +11,10 @@ public:
 	virtual void	Init();/*èâä˙âª*/
 	virtual bool	Update();//
 	virtual bool	Draw();
-
+	virtual void SetPosi( math::Vector2	_pos )
+	{
+		this->_pos = _pos;
+	}
 
 protected:
 	math::Vector2	_pos;		// ç¿ïW
