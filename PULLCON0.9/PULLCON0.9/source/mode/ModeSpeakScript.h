@@ -55,7 +55,7 @@ private:
 	void PlayUpdate();;
 	void TimeWait();
 	void ClickWait();
-
+	void ScriptAuto();
 	void CrfiUpdate();
 	void CrfoUpdate();
 

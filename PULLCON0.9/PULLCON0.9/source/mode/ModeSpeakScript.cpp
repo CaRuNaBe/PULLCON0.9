@@ -81,7 +81,6 @@ namespace
 	const std::string COMMAND_E = "end";
 
 
-	constexpr auto MSG_SPEAKER_SET_X = 360;
 	constexpr auto MSG_SPEAKER_SET_Y = 0;
 
 	constexpr auto ANIME_SKIP_OK_TIME = 120;
@@ -400,6 +399,19 @@ void ModeSpeakScript::TimeWait()
 	}
 }
 
+void ModeSpeakScript::ScriptAuto()
+{
+	for ( auto&& obj : speak_object.GetObjects() )
+	{
+		if (!obj->GetUpdateSkip() )
+		{
+			return;
+		}
+	}
+
+	TimeWait();
+};
+
 void ModeSpeakScript::PlayUpdate()
 {
 	anime_count++;
@@ -615,7 +627,9 @@ bool ModeSpeakScript::OnCommandMessage( unsigned int line,const std::vector<std:
 
 bool ModeSpeakScript::OnCommandAuto( unsigned int line,const std::vector<std::string>& scripts )
 {
-
+	wait_count = 120;
+	state = ScriptState::AUTO;
+	return true;
 };
 
 bool ModeSpeakScript::OnCommandDrawIn( unsigned int line,const std::vector<std::string>& scripts )
