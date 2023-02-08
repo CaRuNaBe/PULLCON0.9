@@ -24,11 +24,13 @@ void EnemySkyhunter::Init()
 
 	_stateEnemySkyhunter = State::NUM;
 
-	_vPos = { 0.f, 5000.f, 5000.f };
+	_vPos = { 0.f, 5000.f, 50000.f };
 	_vEvent = _vPos;
 	_fScale = 2.f;
+	_fSpeed = 150.f;
 	_collision._fRadius = 500.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 2.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 5.f * _fScale;
+	_collisionSearch._fRadius = _collisionEvent._fRadius * 3.f;
 
 	_iLife = 100;
 
@@ -42,18 +44,38 @@ bool EnemySkyhunter::Update()
 		if (obje->GetType() == Type::kPlayer
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kPlayer) {
+				if (IsSearch(*obje)) {
+					
+				}
+				else {
+					if (_ST == 0) {
+						_vRelation = obje->_vPos;
+						// 三次元極座標(r(length3D),θ(theta),φ(rad))
+						float sx = _vRelation.x - _vPos.x;
+						float sz = _vRelation.z - _vPos.z;
+						float sy = _vRelation.y - _vPos.y;
+						float length3D = sqrt(sx * sx + sy * sy + sz * sz);
+						float rad = atan2(sz, sx);
+						float theta = acos(sy / length3D);
+
+						float randomDeg = static_cast<float>(utility::get_random(-30, 30));
+						float randomRad = utility::degree_to_radian(randomDeg);
+						// モデルの進行方向設定用
+						_vVelocity.x = cos(rad + randomRad);
+						_vVelocity.z = sin(rad + randomRad);
+						_vVelocity.y = cos(theta);
+						_vVelocity.Normalized();
+						_ST = 180;
+					}
+				}
 				if (Intersect(_collisionEvent, obje->_collision)) {
-					_coll = true;
 					_fire = true;
-					_vRelation = obje->_vPos;
+					_vTarget = obje->_vPos;
 					// 弾にバラつきを持たせる
 					float randomX = static_cast<float>(utility::get_random(-700, 700));
 					float randomY = static_cast<float>(utility::get_random(-700, 1400));
 					float randomZ = static_cast<float>(utility::get_random(-700, 700));
-					_vTarget = { _vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ };
-				}
-				else {
-					_coll = false;
+					_vTarget = { _vTarget.x + randomX, _vTarget.y + randomY, _vTarget.z + randomZ };
 				}
 			}
 			if (obje->GetType() == Type::kBullet) {
@@ -89,12 +111,19 @@ bool EnemySkyhunter::Update()
 		_CT = 5;
 	}
 
+	if (_vPos.y < 4000.f && _vVelocity.y < 0.f) {
+		_vVelocity.y = 0.f;
+	}
+	
+	_vPos += _vVelocity * _fSpeed;
+
 	if (_iLife < 0) {
 		Damage(_mode);
 	}
 
 	_collision._fRadius = 500.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 5.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 13.f * _fScale;
+	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
 	_vEvent = _vPos;
 	UpdateCollision();  // コリジョン更新
 
@@ -113,7 +142,7 @@ bool EnemySkyhunter::Draw()
 	// モデル拡大
 	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	// モデル回転
-	MV1SetRotationYUseDir(_handle, ToDX(_vDir), 0.f);
+	MV1SetRotationYUseDir(_handle, ToDX(_vVelocity), 0.f);
 	// モデル移動
 	MV1SetPosition(_handle, ToDX(_vPos));
 	// モデル描画
@@ -125,6 +154,7 @@ bool EnemySkyhunter::Draw()
 	{
 		DrawCollision(color);
 		DrawCollisionEvent(color);
+		DrawCollisionSearch(color);
 		if (_overlap)
 		{
 			color = { 255, 0, 0 };

@@ -52,6 +52,7 @@ public:
 	// 向きベクトルの設定
 	void SetDir(const vector4& dir) { _vDir = dir; }
 	void SetDir(float x, float y, float z) { _vDir.x = x; _vDir.y = y; _vDir.z = z; }
+
 	void SetScale(float _scale) { _fScale = _scale; };
 	void SetRadius( float _radius )
 	{
@@ -62,15 +63,16 @@ public:
 		_fSpeed = _speed;
 	};
 public:
-	vector4 _vPos;   // 位置
-	vector4 _vEvent;   // イベント位置
-	vector4 _vRelation;   // 位置関係
-	vector4 _vTarget;   // 目標位置
-	vector4 _vDir;   // 向き
+	vector4 _vPos;       // 位置
+	vector4 _vEvent;     // イベント位置
+	vector4 _vRelation;  // 位置関係
+	vector4 _vTarget;    // 目標位置
+	vector4 _vDir;       // 向き
+	vector4 _vVelocity;  // 速度ベクトル
 
-	Sphere  _collision;   // 球判定
+	Sphere  _collision;        // 球判定
 	Sphere  _collisionEvent;   // イベント判定
-	Sphere  _collisionSearch;   // 索敵判定
+	Sphere  _collisionSearch;  // 索敵判定
 
 	int   _iFuel;    // 燃料
 	int   _iLife;    // ライフ
@@ -80,12 +82,12 @@ public:
 	float _fScale;   // 大きさ
 	float _fRotatX;  // X軸回転
 	float _fRotatY;  // Y軸回転
-	bool  _coll;   // コリジョン判定をするか
-	bool  _overlap;   // 判定が重なったか
-	bool  _event;   // イベント判定と重なったか
-	bool  _pull;    // イベント
+	bool  _coll;     // コリジョン判定をするか
+	bool  _overlap;  // 判定が重なったか
+	bool  _event;    // イベント判定と重なったか
+	bool  _pull;     // 引っこ抜き
 	bool  _finish;   // イベント完了
-	bool  _fire;    // 発砲
+	bool  _fire;     // 発砲
 
 	int _cnt;  // 動作カウント
 	int _CT;   // クールタイム

@@ -17,6 +17,7 @@ void ActorBase3D::Init() {
 	_vRelation = { 0.f, 0.f ,0.f };
 	_vTarget = { 0.f, 0.f ,0.f };
 	_vDir = { 0.f, 0.f ,0.f };
+	_vVelocity = { 0.f, 0.f ,0.f };
 
 	_iFuel = 0;
 	_iLife = 0;

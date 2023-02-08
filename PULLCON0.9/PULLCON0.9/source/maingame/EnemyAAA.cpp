@@ -311,7 +311,7 @@ bool EnemyAAA::Draw()
 			}
 		}
 		else {
-			if (_stateAAA == State::PLAY) {
+			if (_stateAAA == State::EVENT) {
 				vector4 color = { 255, 255, 255 };
 				DrawCollisionSearch(color);
 			}
