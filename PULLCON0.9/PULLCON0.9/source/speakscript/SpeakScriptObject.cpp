@@ -47,8 +47,7 @@ bool SpeakScriptObject::Update()
 	ActorSpeak::Update();
 	if ( !CheckSoundMem( music_hundle ) )
 	{
-		_cnt = 0;
-		_mode.GetObjectServerSpeak().Del( *this );
+		isUpdateSkip = true;
 	}
 	return true;
 }

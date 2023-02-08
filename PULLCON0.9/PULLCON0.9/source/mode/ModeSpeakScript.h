@@ -42,6 +42,7 @@ private:
 		PLAY_ANIME,
 		TIME_WAIT,
 		CLICK_WAIT,
+		AUTO,
 		SCRIPT_END
 	};
 
@@ -54,6 +55,7 @@ private:
 	void PlayUpdate();;
 	void TimeWait();
 	void ClickWait();
+
 	void CrfiUpdate();
 	void CrfoUpdate();
 
@@ -66,7 +68,9 @@ private:
 	bool OnCommandCrfo( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandDrawIn( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandDrawOut( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandObject( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMessage( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandAuto( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMusicloop( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMusicstop( unsigned int line,const std::vector<std::string>& scripts );

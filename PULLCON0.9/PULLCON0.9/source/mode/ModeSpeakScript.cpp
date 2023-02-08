@@ -56,6 +56,7 @@ a�{�^�������܂ő҂��܂��B�������ꍇ��
 */
 
 #include "ModeSpeakScript.h"
+#include "../speakscript/SpeakScriptObject.h"
 #include <algorithm>
 #include <utility>
 #include <stdio.h>
@@ -66,11 +67,13 @@ namespace
 	const std::string COMMAND_ML = "musicload";
 	const std::string COMMAND_FI = "feedin";
 	const std::string COMMAND_FO = "feedout";
-	const std::string COMMAND_DI = "drawin";
+	const std::string COMMAND_DI = "drawin";  
 	const std::string COMMAND_DO = "drawout";
+	const std::string COMMAND_OB = "object";
 	const std::string COMMAND_M = "message";
 	const std::string COMMAND_A = "@";
 	const std::string COMMAND_W = "wait";
+	const std::string COMMAND_OT = "auto";
 	const std::string COMMAND_BM = "backmusic";
 	const std::string COMMAND_LM = "loopmusic";
 	const std::string COMMAND_SM = "stopmusic";
@@ -151,9 +154,12 @@ void ModeSpeakScript::Destroy()
 
 bool ModeSpeakScript::Update()
 {
-	auto is_update_message = false;
-
 	speak_object.Update();
+
+	if ( speak_object.GetObjects().empty() )
+	{
+		state = ScriptState::PARSING;
+	}
 
 	switch ( state )
 	{
@@ -167,7 +173,6 @@ bool ModeSpeakScript::Update()
 
 		case ScriptState::CRFEEDIN:
 			CrfiUpdate();
-			is_update_message = true;
 			break;
 
 		case ScriptState::PLAY_ANIME:
@@ -176,18 +181,20 @@ bool ModeSpeakScript::Update()
 
 		case ScriptState::CRFEEDOUT:
 			CrfoUpdate();
-			is_update_message = true;
 			break;
 
 		case ScriptState::TIME_WAIT:
 			TimeWait();
-			is_update_message = true;
 			break;
 
 		case ScriptState::CLICK_WAIT:
 			ClickWait();
-			is_update_message = true;
 			break;
+
+		case ScriptState::AUTO:
+			ScriptAuto();
+			break;
+
 		case ScriptState::SCRIPT_END:
 			_game.GetModeServer()->Del( *this );
 			break;
@@ -379,7 +386,6 @@ void ModeSpeakScript::ClickWait()
 
 void ModeSpeakScript::TimeWait()
 {
-
 	if ( wait_count > 0 )
 	{
 		--wait_count;
@@ -607,6 +613,11 @@ bool ModeSpeakScript::OnCommandMessage( unsigned int line,const std::vector<std:
 	return true;
 }
 
+bool ModeSpeakScript::OnCommandAuto( unsigned int line,const std::vector<std::string>& scripts )
+{
+
+};
+
 bool ModeSpeakScript::OnCommandDrawIn( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto drawin = std::make_unique<CommandDrawIn>( line,scripts );
@@ -690,6 +701,40 @@ bool ModeSpeakScript::OnCommandDrawOut( unsigned int line,const std::vector<std:
 	return true;
 };
 
+bool ModeSpeakScript::OnCommandObject( unsigned int line,const std::vector<std::string>& scripts )
+{
+	const size_t SCRIPTSIZE = 5;
+	int image_id = 0;
+	int music_id = 0;
+	math::Vector2 posi = {0,0};
+
+	if ( scripts.size() != SCRIPTSIZE )
+	{
+		return false;
+	}
+
+	if ( !(string::ToFloat( scripts[1],posi.x )) )
+	{
+		return false;
+	};
+	if ( !(string::ToFloat( scripts[2],posi.y )) )
+	{
+		return false;
+	};
+	if ( !(string::ToInt( scripts[3],image_id )) )
+	{
+		return false;
+	};
+	if ( !(string::ToInt( scripts[4],music_id )) )
+	{
+		return false;
+	};
+	auto object = std::make_shared<SpeakScriptObject>( _game,*this,image_id,music_id );
+	object->SetPosi( posi );
+	speak_object.Add( object );
+	return true;
+};
+
 bool ModeSpeakScript::OnCommandCrfi( unsigned int line,const std::vector<std::string>& scripts )
 {
 	crfo_list.clear();
@@ -734,7 +779,6 @@ bool ModeSpeakScript::Draw()
 
 void ModeSpeakScript::DrawImage() const
 {
-
 	for ( auto&& drawin : drawin_list )
 	{
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA,static_cast<int>(drawin->GetDrawAlphain()) );

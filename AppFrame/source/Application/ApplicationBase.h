@@ -61,7 +61,7 @@ public:
 protected:
 	static	ApplicationBase* _lpInstance;
 
-	std::shared_ptr<ModeServer> _serverMode;//
+	std::shared_ptr<ModeServer> _serverMode;
 	InputManager _input;//inputクラスインスタス
 	int font_hundle;
 	int font_size;

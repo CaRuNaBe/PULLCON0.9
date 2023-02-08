@@ -194,7 +194,7 @@
     <ClCompile Include="source\title\TitleLogo.cpp" />
     <ClCompile Include="source\title\StartLogo.cpp" />
     <ClCompile Include="source\title\StartGuid.cpp" />
-    <ClCompile Include="SpeakScriptObject.cpp" />
+    <ClCompile Include="source\speakscript\SpeakScriptObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\maingame\Bullet.h" />
@@ -228,7 +228,7 @@
     <ClInclude Include="source\title\TitleLogo.h" />
     <ClInclude Include="source\title\StartLogo.h" />
     <ClInclude Include="source\title\StartGuid.h" />
-    <ClInclude Include="SpeakScriptObject.h" />
+    <ClInclude Include="source\speakscript\SpeakScriptObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

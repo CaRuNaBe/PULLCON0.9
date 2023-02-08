@@ -157,7 +157,7 @@
     <ClCompile Include="source\mode\ModeSpeakScript.cpp">
       <Filter>source\mode\script</Filter>
     </ClCompile>
-    <ClCompile Include="SpeakScriptObject.cpp">
+    <ClCompile Include="source\speakscript\SpeakScriptObject.cpp">
       <Filter>source\object\speakscript</Filter>
     </ClCompile>
     <ClCompile Include="source\mode\ModeGameOver.cpp">
@@ -294,7 +294,7 @@
     <ClInclude Include="source\mode\ModeSpeakScript.h">
       <Filter>source\mode\script</Filter>
     </ClInclude>
-    <ClInclude Include="SpeakScriptObject.h">
+    <ClInclude Include="source\speakscript\SpeakScriptObject.h">
       <Filter>source\object\speakscript</Filter>
     </ClInclude>
     <ClInclude Include="source\title\CreditLogo.h">
