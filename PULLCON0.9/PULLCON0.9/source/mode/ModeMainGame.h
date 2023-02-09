@@ -89,7 +89,7 @@ private:
 	bool OnCommandCommunication( unsigned int line,std::vector<std::string>& scripts );
 	bool OnCommandNoEntry( unsigned int line,std::vector<std::string>& scripts );
 
-
+	bool IsSetVrctor4( math::vector4& set,std::vector<std::string>& scripts );
 
 
 	/** エディットモードの時に入る関数 */

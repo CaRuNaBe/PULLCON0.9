@@ -1,61 +1,4 @@
-﻿/*****************************************************************//**
- * @file   ModeSpeakScript.cpp
- * @brief  ��b�p�X�N���v�g
- *
- * @author ���������Y
- * @date   February 2023
- *********************************************************************/
-/*�R�}���h�ꗗ
-///////////// ����1�t���[��1/60�b�Ȃ̂�60�ƂȂ�ƂP�b�ɂȂ�܂�//////////////////
-////////////���̉�ʐݒ��1920��1080�Ȃ̂ň�ԍ���̍��W���i0,0�j��ԉE�����i1920,1080�j�ɂȂ�܂�//////////
-/// �Ăэ��݂̓X�N���v�g��ԍŏ��ɏ����Ă����������܂������Ȃ��ꍇ������܂�//
-/// �p�X����͂���Ƃ�./resourcefile/������Ă���t�@�C����������Ă����������܂��Ăэ��߂܂���///
-�摜�A����Ăэ���
-"i,�摜��,�摜�p�X",
-����F"i,�e�L�X�g�{�b�N�X,./resourcefile/text_box.png",
-���n�Ăэ���
-"im,����,���p�X",
-����F"im,���艹,./resourcefile/se/yes_effect.mp3",
-�J���[�t�F�[�h�C��
-"fi, �t���[����,�Ԃ̐F�i�K,�΂̐F�i�K,�̐F�i�K",
-����F"fi,120,255,0,0",��������Ɖ�ʂ�2�b�����Ă��񂾂�Ԃ��Ȃ��čs���܂�
-�J���[�t�F�[�h�A�E�g
-"fo, �t���[����,�Ԃ̐F�i�K,�΂̐F�i�K,�̐F�i�K",
-����F"fo,60,0,0,0",��������Ɖ�ʂ�1�b�����ĉ�ʂ������瓧���ɂȂ��čs���܂�
-�摜�t�F�[�h�C��
-"di,�`�悷�鏇��,�����W,�����W,�t���[����,�摜��",
-����F"di,0,0,0,60,�e�L�X�g�{�b�N�X",��������Ɖ�ʍ��W�i0,0�j���C���[�P�Ԗڂ̏���1�b�����ďo�����܂��t��0�ɂ���Ƃ����Ȃ�o�����܂�
-�摜�t�F�[�h�A�E�g
-"do,�`�悷�鏇��,x���W,y���W,�t���[����,�摜��",
-����F"di,2,60,60,120,�e�L�X�g�{�b�N�X",��������Ɖ�ʍ��W�i60,60�j���C���[3�Ԗڂ̏���2�b�����ď����܂��t��0�ɂ���Ƃ����Ȃ�����܂��B
-�܂�di�R�}���h�œo�^�����摜��S�������܂�
-�Z���t
-"m,�N������ׂ邩,�Z���t",
-����F"m,�C�[���X,�Z���t",��������ƃC�[���X������ׂ��������ɂȂ�܂��t�ɖ��O���Ȃ��ꍇ�̕\�L��\�ł�
-���͑҂�
-"��",
-a�{�^�������܂ő҂��܂��B�������ꍇ���艹���Ȃ�܂�
-�҂�
-"w, �t���[����",
-����F"w, 300",���������5�b�~�܂��Ă��玟�ɐi�݂܂�
-���[�v�Đ�//bgm�Ɏg�p
-"bg,����",
-����F"bg,���艹",���艹���������[�v���܂�����~�߂�܂ł����ƂȂ�܂�
-���Đ�//�L����������ׂ鎞����ʉ��Ɏg�p
-"fg,����",
-����F"fg,���艹",���艹�����Đ����܂�
-����~�߂�//bgm��~�߂����Ƃ��Ɏg�p
-"gs,����",
-����~�߂܂�
-���[�r�[�Đ�//
-"ve,�摜��",
-����F"ve,�I�[�v�j���O",�I�[�v�j���O���Đ����܂��B�I��邩�X�^�[�g�{�^����������Ƃ����ɐi�݂܂�
-�R�}���h�I��//
-"e",
-�X�N���v�g���I���Ƃ��g�p
-*/
-
-#include "ModeSpeakScript.h"
+﻿#include "ModeSpeakScript.h"
 #include "../speakscript/SpeakScriptObject.h"
 #include <algorithm>
 #include <utility>
@@ -73,7 +16,6 @@ namespace
 	const std::string COMMAND_M = "message";
 	const std::string COMMAND_A = "@";
 	const std::string COMMAND_W = "wait";
-	const std::string COMMAND_OT = "auto";
 	const std::string COMMAND_BM = "backmusic";
 	const std::string COMMAND_LM = "loopmusic";
 	const std::string COMMAND_SM = "stopmusic";
@@ -155,10 +97,6 @@ bool ModeSpeakScript::Update()
 {
 	speak_object.Update();
 
-	if ( speak_object.GetObjects().empty() )
-	{
-		state = ScriptState::PARSING;
-	}
 
 	switch ( state )
 	{
@@ -188,10 +126,6 @@ bool ModeSpeakScript::Update()
 
 		case ScriptState::CLICK_WAIT:
 			ClickWait();
-			break;
-
-		case ScriptState::AUTO:
-			ScriptAuto();
 			break;
 
 		case ScriptState::SCRIPT_END:
@@ -233,12 +167,14 @@ void ModeSpeakScript::Parsing()
 	is_finishdraw = false;
 	message_list.clear();
 	movie_play.reset();
+	speak_object.Clear();
 	auto stop_parsing = false;
 	funcs_type comand_funcs;
 	comand_funcs.insert( std::make_pair( COMMAND_FI,&ModeSpeakScript::OnCommandCrfi ) );
 	comand_funcs.insert( std::make_pair( COMMAND_FO,&ModeSpeakScript::OnCommandCrfo ) );
 	comand_funcs.insert( std::make_pair( COMMAND_DI,&ModeSpeakScript::OnCommandDrawIn ) );
 	comand_funcs.insert( std::make_pair( COMMAND_DO,&ModeSpeakScript::OnCommandDrawOut ) );
+	comand_funcs.insert( std::make_pair( COMMAND_OB,&ModeSpeakScript::OnCommandObject ) );
 	comand_funcs.insert( std::make_pair( COMMAND_M,&ModeSpeakScript::OnCommandMessage ) );
 	comand_funcs.insert( std::make_pair( COMMAND_A,&ModeSpeakScript::OnCommandClick ) );
 	comand_funcs.insert( std::make_pair( COMMAND_W,&ModeSpeakScript::OnCommandWait ) );
@@ -264,7 +200,7 @@ void ModeSpeakScript::Parsing()
 
 		if ( !isThrough )
 		{
-			if ( string_comand == COMMAND_W || string_comand == COMMAND_FI || string_comand == COMMAND_FO || string_comand == COMMAND_VE )
+			if ( string_comand == COMMAND_W || string_comand == COMMAND_FI || string_comand == COMMAND_FO || string_comand == COMMAND_VE)
 			{
 				stop_parsing = (this->*comand_funcs[string_comand])(now_line,script);
 			}
@@ -367,7 +303,6 @@ void ModeSpeakScript::CrfoUpdate()
 		alpha = 255.0f;
 		state = ScriptState::PARSING;
 	}
-
 }
 
 void ModeSpeakScript::ClickWait()
@@ -385,6 +320,14 @@ void ModeSpeakScript::ClickWait()
 
 void ModeSpeakScript::TimeWait()
 {
+	for ( auto&& obj : speak_object.GetObjects() )
+	{
+		if ( !obj->GetUpdateSkip() )
+		{
+			return;
+		}
+	}
+
 	if ( wait_count > 0 )
 	{
 		--wait_count;
@@ -398,19 +341,6 @@ void ModeSpeakScript::TimeWait()
 		}
 	}
 }
-
-void ModeSpeakScript::ScriptAuto()
-{
-	for ( auto&& obj : speak_object.GetObjects() )
-	{
-		if (!obj->GetUpdateSkip() )
-		{
-			return;
-		}
-	}
-
-	TimeWait();
-};
 
 void ModeSpeakScript::PlayUpdate()
 {
@@ -624,13 +554,6 @@ bool ModeSpeakScript::OnCommandMessage( unsigned int line,const std::vector<std:
 
 	return true;
 }
-
-bool ModeSpeakScript::OnCommandAuto( unsigned int line,const std::vector<std::string>& scripts )
-{
-	wait_count = 120;
-	state = ScriptState::AUTO;
-	return true;
-};
 
 bool ModeSpeakScript::OnCommandDrawIn( unsigned int line,const std::vector<std::string>& scripts )
 {

@@ -163,6 +163,9 @@
     <ClCompile Include="source\mode\ModeGameOver.cpp">
       <Filter>source\mode</Filter>
     </ClCompile>
+    <ClCompile Include="source\mode\ModeMainGame.cpp">
+      <Filter>source\mode\script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\mode\ModeGameOver.h">
@@ -299,6 +302,9 @@
     </ClInclude>
     <ClInclude Include="source\title\CreditLogo.h">
       <Filter>source\object\title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeMainGame.h">
+      <Filter>source\mode\script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

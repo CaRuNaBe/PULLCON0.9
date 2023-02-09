@@ -17,7 +17,8 @@ SpeakScriptObject::SpeakScriptObject
 		auto image_pass_vector = string::Split( file_data->GetScriptLine( image_id ),DELIMITER );
 		for ( int i = 0; i < image_pass_vector.size(); i++ )
 		{
-			cg_ui[i] = ResourceServer::LoadGraph( image_pass_vector[i] );
+			int cg = ResourceServer::LoadGraph( image_pass_vector[i] );
+			cg_ui.push_back( cg );
 		}
 	}
 	{
@@ -47,6 +48,7 @@ bool SpeakScriptObject::Update()
 	ActorSpeak::Update();
 	if ( !CheckSoundMem( music_hundle ) )
 	{
+		_cnt = 0;
 		isUpdateSkip = true;
 	}
 	return true;
@@ -56,6 +58,6 @@ bool SpeakScriptObject::Update()
 bool SpeakScriptObject::Draw()
 {
 	ActorSpeak::Draw();
-	DrawTurnGraph( _pos.IntX(),_pos.IntY(),cg_ui[(_cnt / 2) % cg_ui.size()],TRUE );
+	DrawTurnGraph( _pos.IntX(),_pos.IntY(),cg_ui[(_cnt / 10) % cg_ui.size()],TRUE );
 	return true;
 }
