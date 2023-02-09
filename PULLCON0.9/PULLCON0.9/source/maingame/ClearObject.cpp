@@ -1,7 +1,6 @@
 
 #include "ClearObject.h"
 #include "Bullet.h"
-#include "../mode/ModeGame.h"
 #include "../mode/ModeMainGame.h"
 namespace
 {

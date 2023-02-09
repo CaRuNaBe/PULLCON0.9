@@ -43,7 +43,7 @@ bool SkySphere::Update()
 bool SkySphere::Draw()
 {
 	base::Draw();
-	MV1SetScale( _handle,VGet( 35.0f,35.0f,35.0f ) );
+	MV1SetScale( _handle,VGet( 10.0f,10.0f,10.0f ) );
 	SetUseLighting( FALSE );
 	MV1DrawModel( _handle );
 	SetUseLighting( TRUE );

@@ -26,6 +26,9 @@
     <Filter Include="source\object\speakscript">
       <UniqueIdentifier>{fcb4b166-5d3c-4280-9de2-a74d8920765f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\ui">
+      <UniqueIdentifier>{8cd12839-9393-423f-9997-1632fa130174}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\mode\ModeTitle.cpp">
@@ -166,6 +169,9 @@
     <ClCompile Include="source\mode\ModeMainGame.cpp">
       <Filter>source\mode\script</Filter>
     </ClCompile>
+    <ClCompile Include="source\mode\ModeTest.cpp">
+      <Filter>source\mode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\mode\ModeGameOver.h">
@@ -305,6 +311,9 @@
     </ClInclude>
     <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode\script</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeTest.h">
+      <Filter>source\mode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -24,11 +24,12 @@ public:
 
 	static int LoadSoundMem(std::string FileName);
 
+	static int LoadMV1Model( std::string FileName );
 private:
 	static DivGraphMap _mapDivGraph;
 	static ResourceMap _mapGraph;
 	static ResourceMap _mapSound;
-	static ResourceMap _mapOriginalModel;
+	static ResourceMap _mapMV1Model;
 
 };
 

@@ -176,6 +176,7 @@
     <ClCompile Include="source\maingame\SupplyEria.cpp" />
     <ClCompile Include="source\maingame\Player.cpp" />
     <ClCompile Include="source\mode\ModeMainGame.cpp" />
+    <ClCompile Include="source\mode\ModeTest.cpp" />
     <ClCompile Include="source\mode\ModeResourceRoad.cpp" />
     <ClCompile Include="source\mode\ModeSpeakScript.cpp" />
     <ClCompile Include="source\pose\ReturnTitleLogo.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="source\maingame\SupplyEria.h" />
     <ClInclude Include="source\maingame\Player.h" />
     <ClInclude Include="source\mode\ModeMainGame.h" />
+    <ClInclude Include="source\mode\ModeTest.h" />
     <ClInclude Include="source\mode\ModeResourceRoad.h" />
     <ClInclude Include="source\mode\ModeSpeakScript.h" />
     <ClInclude Include="source\pose\ReturnTitleLogo.h" />

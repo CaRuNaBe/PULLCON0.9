@@ -1,6 +1,5 @@
 
 #include "appframe.h"
-#include "../mode/ModeGame.h"
 #include "../mode/ModeMainGame.h"
 #include "Player.h"
 #include "Bullet.h"

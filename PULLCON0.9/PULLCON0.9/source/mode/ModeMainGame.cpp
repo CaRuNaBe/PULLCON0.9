@@ -181,6 +181,7 @@ void ModeMainGame::PreParsing()
 
 void ModeMainGame::Parsing()
 {
+
 	auto stop_parsing = false;
 	unsigned	int date_empty = 0;
 	FunctionGameCommand comand_funcs;
