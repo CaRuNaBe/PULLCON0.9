@@ -16,6 +16,7 @@ void    ResourceServer::Init()
 	_mapGraph.clear();
 	_mapDivGraph.clear();
 	_mapSound.clear();
+	_mapMV1Model.clear();
 }
 
 void    ResourceServer::Release()

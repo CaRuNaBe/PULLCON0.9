@@ -74,11 +74,7 @@ void	ModeServer::DeleteModes()
 
 }
 
-//更新初期化
-bool ModeServer::UpdateInit()
-{
-	return true;
-}
+
 
 // 更新
 bool ModeServer::Update()
@@ -106,16 +102,8 @@ bool ModeServer::Update()
 	return true;
 }
 
-bool ModeServer::UpdateFinish()
-{
-	return true;
-}
 
-bool ModeServer::DrawInit()
-{
-	ClearDrawScreen();		// 画面を初期化する
-	return true;
-}
+
 // 描画
 bool ModeServer::Draw()
 {
@@ -130,8 +118,3 @@ bool ModeServer::Draw()
 	return true;
 }
 
-bool ModeServer::DrawFinish()
-{
-	ScreenFlip();			// 裏画面の内容を表画面に反映させる
-	return true;
-}

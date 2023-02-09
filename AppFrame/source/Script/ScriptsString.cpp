@@ -52,6 +52,7 @@ namespace string
 		}
 		return split;
 	}
+
 	std::string Combine( std::vector<std::string>& script,const std::string& delimiter )
 	{
 		auto script_size = script.size();

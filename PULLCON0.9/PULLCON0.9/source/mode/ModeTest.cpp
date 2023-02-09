@@ -12,6 +12,7 @@ ModeTest::ModeTest( ApplicationBase& game,int layer )
 	object_main_game.Add( skysphere );
 	auto player = std::make_shared<Player>( _game,*this );
 	object_main_game.Add( player );
+
 };
 
 ModeTest::~ModeTest()
@@ -31,15 +32,14 @@ bool ModeTest::Update()
 {
 	base::Update();
 	object_main_game.Update();
+
 	return true;
 }
 
 bool ModeTest::Draw()
 {
 	base::Draw();
-
 	object_main_game.Draw();
-
 	return true;
 }
 

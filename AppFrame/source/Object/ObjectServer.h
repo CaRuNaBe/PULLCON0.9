@@ -20,7 +20,7 @@ public:
 	ObjectServer():_updating( false )
 	{
 	}
- /** デストラクタ */
+	/** デストラクタ */
 	~ObjectServer()
 	{
 		Clear();
@@ -78,7 +78,7 @@ public:
 			{
 				continue;//描画スキップ
 			}
-			object->Draw( );
+			object->Draw();
 		}
 		return true;
 	}

@@ -66,17 +66,15 @@ bool ApplicationBase::Input()
 
 bool ApplicationBase::Update()
 {
-	_serverMode->UpdateInit();
 	_serverMode->Update();
-	_serverMode->UpdateFinish();
 	return true;
 }
 
 
 bool ApplicationBase::Draw()
 {
-	_serverMode->DrawInit();
+	ClearDrawScreen();		// ‰æ–Ê‚ð‰Šú‰»‚·‚é
 	_serverMode->Draw();
-	_serverMode->DrawFinish();
+	ScreenFlip();			// — ‰æ–Ê‚Ì“à—e‚ð•\‰æ–Ê‚É”½‰f‚³‚¹‚é
 	return true;
 }
