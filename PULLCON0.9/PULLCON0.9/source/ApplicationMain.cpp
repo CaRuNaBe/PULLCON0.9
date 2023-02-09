@@ -1,7 +1,6 @@
 
 #include "AppFrame.h"
 #include "ApplicationMain.h"
-#include "mode/ModePause.h"
 #include "mode/ModeTest.h"
 // ŽÀ‘Ì
 ApplicationMain				g_oApplicationMain;
