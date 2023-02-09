@@ -21,7 +21,7 @@
 #include "../maingame/EnemySpawnEria.h"
 #include "../maingame/CommunicationAria.h"
 #include "../maingame/AreaNoEntry.h"
-//#include "ModeSpeakScript.h"
+#include "ModeSpeakScript.h"
 
 namespace
 {
@@ -716,8 +716,8 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 			return result;
 		}
 		state = ScriptState::STORY;
-		//auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
-		//_game.GetModeServer()->Add( story );
+		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
+		_game.GetModeServer()->Add( story );
 		result = true;
 	}
 	else
@@ -1650,8 +1650,8 @@ bool ModeMainGame::OnCommandCommunication( unsigned int line,std::vector<std::st
 		{
 			return result;
 		}
-		std::string story_name = scripts[5];
-		auto commu_aria = std::make_shared<CommunicationAria>( _game,*this,radius,story_name );
+
+		auto commu_aria = std::make_shared<CommunicationAria>( _game,*this,radius,scripts[5] );
 		commu_aria->SetPosition( posi );
 		object_main_game.Add( commu_aria );
 		result = true;
