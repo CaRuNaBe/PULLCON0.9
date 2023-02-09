@@ -1,7 +1,7 @@
 
 #include "AppFrame.h"
 #include "ApplicationMain.h"
-#include "mode/ModeSpeakScript.h"
+#include "mode/ModeMainGame.h"
 // é¿ëÃ
 ApplicationMain				g_oApplicationMain;
 
@@ -9,7 +9,7 @@ bool ApplicationMain::Initialize(HINSTANCE hInstance) {
 	if (!base::Initialize(hInstance)) { return false; }
 	font_hundle = CreateFontToHandle( "Kazesawa-Bold",font_size,-1,-1 );
 	// ÉÇÅ[ÉhÇÃìoò^
-	auto game = std::make_shared<ModeSpeakScript>(*this,1,"dmitry/opening");
+	auto game = std::make_shared<ModeMainGame>(*this,1);
 	base::GetInstance()->GetModeServer()->Add(game);
 
 	return true;

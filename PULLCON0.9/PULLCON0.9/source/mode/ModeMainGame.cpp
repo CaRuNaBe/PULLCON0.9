@@ -162,26 +162,29 @@ void ModeMainGame::PreParsing()
 	FunctionGameCommand comand_funcs;
 	comand_funcs.insert( std::make_pair( COMMAND_STAGELABEL,&ModeMainGame::OnCommandStageLabel ) );
 
-	while ( now_line >= 0 && now_line < max_line )
+
+	auto script = scripts_data->GetScript( now_line,DELIMITER );
+	const auto& command = script[0];
+	std::string string_comand{command};
+	if ( string_comand == COMMAND_STAGELABEL )
 	{
-		auto script = scripts_data->GetScript( now_line,DELIMITER );
-		const auto& command = script[0];
-		std::string string_comand{command};
-		if ( string_comand == COMMAND_STAGELABEL )
-		{
-			(this->*comand_funcs[string_comand])(now_line,script);
-			++now_line;
-		}
-		else
-		{
-			++now_line;
-		}
+		(this->*comand_funcs[string_comand])(now_line,script);
+
+	}
+
+	++now_line;
+
+
+	if ( now_line >= max_line )
+	{
+		now_line = 0;
+		state = ScriptState::PARSING;
 	}
 }
 
 void ModeMainGame::Parsing()
 {
-
+	object_main_game.Clear();
 	auto stop_parsing = false;
 	unsigned	int date_empty = 0;
 	FunctionGameCommand comand_funcs;
@@ -194,8 +197,6 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrFeedOut ) );
 	comand_funcs.insert( std::make_pair( COMMAND_TIMEWAIT,&ModeMainGame::OnCommandTimeWait ) );
 	comand_funcs.insert( std::make_pair( COMMAND_STORY,&ModeMainGame::OnCommandStory ) );
-
-
 	comand_funcs.insert( std::make_pair( COMMAND_STAGE,&ModeMainGame::OnCommandStage ) );
 	comand_funcs.insert( std::make_pair( COMMAND_SKYSPHERE,&ModeMainGame::OnCommandSkySphere ) );
 	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
