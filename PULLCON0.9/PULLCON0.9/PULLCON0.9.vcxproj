@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\ui\BaseUI.cpp" />
     <ClCompile Include="source\maingame\Bullet.cpp" />
     <ClCompile Include="source\maingame\ClearObject.cpp" />
     <ClCompile Include="source\maingame\CommunicationAria.cpp" />
@@ -176,7 +177,7 @@
     <ClCompile Include="source\maingame\SupplyEria.cpp" />
     <ClCompile Include="source\maingame\Player.cpp" />
     <ClCompile Include="source\mode\ModeMainGame.cpp" />
-    <ClCompile Include="source\mode\ModeTest.cpp" />
+    <ClCompile Include="source\ModeTest.cpp" />
     <ClCompile Include="source\mode\ModeResourceRoad.cpp" />
     <ClCompile Include="source\mode\ModeSpeakScript.cpp" />
     <ClCompile Include="source\pose\ReturnTitleLogo.cpp" />
@@ -197,8 +198,11 @@
     <ClCompile Include="source\title\StartLogo.cpp" />
     <ClCompile Include="source\title\StartGuid.cpp" />
     <ClCompile Include="source\speakscript\SpeakScriptObject.cpp" />
+    <ClCompile Include="source\ui\UIFuelGage.cpp" />
+    <ClCompile Include="source\ui\UIHpGage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\ui\BaseUI.h" />
     <ClInclude Include="source\maingame\Bullet.h" />
     <ClInclude Include="source\maingame\ClearObject.h" />
     <ClInclude Include="source\maingame\CommunicationAria.h" />
@@ -212,7 +216,7 @@
     <ClInclude Include="source\maingame\SupplyEria.h" />
     <ClInclude Include="source\maingame\Player.h" />
     <ClInclude Include="source\mode\ModeMainGame.h" />
-    <ClInclude Include="source\mode\ModeTest.h" />
+    <ClInclude Include="source\ModeTest.h" />
     <ClInclude Include="source\mode\ModeResourceRoad.h" />
     <ClInclude Include="source\mode\ModeSpeakScript.h" />
     <ClInclude Include="source\pose\ReturnTitleLogo.h" />
@@ -233,6 +237,8 @@
     <ClInclude Include="source\title\StartLogo.h" />
     <ClInclude Include="source\title\StartGuid.h" />
     <ClInclude Include="source\speakscript\SpeakScriptObject.h" />
+    <ClInclude Include="source\ui\UIFuelGage.h" />
+    <ClInclude Include="source\ui\UIHpGage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

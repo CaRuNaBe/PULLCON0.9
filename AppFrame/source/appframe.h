@@ -12,6 +12,9 @@
 #include "Object/ObjectServer.h"
 #include "Object/ActorBaseSpeak.h"
 
+#include "Base/GameBase.h"
+#include "Base/GameServer.h"
+
 #include "Script/ScriptsData.h"
 #include "Script/ScriptsString.h"
 #include "Script/CommandCrFeedIn.h"

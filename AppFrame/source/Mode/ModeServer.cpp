@@ -4,8 +4,7 @@
 #include "ModeServer.h"
 
 ModeServer::ModeServer(ApplicationBase& game)
-	: _game(game)
-	,_updating(false)
+	:_updating(false)
 {}
 
 ModeServer::~ModeServer()

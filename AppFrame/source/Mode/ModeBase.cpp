@@ -10,7 +10,9 @@ ModeBase::ModeBase(ApplicationBase& game, int layer)
 	,_isModeSkip(false)
 	,_isDrawSkip(false)
 	,_layer(layer)
-{}
+{
+	Initialize();
+}
 
 ModeBase::~ModeBase()
 {}

@@ -22,15 +22,10 @@ public:
 	void	Add(ModeBasePtr mode);
 	void	Del(ModeBase& mode);
 
-	bool UpdateInit();
 	bool Update();  // çXêV
-	bool UpdateFinish();
-	bool DrawInit();
 	bool Draw();	// ï`âÊ
-	bool DrawFinish();
 
 protected:
-	ApplicationBase& _game;
 	TypeModes _vModes;
 	TypeModes _vPendingModes;
 	bool	_updating;

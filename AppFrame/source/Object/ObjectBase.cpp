@@ -5,17 +5,18 @@
 #include "DxLib.h"
 #include "ObjectBase.h"
 #include "../Mode/ModeBase.h"
-ObjectBase::ObjectBase( ApplicationBase& game ,ModeBase& mode )
-	:isUpdateSkip(false)
-	,isDrawSkip(false)
-	, _game( game )
-, _mode( mode )
+ObjectBase::ObjectBase( ApplicationBase& game,ModeBase& mode )
+	:isUpdateSkip( false )
+	,isDrawSkip( false )
+	,_game( game )
+	,_mode( mode )
 {
 	Init();
 }
 
 ObjectBase::~ObjectBase()
-{}
+{
+}
 
 void ObjectBase::Init()
 {

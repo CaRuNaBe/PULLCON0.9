@@ -23,6 +23,9 @@
     <Filter Include="source\Sclipt">
       <UniqueIdentifier>{f7001ca2-cb2e-4783-9ea9-7242b31127b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\Base">
+      <UniqueIdentifier>{2404f6f2-a7e2-4d8a-97b4-103e30fc1658}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ResourceServer\ResourceServer.h">
@@ -137,6 +140,12 @@
     <ClInclude Include="source\Object\ActorBaseSpeak.h">
       <Filter>source\Object</Filter>
     </ClInclude>
+    <ClInclude Include="source\Base\GameBase.h">
+      <Filter>source\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Base\GameServer.h">
+      <Filter>source\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -244,6 +253,12 @@
     </ClCompile>
     <ClCompile Include="source\Object\ActorBaseSpeak.cpp">
       <Filter>source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Base\GameServer.cpp">
+      <Filter>source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Base\GameBase.cpp">
+      <Filter>source\Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
