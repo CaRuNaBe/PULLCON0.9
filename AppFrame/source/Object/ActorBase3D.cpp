@@ -23,6 +23,7 @@ void ActorBase3D::Init() {
 	_iLife = 0;
 	_iDamage = 0;
 	_iPieces = 0;
+	_iPart = 0;
 	_fSpeed = 0.f;
 	_fScale = 1.f;
 	_fRotatX = 0.f;
@@ -33,6 +34,7 @@ void ActorBase3D::Init() {
 	_pull = false;
 	_finish = false;
 	_fire = false;
+	_synchronize = false;
 	_cnt = 0;
 	_CT = 0;
 	_ST = 0;

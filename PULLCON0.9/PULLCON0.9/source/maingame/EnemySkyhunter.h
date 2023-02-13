@@ -1,11 +1,12 @@
 #pragma once
 #include "appframe.h"
+#include "EnemyColumn.h"
 class EnemySkyhunter :
 	public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	EnemySkyhunter(ApplicationBase& game, ModeBase& mode);
+	EnemySkyhunter(ApplicationBase& game, ModeBase& mode, EnemyColumn& skyhunter);
 	virtual ~EnemySkyhunter();
 	virtual Type GetType()
 	{
@@ -26,6 +27,8 @@ public:
 	void AddBullet();
 
 protected:
+	EnemyColumn& _column;
+
 	State   _stateEnemySkyhunter;
 
 	int    _handle;

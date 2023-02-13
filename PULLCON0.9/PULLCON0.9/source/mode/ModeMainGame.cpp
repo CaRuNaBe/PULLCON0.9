@@ -22,7 +22,7 @@
 #include "../maingame/CommunicationAria.h"
 #include "../maingame/AreaNoEntry.h"
 //#include "ModeSpeakScript.h"
-#include "../maingame/EnemySkyhunter.h"
+#include "../maingame/EnemyColumn.h"
 
 namespace
 {
@@ -94,8 +94,8 @@ ModeMainGame::ModeMainGame(ApplicationMain& game, int layer)
 	_clear = false;
 	_dbgCollisionDraw = false;
 	_transparence = false;
-	auto skyhunter = std::make_shared<EnemySkyhunter>(_game, *this);
-	GetObjectServer3D().Add(skyhunter);
+	auto column = std::make_shared<EnemyColumn>(_game, *this);
+	GetObjectServer3D().Add(column);
 	///////////////////////////////////////////////////////
 	start_time = 0;
 	max_line = 0;

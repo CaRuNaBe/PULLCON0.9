@@ -168,6 +168,7 @@
     <ClCompile Include="source\maingame\CommunicationAria.cpp" />
     <ClCompile Include="source\maingame\EffectTrail.cpp" />
     <ClCompile Include="source\maingame\EnemyAAA.cpp" />
+    <ClCompile Include="source\maingame\EnemyColumn.cpp" />
     <ClCompile Include="source\maingame\EnemySkyhunter.cpp" />
     <ClCompile Include="source\maingame\EnemySpawnEria.cpp" />
     <ClCompile Include="source\maingame\GameStage.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="source\maingame\CommunicationAria.h" />
     <ClInclude Include="source\maingame\EffectTrail.h" />
     <ClInclude Include="source\maingame\EnemyAAA.h" />
+    <ClInclude Include="source\maingame\EnemyColumn.h" />
     <ClInclude Include="source\maingame\EnemySkyhunter.h" />
     <ClInclude Include="source\maingame\EnemySpawnEria.h" />
     <ClInclude Include="source\maingame\GameStage.h" />

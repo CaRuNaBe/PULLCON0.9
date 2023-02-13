@@ -97,6 +97,9 @@
     <ClCompile Include="source\maingame\EnemySkyhunter.cpp">
       <Filter>source\object\game\enemy\skyhunter</Filter>
     </ClCompile>
+    <ClCompile Include="source\maingame\EnemyColumn.cpp">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\mode\ModeGameOver.h">
@@ -193,6 +196,9 @@
       <Filter>source\object\title</Filter>
     </ClInclude>
     <ClInclude Include="source\maingame\EnemySkyhunter.h">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyColumn.h">
       <Filter>source\object\game\enemy\skyhunter</Filter>
     </ClInclude>
   </ItemGroup>

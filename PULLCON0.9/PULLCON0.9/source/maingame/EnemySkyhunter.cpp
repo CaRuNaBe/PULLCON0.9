@@ -1,12 +1,13 @@
 #include  "EnemySkyhunter.h"
-#include "Bullet.h"
-#include "../mode/ModeMainGame.h"
+#include  "Bullet.h"
+#include  "../mode/ModeMainGame.h"
 namespace
 {
 	//constexpr int GUNSHIP_ID;
 }
-EnemySkyhunter::EnemySkyhunter(ApplicationBase& game, ModeBase& mode)
+EnemySkyhunter::EnemySkyhunter(ApplicationBase& game, ModeBase& mode, EnemyColumn& skyhunter)
 	:base(game, mode)
+	,_column(skyhunter)
 {
 	Init();
 }
@@ -22,15 +23,14 @@ void EnemySkyhunter::Init()
 
 	_handle = MV1LoadModel("res/enemy/skyhunters/mv1/cg_SkyHunters.mv1");
 
-	_stateEnemySkyhunter = State::NUM;
+	_stateEnemySkyhunter = State::PLAY;
 
-	_vPos = { 0.f, 5000.f, 50000.f };
+	_vPos = { 0.f, 10000.f, 50000.f };
 	_vEvent = _vPos;
 	_fScale = 2.f;
 	_fSpeed = 150.f;
 	_collision._fRadius = 500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 5.f * _fScale;
-	_collisionSearch._fRadius = _collisionEvent._fRadius * 3.f;
 
 	_iLife = 100;
 
@@ -40,34 +40,17 @@ bool EnemySkyhunter::Update()
 {
 	base::Update();
 
+
+	// 三次元極座標(r(length3D),θ(theta),φ(rad))
+	float sx = 0.f, sz = 0.f, sy = 0.f;
+	float length3D = 0.f;
+	float rad = 0.f;
+	float theta = 0.f;
+
 	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kPlayer
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kPlayer) {
-				if (IsSearch(*obje)) {
-					
-				}
-				else {
-					if (_ST == 0) {
-						_vRelation = obje->_vPos;
-						// 三次元極座標(r(length3D),θ(theta),φ(rad))
-						float sx = _vRelation.x - _vPos.x;
-						float sz = _vRelation.z - _vPos.z;
-						float sy = _vRelation.y - _vPos.y;
-						float length3D = sqrt(sx * sx + sy * sy + sz * sz);
-						float rad = atan2(sz, sx);
-						float theta = acos(sy / length3D);
-
-						float randomDeg = static_cast<float>(utility::get_random(-30, 30));
-						float randomRad = utility::degree_to_radian(randomDeg);
-						// モデルの進行方向設定用
-						_vVelocity.x = cos(rad + randomRad);
-						_vVelocity.z = sin(rad + randomRad);
-						_vVelocity.y = cos(theta);
-						_vVelocity.Normalized();
-						_ST = 180;
-					}
-				}
 				if (Intersect(_collisionEvent, obje->_collision)) {
 					_fire = true;
 					_vTarget = obje->_vPos;
@@ -91,13 +74,13 @@ bool EnemySkyhunter::Update()
 		}
 	}
 
-	// 三次元極座標(r(length3D),θ(theta),φ(rad))
-	float sx = _vTarget.x - _vPos.x;
-	float sz = _vTarget.z - _vPos.z;
-	float sy = _vTarget.y - _vPos.y;
-	float length3D = sqrt(sx * sx + sy * sy + sz * sz);
-	float rad = atan2(sz, sx);
-	float theta = acos(sy / length3D);
+	// 三次元極座標
+	sx = _vTarget.x - _vPos.x;
+	sz = _vTarget.z - _vPos.z;
+	sy = _vTarget.y - _vPos.y;
+	length3D = sqrt(sx * sx + sy * sy + sz * sz);
+	rad = atan2(sz, sx);
+	theta = acos(sy / length3D);
 
 	// 弾の進行方向の向きを設定
 	_vDir.x = cos(rad);
@@ -105,16 +88,23 @@ bool EnemySkyhunter::Update()
 	_vDir.y = cos(theta);
 	_vDir.Normalized();
 
-	// 一定間隔で撃つ
+	// 一定間隔で弾を撃つ
 	if (_fire && _CT == 0) {
 		AddBullet();
 		_CT = 5;
 	}
 
-	if (_vPos.y < 4000.f && _vVelocity.y < 0.f) {
+	if (_column._synchronize != _synchronize) {
+		_ST = 30 * _iPart + 1;
+		_synchronize = !_synchronize;
+	}
+	if (_ST == 1) {
+		_vVelocity = _column._vVelocity;
+	}
+	// 速度分移動する
+	if (_vPos.y < 6000.f && _vVelocity.y < 0.f) {
 		_vVelocity.y = 0.f;
 	}
-	
 	_vPos += _vVelocity * _fSpeed;
 
 	if (_iLife < 0) {
@@ -123,7 +113,6 @@ bool EnemySkyhunter::Update()
 
 	_collision._fRadius = 500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 13.f * _fScale;
-	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
 	_vEvent = _vPos;
 	UpdateCollision();  // コリジョン更新
 
@@ -154,7 +143,6 @@ bool EnemySkyhunter::Draw()
 	{
 		DrawCollision(color);
 		DrawCollisionEvent(color);
-		DrawCollisionSearch(color);
 		if (_overlap)
 		{
 			color = { 255, 0, 0 };

@@ -201,13 +201,6 @@ bool Player::Update() {
 		v.y = sin(_fRotatX) * distance;
 		_vTarget = _vPos + v;
 
-		/*
-		vector4 cursor = { 0.f,0.f,0.f };
-		cursor.y = _cam._vTarget.y + sin(_fRotatX) * length3D;
-		cursor.x = _cam._vTarget.x + length3D * cos(rad + camerad);
-		cursor.z = _cam._vTarget.z + length3D * sin(rad + camerad);
-		*/
-
 		((ModeMainGame&)_mode).SetCursor(_vTarget);
 
 		// ˆø‚Á‚±”²‚«‘JˆÚ

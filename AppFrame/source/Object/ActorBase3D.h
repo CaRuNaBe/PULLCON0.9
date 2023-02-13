@@ -78,6 +78,7 @@ public:
 	int   _iLife;    // ライフ
 	int   _iDamage;  // 与えるダメージ
 	int   _iPieces;  // 個数
+	int   _iPart;    // 各パーツの番号
 	float _fSpeed;   // 速度
 	float _fScale;   // 大きさ
 	float _fRotatX;  // X軸回転
@@ -88,6 +89,7 @@ public:
 	bool  _pull;     // 引っこ抜き
 	bool  _finish;   // イベント完了
 	bool  _fire;     // 発砲
+	bool  _synchronize;// 動きを同期させる
 
 	int _cnt;  // 動作カウント
 	int _CT;   // クールタイム
