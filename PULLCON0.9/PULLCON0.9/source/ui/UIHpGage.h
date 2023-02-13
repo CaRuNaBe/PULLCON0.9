@@ -14,5 +14,6 @@ public:
 private:
 	int handle_hp_body;
 	int handle_hp_gage;
+	float hp_gage_now_posi;
 };
 

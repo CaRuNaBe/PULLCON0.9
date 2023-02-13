@@ -3,6 +3,7 @@
 #include "maingame/Player.h"
 #include "maingame/GameStage.h"
 #include "maingame/SkySphere.h"
+#include "maingame/EnemyAAA.h"
 
 
 
@@ -15,6 +16,8 @@ ModeTest::ModeTest( ApplicationBase& game,int layer )
 	object_main_game.Add( skysphere );
 	auto player = std::make_shared<Player>( _game,*this );
 	object_main_game.Add( player );
+	auto enemy = std::make_shared<EnemyAAA>( _game,*this ,2,3,6,math::vector4(0,0,0));
+	object_main_game.Add( enemy );
 
 	auto fuel_gage = std::make_unique<UIFuelGage>( game,0,*this );
 	ui_player.Add( std::move( fuel_gage ) );

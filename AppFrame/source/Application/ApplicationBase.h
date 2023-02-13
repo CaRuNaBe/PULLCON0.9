@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include<memory>
+#include <memory>
 #include "../Mode/ModeServer.h"
 #include "../Object/ObjectServer.h"
-#include"input_manager.h"
+#include "input_manager.h"
 
 
 

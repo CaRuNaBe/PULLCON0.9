@@ -60,6 +60,14 @@ public:
 	{
 		_fSpeed = _speed;
 	};
+	int GetFuel()
+	{
+		return _iFuel;
+	}
+	int GetLife()
+	{
+		return _iLife;
+	}
 public:
 	vector4 _vPos;   // 位置
 	vector4 _vEvent;   // イベント位置

@@ -14,5 +14,6 @@ public:
 private:
 	int handle_fuel_body;
 	int handle_fuel_gage;
+	float fuel_gage_now_posi;
 };
 

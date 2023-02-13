@@ -35,10 +35,11 @@ Player::~Player() {
 void Player::Init() {
 	base::Init();
 	_statePlayer = State::NUM;
-
+	
 	_fSpeed = 90.f;
 	_fRotatY = utility::PI;
 	_iFuel = 100;
+	_iLife = 100;
 	_push = 0;
 	_isHit = false;
 
@@ -97,6 +98,7 @@ bool Player::Update() {
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
 					if (obje->_CT == 0) {
+						_iLife -= obje->_iDamage;
 						_isHit = true;
 						_ST = 20;
 					}
