@@ -11,45 +11,45 @@ public:
 	virtual bool Draw() = 0;
 	virtual bool DebugDraw() = 0;
 
-	bool IsDead()
+	virtual bool IsDead()
 	{
-		return dead;
+		return is_dead;
 	}
-	void Dead()
+	virtual void Dead()
 	{
-		dead = true;
-	}
-
-	bool GetUpdateSkip()
-	{
-		return isUpdateSkip;
+		is_dead = true;
 	}
 
-	void SetUpdateSkip( bool UpdateSkip )
+	virtual bool GetUpdateSkip()
 	{
-		isUpdateSkip = UpdateSkip;
+		return is_update_skip;
 	}
 
-	bool GetDrawSkip()
+	virtual void SetUpdateSkip( bool update_skip )
 	{
-		return isDrawSkip;
+		is_update_skip = update_skip;
 	}
 
-	void SetDrawSkip( bool DrawSkip )
+	virtual bool GetDrawSkip()
 	{
-		isDrawSkip = DrawSkip;
+		return is_draw_skip;
 	}
 
-	int GetLayer()
+	virtual void SetDrawSkip( bool draw_skip )
+	{
+		is_draw_skip = draw_skip;
+	}
+
+	virtual int GetLayer()
 	{
 		return layer;
 	}
 
 protected:
 	ApplicationBase& game;
-	bool dead;
-	bool isUpdateSkip;
-	bool isDrawSkip;
+	bool is_dead;
+	bool is_update_skip;
+	bool is_draw_skip;
 	int layer;
 };
 

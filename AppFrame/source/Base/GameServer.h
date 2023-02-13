@@ -9,8 +9,11 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include "GameBase.h"
 template<class T> class GameServer
 {
+	using GameBasePtr = std::unique_ptr<T>;
+	using TypeModes = std::vector<GameBasePtr>;
 public:
 	/** コンストラクタ */
 	GameServer():_updating( false )
@@ -22,7 +25,7 @@ public:
 		Clear();
 	}
 	/** _vObjects取得 */
-	std::vector <std::unique_ptr<T>>& GetObjects()
+	TypeModes& GetObjects()
 	{
 		return _vObjects;
 	}
@@ -32,7 +35,7 @@ public:
 		_vObjects.clear();
 	}
 	/** _updatingがtrueの時は追加予約する */
-	void Add( std::unique_ptr<T> object )
+	void Add( GameBasePtr object )
 	{
 		object->Initialize();
 
@@ -64,7 +67,7 @@ public:
 		}
 
 		// レイヤーによるソート
-		std::sort( _vObjects.begin(),_vObjects.end(),[]( const std::unique_ptr<T>& ch1,const std::unique_ptr<T>& ch2 )
+		std::sort( _vObjects.begin(),_vObjects.end(),[]( const GameBasePtr& ch1,const GameBasePtr& ch2 )
 							 {
 								 return ch1->GetLayer() < ch2->GetLayer();
 							 } );
@@ -95,9 +98,9 @@ public:
 	}
 protected:
 	/** 動かすものを入れるコンテナ */
-	std::vector <std::unique_ptr<T>> _vObjects;
+	TypeModes _vObjects;
 	/** 後で追加するためのコンテナ */
-	std::vector <std::unique_ptr<T>> _vPendingObjects;
+	TypeModes _vPendingObjects;
 	/** _vObjectsを回しているときはtrueにする */
 	bool _updating;
 	/** Del関数でオブジェクトが死んでいた場合_vObjectsからerase */

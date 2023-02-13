@@ -98,7 +98,6 @@ bool	ActorBase3D::IsSearch(ActorBase3D& object)
 
 bool ActorBase3D::Draw() {
 	base::Draw();
-
 	return true;
 }
 

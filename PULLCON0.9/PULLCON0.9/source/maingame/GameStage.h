@@ -6,6 +6,7 @@ class GameStage:public ActorBase3D
 public:
 	GameStage( ApplicationBase& game,ModeBase& mode,int stageid );
 	virtual ~GameStage();
+
 	virtual Type GetType()
 	{
 		return Type::kGameStage;

@@ -31,6 +31,7 @@ bool ObjectBase::Update()
 
 bool ObjectBase::Draw()
 {
+	
 	return true;
 }
 

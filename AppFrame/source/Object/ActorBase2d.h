@@ -32,6 +32,7 @@ public:
 		KRESTARTLOGO,    // 11 ポーズ画面の再スタートロゴ
 		KRETURNTITLELOGO,    // 12 ポーズ画面のタイトルに戻るロゴ
 		/** リザルト画面 */
+
 		/** ゲームオーバー画面 */
 	};
 	virtual Type GetType() = 0;

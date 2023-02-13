@@ -4,8 +4,8 @@
 #include "maingame/GameStage.h"
 #include "maingame/SkySphere.h"
 
-#include "ui/UIFuelGage.h"
-#include "ui/UIHpGage.h"
+
+
 ModeTest::ModeTest( ApplicationBase& game,int layer )
 	:ModeBase( game,layer )
 {
@@ -40,6 +40,7 @@ bool ModeTest::Update()
 {
 	ModeBase::Update();
 	object_main_game.Update();
+
 	ui_player.Update();
 	return true;
 }
@@ -48,6 +49,7 @@ bool ModeTest::Draw()
 {
 	ModeBase::Draw();
 	object_main_game.Draw();
+
 	ui_player.Draw();
 	return true;
 }

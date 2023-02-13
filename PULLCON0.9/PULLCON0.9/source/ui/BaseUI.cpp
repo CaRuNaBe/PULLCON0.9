@@ -3,7 +3,6 @@ BaseUI::BaseUI( ApplicationBase& game,int layer,ModeBase& _base )
 	:GameBase( game,layer )
 	,mode_base( _base )
 {
-
 }
 
 BaseUI::~BaseUI()

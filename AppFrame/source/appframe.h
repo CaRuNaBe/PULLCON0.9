@@ -7,10 +7,13 @@
 #include "ResourceServer/ResourceServer.h"
 #include "../../picojson/picojson.h"
 #include "../../AppFrame/source/Math/Math.h"
+
+//å„Ç≈è¡ãé
 #include "../source/Object/ActorBase2d.h"
 #include "../source/Object/ActorBase3D.h"
 #include "Object/ObjectServer.h"
 #include "Object/ActorBaseSpeak.h"
+//Ç±Ç±Ç‹Ç≈
 
 #include "Base/GameBase.h"
 #include "Base/GameServer.h"

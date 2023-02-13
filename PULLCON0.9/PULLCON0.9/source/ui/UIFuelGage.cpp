@@ -1,5 +1,13 @@
 #include "UIFuelGage.h"
-
+namespace
+{
+	constexpr int BODY_POSI_X = 5;
+	constexpr int BODY_POSI_Y = 60;
+	constexpr int GAGE_POSI_X = 60;
+	constexpr int GAGE_POSI_Y = 60;
+	constexpr int GAGE_MAX_WIDTH = 356;
+	constexpr int GAGE_MAX_HEIGHT = 36;
+}
 UIFuelGage::UIFuelGage( ApplicationBase& game,int layer,ModeBase& _base )
 	:BaseUI( game,layer,_base )
 {
@@ -26,8 +34,8 @@ bool UIFuelGage::Update()
 bool UIFuelGage::Draw()
 {
 	BaseUI::Draw();
-	DrawGraph( 5,60,handle_fuel_body,TRUE );
-	DrawGraph( 60,60,handle_fuel_gage,TRUE );
+	DrawGraph( BODY_POSI_X,BODY_POSI_Y,handle_fuel_body,TRUE );
+	DrawRectGraph( GAGE_POSI_X,GAGE_POSI_Y,0,0,GAGE_MAX_WIDTH - 100,GAGE_MAX_HEIGHT,handle_fuel_gage,TRUE,FALSE );
 	return true;
 };
 
