@@ -124,7 +124,7 @@ bool Player::Update() {
 				_iFuel = 0;
 			}
 		}
-		((ModeMainGame&)_mode).SetXMax(_iFuel);
+		//((ModeMainGame&)_mode).SetXMax(_iFuel);
 
 		 // スティック押し込みで速度操作
 		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
@@ -207,11 +207,11 @@ bool Player::Update() {
 		cursor.z = _cam._vTarget.z + length3D * sin(rad + camerad);
 		*/
 
-		((ModeMainGame&)_mode).SetCursor(_vTarget);
+		//((ModeMainGame&)_mode).SetCursor(_vTarget);
 
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {
-			((ModeMainGame&)_mode)._transparence = true;
+			//((ModeMainGame&)_mode)._transparence = true;
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
 			_cam._vPos = _vPos + CAMERADEFAULT_POS;
 			_statePlayer = State::EVENT;
@@ -230,7 +230,7 @@ bool Player::Update() {
 					// PLAY状態に遷移
 					_pull = false;
 					++_iPieces;
-					((ModeMainGame&)_mode)._transparence = false;
+					//((ModeMainGame&)_mode)._transparence = false;
 					_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
 					_cam._vPos = _cam._vTarget + _cam._vMemory;
 					_statePlayer = State::PLAY;
@@ -308,11 +308,13 @@ bool Player::Draw() {
 	DrawLine3D(ToDX(_vPos), ToDX(_vTarget), GetColor(255, 0, 0));
 
 	// コリジョン描画
+	/*
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		vector4 color = { 255, 255, 255 };
 		if (_isHit) { color = { 255, 0, 0 }; }
 		DrawCollision(color);
 	}
+	*/
 	VECTOR Pos = ConvWorldPosToScreenPos(ToDX(_vPos));
 	if (_isHit) {
 		// 作成したフォントで画面左上に『HIT!!』と白の文字列を描画する
