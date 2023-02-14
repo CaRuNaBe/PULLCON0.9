@@ -10,8 +10,6 @@
 
 class ScriptsData;
 
-
-
 class ModeSpeakScript:public ModeBase
 {
 public:
@@ -33,7 +31,12 @@ public:
 	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
 	virtual bool DebugDraw();
+	GameServer<ActorBaseSpeak>& GetObjectServerSpeak()
+	{
+		return speak_object;
+	}
 private:
+	GameServer<ActorBaseSpeak> speak_object;
 	enum class ScriptState
 	{
 		PREPARSING,
@@ -110,5 +113,5 @@ private:
 	int anime_count;
 
 	bool is_finishdraw;
-
+	int object_layer;
 };

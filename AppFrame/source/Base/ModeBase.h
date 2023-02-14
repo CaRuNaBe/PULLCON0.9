@@ -24,13 +24,8 @@ public:
 	{
 		return object_main_game;
 	}
-
-	ObjectServer<ActorBaseSpeak>& GetObjectServerSpeak()
-	{
-		return speak_object;
-	}
 protected:
 	ObjectServer<ActorBase2d> object_out_game;
 	ObjectServer<ActorBase3D> object_main_game;
-	ObjectServer<ActorBaseSpeak> speak_object;
+
 };

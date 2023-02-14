@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp" />
     <ClCompile Include="source\ui\BaseUI.cpp" />
     <ClCompile Include="source\maingame\Bullet.cpp" />
     <ClCompile Include="source\maingame\ClearObject.cpp" />
@@ -177,7 +178,6 @@
     <ClCompile Include="source\maingame\AreaSupply.cpp" />
     <ClCompile Include="source\maingame\Player.cpp" />
     <ClCompile Include="source\mode\ModeMainGame.cpp" />
-    <ClCompile Include="source\ModeTest.cpp" />
     <ClCompile Include="source\mode\ModeResourceRoad.cpp" />
     <ClCompile Include="source\mode\ModeSpeakScript.cpp" />
     <ClCompile Include="source\pose\ReturnTitleLogo.cpp" />
@@ -202,6 +202,7 @@
     <ClCompile Include="source\ui\UIHpGage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\speakscript\ActorBaseSpeak.h" />
     <ClInclude Include="source\ui\BaseUI.h" />
     <ClInclude Include="source\maingame\Bullet.h" />
     <ClInclude Include="source\maingame\ClearObject.h" />
@@ -216,7 +217,6 @@
     <ClInclude Include="source\maingame\AreaSupply.h" />
     <ClInclude Include="source\maingame\Player.h" />
     <ClInclude Include="source\mode\ModeMainGame.h" />
-    <ClInclude Include="source\ModeTest.h" />
     <ClInclude Include="source\mode\ModeResourceRoad.h" />
     <ClInclude Include="source\mode\ModeSpeakScript.h" />
     <ClInclude Include="source\pose\ReturnTitleLogo.h" />

@@ -10,7 +10,7 @@ namespace
 	const std::string COMMAND_ML = "musicload";
 	const std::string COMMAND_FI = "feedin";
 	const std::string COMMAND_FO = "feedout";
-	const std::string COMMAND_DI = "drawin";  
+	const std::string COMMAND_DI = "drawin";
 	const std::string COMMAND_DO = "drawout";
 	const std::string COMMAND_OB = "object";
 	const std::string COMMAND_M = "message";
@@ -66,6 +66,7 @@ void ModeSpeakScript::Initialize( std::string jsonpath,std::string scriptsname,s
 	state = ScriptState::PREPARSING;
 
 	feed_count = 0.0;
+	object_layer = 0;
 	alpha = 0;
 	now_line = 0;
 	wait_count = 0;
@@ -168,6 +169,7 @@ void ModeSpeakScript::Parsing()
 	message_list.clear();
 	movie_play.reset();
 	speak_object.Clear();
+	object_layer = 0;
 	auto stop_parsing = false;
 	funcs_type comand_funcs;
 	comand_funcs.insert( std::make_pair( COMMAND_FI,&ModeSpeakScript::OnCommandCrfi ) );
@@ -200,7 +202,7 @@ void ModeSpeakScript::Parsing()
 
 		if ( !isThrough )
 		{
-			if ( string_comand == COMMAND_W || string_comand == COMMAND_FI || string_comand == COMMAND_FO || string_comand == COMMAND_VE)
+			if ( string_comand == COMMAND_W || string_comand == COMMAND_FI || string_comand == COMMAND_FO || string_comand == COMMAND_VE )
 			{
 				stop_parsing = (this->*comand_funcs[string_comand])(now_line,script);
 			}
@@ -666,9 +668,10 @@ bool ModeSpeakScript::OnCommandObject( unsigned int line,const std::vector<std::
 	{
 		return false;
 	};
-	auto object = std::make_shared<SpeakScriptObject>( _game,*this,image_id,music_id );
+	auto object = std::make_unique<SpeakScriptObject>( _game,object_layer,*this,image_id,music_id );
 	object->SetPosi( posi );
-	speak_object.Add( object );
+	speak_object.Add( std::move( object ) );
+	object_layer++;
 	return true;
 };
 
@@ -745,7 +748,7 @@ void ModeSpeakScript::DrawMessage() const
 		auto posi_x = ((_game.DispSizeW() - string_lenght) / 2);
 		DrawStringToHandle( posi_x,MSG_SPEAKER_SET_Y,message->WhoSpeak().c_str(),message_string_color,_game.GetFontHandle() );
 		DrawStringToHandle( message->GetPosition().IntX(),
-												message->GetPosition().IntY() + _game.GetFuntSize() ,
+												message->GetPosition().IntY() + _game.GetFuntSize(),
 												message->GetMessageA().c_str(),message_string_color,
 												_game.GetFontHandle() );
 	}

@@ -4,10 +4,10 @@ namespace
 	const std::string DELIMITER = ",";
 }
 SpeakScriptObject::SpeakScriptObject
-( ApplicationBase& game,ModeBase& mode,int image_id,int music_id )
-	: ActorSpeak( game,mode )
+( ApplicationBase& game,int layer,ModeSpeakScript& mode,int image_id,int music_id )
+	: ActorSpeak( game,layer,mode )
 {
-	Init();
+	Initialize();
 	{
 		auto file_data = std::make_unique<ScriptsData>();
 		const std::string FILEPASS = "res/script/gamescript/ImageId.json";
@@ -36,9 +36,9 @@ SpeakScriptObject::~SpeakScriptObject()
 {
 }
 
-void SpeakScriptObject::Init()
+void SpeakScriptObject::Initialize()
 {
-	ActorSpeak::Init();
+	ActorSpeak::Initialize();
 	_pos = {0,0};
 	_cnt = 0;
 }
@@ -49,7 +49,7 @@ bool SpeakScriptObject::Update()
 	if ( !CheckSoundMem( music_hundle ) || music_hundle == -1 )
 	{
 		_cnt = 0;
-		isUpdateSkip = true;
+		is_update_skip = true;
 	}
 	return true;
 }
@@ -61,3 +61,9 @@ bool SpeakScriptObject::Draw()
 	DrawTurnGraph( _pos.IntX(),_pos.IntY(),cg_ui[(_cnt / 10) % cg_ui.size()],TRUE );
 	return true;
 }
+
+bool SpeakScriptObject::DebugDraw()
+{
+	ActorSpeak::DebugDraw();
+	return true;
+};
