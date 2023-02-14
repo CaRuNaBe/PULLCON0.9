@@ -342,9 +342,11 @@ void EnemyAAA::GetSearch() {
 void EnemyAAA::AddBullet()
 {
 	vector4 vBullet = {_vPos.x, _vPos.y + 100.f, _vPos.z};
+	float speed = 200.f;
 	auto bullet = std::make_shared<Bullet>( _game,_mode );
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
+	bullet->SetSpeed(speed);
 	_mode.GetObjectServer3D().Add( bullet );
 }
 

@@ -52,9 +52,6 @@ bool StageObject::Draw()
 	MV1SetPosition( _handle,math::ToDX(_vPos) );
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	vector4 color = {255, 255, 255};
-	if ( !_coll )
-	{
 		DrawCollision( color );
-	}
 	return true;
 }
