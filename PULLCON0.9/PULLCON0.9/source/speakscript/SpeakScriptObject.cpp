@@ -46,7 +46,7 @@ void SpeakScriptObject::Init()
 bool SpeakScriptObject::Update()
 {
 	ActorSpeak::Update();
-	if ( !CheckSoundMem( music_hundle ) )
+	if ( !CheckSoundMem( music_hundle ) || music_hundle == -1 )
 	{
 		_cnt = 0;
 		isUpdateSkip = true;

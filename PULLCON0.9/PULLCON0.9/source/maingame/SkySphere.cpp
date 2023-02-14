@@ -1,9 +1,5 @@
 #include "SkySphere.h"
-namespace
-{
-	const auto SUNNY = 1;
-	const auto CLOUDY = 2;
-}
+
 SkySphere::SkySphere( ApplicationBase& game,ModeBase& mode,int objectid )
 	:base( game,mode )
 {

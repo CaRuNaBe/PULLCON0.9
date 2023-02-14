@@ -1,27 +1,27 @@
-#include "CommunicationAria.h"
+#include "AreaCommunication.h"
 #include "../mode/ModeSpeakScript.h"
 #include "../mode/ModeMainGame.h"
-CommunicationAria::CommunicationAria( ApplicationBase& game,ModeBase& mode,float collradius,std::string storyname )
+AreaCommunication::AreaCommunication( ApplicationBase& game,ModeBase& mode,std::string storyname )
 	:base( game,mode )
 {
 	story_name = storyname;
 
 	Init();
-	_collision._fRadius = collradius;
-
+	
 }
 
-CommunicationAria::~CommunicationAria()
+AreaCommunication::~AreaCommunication()
 {
 
 }
 
-void CommunicationAria::Init()
+void AreaCommunication::Init()
 {
 	base::Init();
+
 }
 
-bool CommunicationAria::Update()
+bool AreaCommunication::Update()
 {
 	base::Update();
 
@@ -34,14 +34,15 @@ bool CommunicationAria::Update()
 				auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
 				_game.GetModeServer()->Add( story );
 				_mode.GetObjectServer3D().Del( *this );
+				break;
 			}
 		}
 	}
-
+	UpdateCollision();
 	return true;
 }
 
-bool CommunicationAria::Draw()
+bool AreaCommunication::Draw()
 {
 	base::Draw();
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ

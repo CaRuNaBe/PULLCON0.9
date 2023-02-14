@@ -14,18 +14,18 @@
 #include "../maingame/Player.h"
 #include "../maingame/GameStage.h"
 #include "../maingame/SkySphere.h"
-#include "../maingame/SupplyEria.h"
+#include "../maingame/AreaSupply.h"
 #include "../maingame/ClearObject.h"
 #include "../maingame/EnemyAAA.h"
 #include "../maingame/StageObject.h"
-#include "../maingame/EnemySpawnEria.h"
-#include "../maingame/CommunicationAria.h"
+#include "../maingame/AreaEnemySpawn.h"
+#include "../maingame/AreaCommunication.h"
 #include "../maingame/AreaNoEntry.h"
 #include "ModeSpeakScript.h"
 
 namespace
 {
-	//ゲームコマンド
+	/** ゲームコマンド */
 	const std::string COMMAND_STAGELABEL = "StageLabel";//ステージラベル決定コマンド
 	const std::string COMMAND_JUNPLABEL = "StageJump";//ステージジャンプコマンド
 	const std::string COMMAND_TURNING = "Turning";//ステージ分岐コマンド
@@ -77,16 +77,14 @@ ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	: ModeBase( game,layer )
 {
 	scripts_data = std::make_unique<ScriptsData>();
-	state = ScriptState::PREPARSING;
-#if _DEBUG
-	//state = ScriptState::EDIT;
-#endif
+	Initialize( FILEPASS,GAMESCRIPT,FILENAME );
+
 	///////////////////////////////////////////////////////
 	_cg = ResourceServer::LoadGraph( "res/cursor00.png" );
 	_se = ResourceServer::LoadSoundMem( "res/sound/stage1~3 BGM/650832__timbre__weasel-damage-excerpt-of-audiomirages-freesound-647499.wav" );
 	ChangeVolumeSoundMem( 255 * 40 / 100,_se );
 	//PlaySoundMem(_se, DX_PLAYTYPE_LOOP);
-	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
+	// デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
 	// 作成したデータの識別番号を変数 FontHandle に保存する
 	_handlefont = CreateFontToHandle( NULL,40,3 );
 	_vCursor = {0.0f, 0.0f, 0.0f};
@@ -94,17 +92,6 @@ ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	_dbgCollisionDraw = false;
 	_transparence = false;
 	///////////////////////////////////////////////////////
-	start_time = 0;
-	max_line = 0;
-	now_line = 0;
-	feedcount = 0.0;
-	alpha = 0;
-	is_notcant = false;
-	is_notcommand = false;
-	is_cannotdelete = false;
-
-	Initialize( FILEPASS,GAMESCRIPT,FILENAME );
-
 }
 /**
  * @fn void ModeMainGame::~ModeMainGame.
@@ -140,6 +127,15 @@ void ModeMainGame::Destroy()
 void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname )
 {
 	ModeBase::Initialize();
+	state = ScriptState::PREPARSING;
+	start_time = 0;
+	max_line = 0;
+	now_line = 0;
+	feedcount = 0.0;
+	alpha = 0;
+	is_notcant = false;
+	is_notcommand = false;
+	is_cannotdelete = false;
 
 	if ( !scripts_data->LoadJson( jsonpath,scriptsname,jsonname ) )
 	{
@@ -156,24 +152,26 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 
 	return;
 };
-
+/**
+ * @fn void ModeMainGame::PreParsing.
+ * @brief 事前呼び込み
+ * ステージラベルを呼び込みどこに何があるか保存
+ * @return void
+ */
 void ModeMainGame::PreParsing()
 {
 	FunctionGameCommand comand_funcs;
 	comand_funcs.insert( std::make_pair( COMMAND_STAGELABEL,&ModeMainGame::OnCommandStageLabel ) );
-
-
 	auto script = scripts_data->GetScript( now_line,DELIMITER );
-	const auto& command = script[0];
-	std::string string_comand{command};
-	if ( string_comand == COMMAND_STAGELABEL )
-	{
-		(this->*comand_funcs[string_comand])(now_line,script);
 
+	std::string game_comand{script[0]};
+
+	if ( game_comand == COMMAND_STAGELABEL )
+	{
+		(this->*comand_funcs[game_comand])(now_line,script);
 	}
 
 	++now_line;
-
 
 	if ( now_line >= max_line )
 	{
@@ -181,7 +179,11 @@ void ModeMainGame::PreParsing()
 		state = ScriptState::PARSING;
 	}
 }
-
+/**
+ * @fn void ModeMainGame::Parsing.
+ * @brief
+ * @return void
+ */
 void ModeMainGame::Parsing()
 {
 	object_main_game.Clear();
@@ -256,7 +258,7 @@ bool ModeMainGame::Update()
 {
 	ModeBase::Update();
 	object_main_game.Update();
-
+	ui_player.Update();
 	if ( _game.Getinput().XinputEveryOtherLeftTrigger( 30 ) )
 	{
 		_dbgCollisionDraw = !_dbgCollisionDraw;
@@ -717,7 +719,6 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
-		state = ScriptState::STORY;
 		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
 		_game.GetModeServer()->Add( story );
 		result = true;
@@ -731,7 +732,7 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		}
 		std::array < std::string,2 > input_str =
 		{
-			"オブジェクトid(企画書参照)を記入してください",
+			"ストーリーid(ファイル名/ストーリー名)"
 			"ゲームを止めるか(1:止める0:止めない)"
 		};
 		result = true;
@@ -869,6 +870,10 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		}
+		auto fuel_gage = std::make_unique<UIFuelGage>( _game,0,*this );
+		ui_player.Add( std::move( fuel_gage ) );
+		auto hp_gage = std::make_unique<UIHpGage>( _game,0,*this );
+		ui_player.Add( std::move( hp_gage ) );
 		auto player = std::make_shared<Player>( _game,*this );
 		player->SetPosition( posi );
 		player->SetScale( scale );
@@ -1198,7 +1203,7 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 			auto posi_rand_x = static_cast<float>(utility::get_random( static_cast<int>(x_posi_min),static_cast<int>(x_posi_max) ));
 			auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
 			int pile_num = utility::get_random( pile_min_num,pile_max_num );
-			vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
+			vector4 rand_posi = {posi_rand_x,posi.y,posi_rand_z};
 
 			int in_range_nim = 0;
 
@@ -1323,7 +1328,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 		object->SetPosition( posi );
 		object->SetScale( scale );
-		object->SetRadius( radius );
+		object->SetCollision( posi,radius );
 		object_main_game.Add( object );
 		result = true;
 	}
@@ -1435,7 +1440,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 			auto posi_rand_x = static_cast<float>(utility::get_random( static_cast<int>(x_posi_min),static_cast<int>(x_posi_max) ));
 			auto posi_rand_z = static_cast<float>(utility::get_random( static_cast<int>(z_posi_min),static_cast<int>(z_posi_max) ));
 
-			vector4 rand_posi = {posi_rand_x,0.0f,posi_rand_z};
+			vector4 rand_posi = {posi_rand_x,posi.y,posi_rand_z};
 
 			int in_range_nim = 0;
 
@@ -1467,8 +1472,6 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 				}
 			}
 			posivec.push_back( rand_posi );
-
-
 		}
 
 		for ( auto&& set_pos : posivec )
@@ -1476,7 +1479,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 			auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 			object->SetPosition( set_pos );
 			object->SetScale( scale );
-			object->SetRadius( radius );
+			object->SetCollision( set_pos,radius );
 			object_main_game.Add( object );
 		}
 		result = true;
@@ -1542,7 +1545,7 @@ bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,std::vector<std::string
 		{
 			return result;
 		};
-		auto spawn_eria = std::make_shared<EnemySpawnEria>( _game,*this,spawn_fream,spawn_id );
+		auto spawn_eria = std::make_shared<AreaEnemySpawn>( _game,*this,spawn_fream,spawn_id );
 		spawn_eria->SetPosition( posi );
 		object_main_game.Add( spawn_eria );
 		result = true;
@@ -1598,7 +1601,7 @@ bool ModeMainGame::OnCommandSupply( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		}
-		auto supplyeria = std::make_shared<SupplyEria>( _game,*this,radius );
+		auto supplyeria = std::make_shared<AreaSupply>( _game,*this,radius );
 		supplyeria->SetPosition( posi );
 		object_main_game.Add( supplyeria );
 		result = true;
@@ -1653,8 +1656,9 @@ bool ModeMainGame::OnCommandCommunication( unsigned int line,std::vector<std::st
 			return result;
 		}
 
-		auto commu_aria = std::make_shared<CommunicationAria>( _game,*this,radius,scripts[5] );
+		auto commu_aria = std::make_shared<AreaCommunication>( _game,*this,scripts[5] );
 		commu_aria->SetPosition( posi );
+		commu_aria->SetCollision( posi,radius );
 		object_main_game.Add( commu_aria );
 		result = true;
 	}
@@ -1671,7 +1675,7 @@ bool ModeMainGame::OnCommandCommunication( unsigned int line,std::vector<std::st
 			"y座標",
 			"z座標",
 			"球の半径",
-			"ストーリーid"
+			"ストーリーid(ファイル名/ストーリー名)"
 		};
 		result = true;
 		for ( int i = 0; i < input_str.size(); i++ )
@@ -1764,6 +1768,7 @@ bool ModeMainGame::Draw()
 {
 	ModeBase::Draw();
 	object_main_game.Draw();
+	ui_player.Draw();
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
 	DrawBox( 0,100,_iFuel * 2,140,GetColor( 255,0,0 ),TRUE );
 	/////////////////////////////////////////////////////////////////////////////
@@ -1911,14 +1916,13 @@ void ModeMainGame::Edit()
 
 bool ModeMainGame::OnEditCommandAdd( const std::string& command )
 {
-	/** 文字を表示する座標の初期化 */
+
 	int	x = 0,y = 0;
-	/** 文字列バッファ用 */
+
 	std::string buf;
 	auto cchar = const_cast<char*>(buf.c_str());
-	/** 追加していくのの格納 */
+
 	std::vector < std::string >_script;
-	/** 追加出来るゲームコマンドの読み込み */
 	const std::string FILEPASS = "res/script/gamescript/gamecommand.json";
 	const std::string ARREYNAME = "gamecommand";
 	auto adddate = std::make_unique<ScriptsData>();
@@ -1935,7 +1939,7 @@ bool ModeMainGame::OnEditCommandAdd( const std::string& command )
 		y += 16;
 	}
 
-	/** 追加するゲームコマンド入力 */
+
 	if ( KeyInputSingleCharString( 0,500,20,cchar,TRUE ) == 1 )
 	{
 		std::string ecommandbuf = cchar;
@@ -2061,11 +2065,11 @@ bool ModeMainGame::CommandInputString( int posix,int posiy,std::string inputname
 	auto cchar = const_cast<char*>(buf.c_str());
 	ClearDrawScreen();
 	DrawString( posix,posiy,inputname.c_str(),GetColor( 255,255,255 ) );
-	/** 上記で表示したオブジェクトidを記入 */
-	if ( KeyInputSingleCharString( posix,posiy + 500,50,cchar,TRUE ) == 1 )
+
+	if ( KeyInputSingleCharString( posix + 500,posiy + 500,50,cchar,TRUE ) == 1 )
 	{
 		std::string ecommandbuf = cchar;
-		/** 何も入力してない場合失敗 */
+
 		if ( ecommandbuf.empty() )
 		{
 			_script.clear();

@@ -1,15 +1,15 @@
 #pragma once
 #include "appframe.h"
-class SupplyEria:
+class AreaSupply:
     public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	SupplyEria( ApplicationBase& game,ModeBase& mode , float _radius );
-	virtual ~SupplyEria();
+	AreaSupply( ApplicationBase& game,ModeBase& mode , float _radius );
+	virtual ~AreaSupply();
 	virtual Type GetType()
 	{
-		return Type::kSupplyEria;
+		return Type::kAreaSupply;
 	}
 	virtual void Init();
 	virtual bool Update();

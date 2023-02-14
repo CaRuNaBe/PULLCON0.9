@@ -1,16 +1,16 @@
 #pragma once
 #include "appframe.h"
 #include "string"
-class CommunicationAria:
+class AreaCommunication:
 	public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	CommunicationAria( ApplicationBase& game,ModeBase& mode,float collradius,const std::string storyname );
-	virtual ~CommunicationAria();
+	AreaCommunication( ApplicationBase& game,ModeBase& mode,const std::string storyname );
+	virtual ~AreaCommunication();
 	virtual Type GetType()
 	{
-		return Type::kCommunicationAria;
+		return Type::kAreaCommunication;
 	}
 	virtual void Init();
 	virtual bool Update();
@@ -18,7 +18,6 @@ public:
 
 protected:
 	std::string story_name;
-	float coll_radius;
 };
 
 

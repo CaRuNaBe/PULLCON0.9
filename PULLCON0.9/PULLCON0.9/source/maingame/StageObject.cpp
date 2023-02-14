@@ -35,10 +35,9 @@ void StageObject::Init()
 bool StageObject::Update()
 {
 	base::Update();
+	_collision._fRadius = _collision._fRadius * _fScale; 
 
-	_collision._fRadius = _collision._fRadius * _fScale;
 	UpdateCollision();
-
 	return true;
 }
 

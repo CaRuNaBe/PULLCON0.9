@@ -1,11 +1,11 @@
 
-#include "SupplyEria.h"
+#include "AreaSupply.h"
 #include "../mode/ModeMainGame.h"
 namespace
 {
 	constexpr int SUPPLY_ID = 37;
 }
-SupplyEria::SupplyEria( ApplicationBase& game,ModeBase& mode,float _radius )
+AreaSupply::AreaSupply( ApplicationBase& game,ModeBase& mode,float _radius )
 	:base( game,mode )
 {
 	auto file_pass_data = std::make_unique<ScriptsData>();
@@ -18,12 +18,12 @@ SupplyEria::SupplyEria( ApplicationBase& game,ModeBase& mode,float _radius )
 	Init();
 }
 
-SupplyEria::~SupplyEria()
+AreaSupply::~AreaSupply()
 {
 
 }
 
-void SupplyEria::Init()
+void AreaSupply::Init()
 {
 	base::Init();
 	_vPos = {7000.f, 100.f, 7000.f};
@@ -31,7 +31,7 @@ void SupplyEria::Init()
 
 }
 
-bool SupplyEria::Update()
+bool AreaSupply::Update()
 {
 	base::Update();
 
@@ -61,7 +61,7 @@ bool SupplyEria::Update()
 	return true;
 }
 
-bool SupplyEria::Draw()
+bool AreaSupply::Draw()
 {
 	base::Draw();
 	// ƒ‚ƒfƒ‹Šg‘å

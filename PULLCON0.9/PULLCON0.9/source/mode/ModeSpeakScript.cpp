@@ -179,7 +179,7 @@ void ModeSpeakScript::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_A,&ModeSpeakScript::OnCommandClick ) );
 	comand_funcs.insert( std::make_pair( COMMAND_W,&ModeSpeakScript::OnCommandWait ) );
 	comand_funcs.insert( std::make_pair( COMMAND_LM,&ModeSpeakScript::OnCommandMusicloop ) );
-	comand_funcs.insert( std::make_pair( COMMAND_BM,&ModeSpeakScript::OnCommandMusicbag ) );
+	comand_funcs.insert( std::make_pair( COMMAND_BM,&ModeSpeakScript::OnCommandMusicBack ) );
 	comand_funcs.insert( std::make_pair( COMMAND_SM,&ModeSpeakScript::OnCommandMusicstop ) );
 	comand_funcs.insert( std::make_pair( COMMAND_VE,&ModeSpeakScript::OnCommandPlayanime ) );
 	comand_funcs.insert( std::make_pair( COMMAND_E,&ModeSpeakScript::OnCommandScriptend ) );
@@ -222,7 +222,7 @@ void ModeSpeakScript::Parsing()
 	}
 }
 
-void  ModeSpeakScript::FeedDraw()
+void ModeSpeakScript::FeedDraw()
 {
 	for ( auto&& drawin : drawin_list )
 	{
@@ -430,7 +430,7 @@ bool ModeSpeakScript::OnCommandMusicloop( unsigned int line,const std::vector<st
 	return true;
 };
 
-bool ModeSpeakScript::OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts )
+bool ModeSpeakScript::OnCommandMusicBack( unsigned int line,const std::vector<std::string>& scripts )
 {
 	auto  mgbag = std::make_unique<CommandMusicBack>( line,scripts );
 	if ( !mgbag->Check() )

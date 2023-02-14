@@ -17,10 +17,10 @@ public:
 		kClearObject,   // 5 最終目標
 		kSkySphere,     // 6 スカイスフィア
 		kGameStage,     // 7 ゲームステージ
-		kSupplyEria,    // 8 補給地点
+		kAreaSupply,    // 8 補給地点
 		kStageObject,   // 9 ステージオブジェクト
-		kEnemySpawnEria,// 10 敵スポーンエリア
-		kCommunicationAria,//11　会話スクリプト起動エリア
+		kAreaEnemySpawn,// 10 敵スポーンエリア
+		kAreaCommunication,//11　会話スクリプト起動エリア
 		kAreaNoEntry,   // 12 侵入不能エリア
 		kEffect,        // n エフェクト
 	};
@@ -52,9 +52,10 @@ public:
 	void SetDir(const vector4& dir) { _vDir = dir; }
 	void SetDir(float x, float y, float z) { _vDir.x = x; _vDir.y = y; _vDir.z = z; }
 	void SetScale(float _scale) { _fScale = _scale; };
-	void SetRadius( float _radius )
+	void SetCollision( const vector4& pos,float _radius )
 	{
-		_collision._fRadius = _radius;
+		Sphere collision = {pos,_radius};
+		_collision = collision;
 	};
 	void SetSpeed( float _speed )
 	{

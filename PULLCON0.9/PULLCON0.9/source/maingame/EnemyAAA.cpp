@@ -78,7 +78,7 @@ bool EnemyAAA::Update()
 						}
 						else
 						{
-				// 起動状態に移行
+							// 起動状態に移行
 							_stateAAA = State::PLAY;
 							_coll = true;
 							if (_iType == 0) {

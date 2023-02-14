@@ -12,6 +12,7 @@ namespace
 UIHpGage::UIHpGage( ApplicationBase& game,int layer,ModeBase& _base )
 	:BaseUI( game,layer,_base )
 {
+	hp_gage_now_posi = static_cast<float>(GAGE_MAX_WIDTH);
 	handle_hp_body = ResourceServer::LoadGraph( "res/player/UI/HPgage/ui_Player_HP_1.png" );
 	handle_hp_gage = ResourceServer::LoadGraph( "res/player/UI/HPgage/ui_Player_HP_2.png" );
 	for ( auto&& game_object : mode_base.GetObjectServer3D().GetObjects() )
@@ -55,7 +56,7 @@ bool UIHpGage::Draw()
 	BaseUI::Draw();
 	DrawGraph( BODY_POSI_X,BODY_POSI_Y,handle_hp_body,TRUE );
 
-	DrawRectGraph( GAGE_POSI_X,BODY_POSI_Y,0,0,hp_gage_now_posi,GAGE_MAX_HEIGHT,handle_hp_gage,TRUE,FALSE );
+	DrawRectGraph( GAGE_POSI_X,BODY_POSI_Y,0,0,static_cast<int>(hp_gage_now_posi),GAGE_MAX_HEIGHT,handle_hp_gage,TRUE,FALSE );
 	return true;
 };
 

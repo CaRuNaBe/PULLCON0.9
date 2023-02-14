@@ -37,8 +37,6 @@ public:
 	/** _updating‚ªtrue‚ÌŽž‚Í’Ç‰Á—\–ñ‚·‚é */
 	void Add( GameBasePtr object )
 	{
-		object->Initialize();
-
 		if ( _updating )
 		{
 			_vPendingObjects.push_back( std::move( object ) );

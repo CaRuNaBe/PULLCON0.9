@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "appframe.h"
+
 #include <tchar.h>
 #include <vector>
 #include <string>
@@ -69,7 +70,7 @@ private:
 	bool OnCommandObject( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMessage( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMusicloop( unsigned int line,const std::vector<std::string>& scripts );
-	bool OnCommandMusicbag( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandMusicBack( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandMusicstop( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandPlayanime( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandScriptend( unsigned int line,const std::vector<std::string>& scripts );

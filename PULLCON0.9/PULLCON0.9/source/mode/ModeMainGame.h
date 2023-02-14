@@ -7,6 +7,9 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
+#include "../ui/BaseUI.h"
+#include "../ui/UIHpGage.h"
+#include "../ui/UIFuelGage.h"
 #include <vector>
 #include <memory>
 #include <string>
@@ -152,7 +155,7 @@ private:
 	std::string  stage_name;
 	/** ゲームスタート時間 */
 	int start_time;
-
+	GameServer<BaseUI> ui_player;
 	bool is_notcant;
 	bool is_notcommand;
 	bool is_cannotdelete;

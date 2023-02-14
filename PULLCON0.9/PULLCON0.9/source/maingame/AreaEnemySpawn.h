@@ -1,15 +1,15 @@
 #pragma once
 #include "appframe.h"
 
-class EnemySpawnEria:public ActorBase3D
+class AreaEnemySpawn:public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	EnemySpawnEria( ApplicationBase& game,ModeBase& mode,  int spawnfream,int typeenemy );
-	virtual ~EnemySpawnEria();
+	AreaEnemySpawn( ApplicationBase& game,ModeBase& mode,  int spawnfream,int typeenemy );
+	virtual ~AreaEnemySpawn();
 	virtual Type GetType()
 	{
-		return Type::kEnemySpawnEria;
+		return Type::kAreaEnemySpawn;
 	}
 	virtual void Init();
 	virtual bool Update( );
