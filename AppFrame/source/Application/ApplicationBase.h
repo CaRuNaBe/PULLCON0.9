@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <memory>
-#include "../Mode/ModeServer.h"
-#include "../Object/ObjectServer.h"
+#include "../Base/ModeBase.h"
+#include "../Base/GameServer.h"
 #include "input_manager.h"
 
 
@@ -16,7 +16,7 @@ public:
 	ApplicationBase();
 	virtual ~ApplicationBase();
 
-	virtual bool Initialize(HINSTANCE hInstance);
+	virtual bool Initialize( HINSTANCE hInstance );
 	virtual bool Terminate();
 	virtual bool Input();
 	virtual bool Update();
@@ -40,9 +40,9 @@ public:
 		return _lpInstance;
 	}
 	//ゲームモード管理クラス取得
-	std::shared_ptr<ModeServer> GetModeServer()
+	std::shared_ptr<GameServer<ModeBase>> GetModeServer()
 	{
-		return _serverMode;
+		return _BaseServer;
 	}
 
 	//入力取得
@@ -61,7 +61,7 @@ public:
 protected:
 	static	ApplicationBase* _lpInstance;
 
-	std::shared_ptr<ModeServer> _serverMode;
+	std::shared_ptr<GameServer<ModeBase>> _BaseServer;
 	InputManager _input;//inputクラスインスタス
 	int font_hundle;
 	int font_size;

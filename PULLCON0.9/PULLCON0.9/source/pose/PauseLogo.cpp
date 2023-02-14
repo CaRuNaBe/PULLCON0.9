@@ -18,7 +18,7 @@ void PauseLogo::Init()
 	_colPos = {0.0f,0.0f};
 	_colSize = {166.0f,86.0f};
 	_spd = 0;
-			// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
+			// デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
 	// 作成したデータの識別番号を変数 FontHandle に保存する
 	FontHandle = CreateFontToHandle( NULL,128,3 );
 }

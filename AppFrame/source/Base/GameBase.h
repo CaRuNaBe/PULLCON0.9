@@ -6,7 +6,6 @@ public:
 	GameBase( ApplicationBase& game,int layer );
 	virtual ~GameBase();
 
-	virtual bool Initialize() = 0;
 	virtual bool Update() = 0;
 	virtual bool Draw() = 0;
 	virtual bool DebugDraw() = 0;
@@ -46,7 +45,7 @@ public:
 	}
 
 protected:
-	ApplicationBase& game;
+	ApplicationBase& _game;
 	bool is_dead;
 	bool is_update_skip;
 	bool is_draw_skip;

@@ -10,10 +10,10 @@
 #include "../title/StartGuid.h"
 #include "../title/EndLogo.h"
 #include "../title/EndGuid.h"
-ModeTitle::ModeTitle(ApplicationBase& game,int layer)
-	:base(game,layer)
+ModeTitle::ModeTitle( ApplicationBase& game,int layer )
+	:base( game,layer )
 {
-	auto titlelogo = std::make_shared<TitleLogo>(game,*this);
+	auto titlelogo = std::make_shared<TitleLogo>( game,*this );
 	object_out_game.Add( titlelogo );
 
 	auto creditlogo = std::make_shared<CreditLogo>( game,*this );
@@ -32,17 +32,16 @@ ModeTitle::ModeTitle(ApplicationBase& game,int layer)
 
 	auto player = std::make_shared<TitlePlayer>( game,*this );
 	object_out_game.Add( player );
-	};
+	Initialize();
+};
 
 ModeTitle::~ModeTitle()
-{};
+{
+};
 
 bool ModeTitle::Initialize()
 {
-	if(!base::Initialize())
-	{
-		return false;
-	}
+	base::Initialize();
 	return true;
 }
 
@@ -56,6 +55,12 @@ bool ModeTitle::Update()
 bool ModeTitle::Draw()
 {
 	base::Draw();
-	object_out_game.Draw( );
+	object_out_game.Draw();
 	return true;
 }
+
+bool ModeTitle::DebugDraw()
+{
+	base::DebugDraw();
+	return true;
+};

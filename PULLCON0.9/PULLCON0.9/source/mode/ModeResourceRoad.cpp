@@ -17,6 +17,7 @@ namespace
 ModeResourceRoad::ModeResourceRoad( ApplicationBase& game,int layer )
 	: ModeBase( game,layer )
 {
+	Initialize();
 };
 
 ModeResourceRoad::~ModeResourceRoad()
@@ -24,6 +25,7 @@ ModeResourceRoad::~ModeResourceRoad()
 };
 bool ModeResourceRoad::Initialize()
 {
+	base::Initialize();
 	return true;
 };
 	// çXêV
@@ -37,5 +39,11 @@ bool ModeResourceRoad::Update()
 bool ModeResourceRoad::Draw()
 {
 	ModeBase::Draw();
+	return true;
+};
+
+bool ModeResourceRoad::DebugDraw()
+{
+	base::DebugDraw();
 	return true;
 };

@@ -1,21 +1,16 @@
-/*
-** ModeBase
-*/
+
 
 #include "ModeBase.h"
 
-ModeBase::ModeBase(ApplicationBase& game, int layer)
-	: _game(game)
-	,_dead(false)
-	,_isModeSkip(false)
-	,_isDrawSkip(false)
-	,_layer(layer)
+ModeBase::ModeBase( ApplicationBase& game,int layer )
+	: GameBase( game,layer )
 {
 	Initialize();
 }
 
 ModeBase::~ModeBase()
-{}
+{
+}
 
 bool ModeBase::Initialize()
 {
@@ -32,3 +27,8 @@ bool ModeBase::Draw()
 {
 	return true;
 }
+
+bool ModeBase::DebugDraw()
+{
+	return true;
+};

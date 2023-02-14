@@ -17,6 +17,7 @@
 
 #include "Base/GameBase.h"
 #include "Base/GameServer.h"
+#include "Base/ModeBase.h"
 
 #include "Script/ScriptsData.h"
 #include "Script/ScriptsString.h"

@@ -5,8 +5,12 @@
 // é¿ëÃ
 ApplicationMain				g_oApplicationMain;
 
-bool ApplicationMain::Initialize(HINSTANCE hInstance) {
-	if (!base::Initialize(hInstance)) { return false; }
+bool ApplicationMain::Initialize( HINSTANCE hInstance )
+{
+	if ( !base::Initialize( hInstance ) )
+	{
+		return false;
+	}
 	font_hundle = CreateFontToHandle( "Kazesawa-Bold",font_size,-1,-1 );
 	// ÉÇÅ[ÉhÇÃìoò^
 	/*
@@ -20,37 +24,41 @@ bool ApplicationMain::Initialize(HINSTANCE hInstance) {
 		if ( KeyInputSingleCharString( posix,posiy + 500,50,cchar,TRUE ) == 1 )
 		{
 			std::string ecommandbuf = cchar;
-		
-	
+
+
 		}
 		else
 		{
 		}
 	}
  */
-	auto game = std::make_shared<ModeMainGame>(*this,1);
-	base::GetInstance()->GetModeServer()->Add(game);
+	auto game = std::make_unique<ModeMainGame>( *this,1 );
+	base::GetInstance()->GetModeServer()->Add( std::move( game ) );
 
 	return true;
 }
 
-bool ApplicationMain::Terminate() {
+bool ApplicationMain::Terminate()
+{
 	base::Terminate();
 	return true;
 }
 
 
-bool ApplicationMain::Input() {
+bool ApplicationMain::Input()
+{
 	base::Input();
 	return true;
 }
 
-bool ApplicationMain::Update() {
+bool ApplicationMain::Update()
+{
 	base::Update();
 	return true;
 }
 
-bool ApplicationMain::Draw() {
+bool ApplicationMain::Draw()
+{
 	base::Draw();
 	return true;
 }

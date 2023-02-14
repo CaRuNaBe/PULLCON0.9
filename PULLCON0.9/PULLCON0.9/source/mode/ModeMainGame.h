@@ -34,7 +34,7 @@ public:
 	virtual bool Draw();
 	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
-	
+	virtual bool DebugDraw();
 	void SetCursor(const vector4& pos) { _vCursor = pos; }
 	void SetXMax(const int& i) { _iFuel = i; }
 

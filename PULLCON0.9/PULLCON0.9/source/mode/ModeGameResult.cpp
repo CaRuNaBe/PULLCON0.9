@@ -1,21 +1,19 @@
 #include "ModeGameResult.h"
 #include "../ApplicationMain.h"
 
-ModeGameResult::ModeGameResult(ApplicationBase& game,int layer)
-	:base(game,layer)
+ModeGameResult::ModeGameResult( ApplicationBase& game,int layer )
+	:base( game,layer )
 {
-
+	Initialize();
 };
 
 ModeGameResult::~ModeGameResult()
-{};
+{
+};
 
 bool ModeGameResult::Initialize()
 {
-	if(!base::Initialize())
-	{
-		return false;
-	}
+	base::Initialize();
 	return true;
 }
 
@@ -31,3 +29,8 @@ bool ModeGameResult::Draw()
 	return true;
 }
 
+bool ModeGameResult::DebugDraw()
+{
+	base::DebugDraw();
+	return true;
+};

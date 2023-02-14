@@ -16,6 +16,7 @@ public:
 	virtual bool Initialize();
 	virtual bool Update();/*ŒvZˆ—*/
 	virtual bool Draw();/*•`‰æ*/
+	virtual bool DebugDraw();
 private:
 };
 

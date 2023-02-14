@@ -36,6 +36,7 @@ void ActorBase3D::Init() {
 	_CT = 0;
 	_ST = 0;
 
+	_fRadius = 0.0f;
 }
 
 bool ActorBase3D::Update() {

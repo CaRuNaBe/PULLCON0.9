@@ -14,7 +14,7 @@ class ModeBase;
 template<class T> class ObjectServer
 {
 public:
-	using ObjectPtr = std::shared_ptr<T>;//オブジェクトクラスポインタ　ObjectBaseを継承したクラスのみ対応
+	using ObjectPtr = std::shared_ptr<T>;//オブジェクトクラスポインタObjectBaseを継承したクラスのみ対応
 	using TypeObjects = std::vector <ObjectPtr >;	// オブジェクトリストを定義
 	/** コンストラクタ */
 	ObjectServer():_updating( false )
@@ -52,7 +52,7 @@ public:
 	{
 		object.Dead();
 	}
-	/** 更新処理　毎フレーム呼ばれる */
+	/** 更新処理 毎フレーム呼ばれる */
 	bool	Update()
 	{
 		_updating = true;//処理開始
@@ -69,7 +69,7 @@ public:
 		DeleteObjects();	// 削除予約されたオブジェクトを削除する
 		return true;
 	}
-	/** 描画処理　毎フレーム呼ばれる */
+	/** 描画処理 毎フレーム呼ばれる */
 	bool	Draw()
 	{
 		for ( auto&& object : _vObjects )

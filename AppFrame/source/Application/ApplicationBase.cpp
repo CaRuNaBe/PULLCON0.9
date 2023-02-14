@@ -41,7 +41,7 @@ bool ApplicationBase::Initialize( HINSTANCE hInstance )
 	SetWriteZBuffer3D( TRUE );
 
 	// モードサーバの初期化
-	_serverMode = std::make_shared<ModeServer>( *this );
+	_BaseServer = std::make_shared<GameServer<ModeBase>>();
 
 	font_hundle = 0;
 	font_size = 29;
@@ -66,7 +66,7 @@ bool ApplicationBase::Input()
 
 bool ApplicationBase::Update()
 {
-	_serverMode->Update();
+	_BaseServer->Update();
 	return true;
 }
 
@@ -74,7 +74,7 @@ bool ApplicationBase::Update()
 bool ApplicationBase::Draw()
 {
 	ClearDrawScreen();		// 画面を初期化する
-	_serverMode->Draw();
+	_BaseServer->Draw();
 	ScreenFlip();			// 裏画面の内容を表画面に反映させる
 	return true;
 }

@@ -16,31 +16,35 @@ ModePause::ModePause( ApplicationBase& game,int layer )
 	object_out_game.Add( restartlogo );
 	auto returntitleLogo = std::make_shared<ReturnTitleLogo>( game,*this );
 	object_out_game.Add( returntitleLogo );
+	Initialize();
 };
 
 ModePause::~ModePause()
-{};
+{
+};
 
 bool ModePause::Initialize()
 {
-	if ( !base::Initialize() )
-	{
-		return false;
-	}
+	base::Initialize();
 	return true;
 }
 
 bool ModePause::Update()
 {
 	base::Update();
-	object_out_game.Update( );
+	object_out_game.Update();
 	return true;
 }
 
 bool ModePause::Draw()
 {
 	base::Draw();
-	object_out_game.Draw( );
+	object_out_game.Draw();
 	return true;
 }
 
+bool ModePause::DebugDraw()
+{
+	base::DebugDraw();
+	return true;
+};

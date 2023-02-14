@@ -5,7 +5,7 @@
 #include "Bullet.h"
 
 namespace {
-	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置　プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
+	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
 	const vector4 CAMERADEFAULT_POS = { 0.f, 2500.f, -4000.f };   // プレイヤーを原点としたときのカメラのベクトル
 	const float PLAYERLENGTH = 2000.f;   // プレイヤーの奥行きの長さ
 	constexpr int PLAYER_ID = 0;
@@ -22,7 +22,7 @@ Player::Player(ApplicationBase& game, ModeBase& mode)
 	_handle = MV1LoadModel( file_pass_data ->GetScriptLine( PLAYER_ID ).c_str());
 	_se = ResourceServer::LoadSoundMem("res/player/Audio/pull.wav");
 	_seBullet = ResourceServer::LoadSoundMem("res/player/Audio/normal_bullet_fast.wav");
-	// 　デフォルトのフォントで、サイズ４０、太さ３のフォントを作成
+	//デフォルトのフォントで、サイズ４０、太さ３のフォントを作成
 	_handlefont = CreateFontToHandle(NULL, 40, 3);
 
 	Init();

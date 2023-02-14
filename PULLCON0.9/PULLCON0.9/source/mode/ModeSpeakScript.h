@@ -14,7 +14,6 @@ class ScriptsData;
 
 class ModeSpeakScript:public ModeBase
 {
-
 public:
 	ModeSpeakScript( ApplicationBase& game,int layer,std::string storyname );
 	ModeSpeakScript( const ModeSpeakScript& ) = default;
@@ -33,6 +32,7 @@ public:
 	virtual bool Draw();
 	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
+	virtual bool DebugDraw();
 private:
 	enum class ScriptState
 	{

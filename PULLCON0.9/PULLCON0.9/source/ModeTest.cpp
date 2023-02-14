@@ -19,9 +19,9 @@ ModeTest::ModeTest( ApplicationBase& game,int layer )
 	auto enemy = std::make_shared<EnemyAAA>( _game,*this ,2,3,6,math::vector4(0,0,0));
 	object_main_game.Add( enemy );
 
-	auto fuel_gage = std::make_unique<UIFuelGage>( game,0,*this );
+	auto fuel_gage = std::make_unique<UIFuelGage>( _game,0,*this );
 	ui_player.Add( std::move( fuel_gage ) );
-	auto hp_gage = std::make_unique<UIHpGage>( game,0,*this );
+	auto hp_gage = std::make_unique<UIHpGage>( _game,0,*this );
 	ui_player.Add( std::move( hp_gage ) );
 
 };

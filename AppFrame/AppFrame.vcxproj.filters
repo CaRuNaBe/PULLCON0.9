@@ -37,12 +37,6 @@
     <ClInclude Include="source\Application\input_manager.h">
       <Filter>source\Application</Filter>
     </ClInclude>
-    <ClInclude Include="source\Mode\ModeServer.h">
-      <Filter>source\Mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Mode\ModeBase.h">
-      <Filter>source\Mode</Filter>
-    </ClInclude>
     <ClInclude Include="source\Application\UtilMacro.h">
       <Filter>source\Application</Filter>
     </ClInclude>
@@ -146,6 +140,7 @@
     <ClInclude Include="source\Base\GameServer.h">
       <Filter>source\Base</Filter>
     </ClInclude>
+    <ClInclude Include="source\Base\ModeBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -157,12 +152,6 @@
     </ClCompile>
     <ClCompile Include="source\Application\input_manager.cpp">
       <Filter>source\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Mode\ModeServer.cpp">
-      <Filter>source\Mode</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Mode\ModeBase.cpp">
-      <Filter>source\Mode</Filter>
     </ClCompile>
     <ClCompile Include="source\Object\ObjectBase.cpp">
       <Filter>source\Object</Filter>
@@ -259,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="source\Base\GameBase.cpp">
       <Filter>source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Base\ModeBase.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

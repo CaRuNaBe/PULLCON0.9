@@ -1,7 +1,7 @@
 
 #pragma once
 #include "appframe.h"
-class ModeResourceRoad :public ModeBase
+class ModeResourceRoad:public ModeBase
 {
 	using base = ModeBase;
 public:
@@ -10,7 +10,7 @@ public:
 	virtual bool Initialize();
 	virtual bool Update();
 	virtual bool Draw();
-
+	virtual bool DebugDraw();
 private:
 };
 

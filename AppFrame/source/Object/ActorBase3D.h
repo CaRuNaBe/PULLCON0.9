@@ -20,7 +20,7 @@ public:
 		kAreaSupply,    // 8 補給地点
 		kStageObject,   // 9 ステージオブジェクト
 		kAreaEnemySpawn,// 10 敵スポーンエリア
-		kAreaCommunication,//11　会話スクリプト起動エリア
+		kAreaCommunication,//11会話スクリプト起動エリア
 		kAreaNoEntry,   // 12 侵入不能エリア
 		kEffect,        // n エフェクト
 	};
@@ -56,6 +56,10 @@ public:
 	{
 		Sphere collision = {pos,_radius};
 		_collision = collision;
+	};
+	void SetCollisionRadius(float radius )
+	{
+		_fRadius = radius;
 	};
 	void SetSpeed( float _speed )
 	{
@@ -98,5 +102,6 @@ public:
 	int _cnt;  // 動作カウント
 	int _CT;   // クールタイム
 	int _ST;   // 生存時間
-	
+
+	float _fRadius;
 };

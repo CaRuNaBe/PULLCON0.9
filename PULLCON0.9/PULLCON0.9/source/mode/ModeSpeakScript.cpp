@@ -714,6 +714,12 @@ bool ModeSpeakScript::Draw()
 	return true;
 }
 
+bool ModeSpeakScript::DebugDraw()
+{
+	ModeBase::DebugDraw();
+	return true;
+};
+
 void ModeSpeakScript::DrawImage() const
 {
 	for ( auto&& drawin : drawin_list )

@@ -304,8 +304,8 @@ bool ModeMainGame::Update()
 			break;
 
 		case ScriptState::END:
-			auto title = std::make_shared<ModeTitle>( _game,1 );
-			_game.GetInstance()->GetModeServer()->Add( title );
+			auto title = std::make_unique<ModeTitle>( _game,1 );
+			_game.GetInstance()->GetModeServer()->Add( std::move( title ) );
 			_game.GetModeServer()->Del( *this );
 			break;
 	}
@@ -563,8 +563,8 @@ bool ModeMainGame::OnCommandLoading( unsigned int line,std::vector<std::string>&
 			return false;
 		}
 		state = ScriptState::LOADING;
-		auto loading = std::make_shared<ModeResourceRoad>( _game,20 );
-		_game.GetModeServer()->Add( loading );
+		auto loading = std::make_unique<ModeResourceRoad>( _game,20 );
+		_game.GetModeServer()->Add( std::move( loading ) );
 	}
 	else
 	{
@@ -719,8 +719,8 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
-		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
-		_game.GetModeServer()->Add( story );
+		auto story = std::make_unique<ModeSpeakScript>( _game,30,scripts[1] );
+		_game.GetModeServer()->Add( std::move( story ) );
 		result = true;
 	}
 	else
@@ -1328,7 +1328,8 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
 		object->SetPosition( posi );
 		object->SetScale( scale );
-		object->SetCollision( posi,radius );
+		object->SetCollisionRadius( radius );
+		//object->SetCollision( posi,radius );
 		object_main_game.Add( object );
 		result = true;
 	}
@@ -1746,7 +1747,7 @@ bool ModeMainGame::OnCommandNoEntry( unsigned int line,std::vector<std::string>&
 	return result;
 };
 
-bool  ModeMainGame::IsSetVrctor4( math::vector4& set,std::vector<std::string>& scripts )
+bool ModeMainGame::IsSetVrctor4( math::vector4& set,std::vector<std::string>& scripts )
 {
 	if ( !(string::ToFloat( scripts[1],set.x )) )
 	{
@@ -1824,6 +1825,14 @@ bool ModeMainGame::Draw()
 
 	return true;
 }
+
+bool ModeMainGame::DebugDraw()
+{
+	ModeBase::DebugDraw();
+
+
+	return true;
+};
 
 void ModeMainGame::DrawFeedIn()const
 {
@@ -1973,6 +1982,10 @@ bool ModeMainGame::OnEditCommandDelete( const std::string& command )
 		auto stringnew = "番号%d" + script;
 		DrawFormatString( x,y,GetColor( 255,255,255 ),stringnew.c_str(),i + 1 );
 		y += 18;
+		if ( i > 54 )
+		{
+			x = 400;
+		}
 	}
 	if ( KeyInputSingleCharString( 0,500,30,cchar,TRUE ) == 1 )
 	{

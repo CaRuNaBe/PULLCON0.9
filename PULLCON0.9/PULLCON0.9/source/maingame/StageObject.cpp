@@ -2,6 +2,7 @@
 StageObject::StageObject( ApplicationBase& game,ModeBase& mode,int objectid,int collision )
 	:base( game,mode )
 {
+	Init();
 	if ( collision == 1 )
 	{
 		_coll = true;
@@ -16,27 +17,21 @@ StageObject::StageObject( ApplicationBase& game,ModeBase& mode,int objectid,int 
 	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
 
 	_handle = MV1LoadModel( file_pass_data->GetScriptLine( objectid ).c_str() );
-
-
-	Init();
 }
 
 StageObject::~StageObject()
 {
-
 }
 
 void StageObject::Init()
 {
 	base::Init();
-
 }
 
 bool StageObject::Update()
 {
 	base::Update();
-	_collision._fRadius = _collision._fRadius * _fScale; 
-
+	_collision._fRadius = _fRadius * _fScale;
 	UpdateCollision();
 	return true;
 }
@@ -46,14 +41,15 @@ bool StageObject::Draw()
 	base::Draw();
 	// ƒ‚ƒfƒ‹Šg‘å
 	MV1SetScale( _handle,VGet( _fScale,_fScale,_fScale ) );
-	// ƒ‚ƒfƒ‹•`‰æ
-	MV1DrawModel( _handle );
-	MV1SetPosition( _handle,math::ToDX(_vPos) );
+
+	MV1SetPosition( _handle,math::ToDX( _vPos ) );
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-	vector4 color = {255, 255, 255};
-	if ( !_coll )
-	{
-		DrawCollision( color );
-	}
+	vector4 color = {255, 0, 255};
+	SetUseLighting( FALSE );
+		// ƒ‚ƒfƒ‹•`‰æ
+	MV1DrawModel( _handle );
+	SetUseLighting( TRUE );
+	DrawCollision( color );
+
 	return true;
 }

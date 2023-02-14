@@ -3,17 +3,17 @@
 
 ModeGameOver::ModeGameOver( ApplicationBase& game,int layer )
 	:base( game,layer )
-{};
+{
+	Initialize();
+};
 
 ModeGameOver::~ModeGameOver()
-{};
+{
+};
 
 bool ModeGameOver::Initialize()
 {
-	if ( !base::Initialize() )
-	{
-		return false;
-	}
+	base::Initialize();
 	return true;
 }
 
@@ -29,3 +29,8 @@ bool ModeGameOver::Draw()
 	return true;
 }
 
+bool ModeGameOver::DebugDraw()
+{
+	base::DebugDraw();
+	return true;
+};
