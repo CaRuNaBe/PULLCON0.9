@@ -23,7 +23,7 @@ public:
 	virtual bool Update();
 	virtual bool Draw();
 
-	virtual void Damage(ModeBase& mode);
+	virtual void Damage();
 	void AddBullet();
 
 protected:

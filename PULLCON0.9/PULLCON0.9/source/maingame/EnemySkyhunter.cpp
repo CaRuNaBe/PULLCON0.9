@@ -108,7 +108,7 @@ bool EnemySkyhunter::Update()
 	_vPos += _vVelocity * _fSpeed;
 
 	if (_iLife < 0) {
-		Damage(_mode);
+		Damage();
 	}
 
 	_collision._fRadius = 500.f * _fScale;
@@ -119,9 +119,10 @@ bool EnemySkyhunter::Update()
 	return true;
 }
 
-void EnemySkyhunter::Damage(ModeBase& mode)
+void EnemySkyhunter::Damage()
 {
-	mode.GetObjectServer3D().Del(*this);
+	--_column._iPieces;
+	_mode.GetObjectServer3D().Del(*this);
 }
 
 bool EnemySkyhunter::Draw()

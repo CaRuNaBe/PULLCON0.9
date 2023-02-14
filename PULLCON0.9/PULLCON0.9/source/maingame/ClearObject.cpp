@@ -123,7 +123,7 @@ bool ClearObject::Update()
 
 	
 	if (_iLife < 0) {
-		Damage(_mode);
+		Damage();
 	}
 
 	_collision._fRadius = 500.f * _fScale;
@@ -134,10 +134,9 @@ bool ClearObject::Update()
 	return true;
 }
 
-void ClearObject::Damage( ModeBase& mode )
+void ClearObject::Damage()
 {
-	((ModeMainGame&)mode)._clear = true;
-	mode.GetObjectServer3D().Del( *this );
+	_mode.GetObjectServer3D().Del( *this );
 }
 
 bool ClearObject::Draw()

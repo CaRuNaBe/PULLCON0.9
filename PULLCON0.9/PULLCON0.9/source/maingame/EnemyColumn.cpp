@@ -60,14 +60,18 @@ bool EnemyColumn::Update() {
 	}
 	_vPos += _vVelocity * _fSpeed;
 
+	if (_iPieces == 0) {
+		Damage();
+	}
+
 	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
 	UpdateCollision();  // コリジョン更新
 
 	return true;
 }
 
-void EnemyColumn::Damage(ModeBase& mode) {
-	mode.GetObjectServer3D().Del(*this);
+void EnemyColumn::Damage() {
+	_mode.GetObjectServer3D().Del(*this);
 }
 
 bool EnemyColumn::Draw() {
