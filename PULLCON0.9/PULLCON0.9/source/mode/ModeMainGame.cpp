@@ -86,11 +86,10 @@ ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	// デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
 	// 作成したデータの識別番号を変数 FontHandle に保存する
 	_handlefont = CreateFontToHandle( NULL,40,3 );
-
 	_clear = false;
 	_dbgCollisionDraw = false;
-	_transparence = false;
 	///////////////////////////////////////////////////////
+ 
 }
 /**
  * @fn void ModeMainGame::~ModeMainGame.
@@ -1778,7 +1777,6 @@ bool ModeMainGame::Draw()
 	object_main_game.Draw();
 	ui_player.Draw();
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
-	DrawBox( 0,100,_iFuel * 2,140,GetColor( 255,0,0 ),TRUE );
 
 	switch ( state )
 	{

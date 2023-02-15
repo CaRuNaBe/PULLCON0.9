@@ -126,7 +126,6 @@ bool Player::Update() {
 				_iFuel = 0;
 			}
 		}
-		//((ModeMainGame&)_mode).SetXMax(_iFuel);
 
 		 // スティック押し込みで速度操作
 		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
@@ -206,7 +205,6 @@ bool Player::Update() {
 
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {
-			//((ModeMainGame&)_mode)._transparence = true;
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
 			_cam._vPos = _vPos + CAMERADEFAULT_POS;
 			_statePlayer = State::EVENT;
@@ -225,7 +223,6 @@ bool Player::Update() {
 					// PLAY状態に遷移
 					_pull = false;
 					++_iPieces;
-					//((ModeMainGame&)_mode)._transparence = false;
 					_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
 					_cam._vPos = _cam._vTarget + _cam._vMemory;
 					_statePlayer = State::PLAY;
