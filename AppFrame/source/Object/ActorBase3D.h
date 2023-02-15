@@ -56,8 +56,8 @@ public:
 	void SetScale(float _scale) { _fScale = _scale; };
 	void SetCollision( const vector4& pos,float _radius )
 	{
-		Sphere collision = {pos,_radius};
-		_collision = collision;
+		_collision._vCenter= pos;
+		_fRadius= _radius;
 	};
 	void SetCollisionRadius(float radius )
 	{

@@ -38,6 +38,7 @@ bool AreaCommunication::Update()
 			}
 		}
 	}
+	_collision._fRadius = _fRadius * _fScale;
 	UpdateCollision();
 	return true;
 }
