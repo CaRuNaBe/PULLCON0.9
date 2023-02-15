@@ -28,7 +28,7 @@ void ClearObject::Init()
 
 	_stateClearObject = State::NUM;
 
-	_handle = MV1LoadModel( file_pass_data->GetScriptLine( GUNSHIP_ID ).c_str() );
+	_handle = ResourceServer::LoadMV1Model( file_pass_data->GetScriptLine( GUNSHIP_ID ).c_str() );
 
 	_vObjective = {_vPos.x ,_vPos.y, _vPos.z};
 	_vPos = {_vObjective.x - 5000.f, _vObjective.y, _vObjective.z};

@@ -17,7 +17,7 @@ EnemyKobae::~EnemyKobae() {
 void EnemyKobae::Init() {
 	base::Init();
 
-	_handle = MV1LoadModel("res/enemy/skyhunters/mv1/cg_SkyHunters_KOBAE.mv1");
+	_handle = ResourceServer::LoadMV1Model("res/enemy/skyhunters/mv1/cg_SkyHunters_KOBAE.mv1");
 
 	_stateEnemyKobae = State::WAIT;
 
