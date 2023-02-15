@@ -19,7 +19,7 @@ Player::Player(ApplicationBase& game, ModeBase& mode)
 	const std::string ARRYNAME = "ObjectId";
 	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
 
-	_handle = MV1LoadModel( file_pass_data ->GetScriptLine( PLAYER_ID ).c_str());
+	_handle = ResourceServer::LoadMV1Model( file_pass_data ->GetScriptLine( PLAYER_ID ).c_str());
 	_se = ResourceServer::LoadSoundMem("res/player/Audio/pull.wav");
 	_seBullet = ResourceServer::LoadSoundMem("res/player/Audio/normal_bullet_fast.wav");
 	//デフォルトのフォントで、サイズ４０、太さ３のフォントを作成
@@ -202,14 +202,7 @@ bool Player::Update() {
 		v.y = sin(_fRotatX) * distance;
 		_vTarget = _vPos + v;
 
-		/*
-		vector4 cursor = { 0.f,0.f,0.f };
-		cursor.y = _cam._vTarget.y + sin(_fRotatX) * length3D;
-		cursor.x = _cam._vTarget.x + length3D * cos(rad + camerad);
-		cursor.z = _cam._vTarget.z + length3D * sin(rad + camerad);
-		*/
-
-		//((ModeMainGame&)_mode).SetCursor(_vTarget);
+		((ModeMainGame&)_mode).SetCursor(_vTarget);
 
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {

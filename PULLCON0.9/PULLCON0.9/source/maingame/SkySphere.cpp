@@ -8,7 +8,7 @@ SkySphere::SkySphere( ApplicationBase& game,ModeBase& mode,int objectid )
 	const std::string ARRYNAME = "ObjectId";
 	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
 
-	_handle = MV1LoadModel( file_pass_data->GetScriptLine( objectid ).c_str() );
+	_handle = ResourceServer::LoadMV1Model( file_pass_data->GetScriptLine( objectid ).c_str() );
 
 
 

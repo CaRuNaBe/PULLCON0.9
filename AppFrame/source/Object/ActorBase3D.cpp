@@ -17,11 +17,13 @@ void ActorBase3D::Init() {
 	_vRelation = { 0.f, 0.f ,0.f };
 	_vTarget = { 0.f, 0.f ,0.f };
 	_vDir = { 0.f, 0.f ,0.f };
+	_vVelocity = { 0.f, 0.f ,0.f };
 
 	_iFuel = 0;
 	_iLife = 0;
 	_iDamage = 0;
 	_iPieces = 0;
+	_iPart = 0;
 	_fSpeed = 0.f;
 	_fScale = 1.f;
 	_fRotatX = 0.f;
@@ -32,6 +34,7 @@ void ActorBase3D::Init() {
 	_pull = false;
 	_finish = false;
 	_fire = false;
+	_synchronize = false;
 	_cnt = 0;
 	_CT = 0;
 	_ST = 0;

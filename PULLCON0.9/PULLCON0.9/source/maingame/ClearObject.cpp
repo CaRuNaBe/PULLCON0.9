@@ -28,7 +28,7 @@ void ClearObject::Init()
 
 	_stateClearObject = State::NUM;
 
-	_handle = MV1LoadModel( file_pass_data->GetScriptLine( GUNSHIP_ID ).c_str() );
+	_handle = ResourceServer::LoadMV1Model( file_pass_data->GetScriptLine( GUNSHIP_ID ).c_str() );
 
 	_vObjective = {_vPos.x ,_vPos.y, _vPos.z};
 	_vPos = {_vObjective.x - 5000.f, _vObjective.y, _vObjective.z};
@@ -122,7 +122,7 @@ bool ClearObject::Update()
 
 	
 	if (_iLife < 0) {
-		Damage(_mode);
+		Damage();
 	}
 
 	_collision._fRadius = 500.f * _fScale;
@@ -133,10 +133,9 @@ bool ClearObject::Update()
 	return true;
 }
 
-void ClearObject::Damage( ModeBase& mode )
+void ClearObject::Damage()
 {
-	((ModeMainGame&)mode)._clear = true;
-	mode.GetObjectServer3D().Del( *this );
+	_mode.GetObjectServer3D().Del( *this );
 }
 
 bool ClearObject::Draw()

@@ -21,6 +21,9 @@
 #include "../maingame/AreaEnemySpawn.h"
 #include "../maingame/AreaCommunication.h"
 #include "../maingame/AreaNoEntry.h"
+//#include "ModeSpeakScript.h"
+#include "../maingame/EnemyColumn.h"
+#include "../maingame/EnemyKobae.h"
 #include "ModeSpeakScript.h"
 
 namespace
@@ -212,6 +215,12 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_AREACOMMUNICATION,&ModeMainGame::OnCommandCommunication ) );
 	comand_funcs.insert( std::make_pair( COMMAND_NOENTRY,&ModeMainGame::OnCommandNoEntry ) );
 
+	///////////////////////////////////////////////////////
+	auto column = std::make_shared<EnemyColumn>( _game,*this );
+	GetObjectServer3D().Add( column );
+	auto kobae = std::make_shared<EnemyKobae>( _game,*this );
+	GetObjectServer3D().Add( kobae );
+	///////////////////////////////////////////////////////
 
 	while ( !(stop_parsing) && (now_line >= 0) && (now_line < max_line) )
 	{
@@ -1698,7 +1707,6 @@ bool ModeMainGame::OnCommandNoEntry( unsigned int line,std::vector<std::string>&
 	{
 		vector4 posi;
 		float radius = 0.0f;
-		float height = 0.0f;
 		const size_t SCRIPTSIZE = 5;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
@@ -1715,8 +1723,9 @@ bool ModeMainGame::OnCommandNoEntry( unsigned int line,std::vector<std::string>&
 			return result;
 		}
 
-		auto no_entry = std::make_shared<AreaNoEntry>( _game,*this,radius,height );
+		auto no_entry = std::make_shared<AreaNoEntry>( _game,*this );
 		no_entry->SetPosition( posi );
+		no_entry->SetCollisionRadius( radius );
 		object_main_game.Add( no_entry );
 		result = true;
 	}
@@ -1829,7 +1838,17 @@ bool ModeMainGame::Draw()
 bool ModeMainGame::DebugDraw()
 {
 	ModeBase::DebugDraw();
+	math::vector4 posi;
 
+	for ( auto&& obj : object_main_game.GetObjects() )
+	{
+		if ( obj->GetType() == ActorBase3D::Type::kPlayer )
+		{
+			posi = obj->GetPosition();
+		}
+	}
+	int x = 0,y = 500,size = 16;
+	DrawFormatString( x,y,GetColor( 255,0,0 ),"  pos    = (%5.2f, %5.2f, %5.2f)",posi.x,posi.y,posi.z );
 
 	return true;
 };
@@ -1984,6 +2003,7 @@ bool ModeMainGame::OnEditCommandDelete( const std::string& command )
 		y += 18;
 		if ( i > 54 )
 		{
+			y = 0;
 			x = 400;
 		}
 	}
