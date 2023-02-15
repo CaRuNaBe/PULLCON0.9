@@ -12,5 +12,6 @@ public:
 	virtual bool DebugDraw();
 private:
 	int handle_cursor;
+	math::vector4  posi_cursor;
 };
 

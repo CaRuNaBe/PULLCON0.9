@@ -21,8 +21,11 @@ ModeTest::ModeTest( ApplicationBase& game,int layer )
 
 	auto fuel_gage = std::make_unique<UIFuelGage>( _game,0,*this );
 	ui_player.Add( std::move( fuel_gage ) );
-	auto hp_gage = std::make_unique<UIHpGage>( _game,0,*this );
+	auto hp_gage = std::make_unique<UIHpGage>( _game,1,*this );
 	ui_player.Add( std::move( hp_gage ) );
+	auto cursor = std::make_unique<UICursor>( _game,2,*this );
+	ui_player.Add( std::move( cursor ) );
+
 
 };
 

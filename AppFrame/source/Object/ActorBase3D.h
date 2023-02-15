@@ -75,6 +75,10 @@ public:
 	{
 		return _iLife;
 	}
+	vector4 GetTarget()
+	{
+		return _vTarget;
+	}
 public:
 	vector4 _vPos;       // 位置
 	vector4 _vEvent;     // イベント位置

@@ -21,7 +21,6 @@
 #include "../maingame/AreaEnemySpawn.h"
 #include "../maingame/AreaCommunication.h"
 #include "../maingame/AreaNoEntry.h"
-//#include "ModeSpeakScript.h"
 #include "../maingame/EnemyColumn.h"
 #include "../maingame/EnemyKobae.h"
 #include "ModeSpeakScript.h"
@@ -83,14 +82,11 @@ ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	Initialize( FILEPASS,GAMESCRIPT,FILENAME );
 
 	///////////////////////////////////////////////////////
-	_cg = ResourceServer::LoadGraph( "res/cursor00.png" );
-	_se = ResourceServer::LoadSoundMem( "res/sound/stage1~3 BGM/650832__timbre__weasel-damage-excerpt-of-audiomirages-freesound-647499.wav" );
-	ChangeVolumeSoundMem( 255 * 40 / 100,_se );
 	//PlaySoundMem(_se, DX_PLAYTYPE_LOOP);
 	// デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
 	// 作成したデータの識別番号を変数 FontHandle に保存する
 	_handlefont = CreateFontToHandle( NULL,40,3 );
-	_vCursor = {0.0f, 0.0f, 0.0f};
+
 	_clear = false;
 	_dbgCollisionDraw = false;
 	_transparence = false;
@@ -883,6 +879,8 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 		ui_player.Add( std::move( fuel_gage ) );
 		auto hp_gage = std::make_unique<UIHpGage>( _game,0,*this );
 		ui_player.Add( std::move( hp_gage ) );
+		auto cursor = std::make_unique<UICursor>( _game,2,*this );
+		ui_player.Add( std::move( cursor ) );
 		auto player = std::make_shared<Player>( _game,*this );
 		player->SetPosition( posi );
 		player->SetScale( scale );
@@ -1781,18 +1779,7 @@ bool ModeMainGame::Draw()
 	ui_player.Draw();
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
 	DrawBox( 0,100,_iFuel * 2,140,GetColor( 255,0,0 ),TRUE );
-	/////////////////////////////////////////////////////////////////////////////
-	if ( _clear )
-	{
-// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
-		DrawStringToHandle( _game.DispSizeW() / 2,_game.DispSizeH() / 2,"C L E A R!!",GetColor( 255,255,0 ),_handlefont );
-	}
-	if ( !_transparence )
-	{
-		VECTOR ScreenPos = ConvWorldPosToScreenPos( ToDX( _vCursor ) );
-		DrawRotaGraph( static_cast<int>(ScreenPos.x),static_cast<int>(ScreenPos.y),0.5,0,_cg,TRUE );
-	}
-	//////////////////////////////////////////////////////////////////////////////
+
 	switch ( state )
 	{
 		case ScriptState::EDIT:
@@ -1850,7 +1837,11 @@ bool ModeMainGame::DebugDraw()
 	}
 	int x = 0,y = 500,size = 16;
 	DrawFormatString( x,y,GetColor( 255,0,0 ),"  pos    = (%5.2f, %5.2f, %5.2f)",posi.x,posi.y,posi.z );
-
+	if ( _clear )
+	{
+	// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
+		DrawStringToHandle( _game.DispSizeW() / 2,_game.DispSizeH() / 2,"C L E A R!!",GetColor( 255,255,0 ),_handlefont );
+	}
 	return true;
 };
 

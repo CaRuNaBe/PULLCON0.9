@@ -202,7 +202,7 @@ bool Player::Update() {
 		v.y = sin(_fRotatX) * distance;
 		_vTarget = _vPos + v;
 
-		((ModeMainGame&)_mode).SetCursor(_vTarget);
+
 
 		// ˆø‚Á‚±”²‚«‘JˆÚ
 		if (_pull && _CT == 0) {

@@ -35,6 +35,7 @@ public:
 	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
 	virtual bool DebugDraw();
+	///////////////////////////////////////
 	void SetCursor(const vector4& pos) { _vCursor = pos; }
 	void SetXMax(const int& i) { _iFuel = i; }
 
@@ -42,9 +43,10 @@ public:
 	int  _iFuel;
 	bool _transparence;
 	bool _clear;
-
+	
 	// 開発用
 	bool	_dbgCollisionDraw;		// コリジョン表示/非表示
+	/////////////////////////////////////////////
 private:
 	enum class ScriptState
 	{
