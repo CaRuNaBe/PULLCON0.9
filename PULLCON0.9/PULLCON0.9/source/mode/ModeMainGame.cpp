@@ -1845,6 +1845,7 @@ bool ModeMainGame::DebugDraw()
 		if ( obj->GetType() == ActorBase3D::Type::kPlayer )
 		{
 			posi = obj->GetPosition();
+			break;
 		}
 	}
 	int x = 0,y = 500,size = 16;

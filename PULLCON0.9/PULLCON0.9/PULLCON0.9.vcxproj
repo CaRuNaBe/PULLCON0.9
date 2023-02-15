@@ -205,6 +205,7 @@
     <ClCompile Include="source\speakscript\SpeakScriptObject.cpp" />
     <ClCompile Include="source\ui\UIFuelGage.cpp" />
     <ClCompile Include="source\ui\UIHpGage.cpp" />
+    <ClCompile Include="source\ui\UICursor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ui\UIPullGage.h" />
@@ -249,6 +250,7 @@
     <ClInclude Include="source\speakscript\SpeakScriptObject.h" />
     <ClInclude Include="source\ui\UIFuelGage.h" />
     <ClInclude Include="source\ui\UIHpGage.h" />
+    <ClInclude Include="source\ui\UICursor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

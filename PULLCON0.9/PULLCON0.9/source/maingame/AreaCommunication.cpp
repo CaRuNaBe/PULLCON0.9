@@ -25,6 +25,7 @@ bool AreaCommunication::Update()
 {
 	base::Update();
 
+	_collision._fRadius = _fRadius * _fScale;
 	for ( auto&& obje : _mode.GetObjectServer3D().GetObjects() )
 	{
 		if ( (obje->GetType() == ActorBase3D::Type::kPlayer) )
@@ -39,7 +40,6 @@ bool AreaCommunication::Update()
 			}
 		}
 	}
-	_collision._fRadius = _fRadius * _fScale;
 	UpdateCollision();
 	return true;
 }
@@ -48,10 +48,9 @@ bool AreaCommunication::Draw()
 {
 	base::Draw();
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-	if ( !((ModeMainGame&)_mode)._dbgCollisionDraw )
-	{
-		vector4 color = {255, 255, 255};
-		DrawCollision( color );
-	}
+
+	vector4 color = {255, 255, 255};
+	DrawCollision( color );
+
 	return true;
 }

@@ -19,6 +19,10 @@ void ActorBase3D::Init() {
 	_vDir = { 0.f, 0.f ,0.f };
 	_vVelocity = { 0.f, 0.f ,0.f };
 
+	_collision = {{0.f,0.f,0.f},0.f};
+	_collisionEvent = {{0.f,0.f,0.f},0.f};
+	_collisionSearch = {{0.f,0.f,0.f},0.f};
+
 	_iFuel = 0;
 	_iLife = 0;
 	_iDamage = 0;
