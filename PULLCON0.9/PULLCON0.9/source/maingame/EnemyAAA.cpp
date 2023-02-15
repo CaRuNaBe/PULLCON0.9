@@ -41,6 +41,7 @@ void EnemyAAA::Init( int pile_num,vector4 _vPosi )
 	_collisionEvent._fRadius = 500.f * _fScale;
 	_collisionSearch._fRadius = _collision._fRadius * 70.f;
 	_vEvent = { 10000.f, 10000.f, 10000.f };
+	_vDir = { 0.f, 0.f, -1.f };
 	_iLife = 50;
 
 	_iType = 0;
@@ -191,18 +192,20 @@ bool EnemyAAA::Update()
 			_CT = 10;
 		}
 
-		// 三次元極座標(r(length3D),θ(theta),φ(rad))
-		sx = _vRelation.x - _vPos.x;
-		sy = _vRelation.y - _vPos.y;
-		sz = _vRelation.z - _vPos.z;
-		length3D = sqrt( sx * sx + sy * sy + sz * sz );
-		rad = atan2( sz,sx );
-		theta = acos( sy / length3D );
+		if (_iType == 0) {
+			// 三次元極座標(r(length3D),θ(theta),φ(rad))
+			sx = _vRelation.x - _vPos.x;
+			sy = _vRelation.y - _vPos.y;
+			sz = _vRelation.z - _vPos.z;
+			length3D = sqrt(sx * sx + sy * sy + sz * sz);
+			rad = atan2(sz, sx);
+			theta = acos(sy / length3D);
 
-		// モデルの向きの設定用
-		_vDir.x = cos( rad );
-		_vDir.z = sin( rad );
-		_vDir.Normalized();
+			// モデルの向きの設定用
+			_vDir.x = cos(rad);
+			_vDir.z = sin(rad);
+			_vDir.Normalized();
+		}
 
 		// Y軸回転
 		_fRotatY = -rad;
@@ -210,10 +213,6 @@ bool EnemyAAA::Update()
 		float rX = cos( theta );
 		float degree = utility::radian_to_degree( rX );
 		if ( degree >= 0.f && degree <= 40.f )
-		{
-			_fRotatX = rX;
-		}
-		if ( _iType == 1 )
 		{
 			_fRotatX = rX;
 		}
@@ -311,7 +310,7 @@ bool EnemyAAA::Draw()
 			}
 		}
 		else {
-			if (_stateAAA != State::NUM) {
+			if (_stateAAA == State::EVENT) {
 				vector4 color = { 255, 255, 255 };
 				DrawCollisionSearch(color);
 			}
@@ -343,9 +342,11 @@ void EnemyAAA::GetSearch() {
 void EnemyAAA::AddBullet()
 {
 	vector4 vBullet = {_vPos.x, _vPos.y + 100.f, _vPos.z};
+	float speed = 200.f;
 	auto bullet = std::make_shared<Bullet>( _game,_mode );
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
+	bullet->SetSpeed(speed);
 	_mode.GetObjectServer3D().Add( bullet );
 }
 

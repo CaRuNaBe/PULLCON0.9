@@ -1,17 +1,18 @@
 #pragma once
 #include "appframe.h"
-class ClearObject:
+#include "EnemyColumn.h"
+class EnemySkyhunter :
 	public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	ClearObject( ApplicationBase& game,ModeBase& mode,float _radius );
-	virtual ~ClearObject();
+	EnemySkyhunter(ApplicationBase& game, ModeBase& mode, EnemyColumn& skyhunter);
+	virtual ~EnemySkyhunter();
 	virtual Type GetType()
 	{
-		return Type::kClearObject;
+		return Type::kEnemySkyhunter;
 	}
-	// プレイヤーの状態
+	// スカイハンターの状態
 	enum class State
 	{
 		NUM, //初期状態
@@ -26,11 +27,9 @@ public:
 	void AddBullet();
 
 protected:
-	State   _stateClearObject;  // ガンシップステータス
+	EnemyColumn& _column;
 
-	vector4 _vObjective;  // 円軌道中心座標
+	State   _stateEnemySkyhunter;
 
 	int    _handle;
-	float radius;
 };
-

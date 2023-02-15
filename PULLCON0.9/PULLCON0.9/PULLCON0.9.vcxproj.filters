@@ -318,6 +318,15 @@
     <ClInclude Include="source\mode\ModeResourceRoad.h">
       <Filter>source\mode\modeoutgame</Filter>
     </ClInclude>
+    <ClInclude Include="source\maingame\EnemySkyhunter.h">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyColumn.h">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyKobae.h">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">

@@ -21,6 +21,9 @@
 #include "../maingame/AreaEnemySpawn.h"
 #include "../maingame/AreaCommunication.h"
 #include "../maingame/AreaNoEntry.h"
+//#include "ModeSpeakScript.h"
+#include "../maingame/EnemyColumn.h"
+#include "../maingame/EnemyKobae.h"
 #include "ModeSpeakScript.h"
 
 namespace
@@ -91,6 +94,10 @@ ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	_clear = false;
 	_dbgCollisionDraw = false;
 	_transparence = false;
+	auto column = std::make_shared<EnemyColumn>(_game, *this);
+	GetObjectServer3D().Add(column);
+	auto kobae = std::make_shared<EnemyKobae>(_game, *this);
+	GetObjectServer3D().Add(kobae);
 	///////////////////////////////////////////////////////
 }
 /**
