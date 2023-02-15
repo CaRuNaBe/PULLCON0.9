@@ -6,8 +6,12 @@
 Bullet::Bullet( ApplicationBase& game,ModeBase& mode)
 	:base(game,mode)
 {
-	//_handle = MV1LoadModel("res/bullet/model/normalammo/cg_NormalAmmo.mv1");
-	_cg = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Green.png");
+	_cgDarkPurple = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_DarkPurple.png");
+	_cgGreen = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Green.png");
+	_cgPink = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Pink.png");
+	_cgPurple = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Purple.png");
+	_cgYellow = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Yellow.png");
+	_cg = 0;
 	Init();
 }
 
@@ -18,6 +22,7 @@ Bullet::~Bullet() {
 void Bullet::Init() {
 	base::Init();
 
+	_iType = 0;
 	_iDamage = 1;
 	_fSpeed = 400.f;
 
@@ -43,10 +48,22 @@ bool Bullet::Update() {
 	_collision._fRadius = 50.f * _fScale;
 	UpdateCollision();    // コリジョンアップデート
 
-	if (_cnt % 4 == 0) {
-		auto effect = std::make_shared<EffectTrail>( _game,_mode);
-		effect->SetPosition(_vPos);
-		//mode.GetObjectServer3D().Add(effect);
+	switch (_iType) {
+	case 1:
+		_cg = _cgDarkPurple;
+		break;
+	case 2:
+		_cg = _cgPink;
+		break;
+	case 3:
+		_cg = _cgPurple;
+		break;
+	case 4:
+		_cg = _cgYellow;
+		break;
+	default:
+		_cg = _cgGreen;
+		break;
 	}
 
 	return true;
@@ -58,21 +75,6 @@ void Bullet::Damage() {
 
 bool Bullet::Draw() {
 	base::Draw();
-
-	// 三次元極座標(r(length3D),θ(theta),φ(camerad))
-	float length3D = sqrt(_vDir.x * _vDir.x + _vDir.y * _vDir.y + _vDir.z * _vDir.z);
-	float rad = atan2(_vDir.z, _vDir.x);
-	float theta = acos(_vDir.y / length3D);
-
-	/*// モデル拡大
-	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
-	// モデル回転
-	MV1SetRotationZYAxis(_handle, VGet(_vDir.z, 0.f, -(_vDir.x)), VGet(0.f, 1.f, 0.f), theta);
-	// モデル移動
-	MV1SetPosition(_handle, ToDX(_vPos));
-	// モデル描画
-	MV1DrawModel(_handle);
-	*/
 
 	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 150.f, 0.f, _cg, TRUE);
 

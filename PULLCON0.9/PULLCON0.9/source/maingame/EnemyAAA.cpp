@@ -116,7 +116,7 @@ bool EnemyAAA::Update()
 				{
 // プレイヤーと動きを同化させる
 					_vPos = obje->_vPos;
-					_vPos.y -= 2.f * _collision._fRadius + static_cast<float>(_iPieces) * _collision._fRadius;
+					_vPos.y -= _collision._fRadius + static_cast<float>(_iPieces) * _collision._fRadius;
 					_fRotatY = obje->_fRotatY + utility::PiOver2;
 					_fire = obje->_fire;
 				}
@@ -278,8 +278,9 @@ bool EnemyAAA::Draw()
 	MV1SetScale( _handle_body,VGet( _fScale,_fScale,_fScale ) );
 	MV1SetScale( _handle_turret,VGet( _fScale,_fScale,_fScale ) );
 	// モデル回転
-	MV1SetRotationXYZ( _handle_body,VGet( 0.f,_fRotatY,0.f ) );
-	MV1SetRotationZYAxis( _handle_turret,VGet( -(_vDir.z),0.f,_vDir.x ),VGet( 0.f,1.f,0.f ),_fRotatX );
+	MV1SetRotationXYZ( _handle_body,VGet( 0.f,_fRotatY - utility::PiOver2,0.f ) );
+	MV1SetRotationXYZ(_handle_turret,VGet(_fRotatX,_fRotatY - utility::PiOver2,0.f ) );
+	//MV1SetRotationZYAxis(_handle_turret, VGet(-(_vDir.z), 0.f,_vDir.x), VGet(0.f, 1.f, 0.f), _fRotatX);
 	// モデル移動
 	MV1SetPosition( _handle_body,pos );
 	MV1SetPosition( _handle_turret,VGet( pos.x,pos.y + 40.f,pos.z ) );
