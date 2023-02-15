@@ -94,10 +94,6 @@ ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	_clear = false;
 	_dbgCollisionDraw = false;
 	_transparence = false;
-	auto column = std::make_shared<EnemyColumn>(_game, *this);
-	GetObjectServer3D().Add(column);
-	auto kobae = std::make_shared<EnemyKobae>(_game, *this);
-	GetObjectServer3D().Add(kobae);
 	///////////////////////////////////////////////////////
 }
 /**
@@ -219,6 +215,12 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_AREACOMMUNICATION,&ModeMainGame::OnCommandCommunication ) );
 	comand_funcs.insert( std::make_pair( COMMAND_NOENTRY,&ModeMainGame::OnCommandNoEntry ) );
 
+	///////////////////////////////////////////////////////
+	auto column = std::make_shared<EnemyColumn>(_game, *this);
+	GetObjectServer3D().Add(column);
+	auto kobae = std::make_shared<EnemyKobae>(_game, *this);
+	GetObjectServer3D().Add(kobae);
+	///////////////////////////////////////////////////////
 
 	while ( !(stop_parsing) && (now_line >= 0) && (now_line < max_line) )
 	{

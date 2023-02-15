@@ -106,9 +106,6 @@
     <ClCompile Include="source\speakscript\SpeakScriptObject.cpp">
       <Filter>source\object\speakscript</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeMainGame.cpp">
-      <Filter>source\mode\modeingame</Filter>
-    </ClCompile>
     <ClCompile Include="source\mode\ModeGameOver.cpp">
       <Filter>source\mode\modeoutgame</Filter>
     </ClCompile>
@@ -174,6 +171,18 @@
     </ClCompile>
     <ClCompile Include="source\mode\ModeResourceRoad.cpp">
       <Filter>source\mode\modeoutgame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyColumn.cpp">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyKobae.cpp">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemySkyhunter.cpp">
+      <Filter>source\object\game\enemy\skyhunter</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeMainGame.cpp">
+      <Filter>source\mode\modeingame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

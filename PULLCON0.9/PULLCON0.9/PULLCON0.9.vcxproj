@@ -173,7 +173,6 @@
     <ClCompile Include="source\maingame\EnemyColumn.cpp" />
     <ClCompile Include="source\maingame\EnemyKobae.cpp" />
     <ClCompile Include="source\maingame\EnemySkyhunter.cpp" />
-    <ClCompile Include="source\maingame\EnemySpawnEria.cpp" />
     <ClCompile Include="source\maingame\AreaEnemySpawn.cpp" />
     <ClCompile Include="source\maingame\GameStage.cpp" />
     <ClCompile Include="source\maingame\AreaNoEntry.cpp" />
@@ -216,7 +215,6 @@
     <ClInclude Include="source\maingame\EnemyColumn.h" />
     <ClInclude Include="source\maingame\EnemyKobae.h" />
     <ClInclude Include="source\maingame\EnemySkyhunter.h" />
-    <ClInclude Include="source\maingame\EnemySpawnEria.h" />
     <ClInclude Include="source\maingame\AreaEnemySpawn.h" />
     <ClInclude Include="source\maingame\GameStage.h" />
     <ClInclude Include="source\maingame\AreaNoEntry.h" />
