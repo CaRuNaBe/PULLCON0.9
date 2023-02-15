@@ -1,7 +1,7 @@
 #pragma once
-#include "BaseUI.h"
+#include "UIBase.h"
 #include "appframe.h"
-class UIFuelGage:public BaseUI
+class UIFuelGage:public UIBase
 {
 public:
 	UIFuelGage( ApplicationBase& game,int layer,ModeBase& _base );

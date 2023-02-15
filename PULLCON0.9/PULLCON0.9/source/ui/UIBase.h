@@ -1,10 +1,10 @@
 #pragma once
 #include "appframe.h"
-class BaseUI:public GameBase
+class UIBase:public GameBase
 {
 public:
-	BaseUI( ApplicationBase& game,int layer,ModeBase& _base );
-	virtual ~BaseUI();
+	UIBase( ApplicationBase& game,int layer,ModeBase& _base );
+	virtual ~UIBase();
 
 	virtual bool Initialize();
 	virtual bool Update();

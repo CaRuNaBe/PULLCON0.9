@@ -1,7 +1,7 @@
 #pragma once
-#include "BaseUI.h"
+#include "UIBase.h"
 #include "appframe.h"
-class UIHpGage:public BaseUI
+class UIHpGage:public UIBase
 {
 public:
 	UIHpGage( ApplicationBase& game,int layer,ModeBase& _base );

@@ -1,6 +1,6 @@
 #pragma once
 #include "appframe.h"
-#include "ui/BaseUI.h"
+#include "ui/UIBase.h"
 #include "ui/UIHpGage.h"
 #include "ui/UIFuelGage.h"
 class ModeTest: public ModeBase
@@ -13,7 +13,7 @@ public:
 	virtual bool Draw();
 
 private:
-	GameServer<BaseUI> ui_player;
+	GameServer<UIBase> ui_player;
 
 };
 

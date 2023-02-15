@@ -124,7 +124,7 @@
     <ClCompile Include="source\mode\ModeTitle.cpp">
       <Filter>source\mode\modeoutgame</Filter>
     </ClCompile>
-    <ClCompile Include="source\ui\BaseUI.cpp">
+    <ClCompile Include="source\ui\UIBase.cpp">
       <Filter>source\object\ui</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\UIHpGage.cpp">
@@ -174,6 +174,12 @@
     </ClCompile>
     <ClCompile Include="source\mode\ModeResourceRoad.cpp">
       <Filter>source\mode\modeoutgame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ModeTest.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UIPullGage.cpp">
+      <Filter>source\object\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -267,7 +273,7 @@
     <ClInclude Include="source\mode\ModeTitle.h">
       <Filter>source\mode\modeoutgame</Filter>
     </ClInclude>
-    <ClInclude Include="source\ui\BaseUI.h">
+    <ClInclude Include="source\ui\UIBase.h">
       <Filter>source\object\ui</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\UIHpGage.h">
@@ -317,6 +323,10 @@
     </ClInclude>
     <ClInclude Include="source\mode\ModeResourceRoad.h">
       <Filter>source\mode\modeoutgame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ModeTest.h" />
+    <ClInclude Include="source\ui\UIPullGage.h">
+      <Filter>source\object\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
