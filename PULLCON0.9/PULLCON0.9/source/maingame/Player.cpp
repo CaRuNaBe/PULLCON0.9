@@ -19,7 +19,7 @@ Player::Player(ApplicationBase& game, ModeBase& mode)
 	const std::string ARRYNAME = "ObjectId";
 	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
 
-	_handle = MV1LoadModel( file_pass_data ->GetScriptLine( PLAYER_ID ).c_str());
+	_handle = ResourceServer::LoadMV1Model( file_pass_data ->GetScriptLine( PLAYER_ID ).c_str());
 	_se = ResourceServer::LoadSoundMem("res/player/Audio/pull.wav");
 	_seBullet = ResourceServer::LoadSoundMem("res/player/Audio/normal_bullet_fast.wav");
 	//デフォルトのフォントで、サイズ４０、太さ３のフォントを作成

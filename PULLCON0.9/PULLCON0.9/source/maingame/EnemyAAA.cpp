@@ -19,8 +19,8 @@ EnemyAAA::EnemyAAA( ApplicationBase& game,ModeBase& mode,int min_id,int max_id,i
 	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
 
 	auto pass_vector = string::Split( file_pass_data->GetScriptLine( id ),DELIMITER );
-	_handle_body = MV1LoadModel( pass_vector[BODY].c_str() );
-	_handle_turret = MV1LoadModel( pass_vector[TURRET].c_str() );
+	_handle_body = ResourceServer::LoadMV1Model( pass_vector[BODY].c_str() );
+	_handle_turret = ResourceServer::LoadMV1Model( pass_vector[TURRET].c_str() );
 
 	Init( pile_num,_vPosi );
 	AddPieces( min_id,max_id,pile_num );

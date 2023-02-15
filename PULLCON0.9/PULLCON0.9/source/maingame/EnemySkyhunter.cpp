@@ -3,7 +3,7 @@
 #include  "../mode/ModeMainGame.h"
 namespace
 {
-	//constexpr int GUNSHIP_ID;
+	
 }
 EnemySkyhunter::EnemySkyhunter(ApplicationBase& game, ModeBase& mode, EnemyColumn& skyhunter)
 	:base(game, mode)
@@ -21,7 +21,7 @@ void EnemySkyhunter::Init()
 {
 	base::Init();
 
-	_handle = MV1LoadModel("res/enemy/skyhunters/mv1/cg_SkyHunters.mv1");
+	_handle = ResourceServer::LoadMV1Model("res/enemy/skyhunters/mv1/cg_SkyHunters.mv1");
 
 	_stateEnemySkyhunter = State::PLAY;
 
