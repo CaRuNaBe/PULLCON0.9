@@ -11,6 +11,7 @@
 #include "../ui/UIHpGage.h"
 #include "../ui/UIFuelGage.h"
 #include "../ui/UICursor.h"
+#include "../ui/UIPullGage.h"
 #include <vector>
 #include <memory>
 #include <string>

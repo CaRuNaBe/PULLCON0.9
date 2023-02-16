@@ -1,7 +1,7 @@
 
 #include "AppFrame.h"
 #include "ApplicationMain.h"
-#include "mode/ModeMainGame.h"
+#include "ModeTest.h"
 // ŽÀ‘Ì
 ApplicationMain				g_oApplicationMain;
 
@@ -13,7 +13,7 @@ bool ApplicationMain::Initialize( HINSTANCE hInstance )
 	}
 	font_hundle = CreateFontToHandle( "Kazesawa-Bold",font_size,-1,-1 );
 
-	auto game = std::make_unique<ModeMainGame>( *this,1 );
+	auto game = std::make_unique<ModeTest>( *this,1 );
 	base::GetInstance()->GetModeServer()->Add( std::move( game ) );
 
 	return true;

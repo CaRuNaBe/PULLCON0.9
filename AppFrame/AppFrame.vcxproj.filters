@@ -14,9 +14,6 @@
     <Filter Include="source\Application">
       <UniqueIdentifier>{99a84c11-06de-4ec3-b42d-f157ce3f07b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\Mode">
-      <UniqueIdentifier>{8531f183-e42e-454f-b085-44278d9c3903}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\Math">
       <UniqueIdentifier>{adb50178-8503-4cd3-aa02-1f3d5bc8a761}</UniqueIdentifier>
     </Filter>
@@ -137,7 +134,9 @@
     <ClInclude Include="source\Base\GameServer.h">
       <Filter>source\Base</Filter>
     </ClInclude>
-    <ClInclude Include="source\Base\ModeBase.h" />
+    <ClInclude Include="source\Base\ModeBase.h">
+      <Filter>source\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -244,7 +243,7 @@
       <Filter>source\Base</Filter>
     </ClCompile>
     <ClCompile Include="source\Base\ModeBase.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

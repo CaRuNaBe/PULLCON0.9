@@ -959,7 +959,8 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 		ui_player.Add( std::move( hp_gage ) );
 		auto cursor = std::make_unique<UICursor>( _game,2,*this );
 		ui_player.Add( std::move( cursor ) );
-
+		auto pullgage = std::make_unique<UIPullGage>( _game,3,*this );
+		ui_player.Add( std::move( pullgage ) );
 
 		result = true;
 	}

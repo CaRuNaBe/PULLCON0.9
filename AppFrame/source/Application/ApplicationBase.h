@@ -34,7 +34,10 @@ public:
 	{
 		return 480;
 	}
-
+	virtual int DispBasics()
+	{
+		return 0;
+	}
 	static	ApplicationBase* GetInstance()
 	{
 		return _lpInstance;
