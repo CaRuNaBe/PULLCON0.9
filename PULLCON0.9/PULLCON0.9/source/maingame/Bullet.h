@@ -14,10 +14,15 @@ public:
 
 	virtual void Damage();
 
+	int    _iType;
+
 protected:
 
-	int    _handle;
-	
+	int    _cgDarkPurple;
+	int    _cgGreen;
+	int    _cgPink;
+	int    _cgPurple;
+	int    _cgYellow;
 	int    _cg;
 };
 

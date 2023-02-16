@@ -138,3 +138,13 @@ void ActorBase3D::DrawCollisionSearch(vector4 color)
 	SetUseLighting(TRUE);
 #endif
 }
+
+void ActorBase3D::DrawCollisionObject(vector4 color)
+{
+#if _DEBUG
+	// ライティング計算
+	SetUseLighting(FALSE);
+	_collision.DrawObject(static_cast<int>(color.x), static_cast<int>(color.y), static_cast<int>(color.z));
+	SetUseLighting(TRUE);
+#endif
+}
