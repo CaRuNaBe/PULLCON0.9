@@ -210,7 +210,11 @@ bool Player::Update() {
 		if (_pull && _CT == 0) {
 			((ModeMainGame&)_mode)._transparence = true;
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
+			_cam._vTarget.x = _vPos.x;
+			_cam._vTarget.z = _vPos.z;
+			_cam._vTarget.y -= 1000.f;
 			_cam._vPosEvent.y = _cam._vTarget.y + cos(theta) * length3D;
+			length3D *= 0.5f;
 			length3D *= static_cast<float>(_iPieces + 1);
 			_cam._vPosEvent.x = _cam._vTarget.x + length3D * sin(theta) * cos(camerad);
 			_cam._vPosEvent.z = _cam._vTarget.z + length3D * sin(theta) * sin(camerad);
@@ -401,17 +405,18 @@ void Player::EventCamera() {
 	camerad = atan2(sz, sx) + utility::PI;
 
 	// Xé≤âÒì]
-	float degree = 70.f;
+	float degree = 80.f;
 	theta = utility::degree_to_radian(degree);
 
-	float length = 600.f;
+	float length = 400.f;
 	length3D += length * static_cast<float>(_iPieces);
 
 	// ÉJÉÅÉâà íu
 	_cam._vPosEvent.y = _vPos.y + cos(theta) * length3D;
 	_cam._vPosEvent.x = _vPos.x + length3D * sin(theta) * cos(camerad);
 	_cam._vPosEvent.z = _vPos.z + length3D * sin(theta) * sin(camerad);
-	_cam._vPosEvent.y -= 2000.f;
+	float transformY = 200.f;
+	_cam._vPosEvent.y += 4000.f + transformY * static_cast<float>(_iPieces);
 
 }
 

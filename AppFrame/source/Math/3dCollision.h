@@ -17,6 +17,7 @@ namespace math
 		vector4 _vCenter;
 		float   _fRadius;
 		void Draw(int red, int green, int blue) const;
+		void DrawObject(int red, int green, int blue) const;
 	};
 
 	// Sphere‚ÆSphere‚ÌŒğ·”»’è

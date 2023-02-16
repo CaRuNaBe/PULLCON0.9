@@ -45,6 +45,8 @@ bool Bullet::Update() {
 	_vd *= _fSpeed;
 	_vPos += _vd;
 
+	_iDamage = _fScale;
+
 	_collision._fRadius = 50.f * _fScale;
 	UpdateCollision();    // コリジョンアップデート
 
@@ -76,7 +78,8 @@ void Bullet::Damage() {
 bool Bullet::Draw() {
 	base::Draw();
 
-	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 150.f, 0.f, _cg, TRUE);
+	float size = 150.f * _fScale;
+	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, size, 0.f, _cg, TRUE);
 
 	// コリジョン描画
 	vector4 color = { 255, 255, 255 };

@@ -119,6 +119,7 @@ bool EnemyAAA::Update()
 					_vPos.y -= _collision._fRadius + static_cast<float>(_iPieces) * _collision._fRadius;
 					_fRotatY = obje->_fRotatY + utility::PiOver2;
 					_fire = obje->_fire;
+					_fSpeed = obje->_fSpeed;
 				}
 			}
 			if ( obje->GetType() == Type::kEnemyAAA )
@@ -188,8 +189,10 @@ bool EnemyAAA::Update()
 		// ˆê’èŠÔŠu‚ÅŒ‚‚Â
 		if ( _CT == 0 )
 		{
+			float speed = 200.f;
+			_fSpeed = speed;
 			AddBullet();
-			_CT = 10;
+			_CT = 30;
 		}
 
 		if (_iType == 0) {
@@ -236,8 +239,10 @@ bool EnemyAAA::Update()
 		// ƒvƒŒƒCƒ„[‚ªËŒ‚‚µ‚Ä‚¢‚½‚çˆê’èŠÔŠu‚ÅŒ‚‚Â
 		if ( _fire && _CT == 0 )
 		{
+			float speed = 200.f;
+			_fSpeed += speed;
 			AddBullet();
-			_CT = 10;
+			_CT = 30;
 		}
 
 		// X²‰ñ“]
@@ -280,10 +285,9 @@ bool EnemyAAA::Draw()
 	// ƒ‚ƒfƒ‹‰ñ“]
 	MV1SetRotationXYZ( _handle_body,VGet( 0.f,_fRotatY - utility::PiOver2,0.f ) );
 	MV1SetRotationXYZ(_handle_turret,VGet(_fRotatX,_fRotatY - utility::PiOver2,0.f ) );
-	//MV1SetRotationZYAxis(_handle_turret, VGet(-(_vDir.z), 0.f,_vDir.x), VGet(0.f, 1.f, 0.f), _fRotatX);
 	// ƒ‚ƒfƒ‹ˆÚ“®
 	MV1SetPosition( _handle_body,pos );
-	MV1SetPosition( _handle_turret,VGet( pos.x,pos.y + 40.f,pos.z ) );
+	MV1SetPosition( _handle_turret,VGet( pos.x,pos.y,pos.z ) );
 	// ƒ‚ƒfƒ‹•`‰æ
 	MV1DrawModel( _handle_body );
 	MV1DrawModel( _handle_turret );
@@ -343,11 +347,12 @@ void EnemyAAA::GetSearch() {
 void EnemyAAA::AddBullet()
 {
 	vector4 vBullet = {_vPos.x, _vPos.y + 100.f, _vPos.z};
-	float speed = 200.f;
 	auto bullet = std::make_shared<Bullet>( _game,_mode );
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
-	bullet->SetSpeed(speed);
+	bullet->SetSpeed(_fSpeed);
+	bullet->_fScale = 3.f;
+	bullet->_ST = 300;
 	_mode.GetObjectServer3D().Add( bullet );
 }
 
