@@ -184,15 +184,13 @@
     <ClCompile Include="source\maingame\AreaNoEntry.cpp">
       <Filter>source\object\game\area</Filter>
     </ClCompile>
-    <ClCompile Include="source\ModeTest.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="source\ui\UIPullGage.cpp">
       <Filter>source\object\ui</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\UICursor.cpp">
       <Filter>source\object\ui</Filter>
     </ClCompile>
+    <ClCompile Include="source\ModeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
@@ -345,13 +343,13 @@
     <ClInclude Include="source\maingame\AreaNoEntry.h">
       <Filter>source\object\game\area</Filter>
     </ClInclude>
-    <ClInclude Include="source\ModeTest.h" />
     <ClInclude Include="source\ui\UIPullGage.h">
       <Filter>source\object\ui</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\UICursor.h">
       <Filter>source\object\ui</Filter>
     </ClInclude>
+    <ClInclude Include="source\ModeTest.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">

@@ -82,14 +82,16 @@ ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	Initialize( FILEPASS,GAMESCRIPT,FILENAME );
 
 	///////////////////////////////////////////////////////
-	//PlaySoundMem(_se, DX_PLAYTYPE_LOOP);
-	// デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
-	// 作成したデータの識別番号を変数 FontHandle に保存する
+	/*
+	PlaySoundMem(_se, DX_PLAYTYPE_LOOP);
+	デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
+	作成したデータの識別番号を変数 FontHandle に保存する
+	*/
 	_handlefont = CreateFontToHandle( NULL,40,3 );
 	_clear = false;
 	_dbgCollisionDraw = false;
 	///////////////////////////////////////////////////////
- 
+
 }
 /**
  * @fn void ModeMainGame::~ModeMainGame.
@@ -107,11 +109,12 @@ ModeMainGame::~ModeMainGame()
  */
 void ModeMainGame::Destroy()
 {
-	/** stateをPREPARSINGにしておく */
 	state = ScriptState::PREPARSING;
+	/*
 #if _DEBUG
 	scripts_data->WriteJson( FILENAME,GAMESCRIPT );
 #endif
+*/
 	max_line = 0;
 	now_line = 0;
 	wait_count = 0;
@@ -142,13 +145,149 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 
 	max_line = scripts_data->GetScriptNum();
 
+	/*
 	if ( max_line <= 0 )
 	{
 		state = ScriptState::EDIT;
 		return;
 	}
-
+	*/
 	return;
+};
+
+bool ModeMainGame::Update()
+{
+	ModeBase::Update();
+	object_main_game.Update();
+	ui_player.Update();
+	////////////////////////////////////////////////////////////////////
+	if ( _game.Getinput().XinputEveryOtherLeftTrigger( 30 ) )
+	{
+		_dbgCollisionDraw = !_dbgCollisionDraw;
+	}
+	////////////////////////////////////////////////////////////////////
+
+	switch ( state )
+	{
+		case ScriptState::EDIT:
+
+			break;
+
+		case ScriptState::PREPARSING:
+			PreParsing();
+			break;
+
+		case ScriptState::PARSING:
+			Parsing();
+			break;
+
+		case ScriptState::GAME:
+
+			break;
+
+		case ScriptState::STORY:
+
+			break;
+
+		case ScriptState::RESULT:
+
+			break;
+
+		case ScriptState::CRFEEDIN:
+			CrfiUpdate();
+			break;
+
+		case ScriptState::CRFEEDOUT:
+			CrfoUpdate();
+			break;
+
+		case ScriptState::TIME_WAIT:
+			TimeWait();
+			break;
+
+		case ScriptState::LOADING:
+
+			break;
+
+		case ScriptState::END:
+			auto title = std::make_unique<ModeTitle>( _game,1 );
+			_game.GetInstance()->GetModeServer()->Add( std::move( title ) );
+			_game.GetModeServer()->Del( *this );
+			break;
+	}
+
+	return true;
+}
+
+bool ModeMainGame::Draw()
+{
+	ModeBase::Draw();
+	object_main_game.Draw();
+	ui_player.Draw();
+
+
+	switch ( state )
+	{
+		case ScriptState::EDIT:
+			Edit();
+			break;
+
+		case ScriptState::PREPARSING:
+
+			break;
+
+		case ScriptState::PARSING:
+
+			break;
+
+		case ScriptState::GAME:
+			break;
+
+		case ScriptState::STORY:
+			break;
+
+		case ScriptState::RESULT:
+			break;
+
+		case ScriptState::CRFEEDIN:
+			DrawFeedIn();
+			break;
+
+		case ScriptState::CRFEEDOUT:
+			DrawFeedOut();
+			break;
+
+		case ScriptState::LOADING:
+
+			break;
+
+		case ScriptState::END:
+			break;
+	}
+	return true;
+}
+
+bool ModeMainGame::DebugDraw()
+{
+	ModeBase::DebugDraw();
+	math::vector4 posi;
+	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
+	for ( auto&& obj : object_main_game.GetObjects() )
+	{
+		if ( obj->GetType() == ActorBase3D::Type::kPlayer )
+		{
+			posi = obj->GetPosition();
+			break;
+		}
+	}
+	int x = 0,y = 500,size = 16;
+	DrawFormatString( x,y,GetColor( 255,0,0 ),"  pos    = (%5.2f, %5.2f, %5.2f)",posi.x,posi.y,posi.z );
+	if ( _clear )
+	{
+	// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
+		DrawStringToHandle( _game.DispSizeW() / 2,_game.DispSizeH() / 2,"C L E A R!!",GetColor( 255,255,0 ),_handlefont );
+	}
+	return true;
 };
 /**
  * @fn void ModeMainGame::PreParsing.
@@ -245,77 +384,11 @@ void ModeMainGame::Parsing()
 
 			if ( string_comand == COMMAND_GAMESTART )
 			{
-				state = ScriptState::EDIT;
+				state = ScriptState::GAME;
 			}
 			++now_line;
 		}
 	}
-#if _DEBUG
-	if ( now_line >= max_line )
-	{
-		state = ScriptState::EDIT;
-	}
-#endif
-}
-
-bool ModeMainGame::Update()
-{
-	ModeBase::Update();
-	object_main_game.Update();
-	ui_player.Update();
-	if ( _game.Getinput().XinputEveryOtherLeftTrigger( 30 ) )
-	{
-		_dbgCollisionDraw = !_dbgCollisionDraw;
-	}
-
-
-	switch ( state )
-	{
-		case ScriptState::EDIT:
-
-			break;
-
-		case ScriptState::PREPARSING:
-			PreParsing();
-			break;
-
-		case ScriptState::PARSING:
-			Parsing();
-			break;
-
-		case ScriptState::GAME:
-			break;
-
-		case ScriptState::STORY:
-			break;
-
-		case ScriptState::RESULT:
-			break;
-
-		case ScriptState::CRFEEDIN:
-			CrfiUpdate();
-			break;
-
-		case ScriptState::CRFEEDOUT:
-			CrfoUpdate();
-			break;
-
-		case ScriptState::TIME_WAIT:
-			TimeWait();
-			break;
-
-		case ScriptState::LOADING:
-			break;
-
-		case ScriptState::END:
-			auto title = std::make_unique<ModeTitle>( _game,1 );
-			_game.GetInstance()->GetModeServer()->Add( std::move( title ) );
-			_game.GetModeServer()->Del( *this );
-			break;
-	}
-
-
-	return true;
 }
 
 void ModeMainGame::CrfiUpdate()
@@ -874,17 +947,20 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		}
+		auto player = std::make_shared<Player>( _game,*this );
+		player->SetPosition( posi );
+		player->SetScale( scale );
+		player->SetSpeed( speed );
+		object_main_game.Add( player );
+
 		auto fuel_gage = std::make_unique<UIFuelGage>( _game,0,*this );
 		ui_player.Add( std::move( fuel_gage ) );
 		auto hp_gage = std::make_unique<UIHpGage>( _game,0,*this );
 		ui_player.Add( std::move( hp_gage ) );
 		auto cursor = std::make_unique<UICursor>( _game,2,*this );
 		ui_player.Add( std::move( cursor ) );
-		auto player = std::make_shared<Player>( _game,*this );
-		player->SetPosition( posi );
-		player->SetScale( scale );
-		player->SetSpeed( speed );
-		object_main_game.Add( player );
+
+
 		result = true;
 	}
 	else
@@ -1768,78 +1844,6 @@ bool ModeMainGame::IsSetVrctor4( math::vector4& set,std::vector<std::string>& sc
 		return false;
 	}
 
-	return true;
-};
-
-bool ModeMainGame::Draw()
-{
-	ModeBase::Draw();
-	object_main_game.Draw();
-	ui_player.Draw();
-	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
-
-	switch ( state )
-	{
-		case ScriptState::EDIT:
-			Edit();
-			break;
-
-		case ScriptState::PREPARSING:
-
-			break;
-
-		case ScriptState::PARSING:
-
-			break;
-
-		case ScriptState::GAME:
-			break;
-
-		case ScriptState::STORY:
-			break;
-
-		case ScriptState::RESULT:
-			break;
-
-		case ScriptState::CRFEEDIN:
-			DrawFeedIn();
-			break;
-
-		case ScriptState::CRFEEDOUT:
-			DrawFeedOut();
-			break;
-
-		case ScriptState::LOADING:
-			break;
-
-		case ScriptState::END:
-			break;
-	}
-
-
-	return true;
-}
-
-bool ModeMainGame::DebugDraw()
-{
-	ModeBase::DebugDraw();
-	math::vector4 posi;
-
-	for ( auto&& obj : object_main_game.GetObjects() )
-	{
-		if ( obj->GetType() == ActorBase3D::Type::kPlayer )
-		{
-			posi = obj->GetPosition();
-			break;
-		}
-	}
-	int x = 0,y = 500,size = 16;
-	DrawFormatString( x,y,GetColor( 255,0,0 ),"  pos    = (%5.2f, %5.2f, %5.2f)",posi.x,posi.y,posi.z );
-	if ( _clear )
-	{
-	// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
-		DrawStringToHandle( _game.DispSizeW() / 2,_game.DispSizeH() / 2,"C L E A R!!",GetColor( 255,255,0 ),_handlefont );
-	}
 	return true;
 };
 
