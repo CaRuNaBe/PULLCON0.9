@@ -35,7 +35,7 @@ bool UICursor::Draw()
 {
 	UIBase::Draw();
 	auto ScreenPos = ConvWorldPosToScreenPos( ToDX( posi_cursor ) );
-	DrawRotaGraph( static_cast<int>(ScreenPos.x),static_cast<int>(ScreenPos.y),0.5,0,handle_cursor,TRUE );
+	DrawRotaGraph( static_cast<int>(ScreenPos.x),static_cast<int>(ScreenPos.y),0.2f,0,handle_cursor,TRUE );
 	return true;
 };
 

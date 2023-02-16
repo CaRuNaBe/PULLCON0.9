@@ -183,7 +183,7 @@ bool Player::Update() {
 		// 弾の向きベクトル
 		_vDir = v;
 
-		if (_game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
+		if (_game.Getinput().XinputEveryOtherRightTrigger(10)) {  // RT
 			if (_cnt % 20 == 0) {
 				// SE再生
 				ChangeVolumeSoundMem(255 * 40 / 100, _seBullet);
@@ -310,13 +310,13 @@ bool Player::Draw() {
 	DrawLine3D(ToDX(_vPos), ToDX(_vTarget), GetColor(255, 0, 0));
 
 	// コリジョン描画
-	/*
+	
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		vector4 color = { 255, 255, 255 };
 		if (_isHit) { color = { 255, 0, 0 }; }
 		DrawCollision(color);
 	}
-	*/
+	
 	VECTOR Pos = ConvWorldPosToScreenPos(ToDX(_vPos));
 	if (_isHit) {
 		// 作成したフォントで画面左上に『HIT!!』と白の文字列を描画する
@@ -424,6 +424,7 @@ void Player::AddBullet(vector4 pos) {
 	auto bullet = std::make_shared<Bullet>(_game, _mode);
 	bullet->SetPosition(pos);
 	bullet->SetDir(_vDir);
+	bullet->_fScale = 3.f;
 	bullet->_iType = 4;
 	_mode.GetObjectServer3D().Add(bullet);
 }

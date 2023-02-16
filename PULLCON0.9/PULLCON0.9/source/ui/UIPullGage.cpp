@@ -54,14 +54,14 @@ bool UIPullGage::Draw()
 	UIBase::Draw();
 	if ( !is_hide )
 	{
-		DrawBox( _game.DispBasics(),_game.DispBasics(),_game.DispSizeW(),THICKNESS,brack,TRUE );
+		DrawBox( _game.DispBasics(),_game.DispBasics(),_game.DispBasics() + 500, _game.DispSizeH(),brack,TRUE );
 		DrawGraph( BASE_PULLGAGE_POSI_X,BASE_PULLGAGE_POSI_Y,hundle_pullgage[1],TRUE );
 		//math::Vector2 pos = {};
 		for ( int i = 0; i < 7; i++ )
 		{
 			DrawRotaGraph( BASE_PULLGAGE_POSI_X + 129,BASE_PULLGAGE_POSI_Y + 35,1.0,math::utility::radian_to_degree( 0 ),hundle_pullgage[4],TRUE,TRUE );
 		}
-		DrawBox( _game.DispBasics(),THICKNESS + 900,_game.DispSizeW(),_game.DispSizeH(),brack,TRUE );
+		DrawBox( _game.DispSizeW() - 500, _game.DispBasics(),_game.DispSizeW(),_game.DispSizeH(),brack,TRUE );
 	};
 	return true;
 };
