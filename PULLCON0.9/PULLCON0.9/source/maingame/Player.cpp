@@ -47,6 +47,7 @@ void Player::Init() {
 	_collision._fRadius = 500.f * _fScale;
 
 	// カメラの設定
+	_cam._vPos.x = _vPos.x;
 	_cam._vPos.y = _vPos.y + CAMERADEFAULT_POS_Y;
 	_cam._vPos.z = _vPos.z + CAMERADEFAULT_POS_XZ;
 	_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
@@ -60,6 +61,7 @@ bool Player::Update() {
 	// NUM状態ならPLAY状態に移行する
 	if (_statePlayer == State::NUM) {
 		// カメラの設定
+		_cam._vPos.x = _vPos.x;
 		_cam._vPos.y = _vPos.y + CAMERADEFAULT_POS_Y;
 		_cam._vPos.z = _vPos.z + CAMERADEFAULT_POS_XZ;
 		_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
@@ -326,10 +328,7 @@ bool Player::Draw() {
 	// デバック表記
 	int x = 0, y = 0, size = 16;
 	SetFontSize(size);
-	DrawFormatString(x, y, GetColor(255, 0, 0), "Camera:"); y += size;
-	DrawFormatString(x, y, GetColor(255, 0, 0), "  target = (%5.2f, %5.2f, %5.2f)", _cam._vTarget.x, _cam._vTarget.y, _cam._vTarget.z); y += size;
-	DrawFormatString(x, y, GetColor(255, 0, 0), "  pos    = (%5.2f, %5.2f, %5.2f)", _cam._vPos.x, _cam._vPos.y, _cam._vPos.z); y += size;
-	DrawFormatString(x, y, GetColor(255, 0, 255), "  feil = %d ", _iFuel); y += size;
+	y += size * 10;
 	DrawFormatString(x, y, GetColor(255, 255, 255), "  Pieces = %d ", _iPieces); y += size;
 	DrawFormatString(x, y, GetColor(255, 255, 255), "  Speed = %f ", _fSpeed); y += size;
 
