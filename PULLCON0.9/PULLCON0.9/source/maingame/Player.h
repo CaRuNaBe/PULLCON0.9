@@ -51,7 +51,10 @@ protected:
 	bool   _isHit;  // 当たったか
 	float  _fSpeedIint;  // プレイヤーの速度の初期値
 
-	int    _handle;
+	int    _handleBody;
+	int    _handleAirscrew;
+	int    _handleMagnet;
+	int    _handleBackAirscrew;
 	int    _handlefont;
 	int    _se;
 	int    _seBullet;

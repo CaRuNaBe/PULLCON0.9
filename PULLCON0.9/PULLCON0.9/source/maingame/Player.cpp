@@ -20,7 +20,11 @@ Player::Player(ApplicationBase& game, ModeBase& mode)
 	const std::string ARRYNAME = "ObjectId";
 	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
 
-	_handle = ResourceServer::LoadMV1Model( file_pass_data ->GetScriptLine( PLAYER_ID ).c_str());
+	_handleBody = ResourceServer::LoadMV1Model("res/player/3Dmodel/mv1/cg_PlayerHelicopter_Body.mv1");
+	_handleAirscrew = ResourceServer::LoadMV1Model("res/player/3Dmodel/mv1/cg_PlayerHelicopter_Propera.mv1");
+	_handleMagnet = ResourceServer::LoadMV1Model("res/player/3Dmodel/mv1/cg_PlayerHelicopter_Magnet.mv1");
+	_handleBackAirscrew = ResourceServer::LoadMV1Model("res/player/3Dmodel/mv1/cg_PlayerHelicopter_BackPropera.mv1");
+
 	_se = ResourceServer::LoadSoundMem("res/player/Audio/pull.wav");
 	_seBullet = ResourceServer::LoadSoundMem("res/player/Audio/normal_bullet_fast.wav");
 	//デフォルトのフォントで、サイズ４０、太さ３のフォントを作成
@@ -291,20 +295,32 @@ bool Player::Draw() {
 	float rX = utility::degree_to_radian(5.f);   // 少し上向きに
 	if (_statePlayer == State::EVENT) {
 		// 引っこ抜き状態
-		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
+		MV1SetRotationXYZ(_handleBody, VGet(rX, _fRotatY, 0.0f));
+		MV1SetRotationXYZ(_handleAirscrew, VGet(rX, _fRotatY, 0.0f));
+		MV1SetRotationXYZ(_handleMagnet, VGet(rX, _fRotatY, 0.0f));
+		MV1SetRotationXYZ(_handleBackAirscrew, VGet(rX, _fRotatY, 0.0f));
 	}
 	else {
 		rX += _fRotatX;   // カメラを動かした分プラス
-		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
+		MV1SetRotationXYZ(_handleBody, VGet(rX, _fRotatY, 0.0f));
+		MV1SetRotationXYZ(_handleAirscrew, VGet(rX, _fRotatY, 0.0f));
+		MV1SetRotationXYZ(_handleMagnet, VGet(rX, _fRotatY, 0.0f));
+		MV1SetRotationXYZ(_handleBackAirscrew, VGet(rX, _fRotatY, 0.0f));
 	}
 	// モデル拡大
-	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
+	MV1SetScale(_handleBody, VGet(_fScale, _fScale, _fScale));
 	// 位置
-	MV1SetPosition(_handle, ToDX(_vPos));
+	MV1SetPosition(_handleBody, ToDX(_vPos));
+	MV1SetPosition(_handleAirscrew, ToDX(_vPos));
+	MV1SetPosition(_handleMagnet, ToDX(_vPos));
+	MV1SetPosition(_handleBackAirscrew, ToDX(_vPos));
 	// ライティング計算
 	// モデル描画
 	SetUseLighting(FALSE);
-	MV1DrawModel(_handle);
+	MV1DrawModel(_handleBody);
+	MV1DrawModel(_handleAirscrew);
+	MV1DrawModel(_handleMagnet);
+	MV1DrawModel(_handleBackAirscrew);
 	// 対空砲の狙う位置を可視化
 	DrawSphere3D(ToDX(_vTarget), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 	SetUseLighting(TRUE);
