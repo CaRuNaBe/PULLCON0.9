@@ -41,6 +41,10 @@ public:
 	{
 		return _statePlayer;
 	}
+	int GetPush()
+	{
+		return _push;
+	}
 protected:
 	// ƒJƒƒ‰
 	Camera	_cam;

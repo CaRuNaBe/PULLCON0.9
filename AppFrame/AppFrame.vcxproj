@@ -172,6 +172,7 @@
     <ClInclude Include="source\Base\ModeBase.h" />
     <ClInclude Include="source\Math\3dCollision.h" />
     <ClInclude Include="source\Math\Easing.h" />
+    <ClInclude Include="source\Math\Polar2.h" />
     <ClInclude Include="source\Math\rect.h" />
     <ClInclude Include="source\Math\matrix33.h" />
     <ClInclude Include="source\Application\input_manager.h" />
@@ -189,7 +190,7 @@
     <ClInclude Include="source\Object\ObjectBase.h" />
     <ClInclude Include="source\Object\ObjectServer.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
-    <ClInclude Include="source\Math\vector2.h" />
+    <ClInclude Include="source\Math\Vector2.h" />
     <ClInclude Include="source\Script\CommandBase.h" />
     <ClInclude Include="source\Script\CommandLabel.h" />
     <ClInclude Include="source\Script\CommandCrFeedIn.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="source\Base\ModeBase.cpp" />
     <ClCompile Include="source\Math\3dCollision.cpp" />
     <ClCompile Include="source\Math\Easing.cpp" />
+    <ClCompile Include="source\Math\Polar2.cpp" />
     <ClCompile Include="source\Math\rect.cpp" />
     <ClCompile Include="source\Math\matrix33.cpp" />
     <ClCompile Include="source\Application\input_manager.cpp" />
@@ -228,7 +230,7 @@
     <ClCompile Include="source\Object\ObjectBase.cpp" />
     <ClCompile Include="source\Object\ObjectServer.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
-    <ClCompile Include="source\Math\vector2.cpp" />
+    <ClCompile Include="source\Math\Vector2.cpp" />
     <ClCompile Include="source\Script\CommandLabel.cpp" />
     <ClCompile Include="source\Script\CommandCrFeedIn.cpp" />
     <ClCompile Include="source\Script\CommandCrFeedOut.cpp" />

@@ -19,8 +19,11 @@ public:
 	virtual bool Draw();
 	virtual bool DebugDraw();
 private:
-	std::array<int,7 > hundle_pullgage;
+	std::array<int,5 > hundle_pullgage;
+	std::array<int,2 > hundle_xbutton;
 	int brack;
 	bool is_hide;
+	bool is_pullok;
+	int player_pull_now_count;
 };
 

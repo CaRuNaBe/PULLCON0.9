@@ -1,4 +1,4 @@
-#include "vector2.h"
+#include "Vector2.h"
 #include "matrix33.h"
 namespace math
 {
@@ -62,9 +62,10 @@ namespace math
 	}
 
 	// ベクトルの大きさ
-	float Vector2::Length() const
+	float Vector2::Length( const Vector2& backvec ) const
 	{
-		return std::sqrt( x * x + y * y );
+		Vector2 vec = {x - backvec.x,y - backvec.y};
+		return std::sqrt( vec.x * vec.x + vec.y * vec.y );
 	}
 
 	// ベクトルの正規化
@@ -123,4 +124,12 @@ namespace math
 			vec.x * mat.m[0][1] + vec.y * mat.m[1][1] + w * mat.m[2][1],
 		};
 	}
+
+	Vector2 Vector2::GetCentor( const Vector2& right )
+	{
+		float x2 = ((x * 2.0f) + right.x) / 2.0f;
+		float y2 = ((y * 2.0f) + right.y) / 2.0f;
+		Vector2 vec = {x2,y2};
+		return vec;
+	};
 }

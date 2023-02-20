@@ -80,6 +80,10 @@ public:
 	{
 		return _vTarget;
 	}
+	bool GetEvent()
+	{
+		return _event;
+	}
 public:
 	vector4 _vPos;       // 位置
 	vector4 _vEvent;     // イベント位置

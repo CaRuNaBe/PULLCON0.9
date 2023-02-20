@@ -5,7 +5,7 @@
 #include "Bullet.h"
 
 namespace {
-	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置　プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
+	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
 	const float CAMERADEFAULT_POS_Y =   2500.f;   // プレイヤーを原点としたときのカメラのY座標
 	const float CAMERADEFAULT_POS_XZ = -4000.f;   // プレイヤーを原点としたときのカメラのXZ座標のベクトルの長さ
 	const float PLAYERLENGTH = 2000.f;   // プレイヤーの奥行きの長さ
@@ -60,6 +60,7 @@ bool Player::Update() {
 	// NUM状態ならPLAY状態に移行する
 	if (_statePlayer == State::NUM) {
 		// カメラの設定
+		_cam._vPos.x = _vPos.x;
 		_cam._vPos.y = _vPos.y + CAMERADEFAULT_POS_Y;
 		_cam._vPos.z = _vPos.z + CAMERADEFAULT_POS_XZ;
 		_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
@@ -91,6 +92,8 @@ bool Player::Update() {
 				if (IsHitEvent(*obje)) {
 					_event = true;
 					if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X) && !_pull) {
+						_push = 0;
+						_event = false;
 						_pull = true;
 						obje->_pull = true;
 						obje->_coll = false;
@@ -244,13 +247,13 @@ bool Player::Update() {
 			if (_pull && _CT == 0) {
 				_CT = 10;
 				++_push;
-				if (_push == 6) {
+				if (_push >= 6) {
 					// 引っこ抜き完了
 					ChangeVolumeSoundMem(255 * 40 / 100, _se);
 					PlaySoundMem(_se, DX_PLAYTYPE_BACK);
 					_CT = 50;
 					_finish = true;
-					_push = 0;
+			
 				}
 			}
 		}
