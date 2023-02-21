@@ -50,6 +50,7 @@ protected:
 	int    _push;   // ボタン連打回数
 	bool   _isHit;  // 当たったか
 	float  _fSpeedIint;  // プレイヤーの速度の初期値
+	float  _fRotateAirscrew;
 
 	int    _handleBody;
 	int    _handleAirscrew;
