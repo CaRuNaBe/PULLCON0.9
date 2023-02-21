@@ -193,7 +193,6 @@
     <ClCompile Include="source\title\CreditGuid.cpp" />
     <ClCompile Include="source\title\EndLogo.cpp" />
     <ClCompile Include="source\title\CreditLogo.cpp" />
-    <ClCompile Include="source\mode\ModeGameOver.cpp" />
     <ClCompile Include="source\mode\ModeGameResult.cpp" />
     <ClCompile Include="source\mode\ModePause.cpp" />
     <ClCompile Include="source\mode\ModeTitle.cpp" />
@@ -238,7 +237,6 @@
     <ClInclude Include="source\title\CreditGuid.h" />
     <ClInclude Include="source\title\EndLogo.h" />
     <ClInclude Include="source\title\CreditLogo.h" />
-    <ClInclude Include="source\mode\ModeGameOver.h" />
     <ClInclude Include="source\mode\ModeGameResult.h" />
     <ClInclude Include="source\mode\ModePause.h" />
     <ClInclude Include="source\mode\ModeTitle.h" />

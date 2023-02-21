@@ -32,6 +32,9 @@
     <Filter Include="source\mode\modeingame">
       <UniqueIdentifier>{8f5aa987-b5b8-45b3-bdb2-86faa5addbb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\object\menuitem">
+      <UniqueIdentifier>{86431dee-4467-4fbe-beac-53552606e7d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\maingame\Bullet.cpp">
@@ -84,9 +87,6 @@
     </ClCompile>
     <ClCompile Include="source\speakscript\SpeakScriptObject.cpp">
       <Filter>source\object\speakscript</Filter>
-    </ClCompile>
-    <ClCompile Include="source\mode\ModeGameOver.cpp">
-      <Filter>source\mode\modeoutgame</Filter>
     </ClCompile>
     <ClCompile Include="source\mode\ModeGameResult.cpp">
       <Filter>source\mode\modeoutgame</Filter>
@@ -243,9 +243,6 @@
     </ClInclude>
     <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode\modeingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModeGameOver.h">
-      <Filter>source\mode\modeoutgame</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModeGameResult.h">
       <Filter>source\mode\modeoutgame</Filter>

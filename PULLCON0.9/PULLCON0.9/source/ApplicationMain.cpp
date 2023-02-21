@@ -14,8 +14,8 @@ bool ApplicationMain::Initialize( HINSTANCE hInstance )
 	}
 	font_hundle = CreateFontToHandle( "Kazesawa-Bold",font_size,-1,-1 );
 
-	auto game = std::make_unique<ModeTest>( *this,1 );
-	base::GetInstance()->GetModeServer()->Add( std::move( game ) );
+	auto game = std::make_shared<ModeMainGame>( *this,1 );
+	base::GetInstance()->GetModeServer()->Add( game );
 
 	return true;
 }

@@ -122,6 +122,7 @@ void ModeMainGame::Destroy()
 	label_list.clear();
 	crfi_list.clear();
 	crfo_list.clear();
+	stage_name.clear();
 	scripts_data = nullptr;
 }
 
@@ -160,6 +161,23 @@ bool ModeMainGame::Update()
 	ModeBase::Update();
 	object_main_game.Update();
 	ui_player.Update();
+	int dead = 0;
+	for ( auto& object_3d : object_main_game.GetObjects() )
+	{
+		if ( object_3d->GetType() == ActorBase3D::Type::kPlayer )
+		{
+			if ( object_3d->GetLife() < dead )
+			{
+				for ( auto& object_3d : object_main_game.GetObjects() )
+				{
+					object_3d->SetUpdateSkip( true );
+				}
+				GetLineNumber(stage_name,now_line);
+				state = ScriptState::PARSING;
+			}
+			break;
+		}
+	}
 	////////////////////////////////////////////////////////////////////
 	if ( _game.Getinput().XinputEveryOtherLeftTrigger( 30 ) )
 	{
@@ -215,6 +233,7 @@ bool ModeMainGame::Update()
 			_game.GetModeServer()->Del( *this );
 			break;
 	}
+
 
 	return true;
 }
@@ -324,6 +343,7 @@ void ModeMainGame::PreParsing()
 void ModeMainGame::Parsing()
 {
 	object_main_game.Clear();
+	stage_name.clear();
 	auto stop_parsing = false;
 	unsigned	int date_empty = 0;
 	FunctionGameCommand comand_funcs;
@@ -336,6 +356,7 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_FEEDOUT,&ModeMainGame::OnCommandCrFeedOut ) );
 	comand_funcs.insert( std::make_pair( COMMAND_TIMEWAIT,&ModeMainGame::OnCommandTimeWait ) );
 	comand_funcs.insert( std::make_pair( COMMAND_STORY,&ModeMainGame::OnCommandStory ) );
+
 	comand_funcs.insert( std::make_pair( COMMAND_STAGE,&ModeMainGame::OnCommandStage ) );
 	comand_funcs.insert( std::make_pair( COMMAND_SKYSPHERE,&ModeMainGame::OnCommandSkySphere ) );
 	comand_funcs.insert( std::make_pair( COMMAND_PLAYER,&ModeMainGame::OnCommandPLayer ) );
@@ -364,6 +385,8 @@ void ModeMainGame::Parsing()
 
 		if ( string_comand == COMMAND_STAGELABEL )
 		{
+			stage_name.clear();
+			stage_name = script[1];
 			++now_line;
 		}
 		else
@@ -640,8 +663,8 @@ bool ModeMainGame::OnCommandLoading( unsigned int line,std::vector<std::string>&
 			return false;
 		}
 		state = ScriptState::LOADING;
-		auto loading = std::make_unique<ModeResourceRoad>( _game,20 );
-		_game.GetModeServer()->Add( std::move( loading ) );
+		auto loading = std::make_shared<ModeResourceRoad>( _game,20 );
+		_game.GetModeServer()->Add( loading );
 	}
 	else
 	{
@@ -796,8 +819,8 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
-		auto story = std::make_unique<ModeSpeakScript>( _game,30,scripts[1] );
-		_game.GetModeServer()->Add( std::move( story ) );
+		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
+		_game.GetModeServer()->Add( story );
 		result = true;
 	}
 	else
