@@ -25,5 +25,6 @@ private:
 	bool is_hide;
 	bool is_pullok;
 	int player_pull_now_count;
+	int button_on_count;
 };
 

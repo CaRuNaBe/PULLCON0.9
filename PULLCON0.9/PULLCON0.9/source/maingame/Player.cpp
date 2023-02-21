@@ -247,7 +247,7 @@ bool Player::Update() {
 			if (_pull && _CT == 0) {
 				_CT = 10;
 				++_push;
-				if (_push >= 6) {
+				if (_push >= 12) {
 					// ˆø‚Á‚±”²‚«Š®—¹
 					ChangeVolumeSoundMem(255 * 40 / 100, _se);
 					PlaySoundMem(_se, DX_PLAYTYPE_BACK);

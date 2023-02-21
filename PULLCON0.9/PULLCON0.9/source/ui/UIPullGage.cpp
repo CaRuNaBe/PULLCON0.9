@@ -36,6 +36,7 @@ bool UIPullGage::Initialize()
 	GetGraphSize( hundle_pullgage[1],&BASE_IMAGE_SIZE_X,&BASE_IMAGE_SIZE_Y );
 	BASE_IMAGE_SIZE = {BASE_IMAGE_SIZE_X,BASE_IMAGE_SIZE_Y};
 	BUTTON_POS = {BASE_POS.IntX() + 92,BASE_POS.IntY() + 130};
+	button_on_count = 0;
 	player_pull_now_count = 0;
 	is_hide = true;
 	is_pullok = false;
@@ -47,7 +48,7 @@ bool UIPullGage::Update()
 	UIBase::Update();
 	is_hide = true;
 	is_pullok = false;
-	player_pull_now_count = 0;
+	button_on_count = 0;
 	for ( auto&& game_object : mode_base.GetObjectServer3D().GetObjects() )
 	{
 		if ( game_object->GetType() == ActorBase3D::Type::kPlayer )
@@ -61,8 +62,8 @@ bool UIPullGage::Update()
 			{
 				is_hide = false;
 			}
-			player_pull_now_count = player->GetPush() + 1;
-
+			button_on_count = (player->GetPush() / 2) + 1;
+			player_pull_now_count = player->GetPush();
 			break;
 		}
 	}
@@ -101,25 +102,44 @@ bool UIPullGage::Draw()
 
 		pol.SetTheta( -135.0f );
 		math::Polar2 triangle_pol = {BASE_IMAGE_CENTER,125.0f,-90.0f};
+		float triangle_posi_angle = 0.0f;
+		if ( player_pull_now_count < 7 )
+		{
+			triangle_posi_angle = (static_cast<float>(player_pull_now_count) * 22.5f) + triangle_pol.GetTheta();
+		}
+		else if ( player_pull_now_count == 7 )
+		{
+			triangle_posi_angle = triangle_pol.GetTheta() + 180.f;
+		}
+		else if ( player_pull_now_count > 7 )
+		{
+			triangle_posi_angle = (triangle_pol.GetTheta() + 180.f) + (static_cast<float>(player_pull_now_count % 6) * 22.5f);
+		}
+		if ( player_pull_now_count >= 12 )
+		{
+			triangle_posi_angle = 225.0f;
+		}
+		triangle_pol.SetTheta( triangle_posi_angle );
 
 		for ( int i = 0; i < 8; i++ )
 		{
-
 			pol.ThetaIncrement( 45.0f );
 			if ( i == 4 )
 			{
-				player_pull_now_count += 1;
+				button_on_count += 1;
 				continue;
 			}
-			if ( i == player_pull_now_count )
+			if ( i == button_on_count )
 			{
+
 				break;
 			}
-			triangle_pol.SetTheta( pol.GetTheta() );
+
 			auto pos = pol.ToVector2();
 			auto angle = math::utility::degree_to_radian( pol.GetTheta() + 90 );
 			DrawRotaGraph( pos.IntX(),pos.IntY(),1.0,angle,hundle_pullgage[3],TRUE,TRUE );
 		}
+
 
 		auto triangle_pos = triangle_pol.ToVector2();
 		auto triangle_angle = math::utility::degree_to_radian( triangle_pol.GetTheta() + 90 );
