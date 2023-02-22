@@ -32,9 +32,6 @@
     <Filter Include="source\mode\modeingame">
       <UniqueIdentifier>{8f5aa987-b5b8-45b3-bdb2-86faa5addbb7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\object\menuitem">
-      <UniqueIdentifier>{86431dee-4467-4fbe-beac-53552606e7d5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\maingame\Bullet.cpp">
@@ -190,7 +187,9 @@
     <ClCompile Include="source\ui\UICursor.cpp">
       <Filter>source\object\ui</Filter>
     </ClCompile>
-    <ClCompile Include="source\ModeTest.cpp" />
+    <ClCompile Include="source\ApplicationGlobal.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
@@ -346,7 +345,9 @@
     <ClInclude Include="source\ui\UICursor.h">
       <Filter>source\object\ui</Filter>
     </ClInclude>
-    <ClInclude Include="source\ModeTest.h" />
+    <ClInclude Include="source\ApplicationGlobal.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">

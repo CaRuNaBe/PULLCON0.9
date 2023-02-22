@@ -1,15 +1,12 @@
 ﻿#pragma once
 #include "appframe.h"
-
 #include <tchar.h>
 #include <vector>
 #include <string>
 #include <memory>
 #include <map>
 
-
 class ScriptsData;
-
 class ModeSpeakScript:public ModeBase
 {
 public:

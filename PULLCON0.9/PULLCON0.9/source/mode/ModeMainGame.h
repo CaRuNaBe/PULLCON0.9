@@ -7,6 +7,7 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
+
 #include "../ui/UIBase.h"
 #include "../ui/UIHpGage.h"
 #include "../ui/UIFuelGage.h"
@@ -17,7 +18,6 @@
 #include <string>
 #include <array>
 
-class ApplicationMain;
 class CommandLabel;
 class CommandChoice;
 
@@ -54,7 +54,6 @@ private:
 		PARSING,
 		GAME,
 		STORY,
-		RESULT,
 		CRFEEDIN,
 		CRFEEDOUT,
 		TIME_WAIT,

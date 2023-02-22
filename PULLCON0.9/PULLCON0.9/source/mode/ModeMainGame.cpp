@@ -10,6 +10,7 @@
 #include "ModeTitle.h"
 #include "ModeResourceRoad.h"
 #include <DxLib.h>
+#include "../ApplicationGlobal.h"
 #include "../ApplicationMain.h"
 #include "../maingame/Player.h"
 #include "../maingame/GameStage.h"
@@ -24,6 +25,7 @@
 #include "../maingame/EnemyColumn.h"
 #include "../maingame/EnemyKobae.h"
 #include "ModeSpeakScript.h"
+
 
 namespace
 {
@@ -162,22 +164,7 @@ bool ModeMainGame::Update()
 	object_main_game.Update();
 	ui_player.Update();
 	int dead = 0;
-	for ( auto& object_3d : object_main_game.GetObjects() )
-	{
-		if ( object_3d->GetType() == ActorBase3D::Type::kPlayer )
-		{
-			if ( object_3d->GetLife() < dead )
-			{
-				for ( auto& object_3d : object_main_game.GetObjects() )
-				{
-					object_3d->SetUpdateSkip( true );
-				}
-				GetLineNumber(stage_name,now_line);
-				state = ScriptState::PARSING;
-			}
-			break;
-		}
-	}
+	int gunship_num = 0;
 	////////////////////////////////////////////////////////////////////
 	if ( _game.Getinput().XinputEveryOtherLeftTrigger( 30 ) )
 	{
@@ -200,16 +187,47 @@ bool ModeMainGame::Update()
 			break;
 
 		case ScriptState::GAME:
+			for ( auto& object_3d : object_main_game.GetObjects() )
+			{
+				if ( object_3d->GetType() == ActorBase3D::Type::kPlayer )
+				{
+					if ( object_3d->GetLife() < dead )
+					{
+						for ( auto& object_3d : object_main_game.GetObjects() )
+						{
+							object_3d->SetUpdateSkip( true );
+						}
+						GetLineNumber( stage_name,now_line );
+						auto story = std::make_shared<ModeSpeakScript>( _game,30,"gameover/gameover" );
+						_game.GetModeServer()->Add( story );
+						state = ScriptState::STORY;
+					}
+					break;
+				}
+			}
+
+			for ( auto& object_3d : object_main_game.GetObjects() )
+			{
+				if ( object_3d->GetType() == ActorBase3D::Type::kClearObject )
+				{
+					gunship_num++;
+				}
+			}
+			if ( gunship_num <= 0 )
+			{
+				state = ScriptState::PARSING;
+			}
 
 			break;
 
 		case ScriptState::STORY:
-
+			if ( gGlobal.GetIsEndSpeakScript() )
+			{
+				gGlobal.IsNotEndSpeakScript();
+				state = ScriptState::PARSING;
+			}
 			break;
 
-		case ScriptState::RESULT:
-
-			break;
 
 		case ScriptState::CRFEEDIN:
 			CrfiUpdate();
@@ -228,8 +246,8 @@ bool ModeMainGame::Update()
 			break;
 
 		case ScriptState::END:
-			auto title = std::make_unique<ModeTitle>( _game,1 );
-			_game.GetInstance()->GetModeServer()->Add( std::move( title ) );
+			auto title = std::make_shared<ModeTitle>( _game,1 );
+			_game.GetInstance()->GetModeServer()->Add( title );
 			_game.GetModeServer()->Del( *this );
 			break;
 	}
@@ -251,22 +269,12 @@ bool ModeMainGame::Draw()
 			Edit();
 			break;
 
-		case ScriptState::PREPARSING:
 
-			break;
-
-		case ScriptState::PARSING:
-
-			break;
 
 		case ScriptState::GAME:
 			break;
 
-		case ScriptState::STORY:
-			break;
 
-		case ScriptState::RESULT:
-			break;
 
 		case ScriptState::CRFEEDIN:
 			DrawFeedIn();
@@ -819,6 +827,8 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
+		is_update_skip = true;
+		state = ScriptState::STORY;
 		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
 		_game.GetModeServer()->Add( story );
 		result = true;
