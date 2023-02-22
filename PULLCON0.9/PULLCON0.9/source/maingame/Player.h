@@ -54,8 +54,14 @@ protected:
 	int    _push;   // ボタン連打回数
 	bool   _isHit;  // 当たったか
 	float  _fSpeedIint;  // プレイヤーの速度の初期値
+	float  _fRotateAirscrew;  // プロペラの回転
+	float  _fAxialX;
+	float  _fAxialZ;
 
-	int    _handle;
+	int    _handleBody;
+	int    _handleAirscrew;
+	int    _handleMagnet;
+	int    _handleBackAirscrew;
 	int    _handlefont;
 	int    _se;
 	int    _seBullet;

@@ -304,9 +304,9 @@ namespace math
 
 	std::tuple<float,float> matrix44::get_sin_cos( const float degree ) const
 	{
-		auto radian = utility::degree_to_radian( degree );
+		//auto radian = utility::degree_to_radian( degree );
 
-		return std::make_tuple( std::sin( radian ),std::cos( radian ) );
+		return std::make_tuple( std::sin( degree ),std::cos( degree ) );
 	}
 
 }
