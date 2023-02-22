@@ -9,17 +9,17 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
-template<class T> class GameServer
+template<class T> class GameServer2
 {
-	using GameBasePtr = std::unique_ptr<T>;
+	using GameBasePtr = std::shared_ptr<T>;
 	using TypeModes = std::vector<GameBasePtr>;
 public:
 	/** コンストラクタ */
-	GameServer():_updating( false )
+	GameServer2():_updating( false )
 	{
 	}
 	/** デストラクタ */
-	~GameServer()
+	~GameServer2()
 	{
 		Clear();
 	}
@@ -38,11 +38,11 @@ public:
 	{
 		if ( _updating )
 		{
-			_vPendingObjects.push_back( std::move( object ) );
+			_vPendingObjects.push_back(  object  );
 		}
 		else
 		{
-			_vObjects.push_back( std::move( object ) );
+			_vObjects.push_back( object  );
 		}
 	}
 	/** 削除予約する */

@@ -32,8 +32,8 @@ bool AreaCommunication::Update()
 		{
 			if ( IsHitObject( *obje ) )
 			{
-				auto story = std::make_unique<ModeSpeakScript>( _game,30,story_name );
-				_game.GetModeServer()->Add( std::move( story ) );
+				auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
+				_game.GetModeServer()->Add( story );
 
 				_mode.GetObjectServer3D().Del( *this );
 				break;

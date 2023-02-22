@@ -1,8 +1,8 @@
 #include "UIPullGage.h"
 namespace
 {
-	constexpr int  BASE_PULLGAGE_POSI_X = 500;
-	constexpr int  BASE_PULLGAGE_POSI_Y = 500;
+	constexpr int  BASE_PULLGAGE_POSI_X = 800;
+	constexpr int  BASE_PULLGAGE_POSI_Y = 700;
 	math::Vector2 BASE_POS = {BASE_PULLGAGE_POSI_X,BASE_PULLGAGE_POSI_Y};
 	int BASE_IMAGE_SIZE_X = 0;
 	int BASE_IMAGE_SIZE_Y = 0;

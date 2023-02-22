@@ -1,10 +1,9 @@
-
 #include "AppFrame.h"
 #include "ApplicationMain.h"
-#include "ModeTest.h"
+#include "ApplicationGlobal.h"
 #include "mode/ModeMainGame.h"
 // 実体
-ApplicationMain				g_oApplicationMain;
+ApplicationMain g_oApplicationMain;
 
 bool ApplicationMain::Initialize( HINSTANCE hInstance )
 {
@@ -13,9 +12,10 @@ bool ApplicationMain::Initialize( HINSTANCE hInstance )
 		return false;
 	}
 	font_hundle = CreateFontToHandle( "Kazesawa-Bold",font_size,-1,-1 );
-
-	auto game = std::make_unique<ModeTest>( *this,1 );
-	base::GetInstance()->GetModeServer()->Add( std::move( game ) );
+	// アプリケーショングローバルの初期化
+	gGlobal.Init();
+	auto game = std::make_shared<ModeMainGame>( *this,1 );
+	base::GetInstance()->GetModeServer()->Add( game );
 
 	return true;
 }

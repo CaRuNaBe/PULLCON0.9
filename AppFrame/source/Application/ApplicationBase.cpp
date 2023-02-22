@@ -41,7 +41,7 @@ bool ApplicationBase::Initialize( HINSTANCE hInstance )
 	SetWriteZBuffer3D( TRUE );
 
 	// モードサーバの初期化
-	_BaseServer = std::make_shared<GameServer<ModeBase>>();
+	_BaseServer = std::make_shared<GameServer2<ModeBase>>();
 
 	font_hundle = 0;
 	font_size = 29;

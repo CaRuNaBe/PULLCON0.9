@@ -1,4 +1,5 @@
 ﻿#include "ModeSpeakScript.h"
+#include "../ApplicationGlobal.h"
 #include "../speakscript/SpeakScriptObject.h"
 #include <algorithm>
 #include <utility>
@@ -30,8 +31,8 @@ namespace
 
 
 	unsigned int message_string_color = 0;
-	std::string FILE_PASS = "res/script/";
-	std::string FILE_NAME = ".json";
+	const std::string FILE_PASS = "res/script/";
+	const std::string FILE_NAME = ".json";
 	const std::string DELIMITER = ",";
 	constexpr auto namecharacter = 0;
 	constexpr auto namestory = 1;
@@ -40,13 +41,13 @@ namespace
 ModeSpeakScript::ModeSpeakScript( ApplicationBase& game,int layer,std::string storyname )
 	:ModeBase( game,layer )
 {
-	auto character_story = string::Split( storyname,"/" );
+	const auto character_story = string::Split( storyname,"/" );
 
-	FILE_PASS += character_story[namecharacter];
-	FILE_NAME = character_story[namestory] + FILE_NAME;
-	FILE_PASS += "/";
-	FILE_PASS += FILE_NAME;
-	Initialize( FILE_PASS,character_story[1],FILE_NAME );
+	auto filepass = FILE_PASS + character_story[namecharacter];
+	const auto filename = character_story[namestory] + FILE_NAME;
+	filepass += "/";
+	filepass += filename;
+	Initialize( filepass,character_story[1],filename );
 }
 
 ModeSpeakScript::~ModeSpeakScript()
@@ -146,8 +147,7 @@ void ModeSpeakScript::PreParsing()
 	comand_funcs.insert( std::make_pair( COMMAND_ML,&ModeSpeakScript::OnCommandSe ) );
 
 	const auto script = scripts_data->GetScript( now_line,DELIMITER );
-	const auto& char_command = (script[0]);
-	std::string string_comand{char_command};
+	std::string string_comand{script[0]};
 
 	if ( string_comand == COMMAND_ML || string_comand == COMMAND_IL )
 	{
@@ -309,7 +309,13 @@ void ModeSpeakScript::CrfoUpdate()
 
 void ModeSpeakScript::ClickWait()
 {
-
+	for ( auto&& obj : speak_object.GetObjects() )
+	{
+		if ( !obj->GetUpdateSkip() )
+		{
+			return;
+		}
+	}
 	if ( is_finishdraw )
 	{
 		if ( _game.Getinput().XinputEveryOtherKey( XINPUT_BUTTON_A,2 ) )
@@ -505,6 +511,7 @@ bool ModeSpeakScript::OnCommandScriptend( unsigned int line,const std::vector<st
 	{
 		StopSoundMem( se->GetHandle() );
 	}
+	gGlobal.IsEndSpeakScript();
 	state = ScriptState::SCRIPT_END;
 	return true;
 }
@@ -708,12 +715,12 @@ bool ModeSpeakScript::OnCommandCrfo( unsigned int line,const std::vector<std::st
 
 bool ModeSpeakScript::Draw()
 {
+	DrawAnime();
 	speak_object.Draw();
 	DrawImage();
 	DrawFeedIn();
 	DrawFeedOut();
 	DrawMessage();
-	DrawAnime();
 	return true;
 }
 
@@ -780,6 +787,6 @@ void ModeSpeakScript::DrawAnime()const
 {
 	if ( state == ScriptState::PLAY_ANIME )
 	{
-		DrawGraph( 0,0,movie_play->GetMvHandle(),TRUE );
+		DrawGraph( movie_play->GetPosiX(),movie_play->GetPosiX(),movie_play->GetMvHandle(),TRUE );
 	}
 };

@@ -167,6 +167,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\Base\ObjectServer3D.h" />
+    <ClInclude Include="source\Base\GameServer2.h" />
     <ClInclude Include="source\Base\GameServer.h" />
     <ClInclude Include="source\Base\GameBase.h" />
     <ClInclude Include="source\Base\ModeBase.h" />
@@ -208,6 +210,8 @@
     <ClInclude Include="source\Script\ScriptsString.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Base\ObjectServer3D.cpp" />
+    <ClCompile Include="source\Base\GameServer2.cpp" />
     <ClCompile Include="source\Base\GameServer.cpp" />
     <ClCompile Include="source\Base\GameBase.cpp" />
     <ClCompile Include="source\Base\ModeBase.cpp" />

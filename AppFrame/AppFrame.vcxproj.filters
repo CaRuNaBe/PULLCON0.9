@@ -140,6 +140,10 @@
     <ClInclude Include="source\Math\Polar2.h">
       <Filter>source\Math</Filter>
     </ClInclude>
+    <ClInclude Include="source\Base\GameServer2.h">
+      <Filter>source\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Base\ObjectServer3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -250,6 +254,12 @@
     </ClCompile>
     <ClCompile Include="source\Math\Polar2.cpp">
       <Filter>source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Base\GameServer2.cpp">
+      <Filter>source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Base\ObjectServer3D.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

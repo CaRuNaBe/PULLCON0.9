@@ -16,6 +16,7 @@ public:
 	virtual int DispSizeW() { return 1920; }
 	virtual int DispSizeH() { return 1080; }
 
-protected:
+private:
+
 
 }; 

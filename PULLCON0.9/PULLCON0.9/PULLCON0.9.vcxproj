@@ -163,8 +163,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\ApplicationGlobal.cpp" />
     <ClCompile Include="source\ui\UIPullGage.cpp" />
-    <ClCompile Include="source\ModeTest.cpp" />
     <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp" />
     <ClCompile Include="source\ui\UIBase.cpp" />
     <ClCompile Include="source\maingame\Bullet.cpp" />
@@ -193,7 +193,6 @@
     <ClCompile Include="source\title\CreditGuid.cpp" />
     <ClCompile Include="source\title\EndLogo.cpp" />
     <ClCompile Include="source\title\CreditLogo.cpp" />
-    <ClCompile Include="source\mode\ModeGameOver.cpp" />
     <ClCompile Include="source\mode\ModeGameResult.cpp" />
     <ClCompile Include="source\mode\ModePause.cpp" />
     <ClCompile Include="source\mode\ModeTitle.cpp" />
@@ -208,8 +207,8 @@
     <ClCompile Include="source\ui\UICursor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\ApplicationGlobal.h" />
     <ClInclude Include="source\ui\UIPullGage.h" />
-    <ClInclude Include="source\ModeTest.h" />
     <ClInclude Include="source\speakscript\ActorBaseSpeak.h" />
     <ClInclude Include="source\ui\UIBase.h" />
     <ClInclude Include="source\maingame\Bullet.h" />
@@ -238,7 +237,6 @@
     <ClInclude Include="source\title\CreditGuid.h" />
     <ClInclude Include="source\title\EndLogo.h" />
     <ClInclude Include="source\title\CreditLogo.h" />
-    <ClInclude Include="source\mode\ModeGameOver.h" />
     <ClInclude Include="source\mode\ModeGameResult.h" />
     <ClInclude Include="source\mode\ModePause.h" />
     <ClInclude Include="source\mode\ModeTitle.h" />
