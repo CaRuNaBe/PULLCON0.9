@@ -53,12 +53,6 @@ protected:
 	float  _fRotateAirscrew;  // プロペラの回転
 	float  _fAxialX;
 	float  _fAxialZ;
-	// 線形補間用
-	float  _fAxialXStart;
-	float  _fAxialXEnd;
-	float  _fAxialZStart;
-	float  _fAxialZEnd;
-	float  _fStartCnt;
 
 	int    _handleBody;
 	int    _handleAirscrew;

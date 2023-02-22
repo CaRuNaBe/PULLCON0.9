@@ -49,7 +49,6 @@ void Player::Init() {
 	_fRotateAirscrew = 0.f;
 	_fAxialX = 0.f;
 	_fAxialZ = 0.f;
-	_fStartCnt = 0.00f;
 
 	_collision._fRadius = 500.f * _fScale;
 
@@ -158,7 +157,7 @@ bool Player::Update() {
 
 		//キャラの上昇下降
 		int diry = 0;
-		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_A)) { 
+		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_A)) {
 			diry += 1;
 			_fRotateAirscrew += 3.f * utility::PI / 10.f;
 		}
@@ -223,14 +222,43 @@ bool Player::Update() {
 			AddBullet(vBullet);
 		}
 
-		float axialX = utility::degree_to_radian(30.f);
-		float axialZ = utility::degree_to_radian(30.f);
-		if (_game.Getinput().GetLstickY() > 0) { _fAxialX = -axialX;}  // 前方向
-		else if (_game.Getinput().GetLstickY() < 0) { _fAxialX =  axialX;}  // 後方向
-		else { _fAxialX = 0.f;}
-		if (_game.Getinput().GetLstickX() < 0) { _fAxialZ = -axialZ; }  // 右方向
-		else if (_game.Getinput().GetLstickX() > 0) { _fAxialZ =  axialZ; }  // 左方向
-		else { _fAxialZ= 0.f; }
+		float axialX = _fAxialX;
+		float axialZ = _fAxialZ;
+		if (_game.Getinput().GetLstickY() > 0) {  // 前方向
+			axialX -= utility::degree_to_radian(30.f) / 30.f;
+		}
+		else if (_game.Getinput().GetLstickY() < 0) {  // 後方向
+			axialX += utility::degree_to_radian(30.f) / 30.f;
+		}
+		else {
+			if (axialX < 0.f) {
+				axialX += utility::degree_to_radian(30.f) / 30.f;
+			}
+			else {
+				axialX -= utility::degree_to_radian(30.f) / 30.f;
+			}
+		}
+		if (_game.Getinput().GetLstickX() < 0) {  // 右方向
+			axialZ -= utility::degree_to_radian(30.f) / 30.f;
+		}
+		else if (_game.Getinput().GetLstickX() > 0) {  // 左方向
+			axialZ += utility::degree_to_radian(30.f) / 30.f;
+		}
+		else {
+			if (axialZ < 0.f) {
+				axialZ += utility::degree_to_radian(30.f) / 30.f;
+			}
+			else {
+				axialZ -= utility::degree_to_radian(30.f) / 30.f;
+			}
+		}
+
+		if (abs(axialX) < utility::degree_to_radian(30.f)) {
+			_fAxialX = axialX;
+		}
+		if (abs(axialZ) < utility::degree_to_radian(30.f)) {
+			_fAxialZ = axialZ;
+		}
 
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {
