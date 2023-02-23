@@ -15,8 +15,10 @@ CommandMoviePlay::CommandMoviePlay( unsigned int line,const std::vector<std::str
 	: CommandBase( line,script )
 {
 	mvhandle = 0;
-	posi_x = 0;
-	posi_y = 0;
+	posi_x1 = 0;
+	posi_y1 = 0;
+	posi_x2 = 0;
+	posi_y2 = 0;
 }
 
 bool CommandMoviePlay::Check()
@@ -27,14 +29,21 @@ bool CommandMoviePlay::Check()
 	{
 		return false;
 	}
-	if ( !string::ToInt( script[1],posi_x ) )
+	if ( !string::ToInt( script[1],posi_x1 ) )
 	{
 		return false;
 	}
-	if ( !string::ToInt( script[2],posi_y ) )
+	if ( !string::ToInt( script[2],posi_y1 ) )
 	{
 		return false;
 	}
-
+	if ( !string::ToInt( script[3],posi_x2 ) )
+	{
+		return false;
+	}
+	if ( !string::ToInt( script[4],posi_y2 ) )
+	{
+		return false;
+	}
 	return true;
 }

@@ -143,7 +143,16 @@
     <ClInclude Include="source\Base\GameServer2.h">
       <Filter>source\Base</Filter>
     </ClInclude>
-    <ClInclude Include="source\Base\ObjectServer3D.h" />
+    <ClInclude Include="source\Script\CommandDrawTime.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Base\ObjectServer3D.h">
+      <Filter>source\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandDrawString.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandDrawRect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -258,7 +267,16 @@
     <ClCompile Include="source\Base\GameServer2.cpp">
       <Filter>source\Base</Filter>
     </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawTime.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
     <ClCompile Include="source\Base\ObjectServer3D.cpp">
+      <Filter>source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawString.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawRect.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

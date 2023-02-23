@@ -24,7 +24,7 @@ public:
 
 	inline std::string GetLabel() const
 	{
-		return script[3];
+		return script[5];
 	}
 
 	inline int GetMvHandle() const
@@ -35,17 +35,27 @@ public:
 	{
 		this->mvhandle = handle;
 	}
-	inline int GetPosiX() const
+	inline int GetPosiX1() const
 	{
-		return posi_x;
+		return posi_x1;
 	}
-	inline int GetPosiY() const
+	inline int GetPosiY1() const
 	{
-		return posi_y;
+		return posi_y1;
+	}
+	inline int GetPosiX2() const
+	{
+		return posi_x2;
+	}
+	inline int GetPosiY2() const
+	{
+		return posi_y2;
 	}
 private:
 	int mvhandle;
-	int posi_x;
-	int posi_y;
+	int posi_x1;
+	int posi_y1;
+	int posi_x2;
+	int posi_y2;
 };
 

@@ -22,6 +22,9 @@ public:
 	}
 public:
 	bool is_EndSpeakScript;
-}; 
+	std::shared_ptr<ScriptsData> image_pass_date;
+	std::shared_ptr<ScriptsData> music_pass_date;
+	std::shared_ptr<ScriptsData> object_pass_date;
+};
 // 他のソースでgGlobalを使えるように
 extern ApplicationGlobal    gGlobal;

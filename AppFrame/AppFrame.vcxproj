@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -167,6 +167,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\Script\CommandDrawRect.h" />
+    <ClInclude Include="source\Script\CommandDrawString.h" />
+    <ClInclude Include="source\Script\CommandDrawTime.h" />
     <ClInclude Include="source\Base\ObjectServer3D.h" />
     <ClInclude Include="source\Base\GameServer2.h" />
     <ClInclude Include="source\Base\GameServer.h" />
@@ -210,6 +213,9 @@
     <ClInclude Include="source\Script\ScriptsString.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Script\CommandDrawRect.cpp" />
+    <ClCompile Include="source\Script\CommandDrawString.cpp" />
+    <ClCompile Include="source\Script\CommandDrawTime.cpp" />
     <ClCompile Include="source\Base\ObjectServer3D.cpp" />
     <ClCompile Include="source\Base\GameServer2.cpp" />
     <ClCompile Include="source\Base\GameServer.cpp" />

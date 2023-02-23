@@ -33,7 +33,6 @@ public:
 		return speak_object;
 	}
 private:
-	GameServer<ActorBaseSpeak> speak_object;
 	enum class ScriptState
 	{
 		PREPARSING,
@@ -60,6 +59,7 @@ private:
 
 	bool GetImageHandle( const std::string& str,int& handle ) const;
 	bool GetSeHandle( const std::string& str,int& handle ) const;
+	std::string GetDateTimeStr();
 
 	bool OnCommandClick( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandWait( unsigned int line,const std::vector<std::string>& scripts );
@@ -74,7 +74,9 @@ private:
 	bool OnCommandMusicstop( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandPlayanime( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandScriptend( unsigned int line,const std::vector<std::string>& scripts );
-
+	bool OnCommandDrawTime( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandDrawString( unsigned int line,const std::vector<std::string>& scripts );
+	bool OnCommandDrawRect( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandImage( unsigned int line,const std::vector<std::string>& scripts );
 	bool OnCommandSe( unsigned int line,const std::vector<std::string>& scripts );
 
@@ -83,7 +85,10 @@ private:
 	void DrawFeedIn()const;
 	void DrawFeedOut()const;
 	void DrawAnime()const;
-
+	void DrawTime();
+	void DrawScriptString();
+	void DrawRect();
+	GameServer<ActorBaseSpeak> speak_object;
 	std::unique_ptr<ScriptsData> scripts_data;
 	std::unique_ptr<CommandMoviePlay>movie_play;
 
@@ -93,13 +98,16 @@ private:
 	std::vector<std::unique_ptr<CommandCrFeedOut>> crfo_list;
 	std::vector<std::unique_ptr<CommandDrawIn>> drawin_list;
 	std::vector<std::unique_ptr<CommandDrawOut>> drawout_list;
+	std::vector<std::unique_ptr<CommandDrawTime>> drawtime_list;
+	std::vector<std::unique_ptr<CommandDrawString>> drawstring_list;
+	std::vector<std::unique_ptr<CommandDrawRect>> drawrect_list;
 	std::vector<std::unique_ptr<CommandMessage>> message_list;
 
 
 	typedef std::map<std::string,bool(ModeSpeakScript::*)(unsigned int,const std::vector<std::string>& scripts)> funcs_type;
 
 	ScriptState state;
-
+	std::string time_str;
 	unsigned int max_line;
 	unsigned int now_line;
 

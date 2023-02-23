@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <utility>
 #include <stdio.h>
+#include <iomanip> 
+#include <sstream> 
 
 namespace
 {
@@ -13,6 +15,11 @@ namespace
 	const std::string COMMAND_FO = "feedout";
 	const std::string COMMAND_DI = "drawin";
 	const std::string COMMAND_DO = "drawout";
+
+	const std::string COMMAND_DT = "drawtime";
+	const std::string COMMAND_DR = "drawrect";
+	const std::string COMMAND_DS = "drawrstring";
+
 	const std::string COMMAND_OB = "object";
 	const std::string COMMAND_M = "message";
 	const std::string COMMAND_A = "@";
@@ -65,7 +72,7 @@ void ModeSpeakScript::Initialize( std::string jsonpath,std::string scriptsname,s
 
 	max_line = scripts_data->GetScriptNum();
 	state = ScriptState::PREPARSING;
-
+	time_str = GetDateTimeStr();
 	feed_count = 0.0;
 	object_layer = 0;
 	alpha = 0;
@@ -93,6 +100,7 @@ void ModeSpeakScript::Destroy()
 	crfo_list.clear();
 	drawin_list.clear();
 	drawout_list.clear();
+	drawtime_list.clear();
 }
 
 bool ModeSpeakScript::Update()
@@ -169,6 +177,7 @@ void ModeSpeakScript::Parsing()
 	message_list.clear();
 	movie_play.reset();
 	speak_object.Clear();
+	drawtime_list.clear();
 	object_layer = 0;
 	auto stop_parsing = false;
 	funcs_type comand_funcs;
@@ -185,7 +194,9 @@ void ModeSpeakScript::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_SM,&ModeSpeakScript::OnCommandMusicstop ) );
 	comand_funcs.insert( std::make_pair( COMMAND_VE,&ModeSpeakScript::OnCommandPlayanime ) );
 	comand_funcs.insert( std::make_pair( COMMAND_E,&ModeSpeakScript::OnCommandScriptend ) );
-
+	comand_funcs.insert( std::make_pair( COMMAND_DT,&ModeSpeakScript::OnCommandDrawTime ) );
+	comand_funcs.insert( std::make_pair( COMMAND_DR,&ModeSpeakScript::OnCommandDrawRect ) );
+	comand_funcs.insert( std::make_pair( COMMAND_DS,&ModeSpeakScript::OnCommandDrawString ) );
 	while ( !stop_parsing && (now_line >= 0) && (now_line < max_line) )
 	{
 		const auto script = scripts_data->GetScript( now_line,DELIMITER );
@@ -367,6 +378,26 @@ void ModeSpeakScript::PlayUpdate()
 	}
 };
 
+std::string ModeSpeakScript::GetDateTimeStr()
+{
+	time_t t = time( NULL );
+	struct tm localTime;
+	localtime_s( &localTime,&t );
+	std::stringstream s;
+	s << localTime.tm_year + 1900;
+	// setw(),setfill()で0詰め
+	s << "/";
+	s << std::setw( 2 ) << std::setfill( '0' ) << localTime.tm_mon + 1;
+	s << "/";
+	s << std::setw( 2 ) << std::setfill( '0' ) << localTime.tm_mday;
+	s << ",";
+	s << std::setw( 2 ) << std::setfill( '0' ) << localTime.tm_hour;
+	s << ":";
+	s << std::setw( 2 ) << std::setfill( '0' ) << localTime.tm_min;
+	// std::stringにして値を返す
+	return s.str();
+}
+
 bool ModeSpeakScript::GetImageHandle( const std::string& str,int& handle ) const
 {
 	for ( auto&& image : image_list )
@@ -396,6 +427,68 @@ bool ModeSpeakScript::GetSeHandle( const std::string& str,int& handle ) const
 
 	return false;
 }
+
+bool ModeSpeakScript::OnCommandImage( unsigned int line,const std::vector<std::string>& scripts )
+{
+	auto  image = std::make_unique<CommandImageLoad>( line,scripts );
+	if ( !image->Check() )
+	{
+		return false;
+	}
+
+	image_list.emplace_back( std::move( image ) );
+
+	return true;
+}
+
+bool ModeSpeakScript::OnCommandSe( unsigned int line,const std::vector<std::string>& scripts )
+{
+	auto  se = std::make_unique<CommandSeLoad>( line,scripts );
+	if ( !se->Check() )
+	{
+		return false;
+	}
+
+	se_list.emplace_back( std::move( se ) );
+
+	return true;
+}
+
+bool ModeSpeakScript::OnCommandDrawTime( unsigned int line,const std::vector<std::string>& scripts )
+{
+	auto  drawtime = std::make_unique<CommandDrawTime>( line,scripts );
+	if ( !drawtime->Check() )
+	{
+		return false;
+	}
+
+	drawtime_list.emplace_back( std::move( drawtime ) );
+	return true;
+};
+
+bool ModeSpeakScript::OnCommandDrawString( unsigned int line,const std::vector<std::string>& scripts )
+{
+	auto  drawstring = std::make_unique<CommandDrawString>( line,scripts );
+	if ( !drawstring->Check() )
+	{
+		return false;
+	}
+
+	drawstring_list.emplace_back( std::move( drawstring ) );
+	return true;
+};
+
+bool ModeSpeakScript::OnCommandDrawRect( unsigned int line,const std::vector<std::string>& scripts )
+{
+	auto  drawrect = std::make_unique<CommandDrawRect>( line,scripts );
+	if ( !drawrect->Check() )
+	{
+		return false;
+	}
+
+	drawrect_list.emplace_back( std::move( drawrect ) );
+	return true;
+};
 
 bool ModeSpeakScript::OnCommandPlayanime( unsigned int line,const std::vector<std::string>& scripts )
 {
@@ -513,32 +606,6 @@ bool ModeSpeakScript::OnCommandScriptend( unsigned int line,const std::vector<st
 	}
 	gGlobal.IsEndSpeakScript();
 	state = ScriptState::SCRIPT_END;
-	return true;
-}
-
-bool ModeSpeakScript::OnCommandImage( unsigned int line,const std::vector<std::string>& scripts )
-{
-	auto  image = std::make_unique<CommandImageLoad>( line,scripts );
-	if ( !image->Check() )
-	{
-		return false;
-	}
-
-	image_list.emplace_back( std::move( image ) );
-
-	return true;
-}
-
-bool ModeSpeakScript::OnCommandSe( unsigned int line,const std::vector<std::string>& scripts )
-{
-	auto  se = std::make_unique<CommandSeLoad>( line,scripts );
-	if ( !se->Check() )
-	{
-		return false;
-	}
-
-	se_list.emplace_back( std::move( se ) );
-
 	return true;
 }
 
@@ -716,11 +783,14 @@ bool ModeSpeakScript::OnCommandCrfo( unsigned int line,const std::vector<std::st
 bool ModeSpeakScript::Draw()
 {
 	DrawAnime();
+	DrawRect();
 	speak_object.Draw();
 	DrawImage();
+	DrawTime();
 	DrawFeedIn();
 	DrawFeedOut();
 	DrawMessage();
+	DrawScriptString();
 	return true;
 }
 
@@ -728,6 +798,17 @@ bool ModeSpeakScript::DebugDraw()
 {
 	ModeBase::DebugDraw();
 	return true;
+};
+
+void ModeSpeakScript::DrawTime()
+{
+	auto now_time = string::Split( time_str,DELIMITER );
+	auto white = GetColor( 0,0,0 );
+	for ( auto&& time : drawtime_list )
+	{
+		DrawString( time->GetPosiX(),time->GetPosiY(),now_time[0].c_str(),white );
+		DrawString( time->GetPosiX() + 114,time->GetPosiY() + 61,now_time[0].c_str(),white );
+	}
 };
 
 void ModeSpeakScript::DrawImage() const
@@ -787,6 +868,21 @@ void ModeSpeakScript::DrawAnime()const
 {
 	if ( state == ScriptState::PLAY_ANIME )
 	{
-		DrawGraph( movie_play->GetPosiX(),movie_play->GetPosiX(),movie_play->GetMvHandle(),TRUE );
+		DrawExtendGraph( movie_play->GetPosiX1(),movie_play->GetPosiY1(),movie_play->GetPosiX2() - 1,movie_play->GetPosiY2() - 1,movie_play->GetMvHandle(),TRUE );
+	}
+};
+
+void ModeSpeakScript::DrawScriptString()
+{
+	for ( auto&& scstring : drawstring_list )
+	{
+		DrawStringToHandle( scstring->GetPosiX(),scstring->GetPosiY(),scstring->GetString().c_str(),scstring->GetStringColor(),scstring->GetStringHandle() );
+	}
+};
+void ModeSpeakScript::DrawRect()
+{
+	for ( auto&& drawrect : drawrect_list )
+	{
+		DrawBox( drawrect->GetPosiX1(),drawrect->GetPosiY1(),drawrect->GetPosiX2() - 1,drawrect->GetPosiY2() - 1,drawrect->GetRectColor(),TRUE );
 	}
 };

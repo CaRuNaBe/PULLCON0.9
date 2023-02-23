@@ -27,7 +27,7 @@ bool CommandImageLoad::Check ()
 		return false;
 	}
 
-	handle = ResourceServer::LoadGraph ( script [ 2 ].c_str () );
+	handle = LoadGraph ( script [ 2 ].c_str () );
 
 	if ( handle == -1 )
 	{

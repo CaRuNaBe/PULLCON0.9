@@ -25,6 +25,7 @@
 #include "Script/CommandCrFeedOut.h"
 #include "Script/CommandDrawIn.h"
 #include "Script/CommandDrawOut.h"
+#include "Script/CommandDrawTime.h"
 #include "Script/CommandImageLoad.h"
 #include "Script/CommandLabel.h"
 #include "Script/CommandMessage.h"
@@ -33,3 +34,5 @@
 #include "Script/CommandMusicLoop.h"
 #include "Script/CommandMusicStop.h"
 #include "Script/CommandSeLoad.h"
+#include "Script/CommandDrawRect.h"
+#include "Script/CommandDrawString.h"

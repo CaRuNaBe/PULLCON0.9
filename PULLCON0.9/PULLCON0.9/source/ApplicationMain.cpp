@@ -2,6 +2,7 @@
 #include "ApplicationMain.h"
 #include "ApplicationGlobal.h"
 #include "mode/ModeMainGame.h"
+#include "mode/ModeSpeakScript.h"
 // 実体
 ApplicationMain g_oApplicationMain;
 
@@ -14,7 +15,7 @@ bool ApplicationMain::Initialize( HINSTANCE hInstance )
 	font_hundle = CreateFontToHandle( "Kazesawa-Bold",font_size,-1,-1 );
 	// アプリケーショングローバルの初期化
 	gGlobal.Init();
-	auto game = std::make_shared<ModeMainGame>( *this,1 );
+	auto game = std::make_shared<ModeSpeakScript>( *this,1,"gameover/gameover" );
 	base::GetInstance()->GetModeServer()->Add( game );
 
 	return true;
