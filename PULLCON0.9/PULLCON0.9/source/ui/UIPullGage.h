@@ -1,11 +1,14 @@
 #pragma once
 #include "UIBase.h"
 #include "appframe.h"
+#include <array>
+#include "../maingame/Player.h"
+#include <memory>
 class UIPullGage:public UIBase
 {
 	enum class State
 	{
-	
+
 	};
 public:
 	UIPullGage( ApplicationBase& game,int layer,ModeBase& _base );
@@ -16,13 +19,12 @@ public:
 	virtual bool Draw();
 	virtual bool DebugDraw();
 private:
-
-	int handle_do_pullout;
-	int handle_meter_body;
-	int handle_dopulloutmeter_xbutton_on;
-	int handle_dopulloutmeter_xbutton_off;
-	int hamdle_dopulloutmeterbutton_off;
-	int handle_dopulloutmeterbutton_on;
-	int handle_dopulloutmeterbutton_triangle;
+	std::array<int,5 > hundle_pullgage;
+	std::array<int,2 > hundle_xbutton;
+	int brack;
+	bool is_hide;
+	bool is_pullok;
+	int player_pull_now_count;
+	int button_on_count;
 };
 

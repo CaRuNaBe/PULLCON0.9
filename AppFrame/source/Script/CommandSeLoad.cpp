@@ -29,7 +29,7 @@ bool CommandSeLoad::Check()
 		return false;
 	}
 
-	sehandle = ResourceServer::LoadSoundMem( script[2].c_str() );
+	sehandle = LoadSoundMem( script[2].c_str() );
 
 	if ( sehandle == -1 )
 	{

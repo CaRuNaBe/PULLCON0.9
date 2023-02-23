@@ -34,6 +34,7 @@ SpeakScriptObject::SpeakScriptObject
 
 SpeakScriptObject::~SpeakScriptObject()
 {
+	StopSoundMem( music_hundle );
 }
 
 void SpeakScriptObject::Initialize()

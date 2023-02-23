@@ -16,6 +16,7 @@
 
 #include "Base/GameBase.h"
 #include "Base/GameServer.h"
+#include "Base/GameServer2.h"
 #include "Base/ModeBase.h"
 
 #include "Script/ScriptsData.h"
@@ -24,6 +25,7 @@
 #include "Script/CommandCrFeedOut.h"
 #include "Script/CommandDrawIn.h"
 #include "Script/CommandDrawOut.h"
+#include "Script/CommandDrawTime.h"
 #include "Script/CommandImageLoad.h"
 #include "Script/CommandLabel.h"
 #include "Script/CommandMessage.h"
@@ -32,3 +34,5 @@
 #include "Script/CommandMusicLoop.h"
 #include "Script/CommandMusicStop.h"
 #include "Script/CommandSeLoad.h"
+#include "Script/CommandDrawRect.h"
+#include "Script/CommandDrawString.h"

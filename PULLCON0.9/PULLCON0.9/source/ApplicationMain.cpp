@@ -1,9 +1,9 @@
-
 #include "AppFrame.h"
 #include "ApplicationMain.h"
 #include "mode/ModeSpeakScript.h"
+#include "mode/ModeSpeakScript.h"
 // ŽÀ‘Ì
-ApplicationMain				g_oApplicationMain;
+ApplicationMain g_oApplicationMain;
 
 bool ApplicationMain::Initialize( HINSTANCE hInstance )
 {

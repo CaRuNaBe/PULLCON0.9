@@ -65,7 +65,7 @@ namespace math
 		bool operator!=( const Vector2& b ) const;
 
 		// ベクトルの大きさ
-		float Length() const;
+		float Length( const Vector2& backvec = {0,0} ) const;
 
 		// ベクトルの正規化
 		void Normalized();
@@ -78,5 +78,7 @@ namespace math
 		float Cross( const Vector2& multiplicator )const;
 		// ベクトルの行列変換
 		static Vector2 Transform( const Vector2& vec,const class Matrix3& mat,float w = 1.0f );
+
+		Vector2 GetCentor( const Vector2& right );
 	};
 }

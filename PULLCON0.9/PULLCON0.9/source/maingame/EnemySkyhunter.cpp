@@ -29,6 +29,7 @@ void EnemySkyhunter::Init()
 	_vEvent = _vPos;
 	_fScale = 2.f;
 	_fSpeed = 150.f;
+	_collision._vCenter = _vPos;
 	_collision._fRadius = 500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 5.f * _fScale;
 
@@ -91,7 +92,7 @@ bool EnemySkyhunter::Update()
 	// ˆê’èŠÔŠu‚Å’e‚ðŒ‚‚Â
 	if (_fire && _CT == 0) {
 		AddBullet();
-		_CT = 5;
+		_CT = 10;
 	}
 
 	if (_column._synchronize != _synchronize) {
@@ -155,8 +156,12 @@ bool EnemySkyhunter::Draw()
 
 void EnemySkyhunter::AddBullet() {
 	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
+	float speed = 400.f;
 	auto bullet = std::make_shared<Bullet>(_game, _mode);
 	bullet->SetPosition(vBullet);
 	bullet->SetDir(_vDir);
+	bullet->SetSpeed(speed);
+	bullet->_fScale = 5.f;
+	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add(bullet);
 }

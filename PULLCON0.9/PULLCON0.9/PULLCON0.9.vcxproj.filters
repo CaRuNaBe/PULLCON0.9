@@ -85,9 +85,6 @@
     <ClCompile Include="source\speakscript\SpeakScriptObject.cpp">
       <Filter>source\object\speakscript</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeGameOver.cpp">
-      <Filter>source\mode\modeoutgame</Filter>
-    </ClCompile>
     <ClCompile Include="source\mode\ModeGameResult.cpp">
       <Filter>source\mode\modeoutgame</Filter>
     </ClCompile>
@@ -190,7 +187,9 @@
     <ClCompile Include="source\ui\UICursor.cpp">
       <Filter>source\object\ui</Filter>
     </ClCompile>
-    <ClCompile Include="source\ModeTest.cpp" />
+    <ClCompile Include="source\ApplicationGlobal.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationMain.h">
@@ -243,9 +242,6 @@
     </ClInclude>
     <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode\modeingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModeGameOver.h">
-      <Filter>source\mode\modeoutgame</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModeGameResult.h">
       <Filter>source\mode\modeoutgame</Filter>
@@ -349,7 +345,9 @@
     <ClInclude Include="source\ui\UICursor.h">
       <Filter>source\object\ui</Filter>
     </ClInclude>
-    <ClInclude Include="source\ModeTest.h" />
+    <ClInclude Include="source\ApplicationGlobal.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">

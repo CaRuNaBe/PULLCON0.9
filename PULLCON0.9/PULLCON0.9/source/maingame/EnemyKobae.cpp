@@ -25,6 +25,7 @@ void EnemyKobae::Init() {
 	_vEvent = _vPos;
 	_fScale = 2.f;
 	_fSpeed = 200.f;
+	_collision._vCenter = _vPos;
 	_collision._fRadius = 500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 13.f * _fScale;
 	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
@@ -102,7 +103,7 @@ bool EnemyKobae::Update() {
 	// ˆê’èŠÔŠu‚Å’e‚ðŒ‚‚Â
 	if (_fire && _CT == 0) {
 		AddBullet();
-		_CT = 3;
+		_CT = 5;
 	}
 
 	// ‘¬“x•ªˆÚ“®‚·‚é
@@ -175,8 +176,12 @@ void EnemyKobae::SetVelocity() {
 
 void EnemyKobae::AddBullet() {
 	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
+	float speed = 400.f;
 	auto bullet = std::make_shared<Bullet>(_game, _mode);
 	bullet->SetPosition(vBullet);
 	bullet->SetDir(_vDir);
+	bullet->SetSpeed(speed);
+	bullet->_fScale = 5.f;
+	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add(bullet);
 }

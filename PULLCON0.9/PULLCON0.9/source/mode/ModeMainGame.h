@@ -7,16 +7,17 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
+
 #include "../ui/UIBase.h"
 #include "../ui/UIHpGage.h"
 #include "../ui/UIFuelGage.h"
 #include "../ui/UICursor.h"
+#include "../ui/UIPullGage.h"
 #include <vector>
 #include <memory>
 #include <string>
 #include <array>
 
-class ApplicationMain;
 class CommandLabel;
 class CommandChoice;
 
@@ -39,7 +40,6 @@ public:
 
 
 	///////////////////////////////////////
-
 	bool _clear;
 	bool	_dbgCollisionDraw;		// コリジョン表示/非表示
 	/////////////////////////////////////////////
@@ -54,7 +54,6 @@ private:
 		PARSING,
 		GAME,
 		STORY,
-		RESULT,
 		CRFEEDIN,
 		CRFEEDOUT,
 		TIME_WAIT,

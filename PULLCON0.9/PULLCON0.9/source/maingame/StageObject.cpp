@@ -48,8 +48,7 @@ bool StageObject::Draw()
 	SetUseLighting( FALSE );
 		// ƒ‚ƒfƒ‹•`‰æ
 	MV1DrawModel( _handle );
-	SetUseLighting( TRUE );
-	DrawCollision( color );
-
+	MV1SetPosition( _handle,math::ToDX(_vPos) );
+	DrawCollisionObject( color );
 	return true;
 }

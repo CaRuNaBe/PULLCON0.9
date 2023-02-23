@@ -14,7 +14,9 @@ namespace math
 	{
 	public:
 		static constexpr float PI = 3.14159265358979f;
+		static constexpr float DEGREES_ZERO = 0.0f;
 		static constexpr float DEGREES_180 = 180.0f;
+		static constexpr float DEGREES_360 = DEGREES_180 * 2.0f;
 		static constexpr float TwoPi = PI * 2.0f;
 		static constexpr float PiOver2 = PI / 2.0f;
 

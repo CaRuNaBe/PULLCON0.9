@@ -2,22 +2,27 @@
 #include "appframe.h"
 
 // カメラ
-class Camera {
+class Camera
+{
 public:
 	vector4	_vPos;					// 位置
 	vector4	_vPosEvent;			// 引っこ抜きカメラ位置
 	vector4	_vTarget;				// 注視点
 	vector4	_vMemory;				// ベクトル保存用
-	float	_clipNear, _clipFar;	// クリップ
+	float	_clipNear,_clipFar;	// クリップ
 };
 
-class Player : public ActorBase3D {
+class Player: public ActorBase3D
+{
 	typedef ActorBase3D base;
 public:
 	Player( ApplicationBase& game,ModeBase& mode );
 	virtual ~Player();
-	virtual Type GetType() { return Type::kPlayer; }
-	// プレイヤーの状態
+	virtual Type GetType()
+	{
+		return Type::kPlayer;
+	}
+// プレイヤーの状態
 	enum class State
 	{
 		NUM, //初期状態
@@ -31,8 +36,15 @@ public:
 
 	void CameraUpdate();    // カメラ更新
 	void EventCamera();    // カメラ
-	void AddBullet(vector4 pos);
-	
+	void AddBullet( vector4 pos );
+	State GetPlayerState()
+	{
+		return _statePlayer;
+	}
+	int GetPush()
+	{
+		return _push;
+	}
 protected:
 	// カメラ
 	Camera	_cam;

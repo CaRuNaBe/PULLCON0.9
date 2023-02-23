@@ -34,6 +34,7 @@ public:
 	virtual void	DrawCollision(vector4 color);
 	virtual void	DrawCollisionEvent(vector4 color);
 	virtual void	DrawCollisionSearch(vector4 color);
+	virtual void	DrawCollisionObject(vector4 color);
 
 	virtual bool	IsHitObject(ActorBase3D& object);	// 指定のオブジェクトと当たっているか
 	virtual bool	IsHitEvent(ActorBase3D& object);	// イベントスフィアと当たっているか
@@ -78,6 +79,10 @@ public:
 	vector4 GetTarget()
 	{
 		return _vTarget;
+	}
+	bool GetEvent()
+	{
+		return _event;
 	}
 public:
 	vector4 _vPos;       // 位置

@@ -172,5 +172,7 @@ void ClearObject::AddBullet() {
 	auto bullet = std::make_shared<Bullet>(_game, _mode);
 	bullet->SetPosition(vBullet);
 	bullet->SetDir(_vDir);
+	bullet->_fScale = 5.f;
+	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add(bullet);
 }

@@ -6,7 +6,8 @@
 
 namespace {
 	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
-	const vector4 CAMERADEFAULT_POS = { 0.f, 2500.f, -4000.f };   // プレイヤーを原点としたときのカメラのベクトル
+	const float CAMERADEFAULT_POS_Y =   2500.f;   // プレイヤーを原点としたときのカメラのY座標
+	const float CAMERADEFAULT_POS_XZ = -4000.f;   // プレイヤーを原点としたときのカメラのXZ座標のベクトルの長さ
 	const float PLAYERLENGTH = 2000.f;   // プレイヤーの奥行きの長さ
 	constexpr int PLAYER_ID = 0;
 }
@@ -46,7 +47,8 @@ void Player::Init() {
 	_collision._fRadius = 500.f * _fScale;
 
 	// カメラの設定
-	_cam._vPos = _vPos + CAMERADEFAULT_POS;
+	_cam._vPos.y = _vPos.y + CAMERADEFAULT_POS_Y;
+	_cam._vPos.z = _vPos.z + CAMERADEFAULT_POS_XZ;
 	_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
 	_cam._clipNear = 100.f;
 	_cam._clipFar = 30000000.f;
@@ -58,7 +60,9 @@ bool Player::Update() {
 	// NUM状態ならPLAY状態に移行する
 	if (_statePlayer == State::NUM) {
 		// カメラの設定
-		_cam._vPos = _vPos + CAMERADEFAULT_POS;
+		_cam._vPos.x = _vPos.x;
+		_cam._vPos.y = _vPos.y + CAMERADEFAULT_POS_Y;
+		_cam._vPos.z = _vPos.z + CAMERADEFAULT_POS_XZ;
 		_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
 		// 速度初期値記録
 		_fSpeedIint = _fSpeed;
@@ -88,6 +92,8 @@ bool Player::Update() {
 				if (IsHitEvent(*obje)) {
 					_event = true;
 					if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X) && !_pull) {
+						_push = 0;
+						_event = false;
 						_pull = true;
 						obje->_pull = true;
 						obje->_coll = false;
@@ -180,7 +186,7 @@ bool Player::Update() {
 		// 弾の向きベクトル
 		_vDir = v;
 
-		if (_game.Getinput().XinputEveryOtherRightTrigger(1)) {  // RT
+		if (_game.Getinput().XinputEveryOtherRightTrigger(10)) {  // RT
 			if (_cnt % 20 == 0) {
 				// SE再生
 				ChangeVolumeSoundMem(255 * 40 / 100, _seBullet);
@@ -206,7 +212,14 @@ bool Player::Update() {
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
-			_cam._vPos = _vPos + CAMERADEFAULT_POS;
+			_cam._vTarget.x = _vPos.x;
+			_cam._vTarget.z = _vPos.z;
+			_cam._vTarget.y -= 1000.f;
+			_cam._vPosEvent.y = _cam._vTarget.y + cos(theta) * length3D;
+			length3D *= 0.5f;
+			length3D *= static_cast<float>(_iPieces + 1);
+			_cam._vPosEvent.x = _cam._vTarget.x + length3D * sin(theta) * cos(camerad);
+			_cam._vPosEvent.z = _cam._vTarget.z + length3D * sin(theta) * sin(camerad);
 			_statePlayer = State::EVENT;
 		}
 	}
@@ -234,13 +247,13 @@ bool Player::Update() {
 			if (_pull && _CT == 0) {
 				_CT = 10;
 				++_push;
-				if (_push == 6) {
+				if (_push >= 12) {
 					// 引っこ抜き完了
 					ChangeVolumeSoundMem(255 * 40 / 100, _se);
 					PlaySoundMem(_se, DX_PLAYTYPE_BACK);
 					_CT = 50;
 					_finish = true;
-					_push = 0;
+			
 				}
 			}
 		}
@@ -300,13 +313,13 @@ bool Player::Draw() {
 	DrawLine3D(ToDX(_vPos), ToDX(_vTarget), GetColor(255, 0, 0));
 
 	// コリジョン描画
-	/*
+	
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		vector4 color = { 255, 255, 255 };
 		if (_isHit) { color = { 255, 0, 0 }; }
 		DrawCollision(color);
 	}
-	*/
+	
 	VECTOR Pos = ConvWorldPosToScreenPos(ToDX(_vPos));
 	if (_isHit) {
 		// 作成したフォントで画面左上に『HIT!!』と白の文字列を描画する
@@ -383,28 +396,30 @@ void Player::CameraUpdate() {
 void Player::EventCamera() {
 
 	// 三次元極座標(r(length3D),θ(theta),φ(camerad))
-	float sx = _cam._vPos.x - _vPos.x;
-	float sy = _cam._vPos.y - _vPos.y;
-	float sz = _cam._vPos.z - _vPos.z;
+	float sx = _cam._vPos.x - _cam._vTarget.x;
+	float sy = _cam._vPos.y - _cam._vTarget.y;
+	float sz = _cam._vPos.z - _cam._vTarget.z;
 	float length3D = sqrt(sx * sx + sy * sy + sz * sz);
 	float camerad = atan2(sz, sx);
 	float theta = acos(sy / length3D);
 
 	// 角度変更
 	// Y軸回転
-	camerad = _fRotatY + utility::PI * 5.f / 6.f;
+	camerad = atan2(sz, sx) + utility::PI;
 
 	// X軸回転
-	//float degree = 100.f;
-	//theta = utility::degree_to_radian(degree);
+	float degree = 80.f;
+	theta = utility::degree_to_radian(degree);
 
-	float length = 500.f;
+	float length = 400.f;
 	length3D += length * static_cast<float>(_iPieces);
 
 	// カメラ位置
 	_cam._vPosEvent.y = _vPos.y + cos(theta) * length3D;
 	_cam._vPosEvent.x = _vPos.x + length3D * sin(theta) * cos(camerad);
 	_cam._vPosEvent.z = _vPos.z + length3D * sin(theta) * sin(camerad);
+	float transformY = 200.f;
+	_cam._vPosEvent.y += 4000.f + transformY * static_cast<float>(_iPieces);
 
 }
 
@@ -412,5 +427,7 @@ void Player::AddBullet(vector4 pos) {
 	auto bullet = std::make_shared<Bullet>(_game, _mode);
 	bullet->SetPosition(pos);
 	bullet->SetDir(_vDir);
+	bullet->_fScale = 3.f;
+	bullet->_iType = 4;
 	_mode.GetObjectServer3D().Add(bullet);
 }
