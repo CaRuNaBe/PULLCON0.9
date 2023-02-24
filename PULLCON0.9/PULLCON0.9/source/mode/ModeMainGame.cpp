@@ -1408,8 +1408,9 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		float scale = 1.0f;
 		int object_id = 0;
 		int collision_id = 1;
+		int pieces_coll = 0;
 		float radius = 0.0f;
-		const size_t SCRIPTSIZE = 8;
+		const size_t SCRIPTSIZE = 9;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -1440,8 +1441,10 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		};
-
-		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
+		if (!(string::ToInt(scripts[8], pieces_coll))) {
+			return result;
+		};
+		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id, pieces_coll);
 		object->SetPosition( posi );
 		object->SetScale( scale );
 		object->SetCollisionRadius( radius );
@@ -1456,7 +1459,7 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		}
-		std::array < std::string,7 > input_str =
+		std::array < std::string,8 > input_str =
 		{
 			"x座標",
 			"y座標",
@@ -1464,7 +1467,8 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 			"スケール",
 			"当たり判定球の半径",
 			"オブジェクトid(番号)",
-			"コリジョン有無(1有; 0無)"
+			"コリジョン有無(1有; 0無)",
+			"上に重なる当たり判定の球の数"
 
 		};
 		result = true;
@@ -1503,6 +1507,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		int collision_id = 1;
 		/** 円状に配置か正方形状に配置か。1円状,0正方形状 */
 		int is_circular = 0;
+		int pieces_coll = 0;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -1593,7 +1598,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 
 		for ( auto&& set_pos : posivec )
 		{
-			auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id );
+			auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id , pieces_coll);
 			object->SetPosition( set_pos );
 			object->SetScale( scale );
 			object->SetCollision( set_pos,radius );

@@ -10,7 +10,7 @@ public:
 	virtual ~AreaNoEntry();
 	virtual Type GetType()
 	{
-		return Type::kAreaNoEntry;
+		return Type::kStageObject;
 	}
 	virtual void Init();
 	virtual bool Update();

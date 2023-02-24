@@ -21,6 +21,6 @@ bool AreaNoEntry::Draw()
 {
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	vector4 color = {255, 0, 255};
-	DrawCollision( color );
+	DrawCollisionObject( color );
 	return true;
 };

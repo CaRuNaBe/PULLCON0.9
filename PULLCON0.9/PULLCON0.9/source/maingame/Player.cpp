@@ -78,7 +78,8 @@ bool Player::Update() {
 
 	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kEnemyAAA
-			|| obje->GetType() == Type::kBullet) {
+			|| obje->GetType() == Type::kBullet
+			|| obje->GetType() == Type::kStageObject) {
 			if (obje->GetType() == Type::kEnemyAAA) {
 				if (obje->_pull == true && _pull) {
 					// オブジェクトまで移動する
@@ -110,8 +111,17 @@ bool Player::Update() {
 			}
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
-					if (obje->_CT == 0) {
+					if (obje->_CT == 0 && _ST == 0) {
 						_iLife -= obje->_iDamage;
+						_isHit = true;
+						_ST = 20;
+					}
+				}
+			}
+			if ((obje->GetType() == Type::kStageObject)) {
+				if (IsHitObject(*obje)) {
+					if (_ST == 0) {
+						--_iLife;
 						_isHit = true;
 						_ST = 20;
 					}
