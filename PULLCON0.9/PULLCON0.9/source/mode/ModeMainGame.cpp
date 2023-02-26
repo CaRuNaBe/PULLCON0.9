@@ -191,6 +191,30 @@ bool ModeMainGame::Update()
 			{
 				if ( object_3d->GetType() == ActorBase3D::Type::kPlayer )
 				{
+					auto& playerposi = object_3d->GetPosition();
+
+					if ( playerposi.x > world_range_x )
+					{
+						playerposi.x = world_range_x;
+					}
+					if ( playerposi.x < (-world_range_x) )
+					{
+						playerposi.x = (-world_range_x);
+					}
+					if ( playerposi.y > world_range_y )
+					{
+						playerposi.y = world_range_y;
+					}
+
+					if ( playerposi.z > world_range_z )
+					{
+						playerposi.z = world_range_z;
+					}
+					if ( playerposi.z < (-world_range_z) )
+					{
+						playerposi.z = (-world_range_z);
+					}
+
 					if ( object_3d->GetLife() < dead )
 					{
 						for ( auto& object_3d : object_main_game.GetObjects() )
@@ -869,7 +893,8 @@ bool ModeMainGame::OnCommandStage( unsigned int line,std::vector<std::string>& s
 	bool result = false;
 	if ( state != ScriptState::EDIT )
 	{
-		const size_t SCRIPTSIZE = 2;
+
+		const size_t SCRIPTSIZE = 5;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -879,9 +904,23 @@ bool ModeMainGame::OnCommandStage( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		};
+		if ( !(string::ToFloat( scripts[2],world_range_x )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[3],world_range_y )) )
+		{
+			return result;
+		}
+		if ( !(string::ToFloat( scripts[4],world_range_z )) )
+		{
+			return result;
+		}
+
 		auto stage = std::make_shared<GameStage>( _game,*this,object_id );
 		object_main_game.Add( stage );
 		result = true;
+
 	}
 	else
 	{
@@ -890,9 +929,12 @@ bool ModeMainGame::OnCommandStage( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
-		std::array < std::string,1 > input_str =
+		std::array < std::string,4 > input_str =
 		{
 			"オブジェクトid(企画書参照)を記入してください",
+			"世界の移動範囲x軸最高値",
+			"世界の移動範囲y軸最高値",
+			"世界の移動範囲z軸最高値"
 		};
 		result = true;
 		for ( int i = 0; i < input_str.size(); i++ )

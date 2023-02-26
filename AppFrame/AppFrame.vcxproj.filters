@@ -152,7 +152,9 @@
     <ClInclude Include="source\Script\CommandDrawString.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
-    <ClInclude Include="source\Script\CommandDrawRect.h" />
+    <ClInclude Include="source\Script\CommandDrawRect.h">
+      <Filter>source\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -277,7 +279,7 @@
       <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandDrawRect.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

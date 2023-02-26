@@ -8,7 +8,7 @@
 #include "CommandMoviePlay.h"
 namespace
 {
-	constexpr size_t SCRIPT_NUM = 4;
+	constexpr size_t SCRIPT_NUM = 6;
 }
 
 CommandMoviePlay::CommandMoviePlay( unsigned int line,const std::vector<std::string>& script )

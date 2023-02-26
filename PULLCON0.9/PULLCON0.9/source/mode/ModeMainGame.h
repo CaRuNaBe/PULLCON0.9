@@ -163,4 +163,7 @@ private:
 	int _cg;
 	int _handlefont;
 	int _se;
+	float world_range_x;
+	float world_range_y;
+	float world_range_z;
 };

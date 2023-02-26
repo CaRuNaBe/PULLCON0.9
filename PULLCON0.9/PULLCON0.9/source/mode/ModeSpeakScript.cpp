@@ -868,7 +868,7 @@ void ModeSpeakScript::DrawAnime()const
 {
 	if ( state == ScriptState::PLAY_ANIME )
 	{
-		DrawExtendGraph( movie_play->GetPosiX1(),movie_play->GetPosiY1(),movie_play->GetPosiX2() - 1,movie_play->GetPosiY2() - 1,movie_play->GetMvHandle(),TRUE );
+		DrawExtendGraph( movie_play->GetPosiX1(),movie_play->GetPosiY1(),movie_play->GetPosiX2(),movie_play->GetPosiY2(),movie_play->GetMvHandle(),TRUE );
 	}
 };
 
@@ -879,6 +879,7 @@ void ModeSpeakScript::DrawScriptString()
 		DrawStringToHandle( scstring->GetPosiX(),scstring->GetPosiY(),scstring->GetString().c_str(),scstring->GetStringColor(),scstring->GetStringHandle() );
 	}
 };
+
 void ModeSpeakScript::DrawRect()
 {
 	for ( auto&& drawrect : drawrect_list )
