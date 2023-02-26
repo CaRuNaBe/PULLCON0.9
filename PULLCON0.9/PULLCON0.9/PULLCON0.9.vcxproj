@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\mode\ScriptBase.cpp" />
     <ClCompile Include="source\ApplicationGlobal.cpp" />
     <ClCompile Include="source\ui\UIPullGage.cpp" />
     <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp" />
@@ -201,6 +202,7 @@
     <ClCompile Include="source\ui\UICursor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\mode\ScriptBase.h" />
     <ClInclude Include="source\ApplicationGlobal.h" />
     <ClInclude Include="source\ui\UIPullGage.h" />
     <ClInclude Include="source\speakscript\ActorBaseSpeak.h" />

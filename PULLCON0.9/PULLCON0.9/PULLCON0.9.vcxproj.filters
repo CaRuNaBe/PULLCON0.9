@@ -14,23 +14,20 @@
     <Filter Include="source\object\title">
       <UniqueIdentifier>{8f53cc26-d6a0-4078-949f-a8c926bd295b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\object\pause">
-      <UniqueIdentifier>{1c71afb1-6e1c-47a0-bd62-8e79da3a2943}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\object\game">
       <UniqueIdentifier>{b0781283-a4ea-4ce3-b3ee-9edb1e405b8a}</UniqueIdentifier>
     </Filter>
     <Filter Include="source\object\speakscript">
       <UniqueIdentifier>{fcb4b166-5d3c-4280-9de2-a74d8920765f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\object\ui">
-      <UniqueIdentifier>{8cd12839-9393-423f-9997-1632fa130174}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\mode\modeoutgame">
       <UniqueIdentifier>{cee9dc3e-52e4-4c8e-930d-a1cc53327110}</UniqueIdentifier>
     </Filter>
     <Filter Include="source\mode\modeingame">
       <UniqueIdentifier>{8f5aa987-b5b8-45b3-bdb2-86faa5addbb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\object\game\ui">
+      <UniqueIdentifier>{8cd12839-9393-423f-9997-1632fa130174}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -61,18 +58,6 @@
     <ClCompile Include="source\title\EndGuid.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\pose\DescriptionLogo.cpp">
-      <Filter>source\object\pause</Filter>
-    </ClCompile>
-    <ClCompile Include="source\pose\PauseLogo.cpp">
-      <Filter>source\object\pause</Filter>
-    </ClCompile>
-    <ClCompile Include="source\pose\RestartLogo.cpp">
-      <Filter>source\object\pause</Filter>
-    </ClCompile>
-    <ClCompile Include="source\pose\ReturnTitleLogo.cpp">
-      <Filter>source\object\pause</Filter>
-    </ClCompile>
     <ClCompile Include="source\title\CreditLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
@@ -85,12 +70,6 @@
     <ClCompile Include="source\speakscript\SpeakScriptObject.cpp">
       <Filter>source\object\speakscript</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ModeGameResult.cpp">
-      <Filter>source\mode\modeoutgame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\mode\ModePause.cpp">
-      <Filter>source\mode\modeoutgame</Filter>
-    </ClCompile>
     <ClCompile Include="source\mode\ModeResourceRoad.cpp">
       <Filter>source\mode\modeoutgame</Filter>
     </ClCompile>
@@ -98,13 +77,13 @@
       <Filter>source\mode\modeoutgame</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\UIBase.cpp">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\UIHpGage.cpp">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\UIFuelGage.cpp">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClCompile>
     <ClCompile Include="source\mode\ModeTitle.cpp">
       <Filter>source\mode\modeoutgame</Filter>
@@ -182,13 +161,16 @@
       <Filter>source\object\game\area</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\UIPullGage.cpp">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClCompile>
     <ClCompile Include="source\ui\UICursor.cpp">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClCompile>
     <ClCompile Include="source\ApplicationGlobal.cpp">
       <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ScriptBase.cpp">
+      <Filter>source\mode\modeingame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,18 +198,6 @@
     <ClInclude Include="source\title\CreditGuid.h">
       <Filter>source\object\title</Filter>
     </ClInclude>
-    <ClInclude Include="source\pose\DescriptionLogo.h">
-      <Filter>source\object\pause</Filter>
-    </ClInclude>
-    <ClInclude Include="source\pose\PauseLogo.h">
-      <Filter>source\object\pause</Filter>
-    </ClInclude>
-    <ClInclude Include="source\pose\RestartLogo.h">
-      <Filter>source\object\pause</Filter>
-    </ClInclude>
-    <ClInclude Include="source\pose\ReturnTitleLogo.h">
-      <Filter>source\object\pause</Filter>
-    </ClInclude>
     <ClInclude Include="source\maingame\EffectTrail.h">
       <Filter>source\object\game</Filter>
     </ClInclude>
@@ -243,12 +213,6 @@
     <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>source\mode\modeingame</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ModeGameResult.h">
-      <Filter>source\mode\modeoutgame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mode\ModePause.h">
-      <Filter>source\mode\modeoutgame</Filter>
-    </ClInclude>
     <ClInclude Include="source\mode\ModeResourceRoad.h">
       <Filter>source\mode\modeoutgame</Filter>
     </ClInclude>
@@ -256,13 +220,13 @@
       <Filter>source\mode\modeoutgame</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\UIBase.h">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\UIHpGage.h">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\UIFuelGage.h">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClInclude>
     <ClInclude Include="source\maingame\AreaNoEntry.h">
       <Filter>source\object\game\area</Filter>
@@ -340,13 +304,16 @@
       <Filter>source\object\game\area</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\UIPullGage.h">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\UICursor.h">
-      <Filter>source\object\ui</Filter>
+      <Filter>source\object\game\ui</Filter>
     </ClInclude>
     <ClInclude Include="source\ApplicationGlobal.h">
       <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ScriptBase.h">
+      <Filter>source\mode\modeingame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

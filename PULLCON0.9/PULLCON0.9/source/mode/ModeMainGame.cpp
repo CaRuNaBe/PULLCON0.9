@@ -112,11 +112,7 @@ ModeMainGame::~ModeMainGame()
 void ModeMainGame::Destroy()
 {
 	state = ScriptState::PREPARSING;
-	/*
-#if _DEBUG
-	scripts_data->WriteJson( FILENAME,GAMESCRIPT );
-#endif
-*/
+
 	max_line = 0;
 	now_line = 0;
 	wait_count = 0;
@@ -148,13 +144,6 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 
 	max_line = scripts_data->GetScriptNum();
 
-	/*
-	if ( max_line <= 0 )
-	{
-		state = ScriptState::EDIT;
-		return;
-	}
-	*/
 	return;
 };
 
@@ -162,6 +151,36 @@ bool ModeMainGame::Update()
 {
 	ModeBase::Update();
 	object_main_game.Update();
+	for ( auto& object_3d : object_main_game.GetObjects() )
+	{
+		if ( object_3d->GetType() == ActorBase3D::Type::kPlayer )
+		{
+			auto& playerposi = object_3d->GetPosition();
+
+			if ( playerposi.x > world_range_x )
+			{
+				playerposi.x = world_range_x;
+			}
+			if ( playerposi.x < (-world_range_x) )
+			{
+				playerposi.x = (-world_range_x);
+			}
+			if ( playerposi.y > world_range_y )
+			{
+				playerposi.y = world_range_y;
+			}
+
+			if ( playerposi.z > world_range_z )
+			{
+				playerposi.z = world_range_z;
+			}
+			if ( playerposi.z < (-world_range_z) )
+			{
+				playerposi.z = (-world_range_z);
+			}
+			break;
+		}
+	}
 	ui_player.Update();
 	int dead = 0;
 	int gunship_num = 0;
@@ -671,7 +690,6 @@ bool ModeMainGame::OnCommandEnd( unsigned int line,std::vector<std::string>& scr
 		{
 			return false;
 		}
-
 		state = ScriptState::END;
 	}
 	else
@@ -846,7 +864,7 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 	bool result = false;
 	if ( state != ScriptState::EDIT )
 	{
-		const size_t SCRIPTSIZE = 3;
+		const size_t SCRIPTSIZE = 2;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -864,10 +882,9 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
-		std::array < std::string,2 > input_str =
+		std::array < std::string,1 > input_str =
 		{
 			"ストーリーid(ファイル名/ストーリー名)"
-			"ゲームを止めるか(1:止める0:止めない)"
 		};
 		result = true;
 		for ( int i = 0; i < input_str.size(); i++ )
@@ -1534,7 +1551,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		/** エリアのポジション */
 		vector4 posi;
 		/** scriptsの中にある数値や文字列の数 */
-		const size_t SCRIPTSIZE = 11;
+		const size_t SCRIPTSIZE = 12;
 		/** 大きさ */
 		float scale = 1.0f;
 		/**  */
@@ -1592,7 +1609,10 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		{
 			return result;
 		}
-
+		if ( !(string::ToInt( scripts[11],pieces_coll )) )
+		{
+			return result;
+		};
 		std::vector<math::vector4>posivec;
 		int num_while = 0;
 		auto x_posi_max = posi.x + std::abs( range );
@@ -1655,7 +1675,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 		{
 			return result;
 		}
-		std::array < std::string,10 > input_str =
+		std::array < std::string,11 > input_str =
 		{
 			"x座標",
 			"y座標",
@@ -1666,7 +1686,8 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 			"コリジョン有無(1有;0無)",
 			"円か四角選択(1円;0四角)",
 			"円の範囲",
-			"オブジェクトの間隔"
+			"オブジェクトの間隔",
+			"上に重なる当たり判定の球の数"
 		};
 		result = true;
 		for ( int i = 0; i < input_str.size(); i++ )
