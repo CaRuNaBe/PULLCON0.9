@@ -5,22 +5,25 @@
 #include "Bullet.h"
 
 namespace {
-	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
-	const float CAMERADEFAULT_POS_Y =   2500.f;   // プレイヤーを原点としたときのカメラのY座標
+	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置　プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
+	const float CAMERADEFAULT_POS_Y = 2500.f;   // プレイヤーを原点としたときのカメラのY座標
 	const float CAMERADEFAULT_POS_XZ = -4000.f;   // プレイヤーを原点としたときのカメラのXZ座標のベクトルの長さ
 	const float PLAYERLENGTH = 2000.f;   // プレイヤーの奥行きの長さ
 	constexpr int PLAYER_ID = 0;
 }
 
 Player::Player(ApplicationBase& game, ModeBase& mode)
-	:base(game, mode)
-{
+	:base(game, mode) {
 	auto file_pass_data = std::make_unique<ScriptsData>();
 	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
 	const std::string ARRYNAME = "ObjectId";
-	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
+	file_pass_data->LoadJson(FILEPASS, ARRYNAME);
 
-	_handle = ResourceServer::LoadMV1Model( file_pass_data ->GetScriptLine( PLAYER_ID ).c_str());
+	_handleBody = ResourceServer::LoadMV1Model("res/player/3Dmodel/mv1/cg_PlayerHelicopter_Body.mv1");
+	_handleAirscrew = ResourceServer::LoadMV1Model("res/player/3Dmodel/mv1/cg_PlayerHelicopter_Propera.mv1");
+	_handleMagnet = ResourceServer::LoadMV1Model("res/player/3Dmodel/mv1/cg_PlayerHelicopter_Magnet.mv1");
+	_handleBackAirscrew = ResourceServer::LoadMV1Model("res/player/3Dmodel/mv1/cg_PlayerHelicopter_BackPropera.mv1");
+
 	_se = ResourceServer::LoadSoundMem("res/player/Audio/pull.wav");
 	_seBullet = ResourceServer::LoadSoundMem("res/player/Audio/normal_bullet_fast.wav");
 	//デフォルトのフォントで、サイズ４０、太さ３のフォントを作成
@@ -36,17 +39,21 @@ Player::~Player() {
 void Player::Init() {
 	base::Init();
 	_statePlayer = State::NUM;
-	
+
 	_fSpeed = 90.f;
 	_fRotatY = utility::PI;
 	_iFuel = 100;
 	_iLife = 100;
 	_push = 0;
 	_isHit = false;
+	_fRotateAirscrew = 0.f;
+	_fAxialX = 0.f;
+	_fAxialZ = 0.f;
 
 	_collision._fRadius = 500.f * _fScale;
 
 	// カメラの設定
+	_cam._vPos.x = _vPos.x;
 	_cam._vPos.y = _vPos.y + CAMERADEFAULT_POS_Y;
 	_cam._vPos.z = _vPos.z + CAMERADEFAULT_POS_XZ;
 	_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
@@ -71,7 +78,8 @@ bool Player::Update() {
 
 	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kEnemyAAA
-			|| obje->GetType() == Type::kBullet) {
+			|| obje->GetType() == Type::kBullet
+			|| obje->GetType() == Type::kStageObject) {
 			if (obje->GetType() == Type::kEnemyAAA) {
 				if (obje->_pull == true && _pull) {
 					// オブジェクトまで移動する
@@ -103,8 +111,17 @@ bool Player::Update() {
 			}
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
-					if (obje->_CT == 0) {
+					if (obje->_CT == 0 && _ST == 0) {
 						_iLife -= obje->_iDamage;
+						_isHit = true;
+						_ST = 20;
+					}
+				}
+			}
+			if ((obje->GetType() == Type::kStageObject)) {
+				if (IsHitObject(*obje)) {
+					if (_ST == 0) {
+						--_iLife;
 						_isHit = true;
 						_ST = 20;
 					}
@@ -133,7 +150,7 @@ bool Player::Update() {
 			}
 		}
 
-		 // スティック押し込みで速度操作
+		// スティック押し込みで速度操作
 		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_RIGHT_THUMB)) {
 			_fSpeed += 30.f;
 		}
@@ -152,8 +169,18 @@ bool Player::Update() {
 
 		//キャラの上昇下降
 		int diry = 0;
-		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_A)) { diry += 1; }     // A
-		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_B)) { diry += -1; }     // B
+		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_A)) {
+			diry += 1;
+			_fRotateAirscrew += 3.f * utility::PI / 10.f;
+		}
+		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_B)) {
+			diry += -1;
+			_fRotateAirscrew -= utility::PI / 18.f;
+		}
+		// プロペラの回転軸
+		_fRotateAirscrew += utility::PI / 6.f;
+
+		vector4 vOldPos = _vPos;
 
 		//キャラの移動
 		vector4 dir = { -(_game.Getinput().GetLstickY()),0,_game.Getinput().GetLstickX() };   // int値が入る
@@ -186,6 +213,13 @@ bool Player::Update() {
 		// 弾の向きベクトル
 		_vDir = v;
 
+		// 指定位置設定
+		float distance = _collision._fRadius * 2.f * 15.f;
+		v.x = cos(rad + camerad) * distance;
+		v.z = sin(rad + camerad) * distance;
+		v.y = sin(_fRotatX) * distance;
+		_vTarget = _vPos + v;
+
 		if (_game.Getinput().XinputEveryOtherRightTrigger(10)) {  // RT
 			if (_cnt % 20 == 0) {
 				// SE再生
@@ -196,18 +230,47 @@ bool Player::Update() {
 			_fire = true;
 			vector4 vBullet = { _vPos.x, _vPos.y, _vPos.z };
 			vBullet.x += cos(rad + camerad) * PLAYERLENGTH / 2.f;  // プレイヤーの少し前方に生成する
-			vBullet.z += sin(rad + camerad) * PLAYERLENGTH / 2.f;  
+			vBullet.z += sin(rad + camerad) * PLAYERLENGTH / 2.f;
 			AddBullet(vBullet);
 		}
 
-		// 指定位置設定
-		float distance = _collision._fRadius * 2.f * 15.f;
-		v.x = cos(rad + camerad) * distance;
-		v.z = sin(rad + camerad) * distance;
-		v.y = sin(_fRotatX) * distance;
-		_vTarget = _vPos + v;
+		float axialX = _fAxialX;
+		float axialZ = _fAxialZ;
+		if (_game.Getinput().GetLstickY() > 0) {  // 前方向
+			axialX -= utility::degree_to_radian(30.f) / 30.f;
+		}
+		else if (_game.Getinput().GetLstickY() < 0) {  // 後方向
+			axialX += utility::degree_to_radian(30.f) / 30.f;
+		}
+		else {
+			if (axialX < 0.f) {
+				axialX += utility::degree_to_radian(30.f) / 30.f;
+			}
+			else {
+				axialX -= utility::degree_to_radian(30.f) / 30.f;
+			}
+		}
+		if (_game.Getinput().GetLstickX() < 0) {  // 右方向
+			axialZ -= utility::degree_to_radian(30.f) / 30.f;
+		}
+		else if (_game.Getinput().GetLstickX() > 0) {  // 左方向
+			axialZ += utility::degree_to_radian(30.f) / 30.f;
+		}
+		else {
+			if (axialZ < 0.f) {
+				axialZ += utility::degree_to_radian(30.f) / 30.f;
+			}
+			else {
+				axialZ -= utility::degree_to_radian(30.f) / 30.f;
+			}
+		}
 
-
+		if (abs(axialX) < utility::degree_to_radian(30.f)) {
+			_fAxialX = axialX;
+		}
+		if (abs(axialZ) < utility::degree_to_radian(30.f)) {
+			_fAxialZ = axialZ;
+		}
 
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {
@@ -281,31 +344,62 @@ bool Player::Update() {
 
 bool Player::Draw() {
 	base::Draw();
-
+	// フォグ設定
+	SetFogEnable(TRUE);
+	SetFogColor(255, 255, 255);
+	SetFogStartEnd(5000.f, 400000.f);
 	// 注視点を描画
 	float linelength = 100.f;
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(-linelength, 0, 0)), VAdd(ToDX(_cam._vTarget), VGet(linelength, 0, 0)), GetColor(255, 0, 0));
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(0, -linelength, 0)), VAdd(ToDX(_cam._vTarget), VGet(0, linelength, 0)), GetColor(0, 255, 0));
 	DrawLine3D(VAdd(ToDX(_cam._vTarget), VGet(0, 0, -linelength)), VAdd(ToDX(_cam._vTarget), VGet(0, 0, linelength)), GetColor(0, 0, 255));
 
+	matrix44 rotaMatrix = matrix44();
+	matrix44 rotaAirscrewMatrix = matrix44();
+	matrix44 posMatrix = matrix44();
+	matrix44 posAirscrewMatrix = matrix44();
+	matrix44 matrix = matrix44();
+	matrix44 airscrewMatrix = matrix44();
 	// モデルの回転値
 	float rX = utility::degree_to_radian(5.f);   // 少し上向きに
-	if (_statePlayer == State::EVENT) {
-		// 引っこ抜き状態
-		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
+	if (_statePlayer == State::PLAY) {
+		rX += _fRotatX + _fAxialX;   // カメラを動かした分プラス
 	}
-	else {
-		rX += _fRotatX;   // カメラを動かした分プラス
-		MV1SetRotationXYZ(_handle, VGet(rX, _fRotatY, 0.0f));
-	}
+	rotaAirscrewMatrix.rotate_y(_fRotateAirscrew, false);
+	rotaMatrix.rotate_z(_fAxialZ, false);
+	rotaMatrix.rotate_x(rX, false);
+	rotaMatrix.rotate_y(_fRotatY, false);
+	/*
+	MV1SetRotationXYZ(_handleBody, VGet(rX, _fRotatY, 0.0f));
+	MV1SetRotationXYZ(_handleAirscrew, VGet(rX, _fRotateAirscrew, 0.0f));
+	MV1SetRotationXYZ(_handleMagnet, VGet(rX, _fRotatY, 0.0f));
+	MV1SetRotationXYZ(_handleBackAirscrew, VGet(rX, _fRotatY, 0.0f));
+	*/
 	// モデル拡大
-	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
+	MV1SetScale(_handleBody, VGet(_fScale, _fScale, _fScale));
 	// 位置
-	MV1SetPosition(_handle, ToDX(_vPos));
-	// ライティング計算
+	vector4 posAirscrew = { 0.f, 0.f, -200.f };
+	posMatrix.transfer(_vPos.x, _vPos.y, _vPos.z, false);
+	posAirscrewMatrix.transfer(posAirscrew.x, posAirscrew.y, posAirscrew.z, false);
+	/*
+	MV1SetPosition(_handleBody, ToDX(_vPos));
+	MV1SetPosition(_handleAirscrew, ToDX(posAirscrew));
+	MV1SetPosition(_handleMagnet, ToDX(_vPos));
+	MV1SetPosition(_handleBackAirscrew, ToDX(_vPos));
+	*/
+	// 行列設定反映
+	matrix = rotaMatrix * posMatrix;
+	airscrewMatrix = rotaAirscrewMatrix * posAirscrewMatrix * matrix;
+	MV1SetMatrix(_handleBody, ToDX(matrix));
+	MV1SetMatrix(_handleAirscrew, ToDX(airscrewMatrix));
+	MV1SetMatrix(_handleMagnet, ToDX(matrix));
+	MV1SetMatrix(_handleBackAirscrew, ToDX(matrix));
 	// モデル描画
 	SetUseLighting(FALSE);
-	MV1DrawModel(_handle);
+	MV1DrawModel(_handleBody);
+	MV1DrawModel(_handleAirscrew);
+	MV1DrawModel(_handleMagnet);
+	MV1DrawModel(_handleBackAirscrew);
 	// 対空砲の狙う位置を可視化
 	DrawSphere3D(ToDX(_vTarget), 100.f, 8, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 	SetUseLighting(TRUE);
@@ -313,13 +407,13 @@ bool Player::Draw() {
 	DrawLine3D(ToDX(_vPos), ToDX(_vTarget), GetColor(255, 0, 0));
 
 	// コリジョン描画
-	
+
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
 		vector4 color = { 255, 255, 255 };
 		if (_isHit) { color = { 255, 0, 0 }; }
 		DrawCollision(color);
 	}
-	
+
 	VECTOR Pos = ConvWorldPosToScreenPos(ToDX(_vPos));
 	if (_isHit) {
 		// 作成したフォントで画面左上に『HIT!!』と白の文字列を描画する
@@ -329,10 +423,7 @@ bool Player::Draw() {
 	// デバック表記
 	int x = 0, y = 0, size = 16;
 	SetFontSize(size);
-	DrawFormatString(x, y, GetColor(255, 0, 0), "Camera:"); y += size;
-	DrawFormatString(x, y, GetColor(255, 0, 0), "  target = (%5.2f, %5.2f, %5.2f)", _cam._vTarget.x, _cam._vTarget.y, _cam._vTarget.z); y += size;
-	DrawFormatString(x, y, GetColor(255, 0, 0), "  pos    = (%5.2f, %5.2f, %5.2f)", _cam._vPos.x, _cam._vPos.y, _cam._vPos.z); y += size;
-	DrawFormatString(x, y, GetColor(255, 0, 255), "  feil = %d ", _iFuel); y += size;
+	y += size * 10;
 	DrawFormatString(x, y, GetColor(255, 255, 255), "  Pieces = %d ", _iPieces); y += size;
 	DrawFormatString(x, y, GetColor(255, 255, 255), "  Speed = %f ", _fSpeed); y += size;
 
@@ -358,28 +449,24 @@ void Player::CameraUpdate() {
 
 	// 角度変更  モデルも同期させる
 	// Y軸回転
-	if (_game.Getinput().GetRstickX() < -1000)
-	{
+	if (_game.Getinput().GetRstickX() < -1000) {
 		camerad += 0.02f;
 		_fRotatY += -0.02f;
 	}
-	else if (_game.Getinput().GetRstickX() > 1000)
-	{
+	else if (_game.Getinput().GetRstickX() > 1000) {
 		camerad += -0.02f;
 		_fRotatY += 0.02f;
 	}
 
 	float limitrad = utility::radian_to_degree(theta);  // 度数法に変換
 	// X軸回転
-	if (_game.Getinput().GetRstickY() < -1000)
-	{
+	if (_game.Getinput().GetRstickY() < -1000) {
 		if (limitrad > 40.f) {
 			theta += -0.02f;
 			_fRotatX += -0.02f;
 		}
 	}
-	else if (_game.Getinput().GetRstickY() > 1000)
-	{
+	else if (_game.Getinput().GetRstickY() > 1000) {
 		if (limitrad < 100.f) {
 			theta += 0.02f;
 			_fRotatX += 0.02f;
