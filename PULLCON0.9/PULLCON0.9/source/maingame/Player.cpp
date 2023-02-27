@@ -17,10 +17,6 @@ Player::Player( ApplicationBase& game,ModeMainGame& mode )
 	:base( game,mode )
 {
 	auto file_pass = string::Split( gGlobal.object_pass_date->GetScriptLine( PLAYER_ID ),DELIMITER );
-	//_handleBody = ResourceServer::LoadMV1Model( "res/player/3Dmodel/mv1/cg_PlayerHelicopter_Body.mv1" );
-	//_handleAirscrew = ResourceServer::LoadMV1Model( "res/player/3Dmodel/mv1/cg_PlayerHelicopter_Propera.mv1" );
-	//_handleMagnet = ResourceServer::LoadMV1Model( "res/player/3Dmodel/mv1/cg_PlayerHelicopter_Magnet.mv1" );
-	//_handleBackAirscrew = ResourceServer::LoadMV1Model( "res/player/3Dmodel/mv1/cg_PlayerHelicopter_BackPropera.mv1" );
 	_handleBody = ResourceServer::LoadMV1Model( file_pass[0].c_str() );
 	_handleAirscrew = ResourceServer::LoadMV1Model( file_pass[1].c_str() );
 	_handleMagnet = ResourceServer::LoadMV1Model( file_pass[2].c_str() );

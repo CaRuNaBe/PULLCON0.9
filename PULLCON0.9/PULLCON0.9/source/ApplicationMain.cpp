@@ -2,6 +2,7 @@
 #include "ApplicationMain.h"
 #include "ApplicationGlobal.h"
 #include "mode/ModeTitle.h"
+#include "ModeTest.h"
 // ŽÀ‘Ì
 ApplicationMain g_oApplicationMain;
 
@@ -13,12 +14,13 @@ bool ApplicationMain::Initialize( HINSTANCE hInstance )
 	}
 	font_hundle = CreateFontToHandle( "Kazesawa-Bold",font_size,-1,-1 );
 	gGlobal.Init();
-#if 1
+#if 0
 	auto title = std::make_shared<ModeTitle>( *this,1 );
 	base::GetInstance()->GetModeServer()->Add( title );
 #endif // 0
-#if 0
-
+#if 1
+	auto test = std::make_shared<ModeTest>( *this,1 );
+	base::GetInstance()->GetModeServer()->Add( test );
 #endif
 	return true;
 }

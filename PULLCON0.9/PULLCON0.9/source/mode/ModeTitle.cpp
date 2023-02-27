@@ -10,6 +10,12 @@
 #include "../title/StartGuid.h"
 #include "../title/EndLogo.h"
 #include "../title/EndGuid.h"
+namespace
+{	//jsonファイル関係
+	const std::string FILENAME = "pullcon0.9.json";//ファイル名
+	const std::string FILEPASS = "res/string_date/gamescript/" + FILENAME;//ファイルパス
+	const std::string GAMESCRIPT = "pullcon0.9";//スクリプト名
+}
 ModeTitle::ModeTitle( ApplicationBase& game,int layer )
 	:GameBase( game,layer )
 {
@@ -54,6 +60,7 @@ bool ModeTitle::Update()
 			{
 				_game.GetInstance()->GetModeServer()->Del( *this );
 				auto game = std::make_shared<ModeMainGame>( _game,1 );
+				game->Initialize( FILEPASS,GAMESCRIPT,FILENAME );
 				_game.GetInstance()->GetModeServer()->Add( game );
 			}
 		}

@@ -6,7 +6,7 @@ class EnemyAAA: public ActorBase3D
 {
 	typedef ActorBase3D base;
 public:
-	EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num, vector4 _vPosi);
+	EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,int scale,vector4 _vPosi );
 	virtual ~EnemyAAA();
 	virtual Type GetType()
 	{
@@ -21,19 +21,28 @@ public:
 		WEAPON//•ºŠí‰»
 	};
 
-	virtual void Init(int pile_num, vector4 _vPosi);
+	virtual void Init( int pile_num,vector4 _vPosi );
 	virtual bool Update();
 	virtual bool Draw();
 
 	virtual void Damage();
 	void AddBullet();
-	void AddPieces(int pile_num);
+	void AddPieces( int pile_num );
 	void GetSearch();
-	void AddPieces( int min_id,int max_id,int pile_num );
+	void AddPieces( int min_id,int max_id,int pile_num,int scale );
 
-	void SetAxialX(float _x_rad) { _fAxialX = _x_rad; }
-	void SetAxialY(float _y_rad) { _fAxialY = _y_rad; }
-	void SetType(int _aim_player) { _iType = _aim_player; }
+	void SetAxialX( float _x_rad )
+	{
+		_fAxialX = _x_rad;
+	}
+	void SetAxialY( float _y_rad )
+	{
+		_fAxialY = _y_rad;
+	}
+	void SetType( int _aim_player )
+	{
+		_iType = _aim_player;
+	}
 protected:
 	State   _stateAAA;
 

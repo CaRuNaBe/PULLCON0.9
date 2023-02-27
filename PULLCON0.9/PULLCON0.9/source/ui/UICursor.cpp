@@ -2,7 +2,7 @@
 UICursor::UICursor( ApplicationBase& game,int layer,ModeMainGame& _base )
 	:UIBase( game,layer,_base )
 {
-	handle_cursor = ResourceServer::LoadGraph( "res/player/UI/cursor/ui_Player_AimCorsor.png" );
+	handle_cursor = ResourceServer::LoadGraph( "res/2D_image/cursor/ui_Player_AimCorsor.png" );
 	Initialize();
 };
 

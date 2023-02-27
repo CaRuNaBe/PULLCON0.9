@@ -68,11 +68,12 @@ namespace
 	const std::string ECOMMAND_JUNP = "jump";//編集地点変更コマンド
 	//文字列分割用
 	const std::string DELIMITER = ",";
+
+	constexpr int DANGER_ANIME_MAX = 74;
 	//jsonファイル関係
 	const std::string FILENAME = "pullcon0.9.json";//ファイル名
 	const std::string FILEPASS = "res/string_date/gamescript/" + FILENAME;//ファイルパス
 	const std::string GAMESCRIPT = "pullcon0.9";//スクリプト名
-	constexpr int DANGER_ANIME_MAX = 74;
 }
 
 /**
@@ -86,7 +87,6 @@ ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	: GameBase( game,layer )
 {
 	scripts_data = std::make_unique<ScriptsData>();
-	Initialize( FILEPASS,GAMESCRIPT,FILENAME );
 
 	///////////////////////////////////////////////////////
 	/*
@@ -1181,9 +1181,8 @@ bool ModeMainGame::OnCommandEnemyAAA( unsigned int line,std::vector<std::string>
 		{
 			return result;
 		}
-		auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,pile_num,posi );
+		auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,pile_num,scale,posi );
 
-		enemyAAA->SetScale( scale );
 		enemyAAA->SetAxialX( x_rad );
 		enemyAAA->SetAxialY( y_rad );
 		enemyAAA->SetType( aim_player );
@@ -1379,9 +1378,7 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 
 		for ( auto&& set_pos : posivec )
 		{
-			auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ),std::get<0>( set_pos ) );
-
-			enemyAAA->SetScale( scale );
+			auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ),scale,std::get<0>( set_pos ) );
 			object_main_game.Add( enemyAAA );
 		}
 		result = true;

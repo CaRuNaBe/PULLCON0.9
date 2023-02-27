@@ -9,7 +9,7 @@ namespace
 	constexpr int TURRET = 0;
 	const std::string DELIMITER = ",";
 }
-EnemyAAA::EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,vector4 _vPosi )
+EnemyAAA::EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,int scale ,vector4 _vPosi )
 	:base( game,mode )
 {
 	auto id = utility::get_random( min_id,max_id );
@@ -20,7 +20,7 @@ EnemyAAA::EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_
 	_handle_turret = ResourceServer::LoadMV1Model( pass_vector[TURRET] );
 
 	Init( pile_num,_vPosi );
-	AddPieces( min_id,max_id,pile_num );
+	AddPieces( min_id,max_id,pile_num,scale );
 }
 
 EnemyAAA::~EnemyAAA()
@@ -377,12 +377,12 @@ void EnemyAAA::AddBullet()
 	_mode.GetObjectServer3D().Add( bullet );
 }
 
-void EnemyAAA::AddPieces( int min_id,int max_id,int pile_num )
+void EnemyAAA::AddPieces( int min_id,int max_id,int pile_num,int scale )
 {
 	for ( auto i = 0; i < pile_num; ++i )
 	{
 		vector4 vPiece = {_vPos.x, _vPos.y - _collision._fRadius * static_cast<float>(i + 1), _vPos.z};
-		auto piece = std::make_shared<EnemyAAA>( _game,_mode,min_id,max_id,0,vPiece );
+		auto piece = std::make_shared<EnemyAAA>( _game,_mode,min_id,max_id,0,scale,vPiece );
 		piece->_stateAAA = State::NUM;
 		piece->_coll = false;
 		piece->_iPart = i + 1;   // ‚»‚ê‚¼‚ê‚ª‰½ŒÂ–Ú‚©‚ð‹L‰¯

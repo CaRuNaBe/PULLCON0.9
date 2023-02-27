@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="source\ApplicationGlobal.cpp" />
     <ClCompile Include="source\maingame\ActorBase3D.cpp" />
+    <ClCompile Include="source\ModeTest.cpp" />
     <ClCompile Include="source\ObjectBase.cpp" />
     <ClCompile Include="source\title\ActorBase2d.cpp" />
     <ClCompile Include="source\ui\UIPullGage.cpp" />
@@ -205,6 +206,7 @@
   <ItemGroup>
     <ClInclude Include="source\ApplicationGlobal.h" />
     <ClInclude Include="source\maingame\ActorBase3D.h" />
+    <ClInclude Include="source\ModeTest.h" />
     <ClInclude Include="source\ObjectBase.h" />
     <ClInclude Include="source\title\ActorBase2d.h" />
     <ClInclude Include="source\ui\UIPullGage.h" />

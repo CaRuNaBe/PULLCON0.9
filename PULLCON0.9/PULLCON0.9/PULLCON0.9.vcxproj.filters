@@ -39,6 +39,7 @@
     <ClCompile Include="source\ui\UIFuelGage.cpp" />
     <ClCompile Include="source\ui\UIHpGage.cpp" />
     <ClCompile Include="source\ui\UICursor.cpp" />
+    <ClCompile Include="source\ModeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationGlobal.h" />
@@ -79,5 +80,6 @@
     <ClInclude Include="source\ui\UIFuelGage.h" />
     <ClInclude Include="source\ui\UIHpGage.h" />
     <ClInclude Include="source\ui\UICursor.h" />
+    <ClInclude Include="source\ModeTest.h" />
   </ItemGroup>
 </Project>

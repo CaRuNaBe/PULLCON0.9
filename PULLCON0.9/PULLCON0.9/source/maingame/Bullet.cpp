@@ -6,11 +6,11 @@
 Bullet::Bullet( ApplicationBase& game,ModeMainGame& mode)
 	:base(game,mode)
 {
-	_cgDarkPurple = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_DarkPurple.png");
-	_cgGreen = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Green.png");
-	_cgPink = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Pink.png");
-	_cgPurple = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Purple.png");
-	_cgYellow = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_Yellow.png");
+	_cgDarkPurple = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_DarkPurple.png");
+	_cgGreen = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_Green.png");
+	_cgPink = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_Pink.png");
+	_cgPurple = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_Purple.png");
+	_cgYellow = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_Yellow.png");
 	_cg = 0;
 	Init();
 }

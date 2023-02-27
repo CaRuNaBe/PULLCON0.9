@@ -13,8 +13,8 @@ UIHpGage::UIHpGage( ApplicationBase& game,int layer,ModeMainGame& _base )
 	:UIBase( game,layer,_base )
 {
 	hp_gage_now_posi = static_cast<float>(GAGE_MAX_WIDTH);
-	handle_hp_body = ResourceServer::LoadGraph( "res/player/UI/HPgage/ui_Player_HP_1.png" );
-	handle_hp_gage = ResourceServer::LoadGraph( "res/player/UI/HPgage/ui_Player_HP_2.png" );
+	handle_hp_body = ResourceServer::LoadGraph( "res/2D_image/HPgage/ui_Player_HP_1.png" );
+	handle_hp_gage = ResourceServer::LoadGraph( "res/2D_image/HPgage/ui_Player_HP_2.png" );
 	Initialize();
 };
 

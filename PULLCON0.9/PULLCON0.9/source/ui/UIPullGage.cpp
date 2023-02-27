@@ -24,14 +24,14 @@ UIPullGage:: ~UIPullGage()
 bool UIPullGage::Initialize()
 {
 	UIBase::Initialize();
-	hundle_pullgage[0] = ResourceServer::LoadGraph( "res/player/UI/PullGage/ui_DoPullOut.png" );
-	hundle_pullgage[1] = ResourceServer::LoadGraph( "res/player/UI/PullGage/ui_DoPullOutMeter.png" );
-	hundle_pullgage[2] = ResourceServer::LoadGraph( "res/player/UI/PullGage/ui_DoPullOutMeterButton_OFF.png" );
-	hundle_pullgage[3] = ResourceServer::LoadGraph( "res/player/UI/PullGage/ui_DoPullOutMeterButton_ON.png" );
-	hundle_pullgage[4] = ResourceServer::LoadGraph( "res/player/UI/PullGage/ui_DoPullOutMeterButton_Triangle.png" );
+	hundle_pullgage[0] = ResourceServer::LoadGraph( "res/2D_image/PullGage/ui_DoPullOut.png" );
+	hundle_pullgage[1] = ResourceServer::LoadGraph( "res/2D_image/PullGage/ui_DoPullOutMeter.png" );
+	hundle_pullgage[2] = ResourceServer::LoadGraph( "res/2D_image/PullGage/ui_DoPullOutMeterButton_OFF.png" );
+	hundle_pullgage[3] = ResourceServer::LoadGraph( "res/2D_image/PullGage/ui_DoPullOutMeterButton_ON.png" );
+	hundle_pullgage[4] = ResourceServer::LoadGraph( "res/2D_image/PullGage/ui_DoPullOutMeterButton_Triangle.png" );
 
-	hundle_xbutton[0] = ResourceServer::LoadGraph( "res/player/UI/PullGage/ui_DoPullOutMeter_XButton.png" );
-	hundle_xbutton[1] = ResourceServer::LoadGraph( "res/player/UI/PullGage/ui_DoPullOutMeter_XButton_OFF.png" );
+	hundle_xbutton[0] = ResourceServer::LoadGraph( "res/2D_image/PullGage/ui_DoPullOutMeter_XButton.png" );
+	hundle_xbutton[1] = ResourceServer::LoadGraph( "res/2D_image/PullGage/ui_DoPullOutMeter_XButton_OFF.png" );
 	brack = GetColor( 0,0,0 );
 	GetGraphSize( hundle_pullgage[1],&BASE_IMAGE_SIZE_X,&BASE_IMAGE_SIZE_Y );
 	BASE_IMAGE_SIZE = {BASE_IMAGE_SIZE_X,BASE_IMAGE_SIZE_Y};

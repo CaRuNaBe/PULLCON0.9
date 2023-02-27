@@ -46,8 +46,6 @@ public:
 	}
 
 private:
-	ObjectServer<ActorBase3D> object_main_game;
-	GameServer<UIBase> ui_player;
 	enum class ScriptState
 	{
 		EDIT,//エディットモード
@@ -170,4 +168,7 @@ private:
 	int cg_outobarea[74];
 	int game_over_timer;
 	bool is_player_danger;
+protected:
+	ObjectServer<ActorBase3D> object_main_game;
+	GameServer<UIBase> ui_player;
 };

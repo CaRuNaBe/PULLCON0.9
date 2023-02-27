@@ -14,8 +14,8 @@ UIFuelGage::UIFuelGage( ApplicationBase& game,int layer,ModeMainGame& _base )
 	:UIBase( game,layer,_base )
 {
 	fuel_gage_now_posi = static_cast<float>(GAGE_MAX_WIDTH);
-	handle_fuel_body = ResourceServer::LoadGraph( "res/player/UI/Fuelgage/ui_Player_Fuel_1.png" );
-	handle_fuel_gage = ResourceServer::LoadGraph( "res/player/UI/Fuelgage/ui_Player_Fuel_2.png" );
+	handle_fuel_body = ResourceServer::LoadGraph( "res/2D_image/Fuelgage/ui_Player_Fuel_1.png" );
+	handle_fuel_gage = ResourceServer::LoadGraph( "res/2D_image/Fuelgage/ui_Player_Fuel_2.png" );
 	Initialize();
 };
 
