@@ -1,6 +1,6 @@
 #include "EndGuid.h"
 #include "Dxlib.h"
-EndGuid::EndGuid( ApplicationBase& game,ModeBase& mode ): ActorBase2d( game,mode )
+EndGuid::EndGuid( ApplicationBase& game,ModeTitle& mode ): ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Titlle_EndMenuIcon.png" );
 

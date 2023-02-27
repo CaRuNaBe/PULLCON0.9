@@ -61,9 +61,6 @@
     <ClCompile Include="source\title\CreditLogo.cpp">
       <Filter>source\object\title</Filter>
     </ClCompile>
-    <ClCompile Include="source\maingame\EffectTrail.cpp">
-      <Filter>source\object\game</Filter>
-    </ClCompile>
     <ClCompile Include="source\mode\ModeSpeakScript.cpp">
       <Filter>source\mode\modeingame</Filter>
     </ClCompile>
@@ -118,9 +115,6 @@
     <ClCompile Include="source\maingame\ClearObject.cpp">
       <Filter>source\object\game\enemy\gunship</Filter>
     </ClCompile>
-    <ClCompile Include="source\maingame\EffectTrail.cpp">
-      <Filter>source\object\game\bullet</Filter>
-    </ClCompile>
     <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp">
       <Filter>source\object\speakscript</Filter>
     </ClCompile>
@@ -169,8 +163,14 @@
     <ClCompile Include="source\ApplicationGlobal.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\mode\ScriptBase.cpp">
-      <Filter>source\mode\modeingame</Filter>
+    <ClCompile Include="source\maingame\ActorBase3D.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\ActorBase2d.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ObjectBase.cpp">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,9 +197,6 @@
     </ClInclude>
     <ClInclude Include="source\title\CreditGuid.h">
       <Filter>source\object\title</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\EffectTrail.h">
-      <Filter>source\object\game</Filter>
     </ClInclude>
     <ClInclude Include="source\mode\ModeSpeakScript.h">
       <Filter>source\mode\modeingame</Filter>
@@ -261,9 +258,6 @@
     <ClInclude Include="source\maingame\ClearObject.h">
       <Filter>source\object\game\enemy\gunship</Filter>
     </ClInclude>
-    <ClInclude Include="source\maingame\EffectTrail.h">
-      <Filter>source\object\game\bullet</Filter>
-    </ClInclude>
     <ClInclude Include="source\speakscript\ActorBaseSpeak.h">
       <Filter>source\object\speakscript</Filter>
     </ClInclude>
@@ -312,9 +306,9 @@
     <ClInclude Include="source\ApplicationGlobal.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="source\mode\ScriptBase.h">
-      <Filter>source\mode\modeingame</Filter>
-    </ClInclude>
+    <ClInclude Include="source\maingame\ActorBase3D.h" />
+    <ClInclude Include="source\title\ActorBase2d.h" />
+    <ClInclude Include="source\ObjectBase.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">
@@ -328,9 +322,6 @@
     </Filter>
     <Filter Include="source\object\game">
       <UniqueIdentifier>{6179fa67-eefb-4c0e-8b7a-a6ffa04fc69c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\object\pause">
-      <UniqueIdentifier>{d69216c6-669c-4190-98f0-bcb0e2342c5d}</UniqueIdentifier>
     </Filter>
     <Filter Include="source\object\title">
       <UniqueIdentifier>{a95e8d4a-169c-49ab-8428-944b9b375c59}</UniqueIdentifier>

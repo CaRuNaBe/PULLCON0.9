@@ -1,6 +1,6 @@
 #include "StartGuid.h"
 #include "Dxlib.h"
-StartGuid::StartGuid( ApplicationBase& game,ModeBase& mode )
+StartGuid::StartGuid( ApplicationBase& game,ModeTitle& mode )
 	: ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_StartMenuIcon.png" );

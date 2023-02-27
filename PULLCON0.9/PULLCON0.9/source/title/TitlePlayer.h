@@ -7,6 +7,8 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
+#include "ActorBase2d.h"
+#include "../mode/ModeTitle.h"
 #include "array"
 class TitlePlayer:public ActorBase2d
 {
@@ -21,7 +23,7 @@ public:
 		WAIT//待つ
 	};
 	/** コンストラクタ */
-	TitlePlayer( ApplicationBase& game,ModeBase& mode );
+	TitlePlayer( ApplicationBase& game,ModeTitle& mode );
 	/** デストラクタ */
 	~TitlePlayer();
 

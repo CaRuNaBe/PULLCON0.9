@@ -1,10 +1,12 @@
 #pragma once
 #include "appframe.h"
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
 class EnemyKobae :
     public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	EnemyKobae(ApplicationBase& game, ModeBase& mode);
+	EnemyKobae(ApplicationBase& game,ModeMainGame& mode);
 	virtual ~EnemyKobae();
 	virtual Type GetType() {
 		return Type::kEnemySkyhunter;

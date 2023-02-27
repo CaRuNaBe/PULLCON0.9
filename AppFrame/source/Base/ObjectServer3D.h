@@ -16,13 +16,11 @@ public:
 	using TypeObjects = std::vector <ObjectPtr >;// オブジェクトリストを定義
 	/** コンストラクタ */
 	ObjectServer3D():_updating( false )
-	{
-	}
+	{}
 	/** デストラクタ */
 	~ObjectServer3D()
 	{
-		Clear3DObjects();
-		ClearBillboardObjects();
+		Clear();
 	}
 	/** _v3DObjects取得 */
 	TypeObjects& Get3DObjects()
@@ -33,6 +31,12 @@ public:
 	TypeObjects& GetBillboardObjects()
 	{
 		return _vBillboardObjects;
+	}
+	/** 全クリア */
+	void Clear()
+	{
+		Clear3DObjects();
+		ClearBillboardObjects();
 	}
 	/** _v3DObjects初期化 */
 	void Clear3DObjects()

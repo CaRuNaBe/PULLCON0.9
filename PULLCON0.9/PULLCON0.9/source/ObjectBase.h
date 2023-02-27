@@ -1,12 +1,12 @@
 #pragma once
 #include "Dxlib.h"
-class ApplicationBase;
+#include "AppFrame.h"
 class ModeBase;
 // ObjectBaseƒNƒ‰ƒX
 class ObjectBase
 {
 public:
-	ObjectBase( ApplicationBase& game,ModeBase& mode );
+	ObjectBase( ApplicationBase& game );
 	virtual ~ObjectBase();
 
 	virtual void	Init();
@@ -39,6 +39,4 @@ protected:
 	bool isUpdateSkip;
 	bool isDrawSkip;
 	ApplicationBase& _game;
-	ModeBase& _mode;
-
 };

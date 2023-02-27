@@ -165,13 +165,15 @@
   <ItemGroup>
     <ClCompile Include="source\mode\ScriptBase.cpp" />
     <ClCompile Include="source\ApplicationGlobal.cpp" />
+    <ClCompile Include="source\maingame\ActorBase3D.cpp" />
+    <ClCompile Include="source\ObjectBase.cpp" />
+    <ClCompile Include="source\title\ActorBase2d.cpp" />
     <ClCompile Include="source\ui\UIPullGage.cpp" />
     <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp" />
     <ClCompile Include="source\ui\UIBase.cpp" />
     <ClCompile Include="source\maingame\Bullet.cpp" />
     <ClCompile Include="source\maingame\ClearObject.cpp" />
     <ClCompile Include="source\maingame\AreaCommunication.cpp" />
-    <ClCompile Include="source\maingame\EffectTrail.cpp" />
     <ClCompile Include="source\maingame\EnemyAAA.cpp" />
     <ClCompile Include="source\maingame\EnemyColumn.cpp" />
     <ClCompile Include="source\maingame\EnemyKobae.cpp" />
@@ -204,13 +206,15 @@
   <ItemGroup>
     <ClInclude Include="source\mode\ScriptBase.h" />
     <ClInclude Include="source\ApplicationGlobal.h" />
+    <ClInclude Include="source\maingame\ActorBase3D.h" />
+    <ClInclude Include="source\ObjectBase.h" />
+    <ClInclude Include="source\title\ActorBase2d.h" />
     <ClInclude Include="source\ui\UIPullGage.h" />
     <ClInclude Include="source\speakscript\ActorBaseSpeak.h" />
     <ClInclude Include="source\ui\UIBase.h" />
     <ClInclude Include="source\maingame\Bullet.h" />
     <ClInclude Include="source\maingame\ClearObject.h" />
     <ClInclude Include="source\maingame\AreaCommunication.h" />
-    <ClInclude Include="source\maingame\EffectTrail.h" />
     <ClInclude Include="source\maingame\EnemyAAA.h" />
     <ClInclude Include="source\maingame\EnemyColumn.h" />
     <ClInclude Include="source\maingame\EnemyKobae.h" />

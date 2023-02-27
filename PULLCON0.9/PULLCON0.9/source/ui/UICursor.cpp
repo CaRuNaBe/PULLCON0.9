@@ -1,5 +1,5 @@
 #include "UICursor.h"
-UICursor::UICursor( ApplicationBase& game,int layer,ModeBase& _base )
+UICursor::UICursor( ApplicationBase& game,int layer,ModeMainGame& _base )
 	:UIBase( game,layer,_base )
 {
 	handle_cursor = ResourceServer::LoadGraph( "res/player/UI/cursor/ui_Player_AimCorsor.png" );

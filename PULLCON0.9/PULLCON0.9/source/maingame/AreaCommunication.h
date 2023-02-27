@@ -1,12 +1,14 @@
 #pragma once
 #include "appframe.h"
-#include "string"
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
+#include <string>
 class AreaCommunication:
 	public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	AreaCommunication( ApplicationBase& game,ModeBase& mode,const std::string storyname );
+	AreaCommunication( ApplicationBase& game,ModeMainGame& mode,const std::string storyname );
 	virtual ~AreaCommunication();
 	virtual Type GetType()
 	{

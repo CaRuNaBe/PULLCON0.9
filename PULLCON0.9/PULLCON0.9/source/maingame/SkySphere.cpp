@@ -1,38 +1,24 @@
 #include "SkySphere.h"
-
-SkySphere::SkySphere( ApplicationBase& game,ModeBase& mode,int objectid )
+#include "../ApplicationGlobal.h"
+SkySphere::SkySphere( ApplicationBase& game,ModeMainGame& mode,int objectid )
 	:base( game,mode )
 {
-	auto file_pass_data = std::make_unique<ScriptsData>();
-	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
-	const std::string ARRYNAME = "ObjectId";
-	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
-
-	_handle = ResourceServer::LoadMV1Model( file_pass_data->GetScriptLine( objectid ).c_str() );
-
-
-
+	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( objectid ).c_str() );
 	Init();
 }
 
 SkySphere::~SkySphere()
 {
-
 }
 
 void SkySphere::Init()
 {
 	base::Init();
-
-
 }
 
 bool SkySphere::Update()
 {
 	base::Update();
-
-
-
 	return true;
 }
 

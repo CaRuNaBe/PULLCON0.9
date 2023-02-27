@@ -1,6 +1,6 @@
 #include "StartLogo.h"
 #include "Dxlib.h"
-StartLogo::StartLogo( ApplicationBase& game,ModeBase& mode )
+StartLogo::StartLogo( ApplicationBase& game,ModeTitle& mode )
 	: ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_StartLogo.png" );

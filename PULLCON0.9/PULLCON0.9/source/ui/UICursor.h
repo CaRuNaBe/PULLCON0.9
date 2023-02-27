@@ -1,10 +1,11 @@
 #pragma once
-#include "UIBase.h"
 #include "../maingame/Player.h"
+#include "UIBase.h"
+class UIBase;
 class UICursor:public UIBase
 {
 public:
-	UICursor( ApplicationBase& game,int layer,ModeBase& _base );
+	UICursor( ApplicationBase& game,int layer,ModeMainGame& _base );
 	virtual ~UICursor();
 
 	virtual bool Initialize();

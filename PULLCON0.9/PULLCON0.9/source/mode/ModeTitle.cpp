@@ -11,7 +11,7 @@
 #include "../title/EndLogo.h"
 #include "../title/EndGuid.h"
 ModeTitle::ModeTitle( ApplicationBase& game,int layer )
-	:base( game,layer )
+	:GameBase( game,layer )
 {
 	auto titlelogo = std::make_shared<TitleLogo>( game,*this );
 	object_out_game.Add( titlelogo );
@@ -41,26 +41,22 @@ ModeTitle::~ModeTitle()
 
 bool ModeTitle::Initialize()
 {
-	base::Initialize();
 	return true;
 }
 
 bool ModeTitle::Update()
 {
-	base::Update();
 	object_out_game.Update();
 	return true;
 }
 
 bool ModeTitle::Draw()
 {
-	base::Draw();
 	object_out_game.Draw();
 	return true;
 }
 
 bool ModeTitle::DebugDraw()
 {
-	base::DebugDraw();
 	return true;
 };

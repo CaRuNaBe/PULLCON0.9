@@ -1,12 +1,12 @@
 #pragma once
 #include "appframe.h"
-
-
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
 class EnemyAAA: public ActorBase3D
 {
 	typedef ActorBase3D base;
 public:
-	EnemyAAA( ApplicationBase& game,ModeBase& mode,int min_id,int max_id,int pile_num, vector4 _vPosi);
+	EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num, vector4 _vPosi);
 	virtual ~EnemyAAA();
 	virtual Type GetType()
 	{

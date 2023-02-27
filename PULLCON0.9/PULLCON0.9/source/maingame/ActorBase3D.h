@@ -1,15 +1,18 @@
 #pragma once
+#include "appframe.h"
 
-#include "../Math/math.h"
-#include "ObjectBase.h"
+#include "../ObjectBase.h"
 using namespace math;
-class ActorBase3D : public ObjectBase {
+class ModeMainGame;
+class ActorBase3D: public ObjectBase
+{
 	typedef ObjectBase base;
 public:
-	ActorBase3D( ApplicationBase& game,ModeBase& mode );
+	ActorBase3D( ApplicationBase& game,ModeMainGame& mode );
 	virtual ~ActorBase3D();
 
-	enum class Type {  // 種別の列挙型
+	enum class Type
+	{  // 種別の列挙型
 		kBase,          // 0 アクター
 		kPlayer,        // 1 プレイヤー
 		kBullet,        // 2 弾丸
@@ -31,36 +34,64 @@ public:
 	virtual bool Update();
 	virtual void	UpdateCollision();
 	virtual bool Draw();
-	virtual void	DrawCollision(vector4 color);
-	virtual void	DrawCollisionEvent(vector4 color);
-	virtual void	DrawCollisionSearch(vector4 color);
-	virtual void	DrawCollisionObject(vector4 color);
+	virtual void	DrawCollision( vector4 color );
+	virtual void	DrawCollisionEvent( vector4 color );
+	virtual void	DrawCollisionSearch( vector4 color );
+	virtual void	DrawCollisionObject( vector4 color );
 
-	virtual bool	IsHitObject(ActorBase3D& object);	// 指定のオブジェクトと当たっているか
-	virtual bool	IsHitEvent(ActorBase3D& object);	// イベントスフィアと当たっているか
-	virtual bool	IsSearch(ActorBase3D& object);	  // サーチスフィアと当たっているか
+	virtual bool	IsHitObject( ActorBase3D& object );	// 指定のオブジェクトと当たっているか
+	virtual bool	IsHitEvent( ActorBase3D& object );	// イベントスフィアと当たっているか
+	virtual bool	IsSearch( ActorBase3D& object );	  // サーチスフィアと当たっているか
 
-	virtual void Damage() {}
+	virtual void Damage()
+	{}
 
-	virtual Sphere& GetCollision() { return _collision; }
-	virtual Sphere& GetCollisionEvent() { return _collisionEvent; }
-	virtual Sphere& GetCollisionSearch() { return _collisionSearch; }
+	virtual Sphere& GetCollision()
+	{
+		return _collision;
+	}
+	virtual Sphere& GetCollisionEvent()
+	{
+		return _collisionEvent;
+	}
+	virtual Sphere& GetCollisionSearch()
+	{
+		return _collisionSearch;
+	}
 
-	// 座標の設定
-	void SetPosition(const vector4& pos) { _vPos = pos; }
-	void SetPosition(float x, float y, float z) { _vPos.x = x; _vPos.y = y; _vPos.z = z; }
-	virtual vector4& GetPosition() { return _vPos; }
-	// 向きベクトルの設定
-	void SetDir(const vector4& dir) { _vDir = dir; }
-	void SetDir(float x, float y, float z) { _vDir.x = x; _vDir.y = y; _vDir.z = z; }
+// 座標の設定
+	void SetPosition( const vector4& pos )
+	{
+		_vPos = pos;
+	}
+	void SetPosition( float x,float y,float z )
+	{
+		_vPos.x = x; _vPos.y = y; _vPos.z = z;
+	}
+	virtual vector4& GetPosition()
+	{
+		return _vPos;
+	}
+// 向きベクトルの設定
+	void SetDir( const vector4& dir )
+	{
+		_vDir = dir;
+	}
+	void SetDir( float x,float y,float z )
+	{
+		_vDir.x = x; _vDir.y = y; _vDir.z = z;
+	}
 
-	void SetScale(float _scale) { _fScale = _scale; };
+	void SetScale( float _scale )
+	{
+		_fScale = _scale;
+	};
 	void SetCollision( const vector4& pos,float _radius )
 	{
-		_collision._vCenter= pos;
-		_fRadius= _radius;
+		_collision._vCenter = pos;
+		_fRadius = _radius;
 	};
-	void SetCollisionRadius(float radius )
+	void SetCollisionRadius( float radius )
 	{
 		_fRadius = radius;
 	};
@@ -85,6 +116,7 @@ public:
 		return _event;
 	}
 public:
+	ModeMainGame& _mode;
 	vector4 _vPos;       // 位置
 	vector4 _vEvent;     // イベント位置
 	vector4 _vRelation;  // 位置関係

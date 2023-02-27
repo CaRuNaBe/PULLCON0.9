@@ -1,6 +1,6 @@
 #include "TitleLogo.h"
 #include "Dxlib.h"
-TitleLogo::TitleLogo( ApplicationBase& game,ModeBase& mode )
+TitleLogo::TitleLogo( ApplicationBase& game,ModeTitle& mode )
 	: ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_Logo.png" );

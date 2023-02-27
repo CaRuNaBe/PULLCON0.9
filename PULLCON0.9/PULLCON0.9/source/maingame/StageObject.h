@@ -1,12 +1,13 @@
 #pragma once
 #include "appframe.h"
-
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
 class StageObject:
     public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	StageObject( ApplicationBase& game,ModeBase& mode,int objectid,int collision ,int pieces_coll);
+	StageObject( ApplicationBase& game,ModeMainGame& mode,int objectid,int collision ,int pieces_coll);
 	virtual ~StageObject();
 	virtual Type GetType()
 	{

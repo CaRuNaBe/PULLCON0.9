@@ -50,5 +50,6 @@ protected:
 	bool is_update_skip;
 	bool is_draw_skip;
 	int layer;
+	int cnt;
 };
 

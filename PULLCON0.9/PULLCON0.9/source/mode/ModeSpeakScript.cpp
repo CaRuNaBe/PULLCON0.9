@@ -46,7 +46,7 @@ namespace
 }
 
 ModeSpeakScript::ModeSpeakScript( ApplicationBase& game,int layer,std::string storyname )
-	:ModeBase( game,layer )
+	:GameBase( game,layer )
 {
 	const auto character_story = string::Split( storyname,"/" );
 
@@ -796,7 +796,6 @@ bool ModeSpeakScript::Draw()
 
 bool ModeSpeakScript::DebugDraw()
 {
-	ModeBase::DebugDraw();
 	return true;
 };
 

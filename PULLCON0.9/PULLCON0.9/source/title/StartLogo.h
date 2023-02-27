@@ -7,6 +7,8 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
+#include "ActorBase2d.h"
+#include "../mode/ModeTitle.h"
 class StartLogo:public ActorBase2d
 {
 	using Actor2d = ActorBase2d;
@@ -19,7 +21,7 @@ class StartLogo:public ActorBase2d
 		PULLED//ˆø‚Á’£‚ç‚ê‚Ä‚¢‚é
 	};
 public:
-	StartLogo( ApplicationBase& game,ModeBase& mode );
+	StartLogo( ApplicationBase& game,ModeTitle& mode );
 	~StartLogo();
 	virtual Type	GetType()//Ž©•ª‚ª‰½ŽÒ‚©
 	{

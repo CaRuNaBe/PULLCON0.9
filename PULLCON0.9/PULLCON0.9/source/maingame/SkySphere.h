@@ -1,11 +1,13 @@
 #pragma once
 #include "appframe.h"
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
 class SkySphere:
     public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	SkySphere( ApplicationBase& game,ModeBase& mode,int objectid);
+	SkySphere( ApplicationBase& game,ModeMainGame& mode,int objectid);
 	virtual ~SkySphere();
 	virtual Type GetType()
 	{

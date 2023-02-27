@@ -1,5 +1,5 @@
 #include "UIBase.h"
-UIBase::UIBase( ApplicationBase& game,int layer,ModeBase& _base )
+UIBase::UIBase( ApplicationBase& game,int layer,ModeMainGame& _base )
 	:GameBase( game,layer )
 	,mode_base( _base )
 {

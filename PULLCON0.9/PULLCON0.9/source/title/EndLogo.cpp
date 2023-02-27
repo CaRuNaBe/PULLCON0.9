@@ -1,6 +1,6 @@
 #include "EndLogo.h"
 #include "Dxlib.h"
-EndLogo::EndLogo( ApplicationBase& game,ModeBase& mode )
+EndLogo::EndLogo( ApplicationBase& game,ModeTitle& mode )
 	: ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_EndLogo.png" );

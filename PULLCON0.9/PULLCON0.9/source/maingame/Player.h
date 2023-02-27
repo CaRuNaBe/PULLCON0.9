@@ -1,6 +1,7 @@
 #pragma once
 #include "appframe.h"
-
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
 // ÉJÉÅÉâ
 class Camera
 {
@@ -16,7 +17,7 @@ class Player: public ActorBase3D
 {
 	typedef ActorBase3D base;
 public:
-	Player( ApplicationBase& game,ModeBase& mode );
+	Player( ApplicationBase& game,ModeMainGame& mode );
 	virtual ~Player();
 	virtual Type GetType()
 	{

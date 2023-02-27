@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "appframe.h"
+#include "../speakscript/ActorBaseSpeak.h"
 #include <tchar.h>
 #include <vector>
 #include <string>
@@ -7,7 +8,7 @@
 #include <map>
 
 class ScriptsData;
-class ModeSpeakScript:public ModeBase
+class ModeSpeakScript:public GameBase
 {
 public:
 	ModeSpeakScript( ApplicationBase& game,int layer,std::string storyname );

@@ -1,10 +1,11 @@
 #pragma once
-#include "UIBase.h"
 #include "appframe.h"
+#include "UIBase.h"
+class UIBase;
 class UIHpGage:public UIBase
 {
 public:
-	UIHpGage( ApplicationBase& game,int layer,ModeBase& _base );
+	UIHpGage( ApplicationBase& game,int layer,ModeMainGame& _base );
 	virtual ~UIHpGage();
 
 	virtual bool Initialize();

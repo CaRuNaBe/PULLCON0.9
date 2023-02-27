@@ -6,8 +6,9 @@
  * \author 阿部健太郎
  * \date   December 2022
  *********************************************************************/
-#include "../Math/math.h"
-#include "ObjectBase.h"
+#include "appframe.h"
+#include "../ObjectBase.h"
+#include "../mode/ModeTitle.h"
 using namespace math;
 class ActorBase2d:public ObjectBase
 {
@@ -37,7 +38,7 @@ public:
 	};
 	virtual Type GetType() = 0;
 
-	ActorBase2d( ApplicationBase& game,ModeBase& mode );
+	ActorBase2d( ApplicationBase& game,ModeTitle& mode );
 	virtual ~ActorBase2d();
 
 	virtual void	Init();/*初期化*/
@@ -69,6 +70,7 @@ public:
 	}
 	virtual bool	IsHitObject( ActorBase2d& object );	// 指定のオブジェクトと当たっているか？
 protected:
+	ModeTitle& _mode;
 	Vector2	_pos;		// 座標
 	Vector2 _size;		// 大きさ
 	float	_spd;		// 移動速度

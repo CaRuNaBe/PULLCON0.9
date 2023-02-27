@@ -1,39 +1,23 @@
 #include "GameStage.h"
-
-GameStage::GameStage( ApplicationBase& game,ModeBase& mode,int stageid )
+#include "../ApplicationGlobal.h"
+GameStage::GameStage( ApplicationBase& game,ModeMainGame& mode,int stageid )
 	:base( game,mode )
 {
-
-	auto file_pass_data = std::make_unique<ScriptsData>();
-	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
-	const std::string ARRYNAME = "ObjectId";
-	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
-
-	_handle = ResourceServer::LoadMV1Model( file_pass_data->GetScriptLine( stageid ).c_str() );
-
-
-
+	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( stageid ).c_str() );
 	Init();
 }
 
 GameStage::~GameStage()
-{
-
-}
+{}
 
 void GameStage::Init()
 {
 	base::Init();
-
-
 }
 
 bool GameStage::Update()
 {
 	base::Update();
-
-
-
 	return true;
 }
 
