@@ -422,7 +422,7 @@ void ModeMainGame::Parsing()
 
 			if ( string_comand == COMMAND_GAMESTART )
 			{
-				state = ScriptState::GAME;
+				state = ScriptState::EDIT;
 			}
 			++now_line;
 		}

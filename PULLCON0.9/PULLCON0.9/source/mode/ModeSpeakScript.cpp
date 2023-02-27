@@ -38,7 +38,7 @@ namespace
 
 
 	unsigned int message_string_color = 0;
-	const std::string FILE_PASS = "res/script/";
+	const std::string FILE_PASS = "res/string_date/";
 	const std::string FILE_NAME = ".json";
 	const std::string DELIMITER = ",";
 	constexpr auto namecharacter = 0;
