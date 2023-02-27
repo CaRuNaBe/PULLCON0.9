@@ -23,9 +23,13 @@ public:
 	{
 		return posi_y;
 	}
-
+	inline int GetStringHandle() const
+	{
+		return string_handle;
+	}
 private:
 	int posi_x;
 	int posi_y;
+	int string_handle;
 };
 

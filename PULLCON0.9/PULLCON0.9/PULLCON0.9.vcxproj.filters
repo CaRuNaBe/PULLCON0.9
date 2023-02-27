@@ -2,84 +2,241 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="source\ApplicationGlobal.cpp" />
-    <ClCompile Include="source\maingame\ActorBase3D.cpp" />
     <ClCompile Include="source\ObjectBase.cpp" />
-    <ClCompile Include="source\title\ActorBase2d.cpp" />
-    <ClCompile Include="source\ui\UIPullGage.cpp" />
-    <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp" />
-    <ClCompile Include="source\ui\UIBase.cpp" />
-    <ClCompile Include="source\maingame\Bullet.cpp" />
-    <ClCompile Include="source\maingame\ClearObject.cpp" />
-    <ClCompile Include="source\maingame\AreaCommunication.cpp" />
-    <ClCompile Include="source\maingame\EnemyAAA.cpp" />
-    <ClCompile Include="source\maingame\EnemyColumn.cpp" />
-    <ClCompile Include="source\maingame\EnemyKobae.cpp" />
-    <ClCompile Include="source\maingame\EnemySkyhunter.cpp" />
-    <ClCompile Include="source\maingame\AreaEnemySpawn.cpp" />
-    <ClCompile Include="source\maingame\GameStage.cpp" />
-    <ClCompile Include="source\maingame\AreaNoEntry.cpp" />
-    <ClCompile Include="source\maingame\SkySphere.cpp" />
-    <ClCompile Include="source\maingame\StageObject.cpp" />
-    <ClCompile Include="source\maingame\AreaSupply.cpp" />
-    <ClCompile Include="source\maingame\Player.cpp" />
-    <ClCompile Include="source\mode\ModeMainGame.cpp" />
-    <ClCompile Include="source\mode\ModeResourceRoad.cpp" />
-    <ClCompile Include="source\mode\ModeSpeakScript.cpp" />
-    <ClCompile Include="source\title\EndGuid.cpp" />
-    <ClCompile Include="source\title\CreditGuid.cpp" />
-    <ClCompile Include="source\title\EndLogo.cpp" />
-    <ClCompile Include="source\title\CreditLogo.cpp" />
-    <ClCompile Include="source\mode\ModeTitle.cpp" />
     <ClCompile Include="source\ApplicationMain.cpp" />
-    <ClCompile Include="source\title\TitlePlayer.cpp" />
-    <ClCompile Include="source\title\TitleLogo.cpp" />
-    <ClCompile Include="source\title\StartLogo.cpp" />
-    <ClCompile Include="source\title\StartGuid.cpp" />
-    <ClCompile Include="source\speakscript\SpeakScriptObject.cpp" />
-    <ClCompile Include="source\ui\UIFuelGage.cpp" />
-    <ClCompile Include="source\ui\UIHpGage.cpp" />
-    <ClCompile Include="source\ui\UICursor.cpp" />
     <ClCompile Include="source\ModeTest.cpp" />
+    <ClCompile Include="source\mode\ModeMainGame.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeResourceRoad.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeSpeakScript.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeTitle.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\StageObject.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\SkySphere.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\Player.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\GameStage.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemySkyhunter.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyKobae.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyColumn.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyAAA.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\ActorBase3D.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\ClearObject.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\Bullet.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaSupply.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaNoEntry.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaEnemySpawn.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaCommunication.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\ActorBase2d.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\CreditGuid.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\CreditLogo.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\EndGuid.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\EndLogo.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\StartGuid.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\StartLogo.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\TitleLogo.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\TitlePlayer.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UIPullGage.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UIHpGage.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UIFuelGage.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UICursor.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UIBase.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp">
+      <Filter>speakscript</Filter>
+    </ClCompile>
+    <ClCompile Include="source\speakscript\SpeakScriptObject.cpp">
+      <Filter>speakscript</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationGlobal.h" />
-    <ClInclude Include="source\maingame\ActorBase3D.h" />
     <ClInclude Include="source\ObjectBase.h" />
-    <ClInclude Include="source\title\ActorBase2d.h" />
-    <ClInclude Include="source\ui\UIPullGage.h" />
-    <ClInclude Include="source\speakscript\ActorBaseSpeak.h" />
-    <ClInclude Include="source\ui\UIBase.h" />
-    <ClInclude Include="source\maingame\Bullet.h" />
-    <ClInclude Include="source\maingame\ClearObject.h" />
-    <ClInclude Include="source\maingame\AreaCommunication.h" />
-    <ClInclude Include="source\maingame\EnemyAAA.h" />
-    <ClInclude Include="source\maingame\EnemyColumn.h" />
-    <ClInclude Include="source\maingame\EnemyKobae.h" />
-    <ClInclude Include="source\maingame\EnemySkyhunter.h" />
-    <ClInclude Include="source\maingame\AreaEnemySpawn.h" />
-    <ClInclude Include="source\maingame\GameStage.h" />
-    <ClInclude Include="source\maingame\AreaNoEntry.h" />
-    <ClInclude Include="source\maingame\SkySphere.h" />
-    <ClInclude Include="source\maingame\StageObject.h" />
-    <ClInclude Include="source\maingame\AreaSupply.h" />
-    <ClInclude Include="source\maingame\Player.h" />
-    <ClInclude Include="source\mode\ModeMainGame.h" />
-    <ClInclude Include="source\mode\ModeResourceRoad.h" />
-    <ClInclude Include="source\mode\ModeSpeakScript.h" />
-    <ClInclude Include="source\title\EndGuid.h" />
-    <ClInclude Include="source\title\CreditGuid.h" />
-    <ClInclude Include="source\title\EndLogo.h" />
-    <ClInclude Include="source\title\CreditLogo.h" />
-    <ClInclude Include="source\mode\ModeTitle.h" />
     <ClInclude Include="source\ApplicationMain.h" />
-    <ClInclude Include="source\title\TitlePlayer.h" />
-    <ClInclude Include="source\title\TitleLogo.h" />
-    <ClInclude Include="source\title\StartLogo.h" />
-    <ClInclude Include="source\title\StartGuid.h" />
-    <ClInclude Include="source\speakscript\SpeakScriptObject.h" />
-    <ClInclude Include="source\ui\UIFuelGage.h" />
-    <ClInclude Include="source\ui\UIHpGage.h" />
-    <ClInclude Include="source\ui\UICursor.h" />
     <ClInclude Include="source\ModeTest.h" />
+    <ClInclude Include="source\mode\ModeMainGame.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeResourceRoad.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeSpeakScript.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeTitle.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\StageObject.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\SkySphere.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\Player.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\GameStage.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemySkyhunter.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyKobae.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyColumn.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyAAA.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\ActorBase3D.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\ClearObject.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\Bullet.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaSupply.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaNoEntry.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaEnemySpawn.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaCommunication.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\ActorBase2d.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\CreditGuid.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\CreditLogo.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\EndGuid.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\EndLogo.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\StartGuid.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\StartLogo.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\TitleLogo.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\TitlePlayer.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UIPullGage.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UIHpGage.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UIFuelGage.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UICursor.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UIBase.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\speakscript\ActorBaseSpeak.h">
+      <Filter>speakscript</Filter>
+    </ClInclude>
+    <ClInclude Include="source\speakscript\SpeakScriptObject.h">
+      <Filter>speakscript</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="mode">
+      <UniqueIdentifier>{a2db5df1-b624-4c99-a359-d402e8b26ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame">
+      <UniqueIdentifier>{4cd13da4-4a58-4fd0-9c9d-168088cd8380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="title">
+      <UniqueIdentifier>{4a189cde-503a-4ead-aed9-b1e5285705a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{04228a34-208f-4dbc-9cda-1f53591e1fe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="speakscript">
+      <UniqueIdentifier>{09073051-26f9-427e-b6cc-72392150c292}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

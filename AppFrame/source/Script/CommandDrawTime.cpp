@@ -10,6 +10,7 @@ CommandDrawTime::CommandDrawTime( unsigned int line,const std::vector<std::strin
 {
 	posi_x = 0;
 	posi_y = 0;
+	string_handle= CreateFontToHandle( NULL,60,1,-1 );
 }
 
 bool CommandDrawTime::Check()

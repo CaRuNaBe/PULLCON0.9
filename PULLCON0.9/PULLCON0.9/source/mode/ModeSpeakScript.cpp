@@ -802,11 +802,11 @@ bool ModeSpeakScript::DebugDraw()
 void ModeSpeakScript::DrawTime()
 {
 	auto now_time = string::Split( time_str,DELIMITER );
-	auto white = GetColor( 0,0,0 );
+	auto white = GetColor( 255,255,255 );
 	for ( auto&& time : drawtime_list )
 	{
-		DrawString( time->GetPosiX(),time->GetPosiY(),now_time[0].c_str(),white );
-		DrawString( time->GetPosiX() + 114,time->GetPosiY() + 61,now_time[0].c_str(),white );
+		DrawStringToHandle( time->GetPosiX(),time->GetPosiY(),now_time[0].c_str(),white,time->GetStringHandle() );
+		DrawStringToHandle( time->GetPosiX() + 114,time->GetPosiY() + 61,now_time[1].c_str(),white,time->GetStringHandle() );
 	}
 };
 
