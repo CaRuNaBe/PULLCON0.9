@@ -243,7 +243,7 @@
     <ClCompile Include="source\Script\CommandMoviePlay.cpp" />
     <ClCompile Include="source\Script\CommandMusicBack.cpp" />
     <ClCompile Include="source\Script\CommandMusicLoop.cpp" />
-    <ClCompile Include="source\Script\CommandMusicstop.cpp" />
+    <ClCompile Include="source\Script\CommandMusicStop.cpp" />
     <ClCompile Include="source\Script\CommandSeLoad.cpp" />
     <ClCompile Include="source\Script\ScriptsData.cpp" />
     <ClCompile Include="source\Script\ScriptsString.cpp" />

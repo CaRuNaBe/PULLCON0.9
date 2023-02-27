@@ -141,7 +141,7 @@
       <Filter>source\Sclipt</Filter>
     </ClInclude>
     <ClInclude Include="source\Script\CommandDrawRect.h">
-      <Filter>source\Object</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -224,7 +224,7 @@
     <ClCompile Include="source\Script\CommandMusicLoop.cpp">
       <Filter>source\Sclipt</Filter>
     </ClCompile>
-    <ClCompile Include="source\Script\CommandMusicstop.cpp">
+    <ClCompile Include="source\Script\CommandMusicStop.cpp">
       <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandSeLoad.cpp">
@@ -255,7 +255,7 @@
       <Filter>source\Sclipt</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandDrawRect.cpp">
-      <Filter>source\Object</Filter>
+      <Filter>source\Sclipt</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
