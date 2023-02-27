@@ -8,9 +8,7 @@ ActorBase3D::ActorBase3D( ApplicationBase& game,ModeMainGame& mode )
 }
 
 ActorBase3D::~ActorBase3D()
-{
-
-}
+{}
 
 void ActorBase3D::Init()
 {
@@ -80,7 +78,7 @@ bool	ActorBase3D::IsHitObject( ActorBase3D& object )
 {
 	if ( _coll && object._coll == true )
 	{
-// Sphere‚Å“–‚½‚è”»’è
+		// Sphere‚Å“–‚½‚è”»’è
 		if ( Intersect( object.GetCollision(),_collision ) )
 		{
 			return true;
@@ -93,7 +91,7 @@ bool	ActorBase3D::IsHitEvent( ActorBase3D& object )
 {
 	if ( _coll && object._coll == true )
 	{
-// Sphere‚Å“–‚½‚è”»’è
+		// Sphere‚Å“–‚½‚è”»’è
 		if ( Intersect( object.GetCollisionEvent(),_collision ) )
 		{
 			return true;

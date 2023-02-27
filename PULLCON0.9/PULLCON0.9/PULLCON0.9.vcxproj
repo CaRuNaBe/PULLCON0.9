@@ -163,7 +163,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\mode\ScriptBase.cpp" />
     <ClCompile Include="source\ApplicationGlobal.cpp" />
     <ClCompile Include="source\maingame\ActorBase3D.cpp" />
     <ClCompile Include="source\ObjectBase.cpp" />
@@ -204,7 +203,6 @@
     <ClCompile Include="source\ui\UICursor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\mode\ScriptBase.h" />
     <ClInclude Include="source\ApplicationGlobal.h" />
     <ClInclude Include="source\maingame\ActorBase3D.h" />
     <ClInclude Include="source\ObjectBase.h" />

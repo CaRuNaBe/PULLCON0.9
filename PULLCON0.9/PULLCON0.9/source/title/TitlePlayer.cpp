@@ -5,11 +5,11 @@
 TitlePlayer::TitlePlayer( ApplicationBase& game,ModeTitle& mode )
 	: ActorBase2d( game,mode )
 {
-	cg_player = ResourceServer::LoadGraph( "res/title/cg_Heli.png" );
-	cg_ui[0] = ResourceServer::LoadGraph( "res/title/ui_push_guide_1.png" );
-	cg_ui[1] = ResourceServer::LoadGraph( "res/title/ui_push_guide_3.png" );
-	cg_ui[2] = ResourceServer::LoadGraph( "res/title/ui_push_guide_3.png" );
-	cg_ui[3] = ResourceServer::LoadGraph( "res/title/ui_push_guide_3.png" );
+	cg_player = ResourceServer::LoadGraph( "res/2D_image/title/cg_Heli.png" );
+	cg_ui[0] = ResourceServer::LoadGraph( "res/2D_image/title/ui_push_guide_1.png" );
+	cg_ui[1] = ResourceServer::LoadGraph( "res/2D_image/title/ui_push_guide_3.png" );
+	cg_ui[2] = ResourceServer::LoadGraph( "res/2D_image/title/ui_push_guide_3.png" );
+	cg_ui[3] = ResourceServer::LoadGraph( "res/2D_image/title/ui_push_guide_3.png" );
 
 	Init();
 }

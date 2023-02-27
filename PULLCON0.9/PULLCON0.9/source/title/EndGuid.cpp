@@ -2,7 +2,7 @@
 #include "Dxlib.h"
 EndGuid::EndGuid( ApplicationBase& game,ModeTitle& mode ): ActorBase2d( game,mode )
 {
-	_cg = ResourceServer::LoadGraph( "res/title/ui_Titlle_EndMenuIcon.png" );
+	_cg = ResourceServer::LoadGraph( "res/2D_image/title/ui_Titlle_EndMenuIcon.png" );
 
 	Init();
 }

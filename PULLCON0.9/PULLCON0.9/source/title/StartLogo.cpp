@@ -1,16 +1,16 @@
 #include "StartLogo.h"
+
 #include "Dxlib.h"
 StartLogo::StartLogo( ApplicationBase& game,ModeTitle& mode )
 	: ActorBase2d( game,mode )
 {
-	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_StartLogo.png" );
+	_cg = ResourceServer::LoadGraph( "res/2D_image/title/ui_Title_StartLogo.png" );
 
 	Init();
 }
 
 StartLogo::~StartLogo()
-{
-}
+{}
 
 void StartLogo::Init()
 {
@@ -37,6 +37,11 @@ bool StartLogo::Update()
 				{
 					_spd = static_cast<float>(utility::get_random( 5,20 ));
 					_pos.y -= _spd;		// ˆÊ’u‚ð“®‚©‚·  
+					if ( _pos.y < 500 )
+					{
+						_pos.y = -1000;
+
+					}
 				}
 			}
 		}

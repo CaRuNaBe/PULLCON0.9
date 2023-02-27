@@ -1,6 +1,6 @@
 #include "ModeTitle.h"
 #include "../ApplicationMain.h"
-
+#include "ModeMainGame.h"
 #include "../title/TitlePlayer.h"
 #include "../title/TitleLogo.h"
 
@@ -36,8 +36,7 @@ ModeTitle::ModeTitle( ApplicationBase& game,int layer )
 };
 
 ModeTitle::~ModeTitle()
-{
-};
+{};
 
 bool ModeTitle::Initialize()
 {
@@ -47,6 +46,18 @@ bool ModeTitle::Initialize()
 bool ModeTitle::Update()
 {
 	object_out_game.Update();
+	for ( auto&& obje : object_out_game.GetObjects() )
+	{
+		if ( (obje->GetType() == ActorBase2d::Type::KGAMESTARTLOGO) )
+		{
+			if ( obje->GetPosition().y < 100 )
+			{
+				_game.GetInstance()->GetModeServer()->Del( *this );
+				auto game = std::make_shared<ModeMainGame>( _game,1 );
+				_game.GetInstance()->GetModeServer()->Add( game );
+			}
+		}
+	}
 	return true;
 }
 

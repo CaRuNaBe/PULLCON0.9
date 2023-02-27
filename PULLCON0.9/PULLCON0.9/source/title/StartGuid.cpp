@@ -3,7 +3,7 @@
 StartGuid::StartGuid( ApplicationBase& game,ModeTitle& mode )
 	: ActorBase2d( game,mode )
 {
-	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_StartMenuIcon.png" );
+	_cg = ResourceServer::LoadGraph( "res/2D_image/title/ui_Title_StartMenuIcon.png" );
 
 	Init();
 }

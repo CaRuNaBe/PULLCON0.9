@@ -131,7 +131,7 @@ void ModeMainGame::Destroy()
 void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname )
 {
 	state = ScriptState::PREPARSING;
-	ResourceServer::LoadDivGraph( "res/ui_OutOfArea_Sheet.png",DANGER_ANIME_MAX,5,15,960,540,cg_outobarea );
+	ResourceServer::LoadDivGraph( "res/outarea/ui_OutOfArea_Sheet.png",DANGER_ANIME_MAX,5,15,960,540,cg_outobarea );
 	start_time = 0;
 	max_line = 0;
 	now_line = 0;
@@ -156,36 +156,7 @@ bool ModeMainGame::Update()
 {
 	cnt++;
 	object_main_game.Update();
-	for ( auto& object_3d : object_main_game.GetObjects() )
-	{
-		if ( object_3d->GetType() == ActorBase3D::Type::kPlayer )
-		{
-			auto& playerposi = object_3d->GetPosition();
 
-			if ( playerposi.x > world_range_x )
-			{
-				playerposi.x = world_range_x;
-			}
-			if ( playerposi.x < (-world_range_x) )
-			{
-				playerposi.x = (-world_range_x);
-			}
-			if ( playerposi.y > world_range_y )
-			{
-				playerposi.y = world_range_y;
-			}
-
-			if ( playerposi.z > world_range_z )
-			{
-				playerposi.z = world_range_z;
-			}
-			if ( playerposi.z < (-world_range_z) )
-			{
-				playerposi.z = (-world_range_z);
-			}
-			break;
-		}
-	}
 	ui_player.Update();
 	int dead = 0;
 	int gunship_num = 0;
