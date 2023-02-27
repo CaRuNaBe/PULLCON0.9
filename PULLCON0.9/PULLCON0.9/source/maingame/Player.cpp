@@ -10,6 +10,7 @@ namespace {
 	const float CAMERADEFAULT_POS_XZ = -4000.f;   // プレイヤーを原点としたときのカメラのXZ座標のベクトルの長さ
 	const float PLAYERLENGTH = 2000.f;   // プレイヤーの奥行きの長さ
 	const float AXIALROTATION = utility::degree_to_radian(20.f);   // プレイヤーの移動時の傾き
+	const int   LIFEMAX = 100;   // プレイヤーのライフ最大数
 	constexpr int PLAYER_ID = 0;
 }
 
@@ -41,12 +42,14 @@ void Player::Init() {
 	base::Init();
 	_statePlayer = State::NUM;
 
+	_vMoevDir = { 0.f, 0.f, -100.f };
 	_fSpeed = 90.f;
 	_fRotatY = utility::PI;
 	_iFuel = 100;
-	_iLife = 100;
+	_iLife = LIFEMAX;
 	_push = 0;
 	_isHit = false;
+	_isHitObject = false;
 	_fRotateAirscrew = 0.f;
 	_fAxialX = 0.f;
 	_fAxialZ = 0.f;
@@ -74,6 +77,7 @@ bool Player::Update() {
 		_cam._vTarget = { _vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z };
 		// 速度初期値記録
 		_fSpeedIint = _fSpeed;
+		_collision._vCenter = _vPos;
 		_statePlayer = State::PLAY;
 	}
 
@@ -112,7 +116,7 @@ bool Player::Update() {
 			}
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
-					if (obje->_CT == 0 && _ST == 0) {
+					if (obje->_CT == 0 && !_isHit) {
 						//_iLife -= obje->_iDamage;
 						_isHit = true;
 						_ST = 20;
@@ -121,11 +125,12 @@ bool Player::Update() {
 			}
 			if ((obje->GetType() == Type::kStageObject)) {
 				if (IsHitObject(*obje)) {
-					if (_ST == 0) {
-						--_iLife;
-						_isHit = true;
-						_ST = 20;
+					if (!_isHitObject) {
+						_iLife -= LIFEMAX / 5;
 					}
+					_isHit = true;
+					_isHitObject = true;
+					_ST = 10;
 				}
 			}
 		}
@@ -189,7 +194,14 @@ bool Player::Update() {
 		dir.y += diry * _fSpeed;
 		dir.x = cos(rad + camerad) * length;
 		dir.z = sin(rad + camerad) * length;
-		_vPos += dir;
+		if (!_isHitObject) {
+			_vPos += dir;
+			_vMoevDir = {-dir.x, 0.f, -dir.z};
+		}
+		else {
+			dir = { _vMoevDir.x, dir.y ,_vMoevDir.z };
+			_vPos += _vMoevDir;
+		}
 
 		// カメラも追従させる
 		_cam._vPos += dir;
@@ -261,13 +273,9 @@ bool Player::Update() {
 				axialZ -= AXIALROTATION / 30.f;
 			}
 		}
-
-		if (abs(axialX) < AXIALROTATION) {
-			_fAxialX = axialX;
-		}
-		if (abs(axialZ) < AXIALROTATION) {
-			_fAxialZ = axialZ;
-		}
+		// 回転制御
+		if (abs(axialX) < AXIALROTATION) { _fAxialX = axialX; }
+		if (abs(axialZ) < AXIALROTATION) { _fAxialZ = axialZ; }
 
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {
@@ -325,6 +333,7 @@ bool Player::Update() {
 
 	if (_ST == 0) {
 		_isHit = false;
+		_isHitObject = false;
 	}
 
 	// カメラ設定更新
@@ -381,6 +390,7 @@ bool Player::Draw() {
 	MV1SetMatrix(_handleAirscrew, ToDX(airscrewMatrix));
 	MV1SetMatrix(_handleMagnet, ToDX(matrix));
 	MV1SetMatrix(_handleBackAirscrew, ToDX(matrix));
+
 	// モデル描画
 	SetUseLighting(FALSE);
 	MV1DrawModel(_handleBody);

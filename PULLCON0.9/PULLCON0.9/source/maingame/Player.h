@@ -49,11 +49,13 @@ protected:
 	// カメラ
 	Camera	_cam;
 
-	State  _statePlayer;  // プレイヤーステータス
+	State  _statePlayer;      // プレイヤーステータス
 
-	int    _push;   // ボタン連打回数
-	bool   _isHit;  // 当たったか
-	float  _fSpeedIint;  // プレイヤーの速度の初期値
+	vector4 _vMoevDir;
+	int    _push;             // ボタン連打回数
+	bool   _isHit;            // 当たったか
+	bool   _isHitObject;      // オブジクトと当たったか
+	float  _fSpeedIint;       // プレイヤーの速度の初期値
 	float  _fRotateAirscrew;  // プロペラの回転
 	float  _fAxialX;
 	float  _fAxialZ;
