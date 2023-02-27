@@ -1,17 +1,14 @@
 #pragma once
-#include "UIBase.h"
 #include "appframe.h"
 #include <array>
 #include "../maingame/Player.h"
 #include <memory>
+#include "UIBase.h"
+class UIBase;
 class UIPullGage:public UIBase
 {
-	enum class State
-	{
-
-	};
 public:
-	UIPullGage( ApplicationBase& game,int layer,ModeBase& _base );
+	UIPullGage( ApplicationBase& game,int layer,ModeMainGame& _base );
 	virtual ~UIPullGage();
 
 	virtual bool Initialize();

@@ -1,29 +1,26 @@
 #include "StageObject.h"
 #include "AreaNoEntry.h"
-
-StageObject::StageObject( ApplicationBase& game,ModeBase& mode,int objectid,int collision, int pieces_coll)
+#include "../ApplicationGlobal.h"
+StageObject::StageObject( ApplicationBase& game,ModeMainGame& mode,int objectid,int collision,int pieces_coll )
 	:base( game,mode )
 {
-	auto file_pass_data = std::make_unique<ScriptsData>();
-	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
-	const std::string ARRYNAME = "ObjectId";
-	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
 
-	_handle = ResourceServer::LoadMV1Model( file_pass_data->GetScriptLine( objectid ).c_str() );
+	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( objectid ).c_str() );
 	_iPiecesColl = pieces_coll;
 
 	Init();
-	if (collision == 1) {
+	if ( collision == 1 )
+	{
 		_coll = true;
 	}
-	else {
+	else
+	{
 		_coll = false;
 	}
 }
 
 StageObject::~StageObject()
-{
-}
+{}
 
 void StageObject::Init()
 {
@@ -37,7 +34,8 @@ bool StageObject::Update()
 	base::Update();
 	_collision._fRadius = _fRadius * _fScale;
 	UpdateCollision();
-	if (_stateStageObject == State::NUM) {
+	if ( _stateStageObject == State::NUM )
+	{
 		AddCollision();
 		_stateStageObject = State::STATE;
 	}
@@ -56,19 +54,21 @@ bool StageObject::Draw()
 	SetUseLighting( FALSE );
 	// ƒ‚ƒfƒ‹•`‰æ
 	MV1DrawModel( _handle );
-	SetUseLighting(TRUE);
+	SetUseLighting( TRUE );
 	DrawCollisionObject( color );
 	return true;
 }
 
-void StageObject::AddCollision() {
+void StageObject::AddCollision()
+{
 	vector4 areaPos = _vPos;
-	for (auto i = 1; i < _iPieces; ++i) {
+	for ( auto i = 1; i < _iPieces; ++i )
+	{
 		areaPos.y = _collision._fRadius * 2.f * i;
-		auto area = std::make_shared<AreaNoEntry>(_game, _mode);
-		area->SetPosition(areaPos);
-		area->SetCollisionRadius(_collision._fRadius);
+		auto area = std::make_shared<AreaNoEntry>( _game,_mode );
+		area->SetPosition( areaPos );
+		area->SetCollisionRadius( _collision._fRadius );
 		area->_fScale = _fScale;
-		_mode.GetObjectServer3D().Add(area);
+		_mode.GetObjectServer3D().Add( area );
 	}
 }

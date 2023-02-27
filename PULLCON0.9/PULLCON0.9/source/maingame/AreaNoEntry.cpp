@@ -1,5 +1,5 @@
 #include "AreaNoEntry.h"
-AreaNoEntry::AreaNoEntry( ApplicationBase& game,ModeBase& mode )
+AreaNoEntry::AreaNoEntry( ApplicationBase& game,ModeMainGame& mode )
 	:base(game,mode)
 {
 	Init();

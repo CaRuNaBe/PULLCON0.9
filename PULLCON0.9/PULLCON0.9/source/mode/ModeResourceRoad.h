@@ -1,9 +1,9 @@
 
 #pragma once
 #include "appframe.h"
-class ModeResourceRoad:public ModeBase
+class ModeResourceRoad:public GameBase
 {
-	using base = ModeBase;
+	using base = GameBase;
 public:
 	ModeResourceRoad( ApplicationBase& game,int layer );
 	virtual ~ModeResourceRoad();

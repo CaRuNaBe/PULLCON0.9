@@ -1,27 +1,20 @@
-
 #include "AreaSupply.h"
+#include "../ApplicationGlobal.h"
 #include "../mode/ModeMainGame.h"
 namespace
 {
 	constexpr int SUPPLY_ID = 37;
 }
-AreaSupply::AreaSupply( ApplicationBase& game,ModeBase& mode,float _radius )
+AreaSupply::AreaSupply( ApplicationBase& game,ModeMainGame& mode,float _radius )
 	:base( game,mode )
 {
-	auto file_pass_data = std::make_unique<ScriptsData>();
-	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
-	const std::string ARRYNAME = "ObjectId";
-	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
-
-	_handle = MV1LoadModel( file_pass_data->GetScriptLine( SUPPLY_ID ).c_str() );
+	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( SUPPLY_ID ) );
 	radius = _radius;
 	Init();
 }
 
 AreaSupply::~AreaSupply()
-{
-
-}
+{}
 
 void AreaSupply::Init()
 {
@@ -65,22 +58,24 @@ bool AreaSupply::Draw()
 {
 	base::Draw();
 	// モデル拡大
-	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
+	MV1SetScale( _handle,VGet( _fScale,_fScale,_fScale ) );
 	// モデル移動
-	MV1SetPosition(_handle, ToDX(_vPos));
+	MV1SetPosition( _handle,ToDX( _vPos ) );
 	// ライティング計算
 	// モデル描画
-	SetUseLighting(FALSE);
-	MV1DrawModel(_handle);
-	SetUseLighting(TRUE);
+	SetUseLighting( FALSE );
+	MV1DrawModel( _handle );
+	SetUseLighting( TRUE );
 
 	// コリジョン描画
-	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
-		vector4 color = { 255, 255, 255 };
-		DrawCollisionEvent(color);
-		if (_event) {
-			color = { 0, 255, 0 };
-			DrawCollisionEvent(color);
+	if ( !((ModeMainGame&)_mode)._dbgCollisionDraw )
+	{
+		vector4 color = {255, 255, 255};
+		DrawCollisionEvent( color );
+		if ( _event )
+		{
+			color = {0, 255, 0};
+			DrawCollisionEvent( color );
 		}
 	}
 

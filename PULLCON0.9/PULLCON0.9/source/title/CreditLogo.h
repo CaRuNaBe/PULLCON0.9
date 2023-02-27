@@ -7,6 +7,8 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
+#include "ActorBase2d.h"
+#include "../mode/ModeTitle.h"
 class CreditLogo:
 	public ActorBase2d
 {
@@ -20,7 +22,7 @@ class CreditLogo:
 		PULLED//ˆø‚Á’£‚ç‚ê‚Ä‚¢‚é
 	};
 public:
-	CreditLogo( ApplicationBase& game,ModeBase& mode );
+	CreditLogo( ApplicationBase& game,ModeTitle& mode );
 	~CreditLogo();
 	virtual Type	GetType()//Ž©•ª‚ª‰½ŽÒ‚©
 	{

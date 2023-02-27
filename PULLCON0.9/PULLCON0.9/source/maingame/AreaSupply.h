@@ -1,11 +1,12 @@
 #pragma once
 #include "appframe.h"
-class AreaSupply:
-    public ActorBase3D
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
+class AreaSupply:public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	AreaSupply( ApplicationBase& game,ModeBase& mode , float _radius );
+	AreaSupply( ApplicationBase& game,ModeMainGame& mode , float _radius );
 	virtual ~AreaSupply();
 	virtual Type GetType()
 	{

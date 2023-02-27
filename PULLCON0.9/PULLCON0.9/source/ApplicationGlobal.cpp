@@ -6,11 +6,11 @@
 ApplicationGlobal		gGlobal;
 namespace
 {
-	const std::string IMAGE_ID_FILEPASS = "res/script/gamescript/ImageId.json";
+	const std::string IMAGE_ID_FILEPASS = "res/string_date/gamescript/ImageId.json";
 	const std::string IMAGE_ID_ARRYNAME = "imageid";
-	const std::string MUSIC_ID_FILEPASS = "res/script/gamescript/MusicId.json";
+	const std::string MUSIC_ID_FILEPASS = "res/string_date/gamescript/MusicId.json";
 	const std::string MUSIC_ID_ARRYNAME = "musicid";
-	const std::string OBJECT_ID_FILEPASS = "res/script/gamescript/ObjectId.json";
+	const std::string OBJECT_ID_FILEPASS = "res/string_date/gamescript/ObjectId.json";
 	const std::string OBJECT_ID_ARRYNAME = "ObjectId";
 }
 ApplicationGlobal::ApplicationGlobal()

@@ -4,12 +4,10 @@
 
 #include "DxLib.h"
 #include "ObjectBase.h"
-#include "../Base/ModeBase.h"
-ObjectBase::ObjectBase( ApplicationBase& game,ModeBase& mode )
+ObjectBase::ObjectBase( ApplicationBase& game )
 	:isUpdateSkip( false )
 	,isDrawSkip( false )
 	,_game( game )
-	,_mode( mode )
 {
 	Init();
 }

@@ -8,16 +8,11 @@
 #include "../../picojson/picojson.h"
 #include "../../AppFrame/source/Math/Math.h"
 
-//å„Ç≈è¡ãé
-#include "../source/Object/ActorBase2d.h"
-#include "../source/Object/ActorBase3D.h"
-#include "Object/ObjectServer.h"
-//Ç±Ç±Ç‹Ç≈
 
 #include "Base/GameBase.h"
 #include "Base/GameServer.h"
 #include "Base/GameServer2.h"
-#include "Base/ModeBase.h"
+#include "base/ObjectServer.h"
 
 #include "Script/ScriptsData.h"
 #include "Script/ScriptsString.h"

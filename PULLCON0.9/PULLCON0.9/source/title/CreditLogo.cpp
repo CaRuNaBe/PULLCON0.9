@@ -1,6 +1,6 @@
 #include "CreditLogo.h"
 #include "Dxlib.h"
-CreditLogo::CreditLogo( ApplicationBase& game,ModeBase& mode )
+CreditLogo::CreditLogo( ApplicationBase& game,ModeTitle& mode )
 	: ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_CreditLogo.png" );

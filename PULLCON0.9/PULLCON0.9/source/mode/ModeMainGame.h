@@ -7,12 +7,8 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
-
+#include "../maingame/ActorBase3D.h"
 #include "../ui/UIBase.h"
-#include "../ui/UIHpGage.h"
-#include "../ui/UIFuelGage.h"
-#include "../ui/UICursor.h"
-#include "../ui/UIPullGage.h"
 #include <vector>
 #include <memory>
 #include <string>
@@ -20,8 +16,8 @@
 
 class CommandLabel;
 class CommandChoice;
-
-class ModeMainGame:public ModeBase
+class UIBase;
+class ModeMainGame:public GameBase
 {
 public:
 	/** コンストラクタ */
@@ -44,9 +40,14 @@ public:
 	bool	_dbgCollisionDraw;		// コリジョン表示/非表示
 	/////////////////////////////////////////////
 
-
+	ObjectServer<ActorBase3D>& GetObjectServer3D()
+	{
+		return object_main_game;
+	}
 
 private:
+	ObjectServer<ActorBase3D> object_main_game;
+	GameServer<UIBase> ui_player;
 	enum class ScriptState
 	{
 		EDIT,//エディットモード
@@ -155,7 +156,7 @@ private:
 	std::string  stage_name;
 	/** ゲームスタート時間 */
 	int start_time;
-	GameServer<UIBase> ui_player;
+
 	bool is_notcant;
 	bool is_notcommand;
 	bool is_cannotdelete;
@@ -166,4 +167,7 @@ private:
 	float world_range_x;
 	float world_range_y;
 	float world_range_z;
+	int cg_outobarea[74];
+	int game_over_timer;
+	bool is_player_danger;
 };

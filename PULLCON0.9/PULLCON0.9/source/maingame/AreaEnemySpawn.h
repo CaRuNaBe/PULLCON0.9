@@ -1,11 +1,12 @@
 #pragma once
 #include "appframe.h"
-
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
 class AreaEnemySpawn:public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	AreaEnemySpawn( ApplicationBase& game,ModeBase& mode,  int spawnfream,int typeenemy );
+	AreaEnemySpawn( ApplicationBase& game,ModeMainGame& mode,  int spawnfream,int typeenemy );
 	virtual ~AreaEnemySpawn();
 	virtual Type GetType()
 	{

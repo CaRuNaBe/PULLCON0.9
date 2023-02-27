@@ -1,9 +1,6 @@
 #include  "EnemyColumn.h"
 #include  "EnemySkyhunter.h"
-#include  "../mode/ModeMainGame.h"
-
-
-EnemyColumn::EnemyColumn(ApplicationBase& game, ModeBase& mode)
+EnemyColumn::EnemyColumn(ApplicationBase& game,ModeMainGame& mode)
 	:base(game, mode) {
 	Init();
 }

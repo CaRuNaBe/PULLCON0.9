@@ -2,7 +2,7 @@
 #include "TitlePlayer.h"
 
 
-TitlePlayer::TitlePlayer( ApplicationBase& game,ModeBase& mode )
+TitlePlayer::TitlePlayer( ApplicationBase& game,ModeTitle& mode )
 	: ActorBase2d( game,mode )
 {
 	cg_player = ResourceServer::LoadGraph( "res/title/cg_Heli.png" );

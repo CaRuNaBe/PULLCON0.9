@@ -2,11 +2,12 @@
 #include "ClearObject.h"
 #include "Bullet.h"
 #include "../mode/ModeMainGame.h"
+#include "../ApplicationGlobal.h"
 namespace
 {
 	constexpr int GUNSHIP_ID = 12;
 }
-ClearObject::ClearObject( ApplicationBase& game,ModeBase& mode,float _radius )
+ClearObject::ClearObject( ApplicationBase& game,ModeMainGame& mode,float _radius )
 	:base( game,mode )
 {
 	radius = _radius;
@@ -14,21 +15,15 @@ ClearObject::ClearObject( ApplicationBase& game,ModeBase& mode,float _radius )
 }
 
 ClearObject::~ClearObject()
-{
-
-}
+{}
 
 void ClearObject::Init()
 {
 	base::Init();
-	auto file_pass_data = std::make_unique<ScriptsData>();
-	const std::string FILEPASS = "res/script/gamescript/ObjectId.json";
-	const std::string ARRYNAME = "ObjectId";
-	file_pass_data->LoadJson( FILEPASS,ARRYNAME );
 
 	_stateClearObject = State::NUM;
 
-	_handle = ResourceServer::LoadMV1Model( file_pass_data->GetScriptLine( GUNSHIP_ID ).c_str() );
+	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( GUNSHIP_ID ) );
 
 	_vObjective = {_vPos.x ,_vPos.y, _vPos.z};
 	_vPos = {_vObjective.x - 5000.f, _vObjective.y, _vObjective.z};
@@ -47,33 +42,42 @@ bool ClearObject::Update()
 {
 	base::Update();
 
-	if (_stateClearObject == State::NUM) {
-		_vObjective = { _vPos.x ,_vPos.y, _vPos.z };
-		_vPos = { _vObjective.x + radius, _vObjective.y, _vObjective.z };
+	if ( _stateClearObject == State::NUM )
+	{
+		_vObjective = {_vPos.x ,_vPos.y, _vPos.z};
+		_vPos = {_vObjective.x + radius, _vObjective.y, _vObjective.z};
 		_stateClearObject = State::WAIT;
 	}
 
-	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
-		if (obje->GetType() == Type::kPlayer
-			|| obje->GetType() == Type::kBullet) {
-			if (obje->GetType() == Type::kPlayer) {
-				if (Intersect(_collisionEvent, obje->_collision)) {
+	for ( auto&& obje : _mode.GetObjectServer3D().GetObjects() )
+	{
+		if ( obje->GetType() == Type::kPlayer
+			|| obje->GetType() == Type::kBullet )
+		{
+			if ( obje->GetType() == Type::kPlayer )
+			{
+				if ( Intersect( _collisionEvent,obje->_collision ) )
+				{
 					_coll = true;
 					_fire = true;
 					_vRelation = obje->_vPos;
 					// 弾にバラつきを持たせる
-					float randomX = static_cast<float>(utility::get_random(-700, 700));
-					float randomY = static_cast<float>(utility::get_random(-700, 1400));
-					float randomZ = static_cast<float>(utility::get_random(-700, 700));
-					_vTarget = { _vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ };
+					float randomX = static_cast<float>(utility::get_random( -700,700 ));
+					float randomY = static_cast<float>(utility::get_random( -700,1400 ));
+					float randomZ = static_cast<float>(utility::get_random( -700,700 ));
+					_vTarget = {_vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ};
 				}
-				else {
+				else
+				{
 					_coll = false;
 				}
 			}
-			if (obje->GetType() == Type::kBullet) {
-				if (IsHitObject(*obje)) {
-					if (obje->_CT == 0) {
+			if ( obje->GetType() == Type::kBullet )
+			{
+				if ( IsHitObject( *obje ) )
+				{
+					if ( obje->_CT == 0 )
+					{
 						_CT = 10;
 						_overlap = true;
 						obje->Damage();
@@ -88,18 +92,19 @@ bool ClearObject::Update()
 	float sx = _vTarget.x - _vPos.x;
 	float sz = _vTarget.z - _vPos.z;
 	float sy = _vTarget.y - _vPos.y;
-	float length3D = sqrt(sx * sx + sy * sy + sz * sz);
-	float rad = atan2(sz, sx);
-	float theta = acos(sy / length3D);
+	float length3D = sqrt( sx * sx + sy * sy + sz * sz );
+	float rad = atan2( sz,sx );
+	float theta = acos( sy / length3D );
 
 	// 弾の進行方向の向きを設定
-	_vDir.x = cos(rad);
-	_vDir.z = sin(rad);
-	_vDir.y = cos(theta);
+	_vDir.x = cos( rad );
+	_vDir.z = sin( rad );
+	_vDir.y = cos( theta );
 	_vDir.Normalized();
 
 	// 一定間隔で撃つ
-	if (_fire && _CT == 0) {
+	if ( _fire && _CT == 0 )
+	{
 		AddBullet();
 		_CT = 5;
 	}
@@ -107,21 +112,22 @@ bool ClearObject::Update()
 	// 極座標(r(length3D),θ(rad))
 	sx = _vPos.x - _vObjective.x;
 	sz = _vPos.z - _vObjective.z;
-	length3D = sqrt(sx * sx + sz * sz);
-	rad = atan2(sz, sx);
+	length3D = sqrt( sx * sx + sz * sz );
+	rad = atan2( sz,sx );
 	// 角速度
 	rad += utility::TwoPi / (24.f * 60.f);
 
-	_vPos.x = _vObjective.x + cos(rad) * length3D;
-	_vPos.z = _vObjective.z + sin(rad) * length3D;
+	_vPos.x = _vObjective.x + cos( rad ) * length3D;
+	_vPos.z = _vObjective.z + sin( rad ) * length3D;
 
 	// フォワードベクトル
 	_vDir.x = cos( rad );
 	_vDir.z = sin( rad );
 	_vDir.Normalized();
 
-	
-	if (_iLife < 0) {
+
+	if ( _iLife < 0 )
+	{
 		Damage();
 	}
 
@@ -167,12 +173,13 @@ bool ClearObject::Draw()
 	return true;
 }
 
-void ClearObject::AddBullet() {
-	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
-	auto bullet = std::make_shared<Bullet>(_game, _mode);
-	bullet->SetPosition(vBullet);
-	bullet->SetDir(_vDir);
+void ClearObject::AddBullet()
+{
+	vector4 vBullet = {_vPos.x, _vPos.y - 500.f, _vPos.z};
+	auto bullet = std::make_shared<Bullet>( _game,_mode );
+	bullet->SetPosition( vBullet );
+	bullet->SetDir( _vDir );
 	bullet->_fScale = 5.f;
 	bullet->_iType = 1;
-	_mode.GetObjectServer3D().Add(bullet);
+	_mode.GetObjectServer3D().Add( bullet );
 }

@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <memory>
-#include "../Base/ModeBase.h"
+#include "../Base/GameBase.h"
 #include "../Base/GameServer2.h"
 #include "input_manager.h"
 
@@ -43,7 +43,7 @@ public:
 		return _lpInstance;
 	}
 	//ゲームモード管理クラス取得
-	std::shared_ptr<GameServer2<ModeBase>> GetModeServer()
+	std::shared_ptr<GameServer2<GameBase>> GetModeServer()
 	{
 		return _BaseServer;
 	}
@@ -64,7 +64,7 @@ public:
 protected:
 	static	ApplicationBase* _lpInstance;
 
-	std::shared_ptr<GameServer2<ModeBase>> _BaseServer;
+	std::shared_ptr<GameServer2<GameBase>> _BaseServer;
 	InputManager _input;//inputクラスインスタス
 	int font_hundle;
 	int font_size;

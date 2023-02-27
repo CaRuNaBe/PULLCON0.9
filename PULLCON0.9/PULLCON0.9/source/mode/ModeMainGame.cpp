@@ -24,6 +24,10 @@
 #include "../maingame/AreaNoEntry.h"
 #include "../maingame/EnemyColumn.h"
 #include "../maingame/EnemyKobae.h"
+#include "../ui/UIHpGage.h"
+#include "../ui/UIFuelGage.h"
+#include "../ui/UICursor.h"
+#include "../ui/UIPullGage.h"
 #include "ModeSpeakScript.h"
 
 
@@ -66,8 +70,9 @@ namespace
 	const std::string DELIMITER = ",";
 	//jsonファイル関係
 	const std::string FILENAME = "pullcon0.9.json";//ファイル名
-	const std::string FILEPASS = "res/script/gamescript/" + FILENAME;//ファイルパス
+	const std::string FILEPASS = "res/string_date/gamescript/" + FILENAME;//ファイルパス
 	const std::string GAMESCRIPT = "pullcon0.9";//スクリプト名
+	constexpr int DANGER_ANIME_MAX = 74;
 }
 
 /**
@@ -78,7 +83,7 @@ namespace
  * @return void
  */
 ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
-	: ModeBase( game,layer )
+	: GameBase( game,layer )
 {
 	scripts_data = std::make_unique<ScriptsData>();
 	Initialize( FILEPASS,GAMESCRIPT,FILENAME );
@@ -112,11 +117,6 @@ ModeMainGame::~ModeMainGame()
 void ModeMainGame::Destroy()
 {
 	state = ScriptState::PREPARSING;
-	/*
-#if _DEBUG
-	scripts_data->WriteJson( FILENAME,GAMESCRIPT );
-#endif
-*/
 	max_line = 0;
 	now_line = 0;
 	wait_count = 0;
@@ -130,8 +130,8 @@ void ModeMainGame::Destroy()
 
 void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname )
 {
-	ModeBase::Initialize();
 	state = ScriptState::PREPARSING;
+	ResourceServer::LoadDivGraph( "res/ui_OutOfArea_Sheet.png",DANGER_ANIME_MAX,5,15,960,540,cg_outobarea );
 	start_time = 0;
 	max_line = 0;
 	now_line = 0;
@@ -140,7 +140,8 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 	is_notcant = false;
 	is_notcommand = false;
 	is_cannotdelete = false;
-
+	game_over_timer = 600;
+	is_player_danger = false;
 	if ( !scripts_data->LoadJson( jsonpath,scriptsname,jsonname ) )
 	{
 		return;
@@ -148,19 +149,12 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 
 	max_line = scripts_data->GetScriptNum();
 
-	/*
-	if ( max_line <= 0 )
-	{
-		state = ScriptState::EDIT;
-		return;
-	}
-	*/
 	return;
 };
 
 bool ModeMainGame::Update()
 {
-	ModeBase::Update();
+	cnt++;
 	object_main_game.Update();
 	ui_player.Update();
 	int dead = 0;
@@ -193,29 +187,22 @@ bool ModeMainGame::Update()
 				{
 					auto& playerposi = object_3d->GetPosition();
 
-					if ( playerposi.x > world_range_x )
+					if ( playerposi.x > world_range_x
+							 || playerposi.x < (-world_range_x)
+							 || (playerposi.y > world_range_y)
+							 || playerposi.z > world_range_z
+							 || playerposi.z < (-world_range_z) )
 					{
-						playerposi.x = world_range_x;
+						game_over_timer--;
+						is_player_danger = true;
 					}
-					if ( playerposi.x < (-world_range_x) )
+					else
 					{
-						playerposi.x = (-world_range_x);
+						cnt = 0;
+						is_player_danger = false;
+						game_over_timer = 600;
 					}
-					if ( playerposi.y > world_range_y )
-					{
-						playerposi.y = world_range_y;
-					}
-
-					if ( playerposi.z > world_range_z )
-					{
-						playerposi.z = world_range_z;
-					}
-					if ( playerposi.z < (-world_range_z) )
-					{
-						playerposi.z = (-world_range_z);
-					}
-
-					if ( object_3d->GetLife() < dead )
+					if ( object_3d->GetLife() < dead || game_over_timer < 0 )
 					{
 						for ( auto& object_3d : object_main_game.GetObjects() )
 						{
@@ -282,10 +269,12 @@ bool ModeMainGame::Update()
 
 bool ModeMainGame::Draw()
 {
-	ModeBase::Draw();
 	object_main_game.Draw();
 	ui_player.Draw();
-
+	if ( is_player_danger )
+	{
+		DrawExtendGraph( _game.DispBasics(),_game.DispBasics(),_game.DispSizeW(),_game.DispSizeH(),cg_outobarea[cnt % DANGER_ANIME_MAX],TRUE );
+	}
 
 	switch ( state )
 	{
@@ -320,7 +309,6 @@ bool ModeMainGame::Draw()
 
 bool ModeMainGame::DebugDraw()
 {
-	ModeBase::DebugDraw();
 	math::vector4 posi;
 	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
 	for ( auto&& obj : object_main_game.GetObjects() )
@@ -402,12 +390,6 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_AREACOMMUNICATION,&ModeMainGame::OnCommandCommunication ) );
 	comand_funcs.insert( std::make_pair( COMMAND_NOENTRY,&ModeMainGame::OnCommandNoEntry ) );
 
-	///////////////////////////////////////////////////////
-	auto column = std::make_shared<EnemyColumn>( _game,*this );
-	GetObjectServer3D().Add( column );
-	auto kobae = std::make_shared<EnemyKobae>( _game,*this );
-	GetObjectServer3D().Add( kobae );
-	///////////////////////////////////////////////////////
 
 	while ( !(stop_parsing) && (now_line >= 0) && (now_line < max_line) )
 	{
@@ -1483,10 +1465,11 @@ bool ModeMainGame::OnCommandObject( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		};
-		if (!(string::ToInt(scripts[8], pieces_coll))) {
+		if ( !(string::ToInt( scripts[8],pieces_coll )) )
+		{
 			return result;
 		};
-		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id, pieces_coll);
+		auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id,pieces_coll );
 		object->SetPosition( posi );
 		object->SetScale( scale );
 		object->SetCollisionRadius( radius );
@@ -1640,7 +1623,7 @@ bool ModeMainGame::OnCommandAreaObj( unsigned int line,std::vector<std::string>&
 
 		for ( auto&& set_pos : posivec )
 		{
-			auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id , pieces_coll);
+			auto object = std::make_shared<StageObject>( _game,*this,object_id,collision_id,pieces_coll );
 			object->SetPosition( set_pos );
 			object->SetScale( scale );
 			object->SetCollision( set_pos,radius );

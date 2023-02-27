@@ -1,4 +1,5 @@
 #include "SpeakScriptObject.h"
+#include "../ApplicationGlobal.h"
 namespace
 {
 	const std::string DELIMITER = ",";
@@ -8,28 +9,19 @@ SpeakScriptObject::SpeakScriptObject
 	: ActorSpeak( game,layer,mode )
 {
 	Initialize();
-	{
-		auto file_data = std::make_unique<ScriptsData>();
-		const std::string FILEPASS = "res/script/gamescript/ImageId.json";
-		const std::string ARRYNAME = "imageid";
-		file_data->LoadJson( FILEPASS,ARRYNAME );
 
-		auto image_pass_vector = string::Split( file_data->GetScriptLine( image_id ),DELIMITER );
-		for ( int i = 0; i < image_pass_vector.size(); i++ )
-		{
-			int cg = ResourceServer::LoadGraph( image_pass_vector[i] );
-			cg_ui.push_back( cg );
-		}
-	}
-	{
-		auto file_data = std::make_unique<ScriptsData>();
-		const std::string FILEPASS = "res/script/gamescript/MusicId.json";
-		const std::string ARRYNAME = "musicid";
-		file_data->LoadJson( FILEPASS,ARRYNAME );
 
-		music_hundle = ResourceServer::LoadSoundMem( file_data->GetScriptLine( music_id ).c_str() );
-		PlaySoundMem( music_hundle,DX_PLAYTYPE_BACK,TRUE );
+	auto image_pass_vector = string::Split( gGlobal.image_pass_date->GetScriptLine( image_id ),DELIMITER );
+	for ( int i = 0; i < image_pass_vector.size(); i++ )
+	{
+		int cg = ResourceServer::LoadGraph( image_pass_vector[i] );
+		cg_ui.push_back( cg );
 	}
+
+
+	music_hundle = ResourceServer::LoadSoundMem( gGlobal.music_pass_date->GetScriptLine( music_id ).c_str() );
+	PlaySoundMem( music_hundle,DX_PLAYTYPE_BACK,TRUE );
+
 }
 
 SpeakScriptObject::~SpeakScriptObject()

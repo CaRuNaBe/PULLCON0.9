@@ -1,10 +1,11 @@
 #pragma once
-#include "UIBase.h"
 #include "appframe.h"
+#include "UIBase.h"
+class UIBase;
 class UIFuelGage:public UIBase
 {
 public:
-	UIFuelGage( ApplicationBase& game,int layer,ModeBase& _base );
+	UIFuelGage( ApplicationBase& game,int layer,ModeMainGame& _base );
 	virtual ~UIFuelGage();
 
 	virtual bool Initialize();

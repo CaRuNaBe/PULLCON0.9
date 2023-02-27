@@ -1,12 +1,14 @@
 #pragma once
 #include "appframe.h"
 #include "EnemyColumn.h"
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
 class EnemySkyhunter :
 	public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	EnemySkyhunter(ApplicationBase& game, ModeBase& mode, EnemyColumn& skyhunter);
+	EnemySkyhunter(ApplicationBase& game,ModeMainGame& mode, EnemyColumn& skyhunter);
 	virtual ~EnemySkyhunter();
 	virtual Type GetType()
 	{

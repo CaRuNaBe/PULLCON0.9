@@ -1,11 +1,13 @@
 #pragma once
 #include "appframe.h"
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
 class EnemyColumn :
     public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	EnemyColumn(ApplicationBase& game, ModeBase& mode);
+	EnemyColumn(ApplicationBase& game,ModeMainGame& mode);
 	virtual ~EnemyColumn();
 	virtual Type GetType()
 	{

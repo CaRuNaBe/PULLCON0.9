@@ -9,7 +9,7 @@ namespace
 
 	int player_max_hp = 0;
 }
-UIHpGage::UIHpGage( ApplicationBase& game,int layer,ModeBase& _base )
+UIHpGage::UIHpGage( ApplicationBase& game,int layer,ModeMainGame& _base )
 	:UIBase( game,layer,_base )
 {
 	hp_gage_now_posi = static_cast<float>(GAGE_MAX_WIDTH);

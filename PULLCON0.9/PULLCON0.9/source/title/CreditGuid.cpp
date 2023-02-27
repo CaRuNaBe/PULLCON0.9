@@ -1,6 +1,6 @@
 #include "CreditGuid.h"
 #include "Dxlib.h"
-CreditGuid::CreditGuid( ApplicationBase& game,ModeBase& mode ): ActorBase2d( game,mode )
+CreditGuid::CreditGuid( ApplicationBase& game,ModeTitle& mode ): ActorBase2d( game,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/title/ui_Title_CreditMenuIcon.png" );
 

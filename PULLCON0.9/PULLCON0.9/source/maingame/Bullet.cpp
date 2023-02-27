@@ -1,9 +1,9 @@
 
 #include "Bullet.h"
 #include "EffectTrail.h"
-#include "../mode/ModeMainGame.h"
 
-Bullet::Bullet( ApplicationBase& game,ModeBase& mode)
+
+Bullet::Bullet( ApplicationBase& game,ModeMainGame& mode)
 	:base(game,mode)
 {
 	_cgDarkPurple = ResourceServer::LoadGraph("res/bullet/BulletBillBorad/BulletTexture_DarkPurple.png");

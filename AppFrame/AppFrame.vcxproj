@@ -174,7 +174,6 @@
     <ClInclude Include="source\Base\GameServer2.h" />
     <ClInclude Include="source\Base\GameServer.h" />
     <ClInclude Include="source\Base\GameBase.h" />
-    <ClInclude Include="source\Base\ModeBase.h" />
     <ClInclude Include="source\Math\3dCollision.h" />
     <ClInclude Include="source\Math\Easing.h" />
     <ClInclude Include="source\Math\Polar2.h" />
@@ -190,10 +189,7 @@
     <ClInclude Include="source\Math\matrix44.h" />
     <ClInclude Include="source\Math\utility.h" />
     <ClInclude Include="source\Math\vector4.h" />
-    <ClInclude Include="source\Object\ActorBase3D.h" />
-    <ClInclude Include="source\Object\ActorBase2d.h" />
-    <ClInclude Include="source\Object\ObjectBase.h" />
-    <ClInclude Include="source\Object\ObjectServer.h" />
+    <ClInclude Include="source\Base\ObjectServer.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
     <ClInclude Include="source\Math\Vector2.h" />
     <ClInclude Include="source\Script\CommandBase.h" />
@@ -220,7 +216,6 @@
     <ClCompile Include="source\Base\GameServer2.cpp" />
     <ClCompile Include="source\Base\GameServer.cpp" />
     <ClCompile Include="source\Base\GameBase.cpp" />
-    <ClCompile Include="source\Base\ModeBase.cpp" />
     <ClCompile Include="source\Math\3dCollision.cpp" />
     <ClCompile Include="source\Math\Easing.cpp" />
     <ClCompile Include="source\Math\Polar2.cpp" />
@@ -235,10 +230,7 @@
     <ClCompile Include="source\Math\matrix44.cpp" />
     <ClCompile Include="source\Math\utility.cpp" />
     <ClCompile Include="source\Math\vector4.cpp" />
-    <ClCompile Include="source\Object\ActorBase3D.cpp" />
-    <ClCompile Include="source\Object\ActorBase2d.cpp" />
-    <ClCompile Include="source\Object\ObjectBase.cpp" />
-    <ClCompile Include="source\Object\ObjectServer.cpp" />
+    <ClCompile Include="source\Base\ObjectServer.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
     <ClCompile Include="source\Math\Vector2.cpp" />
     <ClCompile Include="source\Script\CommandLabel.cpp" />

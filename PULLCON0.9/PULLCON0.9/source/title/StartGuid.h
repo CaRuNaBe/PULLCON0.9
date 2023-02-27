@@ -1,5 +1,7 @@
 #pragma once
 #include "appframe.h"
+#include "ActorBase2d.h"
+#include "../mode/ModeTitle.h"
 class StartGuid:public ActorBase2d
 {
 	using Actor2d = ActorBase2d;
@@ -12,7 +14,7 @@ class StartGuid:public ActorBase2d
 		PULLED//ˆø‚Á’£‚ç‚ê‚Ä‚¢‚é
 	};
 public:
-	StartGuid( ApplicationBase& game,ModeBase& mode );
+	StartGuid( ApplicationBase& game,ModeTitle& mode );
 	~StartGuid();
 	virtual Type	GetType()//Ž©•ª‚ª‰½ŽÒ‚©
 	{

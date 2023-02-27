@@ -1,11 +1,13 @@
 #pragma once
 #include "appframe.h"
+#include "ActorBase3D.h"
+#include "../mode/ModeMainGame.h"
 class ClearObject:
 	public ActorBase3D
 {
 	using base = ActorBase3D;
 public:
-	ClearObject( ApplicationBase& game,ModeBase& mode,float _radius );
+	ClearObject( ApplicationBase& game,ModeMainGame& mode,float _radius );
 	virtual ~ClearObject();
 	virtual Type GetType()
 	{

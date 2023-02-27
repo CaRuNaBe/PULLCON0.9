@@ -11,7 +11,7 @@ namespace
 	math::Vector2 BUTTON_POS = {0,0};
 }
 
-UIPullGage::UIPullGage( ApplicationBase& game,int layer,ModeBase& _base )
+UIPullGage::UIPullGage( ApplicationBase& game,int layer,ModeMainGame& _base )
 	:UIBase( game,layer,_base )
 {
 	Initialize();

@@ -1,7 +1,8 @@
 #include "AreaCommunication.h"
 #include "../mode/ModeSpeakScript.h"
-#include "../mode/ModeMainGame.h"
-AreaCommunication::AreaCommunication( ApplicationBase& game,ModeBase& mode,std::string storyname )
+
+#include "../ApplicationGlobal.h"
+AreaCommunication::AreaCommunication( ApplicationBase& game,ModeMainGame& mode,std::string storyname )
 	:base( game,mode )
 {
 	story_name = storyname;
@@ -32,10 +33,13 @@ bool AreaCommunication::Update()
 		{
 			if ( IsHitObject( *obje ) )
 			{
-				auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
-				_game.GetModeServer()->Add( story );
+				if ( !gGlobal.GetIsEndSpeakScript() )
+				{
+					auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
+					_game.GetModeServer()->Add( story );
 
-				_mode.GetObjectServer3D().Del( *this );
+					_mode.GetObjectServer3D().Del( *this );
+				}
 				break;
 			}
 		}

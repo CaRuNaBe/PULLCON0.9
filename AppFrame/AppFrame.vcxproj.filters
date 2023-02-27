@@ -37,10 +37,7 @@
     <ClInclude Include="source\Application\UtilMacro.h">
       <Filter>source\Application</Filter>
     </ClInclude>
-    <ClInclude Include="source\Object\ObjectBase.h">
-      <Filter>source\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Object\ObjectServer.h">
+    <ClInclude Include="source\Base\ObjectServer.h">
       <Filter>source\Object</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\2dCollision.h">
@@ -79,12 +76,6 @@
     </ClInclude>
     <ClInclude Include="source\Script\ScriptsString.h">
       <Filter>source\Sclipt</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Object\ActorBase2d.h">
-      <Filter>source\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Object\ActorBase3D.h">
-      <Filter>source\Object</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\3dCollision.h">
       <Filter>source\Math</Filter>
@@ -134,9 +125,6 @@
     <ClInclude Include="source\Base\GameServer.h">
       <Filter>source\Base</Filter>
     </ClInclude>
-    <ClInclude Include="source\Base\ModeBase.h">
-      <Filter>source\Base</Filter>
-    </ClInclude>
     <ClInclude Include="source\Math\Polar2.h">
       <Filter>source\Math</Filter>
     </ClInclude>
@@ -167,10 +155,7 @@
     <ClCompile Include="source\Application\input_manager.cpp">
       <Filter>source\Application</Filter>
     </ClCompile>
-    <ClCompile Include="source\Object\ObjectBase.cpp">
-      <Filter>source\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Object\ObjectServer.cpp">
+    <ClCompile Include="source\Base\ObjectServer.cpp">
       <Filter>source\Object</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\2dCollision.cpp">
@@ -208,12 +193,6 @@
     </ClCompile>
     <ClCompile Include="source\Script\ScriptsString.cpp">
       <Filter>source\Sclipt</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Object\ActorBase2d.cpp">
-      <Filter>source\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Object\ActorBase3D.cpp">
-      <Filter>source\Object</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\3dCollision.cpp">
       <Filter>source\Math</Filter>
@@ -258,9 +237,6 @@
       <Filter>source\Base</Filter>
     </ClCompile>
     <ClCompile Include="source\Base\GameBase.cpp">
-      <Filter>source\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Base\ModeBase.cpp">
       <Filter>source\Base</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\Polar2.cpp">
