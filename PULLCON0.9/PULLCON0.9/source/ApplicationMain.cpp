@@ -3,7 +3,7 @@
 #include "ApplicationGlobal.h"
 #include "mode/ModeTitle.h"
 #include "mode/ModeSpeakScript.h"
-#include "ModeTest.h"
+#include "mode/ModeMainGame.h"
 // ŽÀ‘Ì
 ApplicationMain g_oApplicationMain;
 

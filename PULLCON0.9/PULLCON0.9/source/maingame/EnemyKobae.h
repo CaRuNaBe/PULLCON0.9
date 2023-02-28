@@ -3,14 +3,12 @@
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
 class EnemyKobae :
-    public ActorBase3D {
+	public ActorBase3D {
 	using base = ActorBase3D;
 public:
 	EnemyKobae(ApplicationBase& game,ModeMainGame& mode);
 	virtual ~EnemyKobae();
-	virtual Type GetType() {
-		return Type::kEnemySkyhunter;
-	}
+	virtual Type GetType() { return Type::kEnemySkyhunter; }
 	// コバエの状態
 	enum class State {
 		WAIT,//待機状態

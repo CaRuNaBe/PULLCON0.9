@@ -9,13 +9,10 @@ class SkySphere:
 public:
 	SkySphere( ApplicationBase& game,ModeMainGame& mode,int objectid);
 	virtual ~SkySphere();
-	virtual Type GetType()
-	{
-		return Type::kSkySphere;
-	}
+	virtual Type GetType() { return Type::kSkySphere; }
 	virtual void Init();
-	virtual bool Update(  );
-	virtual bool Draw(  );
+	virtual bool Update();
+	virtual bool Draw();
 
 protected:
 	int    _handle;

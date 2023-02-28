@@ -9,10 +9,7 @@ class StageObject:
 public:
 	StageObject( ApplicationBase& game,ModeMainGame& mode,int objectid,int collision ,int pieces_coll);
 	virtual ~StageObject();
-	virtual Type GetType()
-	{
-		return Type::kStageObject;
-	}
+	virtual Type GetType() { return Type::kStageObject; }
 	// ステージオブジェクトの状態
 	enum class State {
 		NUM, //初期状態
@@ -20,8 +17,8 @@ public:
 	};
 
 	virtual void Init();
-	virtual bool Update(  );
-	virtual bool Draw( );
+	virtual bool Update();
+	virtual bool Draw();
 
 	void AddCollision();
 

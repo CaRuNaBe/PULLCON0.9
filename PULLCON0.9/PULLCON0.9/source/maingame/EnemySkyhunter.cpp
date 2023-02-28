@@ -21,7 +21,7 @@ void EnemySkyhunter::Init()
 
 	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( SKYHUNTER_ID ) );
 
-	_stateEnemySkyhunter = State::PLAY;
+	_stateEnemySkyhunter = State::WAIT;
 
 	_vPos = {0.f, 10000.f, 50000.f};
 	_vEvent = _vPos;
@@ -39,6 +39,11 @@ bool EnemySkyhunter::Update()
 {
 	base::Update();
 
+	if (_stateEnemySkyhunter == State::WAIT) {
+		_collision._vCenter = _vPos;
+		_collisionEvent._vCenter = _vPos;
+		_stateEnemySkyhunter = State::PLAY;
+	}
 
 	// OŸŒ³‹ÉÀ•W(r(length3D),ƒÆ(theta),ƒÓ(rad))
 	float sx = 0.f,sz = 0.f,sy = 0.f;

@@ -9,10 +9,7 @@ class AreaNoEntry:
 public:
 	AreaNoEntry( ApplicationBase& game,ModeMainGame& mode );
 	virtual ~AreaNoEntry();
-	virtual Type GetType()
-	{
-		return Type::kStageObject;
-	}
+	virtual Type GetType() { return Type::kStageObject; }
 	virtual void Init();
 	virtual bool Update();
 	virtual bool Draw();

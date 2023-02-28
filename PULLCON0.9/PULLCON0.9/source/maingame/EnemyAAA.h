@@ -8,13 +8,9 @@ class EnemyAAA: public ActorBase3D
 public:
 	EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,int scale,vector4 _vPosi );
 	virtual ~EnemyAAA();
-	virtual Type GetType()
-	{
-		return Type::kEnemyAAA;
-	}
-// 対空砲の状態
-	enum class State
-	{
+	virtual Type GetType() { return Type::kEnemyAAA; }
+	// 対空砲の状態
+	enum class State {
 		NUM,//地下の対空砲
 		PLAY,//プレイアブル状態
 		EVENT,//イベント状態

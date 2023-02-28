@@ -9,13 +9,9 @@ class ClearObject:
 public:
 	ClearObject( ApplicationBase& game,ModeMainGame& mode,float _radius );
 	virtual ~ClearObject();
-	virtual Type GetType()
-	{
-		return Type::kClearObject;
-	}
-	// プレイヤーの状態
-	enum class State
-	{
+	virtual Type GetType() { return Type::kClearObject; }
+	// ガンシップの状態
+	enum class State {
 		NUM, //初期状態
 		WAIT,//待機状態
 		PLAY,//迎撃体制
@@ -28,7 +24,7 @@ public:
 	void AddBullet();
 
 protected:
-	State   _stateClearObject;  // ガンシップステータス
+	State   _stateClearObject;
 
 	vector4 _vObjective;  // 円軌道中心座標
 

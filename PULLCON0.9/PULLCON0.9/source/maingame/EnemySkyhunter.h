@@ -4,19 +4,14 @@
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
 class EnemySkyhunter :
-	public ActorBase3D
-{
+	public ActorBase3D {
 	using base = ActorBase3D;
 public:
 	EnemySkyhunter(ApplicationBase& game,ModeMainGame& mode, EnemyColumn& skyhunter);
 	virtual ~EnemySkyhunter();
-	virtual Type GetType()
-	{
-		return Type::kEnemySkyhunter;
-	}
+	virtual Type GetType() { return Type::kEnemySkyhunter; }
 	// スカイハンターの状態
-	enum class State
-	{
+	enum class State {
 		NUM, //初期状態
 		WAIT,//待機状態
 		PLAY,//迎撃体制
