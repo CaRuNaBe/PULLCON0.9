@@ -3,7 +3,7 @@
 #include "EnemyKobae.h"
 #include "../mode/ModeMainGame.h"
 
-AreaEnemySpawn::AreaEnemySpawn(ApplicationBase& game, ModeBase& mode, int spawnfream, int typeenemy)
+AreaEnemySpawn::AreaEnemySpawn(ApplicationBase& game, ModeMainGame& mode, int spawnfream, int typeenemy)
 	:base(game, mode)
 {
 	spawn_fream = spawnfream;

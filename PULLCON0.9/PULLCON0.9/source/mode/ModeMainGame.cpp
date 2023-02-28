@@ -399,8 +399,6 @@ void ModeMainGame::Parsing()
 	auto enemyspawn = std::make_shared<AreaEnemySpawn>( _game,*this,0,0 );
 	GetObjectServer3D().Add(enemyspawn);
 	///////////////////////////////////////////////////////
-	GetObjectServer3D().Add( kobae );
-	///////////////////////////////////////////////////////
 
 	while ( !(stop_parsing) && (now_line >= 0) && (now_line < max_line) )
 	{
@@ -432,7 +430,7 @@ void ModeMainGame::Parsing()
 
 			if ( string_comand == COMMAND_GAMESTART )
 			{
-				state = ScriptState::EDIT;
+				state = ScriptState::GAME;
 			}
 			++now_line;
 		}
