@@ -16,10 +16,17 @@ public:
 	virtual bool Update();
 	virtual bool Draw();
 
+	virtual void Damage();
+	void  AddEnemyColumn();
+	void  AddEnemyKobae();
 protected:
 	State  _stateEnemySpawn;
 
 	int spawn_fream;
 	int type_enemy;
+
+	int _handle;
+	int _handleSky;
+	int _handleKobae;
 };
 

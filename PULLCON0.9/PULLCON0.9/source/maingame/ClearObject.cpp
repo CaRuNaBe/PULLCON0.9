@@ -9,8 +9,8 @@ namespace
 ClearObject::ClearObject( ApplicationBase& game,ModeBase& mode,float _radius )
 	:base( game,mode )
 {
-	radius = _radius;
 	Init();
+	radius = _radius;
 }
 
 ClearObject::~ClearObject()
@@ -37,8 +37,6 @@ void ClearObject::Init()
 	_collision._fRadius = 500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 2.f * _fScale;
 
-	radius = 4000.f;
-
 	_iLife = 100;
 
 }
@@ -58,7 +56,6 @@ bool ClearObject::Update()
 			|| obje->GetType() == Type::kBullet) {
 			if (obje->GetType() == Type::kPlayer) {
 				if (Intersect(_collisionEvent, obje->_collision)) {
-					_coll = true;
 					_fire = true;
 					_vRelation = obje->_vPos;
 					// ’e‚Éƒoƒ‰‚Â‚«‚ğ‚½‚¹‚é
@@ -66,9 +63,6 @@ bool ClearObject::Update()
 					float randomY = static_cast<float>(utility::get_random(-700, 1400));
 					float randomZ = static_cast<float>(utility::get_random(-700, 700));
 					_vTarget = { _vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ };
-				}
-				else {
-					_coll = false;
 				}
 			}
 			if (obje->GetType() == Type::kBullet) {

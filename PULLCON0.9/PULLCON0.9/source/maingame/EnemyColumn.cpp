@@ -3,9 +3,10 @@
 #include  "../mode/ModeMainGame.h"
 
 
-EnemyColumn::EnemyColumn(ApplicationBase& game, ModeBase& mode)
+EnemyColumn::EnemyColumn(ApplicationBase& game, ModeBase& mode, vector4 pos)
 	:base(game, mode) {
 	Init();
+	AddPieces(pos);
 }
 
 EnemyColumn::~EnemyColumn() {
@@ -16,7 +17,6 @@ void EnemyColumn::Init() {
 	base::Init();
 	_stateEnemyColumn = State::WAIT;
 
-	_vPos = { 0.f, 10000.f, 50000.f };
 	_iPieces = 3;
 	_fSpeed = 150.f;
 	_fScale = 2.0f;
@@ -25,7 +25,6 @@ void EnemyColumn::Init() {
 	_collisionEvent._fRadius = _collision._fRadius * 13.f * _fScale;
 	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
 
-	AddPieces();
 }
 
 bool EnemyColumn::Update() {
@@ -104,10 +103,10 @@ void EnemyColumn::SetVelocity() {
 	_vVelocity.Normalized();
 }
 
-void EnemyColumn::AddPieces() {
+void EnemyColumn::AddPieces(vector4 pos) {
 	for (auto i = 0; i < _iPieces; ++i) {
 		auto skyhunter = std::make_shared<EnemySkyhunter>(_game, _mode, *this);
-		skyhunter->SetPosition(_vPos);
+		skyhunter->SetPosition(pos);
 		skyhunter->_iPart = i;
 		skyhunter->_ST = 30 * i + 1;
 		_mode.GetObjectServer3D().Add(skyhunter);

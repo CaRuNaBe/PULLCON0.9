@@ -22,8 +22,6 @@
 #include "../maingame/AreaEnemySpawn.h"
 #include "../maingame/AreaCommunication.h"
 #include "../maingame/AreaNoEntry.h"
-#include "../maingame/EnemyColumn.h"
-#include "../maingame/EnemyKobae.h"
 #include "ModeSpeakScript.h"
 
 
@@ -403,10 +401,8 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_NOENTRY,&ModeMainGame::OnCommandNoEntry ) );
 
 	///////////////////////////////////////////////////////
-	auto column = std::make_shared<EnemyColumn>( _game,*this );
-	GetObjectServer3D().Add( column );
-	auto kobae = std::make_shared<EnemyKobae>( _game,*this );
-	GetObjectServer3D().Add( kobae );
+	auto enemyspawn = std::make_shared<AreaEnemySpawn>( _game,*this,0,0 );
+	GetObjectServer3D().Add(enemyspawn);
 	///////////////////////////////////////////////////////
 
 	while ( !(stop_parsing) && (now_line >= 0) && (now_line < max_line) )

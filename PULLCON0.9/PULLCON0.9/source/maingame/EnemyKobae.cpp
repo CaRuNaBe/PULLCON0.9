@@ -21,7 +21,6 @@ void EnemyKobae::Init() {
 
 	_stateEnemyKobae = State::WAIT;
 
-	_vPos = { 0.f, 10000.f, 50000.f };
 	_vEvent = _vPos;
 	_fScale = 2.f;
 	_fSpeed = 200.f;
@@ -37,6 +36,10 @@ void EnemyKobae::Init() {
 bool EnemyKobae::Update() {
 	base::Update();
 
+	if (_stateEnemyKobae == State::WAIT) {
+		_collision._vCenter = _vPos;
+		_collisionEvent._vCenter = _vPos;
+	}
 
 	// éOéüå≥ã…ç¿ïW(r(length3D),É∆(theta),É”(rad))
 	float sx = 0.f, sz = 0.f, sy = 0.f;

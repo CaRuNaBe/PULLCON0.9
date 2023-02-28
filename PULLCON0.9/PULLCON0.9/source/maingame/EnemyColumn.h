@@ -4,7 +4,7 @@ class EnemyColumn :
 	public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	EnemyColumn(ApplicationBase& game, ModeBase& mode);
+	EnemyColumn(ApplicationBase& game, ModeBase& mode, vector4 pos);
 	virtual ~EnemyColumn();
 	virtual Type GetType() { return Type::kEnemySkyhunter; }
 	// スカイハンター隊列の状態
@@ -18,7 +18,7 @@ public:
 
 	virtual void Damage();
 	void SetVelocity();   // 速度ベクトル
-	void AddPieces();
+	void AddPieces(vector4 pos);
 
 protected:
 	State   _stateEnemyColumn;
