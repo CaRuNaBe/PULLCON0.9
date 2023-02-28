@@ -395,10 +395,6 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_AREACOMMUNICATION,&ModeMainGame::OnCommandCommunication ) );
 	comand_funcs.insert( std::make_pair( COMMAND_NOENTRY,&ModeMainGame::OnCommandNoEntry ) );
 
-	///////////////////////////////////////////////////////
-	auto enemyspawn = std::make_shared<AreaEnemySpawn>( _game,*this,0,0 );
-	GetObjectServer3D().Add(enemyspawn);
-	///////////////////////////////////////////////////////
 
 	while ( !(stop_parsing) && (now_line >= 0) && (now_line < max_line) )
 	{

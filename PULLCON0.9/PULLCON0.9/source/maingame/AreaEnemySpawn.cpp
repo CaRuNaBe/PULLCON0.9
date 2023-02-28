@@ -6,7 +6,8 @@
 AreaEnemySpawn::AreaEnemySpawn(ApplicationBase& game, ModeMainGame& mode, int spawnfream, int typeenemy)
 	:base(game, mode)
 {
-	spawn_fream = spawnfream;
+	_iSpawnFream = spawnfream;
+	_iEnemyType = typeenemy;
 	_handle = ResourceServer::LoadMV1Model("res/enemy/airstation/mv1/cg_EnemySpawer.mv1");
 	_handleSky = ResourceServer::LoadMV1Model("res/enemy/skyhunters/mv1/cg_SkyHunters.mv1");
 	_handleKobae = ResourceServer::LoadMV1Model("res/enemy/skyhunters/mv1/cg_SkyHunters.mv1");
@@ -21,7 +22,8 @@ AreaEnemySpawn::~AreaEnemySpawn() {
 void AreaEnemySpawn::Init() {
 	base::Init();
 	_stateEnemySpawn = State::NUM;
-
+	
+	_isAddKobae = false;
 	_vPos = { 0.f, 5000.f, 100000.f };
 	_fScale = 3.f;
 	_vEvent = _vPos;
@@ -57,7 +59,7 @@ bool AreaEnemySpawn::Update() {
 					if (obje->_CT == 0) {
 						_overlap = true;
 						obje->Damage();
-						_iLife -= obje->_iDamage;
+						//_iLife -= obje->_iDamage;
 					}
 				}
 			}
@@ -66,9 +68,26 @@ bool AreaEnemySpawn::Update() {
 
 	// àÍíËä‘äuÇ≈ÉXÉ|Å[ÉìÇ≥ÇπÇÈ
 	if (_fire && _CT == 0) {
-		AddEnemyColumn();
-		AddEnemyKobae();
-		_CT = 600;
+		switch (_iEnemyType) {
+		case 1:
+			AddEnemyColumn();
+			break;
+		case 2:
+			AddEnemyKobae();
+			break;
+		case 3:
+			if (_isAddKobae) {
+				AddEnemyKobae();
+			}
+			else {
+				AddEnemyColumn();
+			}
+			_isAddKobae = !_isAddKobae;
+			break;
+		default:
+			break;
+		}
+		_CT = _iSpawnFream;
 	}
 
 	if (_iLife < 0) {
@@ -112,6 +131,7 @@ void AreaEnemySpawn::Damage() {
 
 void AreaEnemySpawn::AddEnemyColumn() {
 	auto column = std::make_shared<EnemyColumn>(_game, _mode, _vPos);
+	column->SetPosition(_vPos);
 	_mode.GetObjectServer3D().Add(column);
 }
 
