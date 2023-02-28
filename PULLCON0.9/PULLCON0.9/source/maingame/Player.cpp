@@ -352,7 +352,7 @@ bool Player::Draw() {
 	base::Draw();
 	// フォグ設定
 	SetFogEnable(TRUE);
-	SetFogColor(255, 255, 255);
+	SetFogColor(255, 255, 205);
 	SetFogStartEnd(5000.f, 400000.f);
 	// 注視点を描画
 	float linelength = 100.f;

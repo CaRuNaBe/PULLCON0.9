@@ -1,14 +1,12 @@
 #pragma once
 #include "appframe.h"
 class EnemyKobae :
-    public ActorBase3D {
+	public ActorBase3D {
 	using base = ActorBase3D;
 public:
 	EnemyKobae(ApplicationBase& game, ModeBase& mode);
 	virtual ~EnemyKobae();
-	virtual Type GetType() {
-		return Type::kEnemySkyhunter;
-	}
+	virtual Type GetType() { return Type::kEnemySkyhunter; }
 	// コバエの状態
 	enum class State {
 		WAIT,//待機状態

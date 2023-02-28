@@ -1,17 +1,13 @@
 #pragma once
 #include "appframe.h"
 
-class AreaNoEntry:
-	public ActorBase3D
-{
+class AreaNoEntry :
+	public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	AreaNoEntry( ApplicationBase& game,ModeBase& mode );
+	AreaNoEntry(ApplicationBase& game, ModeBase& mode);
 	virtual ~AreaNoEntry();
-	virtual Type GetType()
-	{
-		return Type::kStageObject;
-	}
+	virtual Type GetType() { return Type::kStageObject; }
 	virtual void Init();
 	virtual bool Update();
 	virtual bool Draw();

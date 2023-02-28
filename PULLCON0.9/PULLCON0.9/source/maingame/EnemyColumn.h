@@ -1,19 +1,14 @@
 #pragma once
 #include "appframe.h"
 class EnemyColumn :
-    public ActorBase3D
-{
+	public ActorBase3D {
 	using base = ActorBase3D;
 public:
 	EnemyColumn(ApplicationBase& game, ModeBase& mode);
 	virtual ~EnemyColumn();
-	virtual Type GetType()
-	{
-		return Type::kEnemySkyhunter;
-	}
+	virtual Type GetType() { return Type::kEnemySkyhunter; }
 	// スカイハンター隊列の状態
-	enum class State
-	{
+	enum class State {
 		WAIT,//待機状態
 		PLAY,//隊列
 	};

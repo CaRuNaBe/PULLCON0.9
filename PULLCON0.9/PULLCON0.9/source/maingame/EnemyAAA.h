@@ -2,19 +2,14 @@
 #include "appframe.h"
 
 
-class EnemyAAA: public ActorBase3D
-{
+class EnemyAAA : public ActorBase3D {
 	typedef ActorBase3D base;
 public:
-	EnemyAAA( ApplicationBase& game,ModeBase& mode,int min_id,int max_id,int pile_num, vector4 _vPosi);
+	EnemyAAA(ApplicationBase& game, ModeBase& mode, int min_id, int max_id, int pile_num, vector4 _vPosi);
 	virtual ~EnemyAAA();
-	virtual Type GetType()
-	{
-		return Type::kEnemyAAA;
-	}
-// 対空砲の状態
-	enum class State
-	{
+	virtual Type GetType() { return Type::kEnemyAAA; }
+	// 対空砲の状態
+	enum class State {
 		NUM,//地下の対空砲
 		PLAY,//プレイアブル状態
 		EVENT,//イベント状態
@@ -29,7 +24,7 @@ public:
 	void AddBullet();
 	void AddPieces(int pile_num);
 	void GetSearch();
-	void AddPieces( int min_id,int max_id,int pile_num );
+	void AddPieces(int min_id, int max_id, int pile_num);
 
 	void SetAxialX(float _x_rad) { _fAxialX = _x_rad; }
 	void SetAxialY(float _y_rad) { _fAxialY = _y_rad; }

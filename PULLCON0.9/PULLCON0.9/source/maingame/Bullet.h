@@ -1,10 +1,10 @@
 #pragma once
 #include "appframe.h"
 
-class Bullet : public ActorBase3D{
+class Bullet : public ActorBase3D {
 	typedef ActorBase3D base;
 public:
-	Bullet( ApplicationBase& game,ModeBase& mode);
+	Bullet(ApplicationBase& game, ModeBase& mode);
 	virtual ~Bullet();
 	virtual Type GetType() { return Type::kBullet; }
 

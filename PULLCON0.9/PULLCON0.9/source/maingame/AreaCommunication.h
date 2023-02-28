@@ -8,10 +8,7 @@ class AreaCommunication:
 public:
 	AreaCommunication( ApplicationBase& game,ModeBase& mode,const std::string storyname );
 	virtual ~AreaCommunication();
-	virtual Type GetType()
-	{
-		return Type::kAreaCommunication;
-	}
+	virtual Type GetType() { return Type::kAreaCommunication; }
 	virtual void Init();
 	virtual bool Update();
 	virtual bool Draw();
