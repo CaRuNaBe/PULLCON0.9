@@ -131,7 +131,7 @@ void ModeMainGame::Destroy()
 void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname )
 {
 	state = ScriptState::PREPARSING;
-	ResourceServer::LoadDivGraph( "res/outarea/ui_OutOfArea_Sheet.png",DANGER_ANIME_MAX,5,15,960,540,cg_outobarea );
+	ResourceServer::LoadDivGraph( "res/2D_image/outarea/ui_OutOfArea_Sheet.png",DANGER_ANIME_MAX,5,15,960,540,cg_outobarea );
 	start_time = 0;
 	max_line = 0;
 	now_line = 0;
@@ -209,9 +209,13 @@ bool ModeMainGame::Update()
 						{
 							object_3d->SetUpdateSkip( true );
 						}
+						cnt = 0;
+						is_player_danger = false;
+						game_over_timer = 600;
 						GetLineNumber( stage_name,now_line );
 						auto story = std::make_shared<ModeSpeakScript>( _game,30,"gameover/gameover" );
 						_game.GetModeServer()->Add( story );
+						gGlobal.IsNotEndSpeakScript();
 						state = ScriptState::STORY;
 					}
 					break;
@@ -272,10 +276,8 @@ bool ModeMainGame::Draw()
 {
 	object_main_game.Draw();
 	ui_player.Draw();
-	if ( is_player_danger )
-	{
-		DrawExtendGraph( _game.DispBasics(),_game.DispBasics(),_game.DispSizeW(),_game.DispSizeH(),cg_outobarea[cnt % DANGER_ANIME_MAX],TRUE );
-	}
+
+
 
 	switch ( state )
 	{
@@ -286,10 +288,11 @@ bool ModeMainGame::Draw()
 
 
 		case ScriptState::GAME:
+			if ( is_player_danger )
+			{
+				DrawExtendGraph( _game.DispBasics(),_game.DispBasics(),_game.DispSizeW(),_game.DispSizeH(),cg_outobarea[cnt % DANGER_ANIME_MAX],TRUE );
+			}
 			break;
-
-
-
 		case ScriptState::CRFEEDIN:
 			DrawFeedIn();
 			break;
@@ -364,6 +367,7 @@ void ModeMainGame::PreParsing()
 void ModeMainGame::Parsing()
 {
 	object_main_game.Clear();
+	ui_player.Clear();
 	stage_name.clear();
 	auto stop_parsing = false;
 	unsigned	int date_empty = 0;
@@ -835,6 +839,7 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		}
 		is_update_skip = true;
 		state = ScriptState::STORY;
+		gGlobal.IsNotEndSpeakScript();
 		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
 		_game.GetModeServer()->Add( story );
 		result = true;
@@ -2008,8 +2013,9 @@ bool ModeMainGame::OnEditCommandAdd( const std::string& command )
 	std::string buf;
 	auto cchar = const_cast<char*>(buf.c_str());
 
+
 	std::vector < std::string >_script;
-	const std::string FILEPASS = "res/script/gamescript/gamecommand.json";
+	const std::string FILEPASS = "res/string_date/gamescript/gamecommand.json";
 	const std::string ARREYNAME = "gamecommand";
 	auto adddate = std::make_unique<ScriptsData>();
 	adddate->LoadJson( FILEPASS,ARREYNAME );

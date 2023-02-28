@@ -15,7 +15,7 @@ bool ApplicationMain::Initialize( HINSTANCE hInstance )
 	}
 	font_hundle = CreateFontToHandle( "Kazesawa-Bold",font_size,-1,-1 );
 	gGlobal.Init();
-#if 0
+#if 1
 	auto title = std::make_shared<ModeTitle>( *this,1 );
 	base::GetInstance()->GetModeServer()->Add( title );
 #endif // 0
@@ -23,7 +23,7 @@ bool ApplicationMain::Initialize( HINSTANCE hInstance )
 	auto test = std::make_shared<ModeTest>( *this,1 );
 	base::GetInstance()->GetModeServer()->Add( test );
 #endif
-#if 1
+#if 0
 	// ÉÇÅ[ÉhÇÃìoò^
 	std::string command;
 	while ( true )

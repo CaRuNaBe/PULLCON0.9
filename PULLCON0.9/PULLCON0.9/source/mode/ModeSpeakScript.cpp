@@ -649,7 +649,7 @@ bool ModeSpeakScript::OnCommandDrawIn( unsigned int line,const std::vector<std::
 	drawin->SetHandle( handle );
 
 	const auto index = drawin->GetIndex();
-	const auto check = [index]( const auto& element ) -> bool
+	const auto check = [index] ( const auto& element ) -> bool
 	{
 		return element->GetIndex() == index;
 	};
@@ -660,7 +660,7 @@ bool ModeSpeakScript::OnCommandDrawIn( unsigned int line,const std::vector<std::
 
 	if ( drawin_list.size() >= 2 )
 	{
-		const auto sort = []( const auto& lh,const auto& rh ) -> bool
+		const auto sort = [] ( const auto& lh,const auto& rh ) -> bool
 		{
 			return lh->GetIndex() < rh->GetIndex();
 		};
@@ -692,7 +692,7 @@ bool ModeSpeakScript::OnCommandDrawOut( unsigned int line,const std::vector<std:
 	drawout->SetHandle( handle );
 
 	const auto index = drawout->GetIndex();
-	const auto check = [index]( const auto& element ) -> bool
+	const auto check = [index] ( const auto& element ) -> bool
 	{
 		return element->GetIndex() == index;
 	};
@@ -703,7 +703,7 @@ bool ModeSpeakScript::OnCommandDrawOut( unsigned int line,const std::vector<std:
 
 	if ( drawout_list.size() >= 2 )
 	{
-		const auto sort = []( const auto& lh,const auto& rh ) -> bool
+		const auto sort = [] ( const auto& lh,const auto& rh ) -> bool
 		{
 			return lh->GetIndex() < rh->GetIndex();
 		};
@@ -782,8 +782,8 @@ bool ModeSpeakScript::OnCommandCrfo( unsigned int line,const std::vector<std::st
 
 bool ModeSpeakScript::Draw()
 {
-	DrawAnime();
 	DrawRect();
+	DrawAnime();
 	speak_object.Draw();
 	DrawImage();
 	DrawTime();

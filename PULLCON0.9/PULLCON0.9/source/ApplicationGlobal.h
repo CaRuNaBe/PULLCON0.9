@@ -27,4 +27,4 @@ public:
 	std::shared_ptr<ScriptsData> object_pass_date;
 };
 // 他のソースでgGlobalを使えるように
-extern ApplicationGlobal    gGlobal;
+extern ApplicationGlobal gGlobal;
