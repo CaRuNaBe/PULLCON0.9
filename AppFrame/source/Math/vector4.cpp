@@ -9,9 +9,9 @@ namespace math
 		x = 0.0; y = 0.0; z = 0.0; w = 1.0;
 	}
 
-	const float vector4::Lenght() const
+	const float vector4::Lenght( const vector4& second ) const
 	{
-		return sqrt( x * x + y * y + z * z );
+		return sqrt( x- second.x * x + y * y + z * z );
 	}
 
 	//ê≥ãKâª

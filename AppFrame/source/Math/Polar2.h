@@ -1,6 +1,12 @@
+/*****************************************************************//**
+ * @file   Polar2.h
+ * @brief  2ŸŒ³‹ÉÀ•W‚Ì’è‹`
+ * 
+ * @author ˆ¢•”Œ’‘¾˜Y
+ * @date   February 2023
+ *********************************************************************/
 #pragma once
 #include <cmath>
-#include "Vector2.h"
 #include "utility.h"
 namespace math
 {
@@ -57,11 +63,6 @@ namespace math
 		{
 			this->radius = radius;
 			this->theta = theta;
-		}
-		void SetVector2( Vector2 vec )
-		{
-			radius = vec.Length();
-			theta = std::atan( vec.y / vec.x );
 		}
 		void SetRadius( const float radius )
 		{

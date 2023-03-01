@@ -143,6 +143,9 @@
     <ClInclude Include="source\Script\CommandDrawRect.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
+    <ClInclude Include="source\Math\Polar3D.h">
+      <Filter>source\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
@@ -256,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="source\Script\CommandDrawRect.cpp">
       <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\Polar3D.cpp">
+      <Filter>source\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

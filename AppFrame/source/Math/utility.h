@@ -13,10 +13,11 @@ namespace math
 	class utility
 	{
 	public:
-		static constexpr float PI = 3.14159265358979f;
 		static constexpr float DEGREES_ZERO = 0.0f;
 		static constexpr float DEGREES_180 = 180.0f;
 		static constexpr float DEGREES_360 = DEGREES_180 * 2.0f;
+		static constexpr float PI = 3.14159265358979f;
+		static constexpr float RADIANS_ZERO = 0.0f;
 		static constexpr float TwoPi = PI * 2.0f;
 		static constexpr float PiOver2 = PI / 2.0f;
 
@@ -41,4 +42,32 @@ namespace math
 		utility() = default;
 	};
 
+	// 二つの値の大きい値を取得
+	template <typename T>
+	T Max( const T& a,const T& b )
+	{
+		return (a < b ? b : a);
+	}
+	// 二つの値の小さい値を取得
+	template <typename T>
+	T Min( const T& a,const T& b )
+	{
+		return (a < b ? a : b);
+	}
+	// 二つの値の間でクランプする
+	template <typename T>
+	T Clamp( const T& value,const T& lower,const T& upper )
+	{
+		return Min( upper,Max( lower,value ) );
+	}
+	template <typename T>
+	T Sign( const T& num )
+	{
+		return (num > 0) - (num < 0);
+	}
+	template <typename T>
+	T Step( const T& num )
+	{
+		return (num >= 0);
+	}
 }
