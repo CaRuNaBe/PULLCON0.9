@@ -2,6 +2,7 @@
 #include "../ApplicationGlobal.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "GameStage.h"
 
 namespace
 {
@@ -84,7 +85,8 @@ bool Player::Update()
 	{
 		if ( obje->GetType() == Type::kEnemyAAA
 			|| obje->GetType() == Type::kBullet
-			|| obje->GetType() == Type::kStageObject )
+			|| obje->GetType() == Type::kStageObject
+			|| obje->GetType() == Type::kGameStage)
 		{
 			if ( obje->GetType() == Type::kEnemyAAA )
 			{
@@ -139,6 +141,11 @@ bool Player::Update()
 					_isHitObject = true;
 					_ST = 10;
 				}
+			}
+			if ((obje->GetType() == Type::kGameStage)) {
+				auto stage = std::static_pointer_cast<GameStage>(obje);
+				MV1SetupCollInfo(stage->GetHandle(), 0, 8, 8, 8);
+				MV1_COLL_RESULT_POLY hitPoly;
 			}
 		}
 	}

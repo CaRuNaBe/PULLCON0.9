@@ -4,6 +4,7 @@ GameStage::GameStage( ApplicationBase& game,ModeMainGame& mode,int stageid )
 	:base( game,mode )
 {
 	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( stageid ).c_str() );
+	MV1SetupCollInfo(_handle, 0, 8, 8, 8);
 	Init();
 }
 
