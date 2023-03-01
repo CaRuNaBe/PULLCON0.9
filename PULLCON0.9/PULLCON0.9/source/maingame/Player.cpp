@@ -215,11 +215,11 @@ bool Player::Update()
 		dir.z = sin(rad + camerad) * length;
 		if (!_isHitObject) {
 			_vPos += dir;
-			_vMoevDir = {-dir.x, 0.f, -dir.z};
+			_vMoevDir = dir * -1.f;
 		}
 		else {
-			dir = { _vMoevDir.x, dir.y ,_vMoevDir.z };
-			_vPos += _vMoevDir;
+			dir = _vMoevDir;
+			_vPos += dir;
 		}
 
 		// ÉJÉÅÉâÇ‡í«è]Ç≥ÇπÇÈ
