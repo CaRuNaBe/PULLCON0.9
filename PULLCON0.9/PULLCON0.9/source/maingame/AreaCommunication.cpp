@@ -33,9 +33,10 @@ bool AreaCommunication::Update()
 		{
 			if ( IsHitObject( *obje ) )
 			{
-				if ( !gGlobal.GetIsEndSpeakScript() )
+				if (gGlobal.GetIsEndSpeakScript() )
 				{
-					auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
+					gGlobal.IsNotEndSpeakScript();
+						auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
 					_game.GetModeServer()->Add( story );
 
 					_mode.GetObjectServer3D().Del( *this );

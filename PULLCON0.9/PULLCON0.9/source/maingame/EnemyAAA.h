@@ -2,11 +2,12 @@
 #include "appframe.h"
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
+
 class EnemyAAA: public ActorBase3D
 {
 	typedef ActorBase3D base;
 public:
-	EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,int scale,vector4 _vPosi );
+	EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,float scale,vector4 _vPosi );
 	virtual ~EnemyAAA();
 	virtual Type GetType() { return Type::kEnemyAAA; }
 	// ëŒãÛñCÇÃèÛë‘
@@ -25,7 +26,7 @@ public:
 	void AddBullet();
 	void AddPieces( int pile_num );
 	void GetSearch();
-	void AddPieces( int min_id,int max_id,int pile_num,int scale );
+	void AddPieces( int min_id,int max_id,int pile_num,float scale );
 
 	void SetAxialX( float _x_rad )
 	{

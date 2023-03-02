@@ -15,7 +15,7 @@ namespace
 }
 ApplicationGlobal::ApplicationGlobal()
 {
-	is_EndSpeakScript = false;
+	is_EndSpeakScript = true;
 }
 
 ApplicationGlobal::~ApplicationGlobal()
@@ -24,7 +24,7 @@ ApplicationGlobal::~ApplicationGlobal()
 
 bool ApplicationGlobal::Init()
 {
-	is_EndSpeakScript = false;
+	is_EndSpeakScript = true;
 
 	image_pass_date = std::make_shared<ScriptsData>();
 

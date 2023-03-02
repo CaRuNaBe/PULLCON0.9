@@ -9,7 +9,7 @@ namespace
 	constexpr int TURRET = 0;
 	const std::string DELIMITER = ",";
 }
-EnemyAAA::EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,int scale ,vector4 _vPosi )
+EnemyAAA::EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,float scale ,vector4 _vPosi )
 	:base( game,mode )
 {
 	auto id = utility::get_random( min_id,max_id );
@@ -377,7 +377,7 @@ void EnemyAAA::AddBullet()
 	_mode.GetObjectServer3D().Add( bullet );
 }
 
-void EnemyAAA::AddPieces( int min_id,int max_id,int pile_num,int scale )
+void EnemyAAA::AddPieces( int min_id,int max_id,int pile_num,float scale )
 {
 	for ( auto i = 0; i < pile_num; ++i )
 	{

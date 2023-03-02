@@ -28,7 +28,5 @@ protected:
 	int type_enemy;
 
 	int _handle;
-	int _handleSky;
-	int _handleKobae;
 };
 

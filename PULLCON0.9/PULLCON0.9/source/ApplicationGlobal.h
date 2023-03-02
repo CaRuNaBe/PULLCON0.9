@@ -8,7 +8,7 @@ public:
 	virtual ~ApplicationGlobal();
 
 	bool Init();
-	virtual bool GetIsEndSpeakScript()
+	virtual bool GetIsEndSpeakScript()const
 	{
 		return is_EndSpeakScript;
 	}
