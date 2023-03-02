@@ -44,7 +44,7 @@ protected:
 
 	State  _statePlayer;
 
-	vector4 _vMoevDir;
+	vector4 _vMoveDir;
 	int    _push;             // ボタン連打回数
 	bool   _isHit;            // 当たったか
 	bool   _isHitObject;      // オブジクトと当たったか
@@ -58,6 +58,7 @@ protected:
 	int    _handleMagnet;
 	int    _handleBackAirscrew;
 	int    _handlefont;
+	int    _handleStage;
 	int    _se;
 	int    _seBullet;
 

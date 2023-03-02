@@ -29,4 +29,5 @@ protected:
 	State   _stateEnemySkyhunter;
 
 	int    _handle;
+	int    _handleStage;
 };

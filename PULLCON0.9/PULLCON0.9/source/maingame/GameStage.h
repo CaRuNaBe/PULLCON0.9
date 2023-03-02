@@ -14,7 +14,7 @@ public:
 	virtual bool Update();
 	virtual bool Draw();
 
-	virtual int GetHandle() { return _handle; }
+	virtual int& GetHandle() { return _handle; }
 
 protected:
 	int    _handle;

@@ -1,5 +1,6 @@
 #include  "EnemyColumn.h"
 #include  "EnemySkyhunter.h"
+#include  "GameStage.h"
 EnemyColumn::EnemyColumn(ApplicationBase& game,ModeMainGame& mode, vector4 pos)
 	:base(game, mode) {
 	Init();
@@ -48,13 +49,23 @@ bool EnemyColumn::Update() {
 				}
 			}
 		}
+		if ((obje->GetType() == Type::kGameStage)) {
+			auto stage = std::static_pointer_cast<GameStage>(obje);
+			_handleStage = stage->GetHandle();
+			MV1RefreshCollInfo(_handleStage, 0);
+		}
 	}
 
-	// ‘¬“x•ªˆÚ“®‚·‚é
-	if (_vPos.y < 6000.f && _vVelocity.y < 0.f) {
-		_vVelocity.y = 0.f;
+	vector4 move = _vVelocity * _fSpeed;
+
+	MV1_COLL_RESULT_POLY hitPoly;
+	vector4 posStart = _vPos + move;
+	vector4 posEnd = { posStart.x, posStart.y - 6000.f, posStart.z };
+	hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));
+	if (hitPoly.HitFlag) {
+		move += ToMath(hitPoly.HitPosition) - posEnd;
 	}
-	_vPos += _vVelocity * _fSpeed;
+	_vPos += move;
 
 	if (_iPieces == 0) {
 		Damage();

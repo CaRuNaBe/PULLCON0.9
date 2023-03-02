@@ -41,7 +41,7 @@ void Player::Init()
 	base::Init();
 	_statePlayer = State::NUM;
 
-	_vMoevDir = { 0.f, 0.f, -100.f };
+	_vMoveDir = { 0.f, 0.f, -100.f };
 	_fSpeed = 90.f;
 	_fRotatY = utility::PI;
 	_iFuel = 100;
@@ -144,8 +144,8 @@ bool Player::Update()
 			}
 			if ((obje->GetType() == Type::kGameStage)) {
 				auto stage = std::static_pointer_cast<GameStage>(obje);
-				MV1SetupCollInfo(stage->GetHandle(), 0, 8, 8, 8);
-				MV1_COLL_RESULT_POLY hitPoly;
+				_handleStage = stage->GetHandle();
+				MV1RefreshCollInfo(_handleStage, 0);
 			}
 		}
 	}
@@ -221,14 +221,21 @@ bool Player::Update()
 		dir.x = cos(rad + camerad) * length;
 		dir.z = sin(rad + camerad) * length;
 		if (!_isHitObject) {
-			_vPos += dir;
-			_vMoevDir = dir * -1.f;
+			_vMoveDir = dir * -1.f;
 		}
 		else {
-			dir = _vMoevDir;
-			_vPos += dir;
+			dir = _vMoveDir;
 		}
 
+		MV1_COLL_RESULT_POLY hitPoly;
+		vector4 posStart = _vPos + dir;
+		vector4 posEnd = { posStart.x, posStart.y - 1500.f, posStart.z };
+		hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));
+		if (hitPoly.HitFlag) {
+			dir += ToMath(hitPoly.HitPosition) - posEnd;
+		}
+
+		_vPos += dir;
 		// ÉJÉÅÉâÇ‡í«è]Ç≥ÇπÇÈ
 		_cam._vPos += dir;
 		_cam._vTarget += dir;
@@ -440,7 +447,9 @@ bool Player::Draw()
 	DrawSphere3D( ToDX( _vTarget ),100.f,8,GetColor( 255,0,0 ),GetColor( 0,0,0 ),TRUE );
 	SetUseLighting( TRUE );
 	// ÉvÉåÉCÉÑÅ[ÇÃíeÇÃãOìπÇï`âÊ
+	vector4 underLine = { _vPos.x, _vPos.y - 1500.f, _vPos.z };
 	DrawLine3D( ToDX( _vPos ),ToDX( _vTarget ),GetColor( 255,0,0 ) );
+	DrawLine3D( ToDX( _vPos ),ToDX(underLine),GetColor( 255,0,0 ) );
 
 	// ÉRÉäÉWÉáÉìï`âÊ
 

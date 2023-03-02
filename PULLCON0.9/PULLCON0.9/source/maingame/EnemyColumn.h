@@ -25,5 +25,6 @@ public:
 protected:
 	State   _stateEnemyColumn;
 
+	int    _handleStage;
 };
 

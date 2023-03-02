@@ -26,5 +26,6 @@ protected:
 	State   _stateEnemyKobae;
 
 	int    _handle;
+	int    _handleStage;
 };
 
