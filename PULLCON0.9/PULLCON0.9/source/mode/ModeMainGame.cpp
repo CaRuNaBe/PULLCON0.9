@@ -203,7 +203,7 @@ bool ModeMainGame::Update()
 						is_player_danger = false;
 						game_over_timer = 600;
 					}
-					if ( object_3d->GetLife() < dead || game_over_timer < 0 )
+					if ( object_3d->GetLife() < dead || game_over_timer < 0 ||object_3d->GetFuel() < dead )
 					{
 						for ( auto& object_3d : object_main_game.GetObjects() )
 						{
@@ -237,9 +237,9 @@ bool ModeMainGame::Update()
 			break;
 
 		case ScriptState::STORY:
+
 			if ( gGlobal.GetIsEndSpeakScript() )
 			{
-				gGlobal.IsNotEndSpeakScript();
 				state = ScriptState::PARSING;
 			}
 			break;
@@ -395,10 +395,6 @@ void ModeMainGame::Parsing()
 	comand_funcs.insert( std::make_pair( COMMAND_AREACOMMUNICATION,&ModeMainGame::OnCommandCommunication ) );
 	comand_funcs.insert( std::make_pair( COMMAND_NOENTRY,&ModeMainGame::OnCommandNoEntry ) );
 
-	///////////////////////////////////////////////////////
-	auto enemyspawn = std::make_shared<AreaEnemySpawn>( _game,*this,0,0 );
-	GetObjectServer3D().Add(enemyspawn);
-	///////////////////////////////////////////////////////
 
 	while ( !(stop_parsing) && (now_line >= 0) && (now_line < max_line) )
 	{
@@ -841,7 +837,6 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
-		is_update_skip = true;
 		state = ScriptState::STORY;
 		gGlobal.IsNotEndSpeakScript();
 		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
