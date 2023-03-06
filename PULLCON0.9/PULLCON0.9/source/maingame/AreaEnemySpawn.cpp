@@ -13,7 +13,7 @@ namespace
 AreaEnemySpawn::AreaEnemySpawn( ApplicationBase& game,ModeMainGame& mode,int spawnfream,int typeenemy )
 	:base( game,mode )
 {
-	spawn_fream = spawnfream;
+	_iSpawnFream = spawnfream;
 	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( AREAENEMYSPAWN_ID ) );
 	ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( KOBAE_ID ) );
 	ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( SKYHUNTER_ID ) );
