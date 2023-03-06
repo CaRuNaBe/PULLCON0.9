@@ -579,6 +579,6 @@ void Player::AddBullet( vector4 pos )
 	bullet->SetPosition( pos );
 	bullet->SetDir( _vDir );
 	bullet->_fScale = 3.f;
-	bullet->_iType = 4;
+	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }

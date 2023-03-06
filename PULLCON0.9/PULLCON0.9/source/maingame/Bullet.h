@@ -25,5 +25,6 @@ protected:
 	int    _cgPurple;
 	int    _cgYellow;
 	int    _cg;
+	int    _handle;
 };
 
