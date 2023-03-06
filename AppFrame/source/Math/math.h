@@ -10,6 +10,7 @@
 #include "vector4.h"
 #include "Easing.h"
 #include "Polar2.h"
+#include "Polar3D.h"
 /*
  * @file  Math.h
  * @brief ”ŠwŠÖ˜A

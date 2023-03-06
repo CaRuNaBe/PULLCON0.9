@@ -2,16 +2,22 @@
 #include "appframe.h"
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
-
+#include <string>
+#include <sstream>
+#include <array>
 class EnemyAAA: public ActorBase3D
 {
 	typedef ActorBase3D base;
 public:
 	EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,float scale,vector4 _vPosi );
 	virtual ~EnemyAAA();
-	virtual Type GetType() { return Type::kEnemyAAA; }
-	// 対空砲の状態
-	enum class State {
+	virtual Type GetType()
+	{
+		return Type::kEnemyAAA;
+	}
+// 対空砲の状態
+	enum class State
+	{
 		NUM,//地下の対空砲
 		PLAY,//プレイアブル状態
 		EVENT,//イベント状態
@@ -23,7 +29,7 @@ public:
 	virtual bool Draw();
 
 	virtual void Damage();
-	void AddBullet();
+	void AddBullet( const int& theta_split_num,const int& phi_split_num,const int& theta_degree_lower,const int& theta_degree_upper,const int& phi_degree_lower,const int& phi_degree_upper );
 	void AddPieces( int pile_num );
 	void GetSearch();
 	void AddPieces( int min_id,int max_id,int pile_num,float scale );
@@ -51,5 +57,7 @@ protected:
 
 	int    _handle_body;
 	int    _handle_turret;
-
+	int AAA_ID;
+	std::vector<int>bullet_state;
+	
 };

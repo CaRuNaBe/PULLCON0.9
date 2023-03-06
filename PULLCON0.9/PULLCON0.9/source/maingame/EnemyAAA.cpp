@@ -1,21 +1,37 @@
 #include "appframe.h"
 #include "EnemyAAA.h"
 #include "Bullet.h"
-
 #include "../ApplicationGlobal.h"
+
 namespace
 {
 	constexpr int BODY = 1;
 	constexpr int TURRET = 0;
 	const std::string DELIMITER = ",";
+	const std::string BULLET_STATE_PASS = "res/string_date/gamescript/bullet_state/";
+	const std::string BULLET_STATE = "bullet_state";
+	const std::string BULLET_STATEJSON = BULLET_STATE + ".json";
 }
-EnemyAAA::EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,float scale ,vector4 _vPosi )
+EnemyAAA::EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_id,int pile_num,float scale,vector4 _vPosi )
 	:base( game,mode )
+	,AAA_ID( utility::get_random( min_id,max_id ) )
 {
-	auto id = utility::get_random( min_id,max_id );
+	std::ostringstream filepass;
 
+	filepass << BULLET_STATE_PASS << AAA_ID << "/" << BULLET_STATEJSON;
 
-	auto pass_vector = string::Split( gGlobal.object_pass_date->GetScriptLine( id ),DELIMITER );
+	auto bullet_state_date = std::make_unique<ScriptsData>();
+
+	bullet_state_date->LoadJson( filepass.str(),BULLET_STATE );
+	auto state_vector = string::Split( bullet_state_date->GetScriptLine( 0 ),DELIMITER );
+	for ( auto&& state : state_vector )
+	{
+		int value = 0;
+		string::ToInt( state,value );
+		bullet_state.push_back( value );
+	}
+
+	auto pass_vector = string::Split( gGlobal.object_pass_date->GetScriptLine( AAA_ID ),DELIMITER );
 	_handle_body = ResourceServer::LoadMV1Model( pass_vector[BODY] );
 	_handle_turret = ResourceServer::LoadMV1Model( pass_vector[TURRET] );
 
@@ -199,7 +215,7 @@ bool EnemyAAA::Update()
 		{
 			float speed = 200.f;
 			_fSpeed = speed;
-			AddBullet();
+			AddBullet( bullet_state[1],bullet_state[2],bullet_state[3],bullet_state[4],bullet_state[5],bullet_state[6] );
 			_CT = 30;
 		}
 
@@ -253,7 +269,7 @@ bool EnemyAAA::Update()
 		{
 			float speed = 200.f;
 			_fSpeed += speed;
-			AddBullet();
+			AddBullet( bullet_state[1],bullet_state[2],bullet_state[3],bullet_state[4],bullet_state[5],bullet_state[6] );
 			_CT = 30;
 		}
 
@@ -365,17 +381,106 @@ void EnemyAAA::GetSearch()
 	}
 }
 
-void EnemyAAA::AddBullet()
+//void EnemyAAA::AddBullet()
+//{
+//	vector4 vBullet = {_vPos.x, _vPos.y + 100.f, _vPos.z};
+//
+//	auto bullet = std::make_shared<Bullet>( _game,_mode );
+//	bullet->SetPosition( vBullet );
+//	bullet->SetDir( _vDir );
+//	bullet->SetSpeed( _fSpeed );
+//	bullet->_fScale = 7.f;
+//	bullet->_ST = 300;
+//	_mode.GetObjectServer3D().Add( bullet );
+//}
+
+void EnemyAAA::AddBullet( const int& theta_split_num,const int& phi_split_num,const int& theta_degree_lower,const int& theta_degree_upper,const int& phi_degree_lower,const int& phi_degree_upper )
 {
 	vector4 vBullet = {_vPos.x, _vPos.y + 100.f, _vPos.z};
-	auto bullet = std::make_shared<Bullet>( _game,_mode );
-	bullet->SetPosition( vBullet );
-	bullet->SetDir( _vDir );
-	bullet->SetSpeed( _fSpeed );
-	bullet->_fScale = 7.f;
-	bullet->_ST = 300;
-	_mode.GetObjectServer3D().Add( bullet );
+	if ( AAA_ID == 1 )
+	{
+		auto bullet = std::make_shared<Bullet>( _game,_mode );
+		bullet->SetPosition( vBullet );
+		bullet->SetDir( _vDir );
+		bullet->SetSpeed( _fSpeed );
+		bullet->_fScale = 7.f;
+		bullet->_ST = 300;
+		_mode.GetObjectServer3D().Add( bullet );
+	}
+	else
+	{
+		if ( AAA_ID == 3 )
+		{
+			_iType = 1;
+		}
+		Polar3D bullet_dir_pol = {{0,0,0},1.0f,0.0f,0.0f};
+		const auto THETA_ADD_NUM = math::utility::PI / theta_split_num;
+		const auto PHI_ADD_NUM = math::utility::TwoPi / phi_split_num;
+		const auto THETA_RADIAN_LOWER = utility::degree_to_radian( static_cast<float>(theta_degree_lower) );
+		const auto THETA_RADIAN_UPPER = utility::degree_to_radian( static_cast<float>(theta_degree_upper) );
+		const auto PHI_RADIAN_LOWER = utility::degree_to_radian( static_cast<float>(phi_degree_lower) );
+		const auto PHI_RADIAN_UPPER = utility::degree_to_radian( static_cast<float>(phi_degree_upper) );
+
+		const auto Y_UP = VGet( 0.f,1.f,0.f );
+		const auto Z_DOWN = VGet( 0.f,0.f,0.f );
+		for ( int i = 0; i < phi_split_num; i++ )
+		{
+			for ( int i = 0; i < theta_split_num; i++ )
+			{
+				auto bullet = std::make_shared<Bullet>( _game,_mode );
+				bullet->SetPosition( vBullet );
+
+				auto bullet_dir = bullet_dir_pol.ToVector4();
+
+				if ( _iType == 0 )
+				{
+					if ( bullet_state[0] == 1 )
+					{
+						MATRIX to_player_dxmatrix = MGetRotVec2( Y_UP,ToDX( _vDir ) );
+						VECTOR bullet_dx_dir = VTransform( ToDX( bullet_dir ),to_player_dxmatrix );
+
+						bullet_dir = ToMath( bullet_dx_dir );
+					}
+					else
+					{
+			/*			vector4 yvec = {0.0f,-_vDir.GetY(),0.0f};
+						vector4 xzvec = {_vDir.GetX(),0.0f,_vDir.GetZ()};
+						auto vec = yvec - xzvec;
+						vec += {0.0f,1.0f,0.0f};
+						
+						MATRIX to_player_dxmatrix = MGetRotVec2( ToDX( vec ),ToDX( _vDir ) );
+						VECTOR bullet_dx_dir = VTransform( ToDX( bullet_dir ),to_player_dxmatrix );
+
+						bullet_dir = ToMath( bullet_dx_dir );*/
+					}
+				}
+
+
+				bullet->SetDir( bullet_dir );
+				bullet->SetSpeed( _fSpeed );
+				bullet->_fScale = 7.f;
+				bullet->_ST = 300;
+				bullet_dir_pol.PhiIncrement( PHI_ADD_NUM );
+
+
+				if ( bullet_dir_pol.GetTheta() < THETA_RADIAN_LOWER ||
+						 bullet_dir_pol.GetTheta() >= THETA_RADIAN_UPPER ||
+						 bullet_dir_pol.GetPhi() < PHI_RADIAN_LOWER ||
+						 bullet_dir_pol.GetPhi() >= PHI_RADIAN_UPPER )
+				{
+					continue;
+				}
+				_mode.GetObjectServer3D().Add( bullet );
+
+			}
+			bullet_dir_pol.SetPhi( 0.0f );
+
+			bullet_dir_pol.ThetaIncrement( THETA_ADD_NUM );
+		}
+	}
 }
+
+
 
 void EnemyAAA::AddPieces( int min_id,int max_id,int pile_num,float scale )
 {

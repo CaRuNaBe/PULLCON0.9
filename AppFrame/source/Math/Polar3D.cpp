@@ -29,10 +29,17 @@ namespace math
 		,phi( static_cast<float> (phi) )
 	{};
 
+	Polar3D::Polar3D( const vector4& vec )
+		:centor( 0,0,0 )
+		,radius( vec.Lenght() )
+		,theta( std::acos( vec.GetZ() / radius ) )
+		,phi( math::Sign( vec.GetY() )* std::acos( vec.GetX() / (std::sqrt( (vec.GetX() * vec.GetX()) + (vec.GetY() * vec.GetY()) )) ) )
+	{};
+
 	vector4 Polar3D::ToVector4()
 	{
 		auto fnum = radius * std::sin( theta );
-		return {fnum * std::cos( phi ),fnum * std::sin( phi ),radius * cos( theta )};
+		return {fnum * std::cos( phi ),radius * std::cos( theta ),fnum * std::sin( phi )};
 	};
 
 	void Polar3D::RadiusIncrement( const float& radius )
@@ -52,9 +59,9 @@ namespace math
 	void Polar3D::ThetaIncrement( const float& theta )
 	{
 		this->theta += theta;
-		if ( this->theta > math::utility::TwoPi )
+		if ( this->theta > math::utility::PI )
 		{
-			this->theta = math::utility::TwoPi;
+			this->theta = math::utility::PI;
 		}
 	};
 

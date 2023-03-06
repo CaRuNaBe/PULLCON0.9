@@ -11,7 +11,7 @@ namespace math
 
 	const float vector4::Lenght( const vector4& second ) const
 	{
-		return sqrt( x- second.x * x + y * y + z * z );
+		return sqrt( (x - second.GetX()) * (x - second.GetX()) + (y - second.GetY()) * (y - second.GetY()) + (z - second.GetZ()) * (z - second.GetZ()) );
 	}
 
 	//ê≥ãKâª

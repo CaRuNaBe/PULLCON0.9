@@ -21,6 +21,7 @@ namespace math
 
 		Polar3D( const vector4& vec2,const vector4& centor = {0,0,0},float theta = 0.0f,float phi = 0.0f );
 
+		Polar3D( const vector4& vec );
 		Polar3D( const Polar3D& ) = default; // コピー
 		Polar3D( Polar3D&& ) = default; // ムーブ
 

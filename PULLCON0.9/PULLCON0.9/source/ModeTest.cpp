@@ -18,24 +18,29 @@ ModeTest::ModeTest( ApplicationBase& game,int layer )
 	player->SetPosition( {0,5000,0} );
 	object_main_game.Add( player );
 
-	auto enemy1 = std::make_shared<EnemyAAA>( _game,*this,1,1,1,4.0f,math::vector4( 0,0,0 ) );
-	object_main_game.Add( enemy1 );
-	auto enemy2 = std::make_shared<EnemyAAA>( _game,*this,2,2,1,4.0f,math::vector4( 2000,0,0 ) );
-	object_main_game.Add( enemy2 );
-	auto enemy3 = std::make_shared<EnemyAAA>( _game,*this,3,3,1,4.0f,math::vector4( 4000,0,0 ) );
-	object_main_game.Add( enemy3 );
-	auto enemy4 = std::make_shared<EnemyAAA>( _game,*this,4,4,1,4.0f,math::vector4( 6000,0,0 ) );
+	//auto enemy1 = std::make_shared<EnemyAAA>( _game,*this,1,1,1,4.0f,math::vector4( 0,0,0 ) );
+	//object_main_game.Add( enemy1 );
+
+	//auto enemy2 = std::make_shared<EnemyAAA>( _game,*this,2,2,1,4.0f,math::vector4( 2000,0,15000 ) );
+	//object_main_game.Add( enemy2 );
+
+	//auto enemy3 = std::make_shared<EnemyAAA>( _game,*this,3,3,1,4.0f,math::vector4( 4000,0,20000 ) );
+	//object_main_game.Add( enemy3 );
+
+	auto enemy4 = std::make_shared<EnemyAAA>( _game,*this,4,4,1,4.0f,math::vector4( 6000,0,30000) );
+	enemy4->SetType(0);
 	object_main_game.Add( enemy4 );
-	auto enemy5 = std::make_shared<EnemyAAA>( _game,*this,5,5,1,4.0f,math::vector4( 8000,0,0 ) );
-	object_main_game.Add( enemy5 );
-	auto enemy6 = std::make_shared<EnemyAAA>( _game,*this,6,6,1,4.0f,math::vector4( 10000,0,0 ) );
-	object_main_game.Add( enemy6 );
-	auto enemy7 = std::make_shared<EnemyAAA>( _game,*this,7,7,1,4.0f,math::vector4( 12000,0,0 ) );
-	object_main_game.Add( enemy7 );
-	auto enemy8 = std::make_shared<EnemyAAA>( _game,*this,8,8,1,4.0f,math::vector4( 14000,0,0 ) );
-	object_main_game.Add( enemy8 );
-	auto enemy9 = std::make_shared<EnemyAAA>( _game,*this,9,9,1,4.0f,math::vector4( 16000,0,0 ) );
-	object_main_game.Add( enemy9 );
+	 
+	//auto enemy5 = std::make_shared<EnemyAAA>( _game,*this,5,5,1,4.0f,math::vector4( 8000,0,0 ) );
+	//object_main_game.Add( enemy5 );
+	//auto enemy6 = std::make_shared<EnemyAAA>( _game,*this,6,6,1,4.0f,math::vector4( 10000,0,0 ) );
+	//object_main_game.Add( enemy6 );
+	//auto enemy7 = std::make_shared<EnemyAAA>( _game,*this,7,7,1,4.0f,math::vector4( 12000,0,0 ) );
+	//object_main_game.Add( enemy7 );
+	//auto enemy8 = std::make_shared<EnemyAAA>( _game,*this,8,8,1,4.0f,math::vector4( 14000,0,0 ) );
+	//object_main_game.Add( enemy8 );
+	//auto enemy9 = std::make_shared<EnemyAAA>( _game,*this,9,9,1,4.0f,math::vector4( 16000,0,0 ) );
+	//object_main_game.Add( enemy9 );
 
 	auto sup = std::make_shared<AreaSupply>( _game,*this,2000.0f );
 	object_main_game.Add( sup );
