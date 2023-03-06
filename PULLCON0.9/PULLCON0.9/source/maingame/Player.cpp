@@ -135,7 +135,7 @@ bool Player::Update()
 			if ((obje->GetType() == Type::kStageObject)) {
 				if (IsHitObject(*obje)) {
 					if (!_isHitObject) {
-						_iLife -= LIFEMAX / 5;
+						_iLife -= 5;
 					}
 					_isHit = true;
 					_isHitObject = true;
@@ -166,7 +166,7 @@ bool Player::Update()
 			_finish = false;
 		}
 		// 燃料消費
-		if ( _cnt % 30 == 0 )
+		if ( _cnt % 60 == 0 )
 		{
 			--_iFuel;
 			if ( _iFuel < 0 )
@@ -229,7 +229,7 @@ bool Player::Update()
 
 		MV1_COLL_RESULT_POLY hitPoly;
 		vector4 posStart = _vPos + dir;
-		vector4 posEnd = { posStart.x, posStart.y - 1500.f, posStart.z };
+		vector4 posEnd = { posStart.x, posStart.y - 1000.f, posStart.z };
 		hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));
 		if (hitPoly.HitFlag) {
 			dir += ToMath(hitPoly.HitPosition) - posEnd;
@@ -378,14 +378,23 @@ bool Player::Update()
 		_isHitObject = false;
 	}
 
+	vector4 v = { 0.f, 0.f, 0.f };
+	if (_isHit) {
+		float rand = static_cast<float>(utility::get_random(-100, 100));
+		v = { rand,rand,rand };
+		v *= static_cast<float>(_ST) / 20.f;
+	}
 	// カメラ設定更新
+	vector4 camPos      = _cam._vPos + v;
+	vector4 camPosEvent = _cam._vPosEvent + v;
+	vector4 camTarget = _cam._vTarget + v;
 	if ( _statePlayer == State::EVENT )
 	{
-		SetCameraPositionAndTarget_UpVecY( ToDX( _cam._vPosEvent ),ToDX( _cam._vTarget ) );
+		SetCameraPositionAndTarget_UpVecY( ToDX(camPosEvent),ToDX(camTarget) );
 	}
 	else
 	{
-		SetCameraPositionAndTarget_UpVecY( ToDX( _cam._vPos ),ToDX( _cam._vTarget ) );
+		SetCameraPositionAndTarget_UpVecY( ToDX(camPos),ToDX(camTarget) );
 	}
 	SetCameraNearFar( _cam._clipNear,_cam._clipFar );
 
@@ -447,9 +456,7 @@ bool Player::Draw()
 	DrawSphere3D( ToDX( _vTarget ),100.f,8,GetColor( 255,0,0 ),GetColor( 0,0,0 ),TRUE );
 	SetUseLighting( TRUE );
 	// プレイヤーの弾の軌道を描画
-	vector4 underLine = { _vPos.x, _vPos.y - 1500.f, _vPos.z };
 	DrawLine3D( ToDX( _vPos ),ToDX( _vTarget ),GetColor( 255,0,0 ) );
-	DrawLine3D( ToDX( _vPos ),ToDX(underLine),GetColor( 255,0,0 ) );
 
 	// コリジョン描画
 

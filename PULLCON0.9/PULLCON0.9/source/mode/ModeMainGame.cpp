@@ -274,6 +274,8 @@ bool ModeMainGame::Update()
 
 bool ModeMainGame::Draw()
 {
+	ChangeLightTypeDir(VGet(-1.0f, -1.0f, 1.0f));
+	SetGlobalAmbientLight(GetColorF(0.0f, 0.0f, 0.0f, 0.f));
 	object_main_game.Draw();
 	ui_player.Draw();
 

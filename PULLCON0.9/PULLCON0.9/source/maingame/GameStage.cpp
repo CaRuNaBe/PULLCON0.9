@@ -25,6 +25,8 @@ bool GameStage::Update()
 bool GameStage::Draw()
 {
 	base::Draw();
+	SetUseLighting(TRUE);
 	MV1DrawModel( _handle );
+	SetUseLighting(TRUE);
 	return true;
 }
