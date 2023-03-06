@@ -9,8 +9,8 @@ AreaSupply::AreaSupply( ApplicationBase& game,ModeMainGame& mode,float _radius )
 	:base( game,mode )
 {
 	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( SUPPLY_ID ) );
-	radius = _radius;
 	Init();
+	_fRadius = _radius;
 }
 
 AreaSupply::~AreaSupply()
@@ -19,9 +19,6 @@ AreaSupply::~AreaSupply()
 void AreaSupply::Init()
 {
 	base::Init();
-	_vPos = {7000.f, 100.f, 7000.f};
-	_collisionEvent._fRadius = 5000.0f * _fScale;
-
 }
 
 bool AreaSupply::Update()
@@ -47,7 +44,7 @@ bool AreaSupply::Update()
 		}
 	}
 
-	_collisionEvent._fRadius = 5000.0f * _fScale;
+	_collisionEvent._fRadius = _fRadius * _fScale;
 	_vEvent = _vPos;
 	UpdateCollision();  // コリジョン更新
 

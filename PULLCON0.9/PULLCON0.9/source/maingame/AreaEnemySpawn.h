@@ -24,8 +24,9 @@ public:
 protected:
 	State  _stateEnemySpawn;
 
-	int spawn_fream;
-	int type_enemy;
+	int  _iSpawnFream;
+	int  _iEnemyType;
+	bool _isAddKobae;
 
 	int _handle;
 };

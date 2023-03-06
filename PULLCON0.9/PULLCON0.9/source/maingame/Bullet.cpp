@@ -6,12 +6,13 @@
 Bullet::Bullet( ApplicationBase& game,ModeMainGame& mode)
 	:base(game,mode)
 {
-	_cgDarkPurple = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_DarkPurple.png");
-	_cgGreen = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_Green.png");
+	_cgDarkPurple = ResourceServer::LoadMV1Model("res/3D_model/ammo/AmmoModel_Ver1/Ammo_Blue.mv1");
+	_cgGreen = ResourceServer::LoadMV1Model("res/3D_model/ammo/AmmoModel_Ver1/Ammo.mv1");
 	_cgPink = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_Pink.png");
-	_cgPurple = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_Purple.png");
-	_cgYellow = ResourceServer::LoadGraph("res/2D_image/BulletBillBorad/BulletTexture_Yellow.png");
+	_cgPurple = ResourceServer::LoadMV1Model("res/3D_model/ammo/AmmoModel_Ver1/Ammo_Purple.mv1");
+	_cgYellow = ResourceServer::LoadMV1Model("res/3D_model/ammo/AmmoModel_Ver1/Ammo.mv1");
 	_cg = 0;
+	_handle = ResourceServer::LoadMV1Model("res/3D_model/ammo/AmmoModel_Ver1/Ammo.mv1");
 	Init();
 }
 
@@ -52,19 +53,19 @@ bool Bullet::Update() {
 
 	switch (_iType) {
 	case 1:
-		_cg = _cgDarkPurple;
+		_handle = _cgDarkPurple;
 		break;
 	case 2:
-		_cg = _cgPink;
+		_handle = _cgPink;
 		break;
 	case 3:
-		_cg = _cgPurple;
+		_handle = _cgPurple;
 		break;
 	case 4:
-		_cg = _cgYellow;
+		_handle = _cgYellow;
 		break;
 	default:
-		_cg = _cgGreen;
+		_handle = _cgGreen;
 		break;
 	}
 
@@ -79,8 +80,13 @@ bool Bullet::Draw() {
 	base::Draw();
 
 	float size = 150.f * _fScale;
-	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, size, 0.f, _cg, TRUE);
+	//DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, size, 0.f, _cg, TRUE);
 
+	float length3D = sqrt(_vDir.x * _vDir.x + _vDir.y * _vDir.y + _vDir.z * _vDir.z);
+	float theta = acos(_vDir.y / length3D);
+	MV1SetRotationZYAxis(_handle, VGet(_vDir.z, 0.f, -(_vDir.x)), VGet(0.f, 1.f, 0.f), theta - utility::PiOver2);
+	MV1SetPosition(_handle, ToDX(_vPos));
+	MV1DrawModel(_handle);
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	vector4 color = { 255, 255, 255 };
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {

@@ -2,6 +2,7 @@
 #include "../ApplicationGlobal.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "GameStage.h"
 
 namespace
 {
@@ -40,7 +41,7 @@ void Player::Init()
 	base::Init();
 	_statePlayer = State::NUM;
 
-	_vMoevDir = { 0.f, 0.f, -100.f };
+	_vMoveDir = { 0.f, 0.f, -100.f };
 	_fSpeed = 90.f;
 	_fRotatY = utility::PI;
 	_iFuel = 100;
@@ -84,7 +85,8 @@ bool Player::Update()
 	{
 		if ( obje->GetType() == Type::kEnemyAAA
 			|| obje->GetType() == Type::kBullet
-			|| obje->GetType() == Type::kStageObject )
+			|| obje->GetType() == Type::kStageObject
+			|| obje->GetType() == Type::kGameStage)
 		{
 			if ( obje->GetType() == Type::kEnemyAAA )
 			{
@@ -133,12 +135,17 @@ bool Player::Update()
 			if ((obje->GetType() == Type::kStageObject)) {
 				if (IsHitObject(*obje)) {
 					if (!_isHitObject) {
-						_iLife -= LIFEMAX / 5;
+						_iLife -= 5;
 					}
 					_isHit = true;
 					_isHitObject = true;
 					_ST = 10;
 				}
+			}
+			if ((obje->GetType() == Type::kGameStage)) {
+				auto stage = std::static_pointer_cast<GameStage>(obje);
+				_handleStage = stage->GetHandle();
+				MV1RefreshCollInfo(_handleStage, 0);
 			}
 		}
 	}
@@ -159,7 +166,7 @@ bool Player::Update()
 			_finish = false;
 		}
 		// 燃料消費
-		if ( _cnt % 30 == 0 )
+		if ( _cnt % 60 == 0 )
 		{
 			--_iFuel;
 			if ( _iFuel < 0 )
@@ -214,14 +221,21 @@ bool Player::Update()
 		dir.x = cos(rad + camerad) * length;
 		dir.z = sin(rad + camerad) * length;
 		if (!_isHitObject) {
-			_vPos += dir;
-			_vMoevDir = {-dir.x, 0.f, -dir.z};
+			_vMoveDir = dir * -1.f;
 		}
 		else {
-			dir = { _vMoevDir.x, dir.y ,_vMoevDir.z };
-			_vPos += _vMoevDir;
+			dir = _vMoveDir;
 		}
 
+		MV1_COLL_RESULT_POLY hitPoly;
+		vector4 posStart = _vPos + dir;
+		vector4 posEnd = { posStart.x, posStart.y - 1000.f, posStart.z };
+		hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));
+		if (hitPoly.HitFlag) {
+			dir += ToMath(hitPoly.HitPosition) - posEnd;
+		}
+
+		_vPos += dir;
 		// カメラも追従させる
 		_cam._vPos += dir;
 		_cam._vTarget += dir;
@@ -364,14 +378,23 @@ bool Player::Update()
 		_isHitObject = false;
 	}
 
+	vector4 v = { 0.f, 0.f, 0.f };
+	if (_isHit) {
+		float rand = static_cast<float>(utility::get_random(-100, 100));
+		v = { rand,rand,rand };
+		v *= static_cast<float>(_ST) / 20.f;
+	}
 	// カメラ設定更新
+	vector4 camPos      = _cam._vPos + v;
+	vector4 camPosEvent = _cam._vPosEvent + v;
+	vector4 camTarget = _cam._vTarget + v;
 	if ( _statePlayer == State::EVENT )
 	{
-		SetCameraPositionAndTarget_UpVecY( ToDX( _cam._vPosEvent ),ToDX( _cam._vTarget ) );
+		SetCameraPositionAndTarget_UpVecY( ToDX(camPosEvent),ToDX(camTarget) );
 	}
 	else
 	{
-		SetCameraPositionAndTarget_UpVecY( ToDX( _cam._vPos ),ToDX( _cam._vTarget ) );
+		SetCameraPositionAndTarget_UpVecY( ToDX(camPos),ToDX(camTarget) );
 	}
 	SetCameraNearFar( _cam._clipNear,_cam._clipFar );
 
@@ -556,6 +579,6 @@ void Player::AddBullet( vector4 pos )
 	bullet->SetPosition( pos );
 	bullet->SetDir( _vDir );
 	bullet->_fScale = 3.f;
-	bullet->_iType = 4;
+	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }

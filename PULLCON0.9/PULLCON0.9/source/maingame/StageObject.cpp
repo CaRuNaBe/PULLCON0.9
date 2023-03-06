@@ -64,11 +64,10 @@ void StageObject::AddCollision()
 	vector4 areaPos = _vPos;
 	for ( auto i = 1; i < _iPieces; ++i )
 	{
-		areaPos.y = _collision._fRadius * 2.f * i;
+		areaPos.y = _vPos.y + _collision._fRadius * 2.f * i;
 		auto area = std::make_shared<AreaNoEntry>( _game,_mode );
 		area->SetPosition( areaPos );
 		area->SetCollisionRadius( _collision._fRadius );
-		area->_fScale = _fScale;
 		_mode.GetObjectServer3D().Add( area );
 	}
 }

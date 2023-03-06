@@ -13,7 +13,7 @@ void AreaNoEntry::Init()
 };
 bool AreaNoEntry::Update()
 {
-	_collision._fRadius = _fRadius * _fScale;
+	_collision._fRadius = _fRadius;
 	UpdateCollision();
 	return true;
 };

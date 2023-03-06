@@ -78,6 +78,11 @@ namespace math
 		return vector4( x - rhs.x,y - rhs.y,z - rhs.z );
 	}
 
+	const vector4 vector4::operator*( const vector4& rhs ) const
+	{
+		return vector4( x * rhs.x,y * rhs.y,z * rhs.z );
+	}
+	
 	const vector4 vector4::operator*( const float rhs ) const
 	{
 		return vector4( x * rhs,y * rhs,z * rhs );

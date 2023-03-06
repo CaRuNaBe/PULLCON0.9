@@ -1,5 +1,6 @@
 #include  "EnemyKobae.h"
 #include  "Bullet.h"
+#include  "GameStage.h"
 #include "../ApplicationGlobal.h"
 namespace
 {
@@ -52,7 +53,8 @@ bool EnemyKobae::Update()
 	for ( auto&& obje : _mode.GetObjectServer3D().GetObjects() )
 	{
 		if ( obje->GetType() == Type::kPlayer
-			|| obje->GetType() == Type::kBullet )
+			|| obje->GetType() == Type::kBullet
+			|| obje->GetType() == Type::kGameStage )
 		{
 			if ( obje->GetType() == Type::kPlayer )
 			{
@@ -99,6 +101,11 @@ bool EnemyKobae::Update()
 					}
 				}
 			}
+			if ((obje->GetType() == Type::kGameStage)) {
+				auto stage = std::static_pointer_cast<GameStage>(obje);
+				_handleStage = stage->GetHandle();
+				MV1RefreshCollInfo(_handleStage, 0);
+			}
 		}
 	}
 
@@ -123,12 +130,16 @@ bool EnemyKobae::Update()
 		_CT = 5;
 	}
 
-	// ‘¬“x•ªˆÚ“®‚·‚é
-	if ( _vPos.y < 6000.f && _vVelocity.y < 0.f )
-	{
-		_vVelocity.y = 0.f;
+	vector4 move = _vVelocity * _fSpeed;
+
+	MV1_COLL_RESULT_POLY hitPoly;
+	vector4 posStart = _vPos + move;
+	vector4 posEnd = { posStart.x, posStart.y - 6000.f, posStart.z };
+	hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));
+	if (hitPoly.HitFlag) {
+		move += ToMath(hitPoly.HitPosition) - posEnd;
 	}
-	_vPos += _vVelocity * _fSpeed;
+	_vPos += move;
 
 	if ( _iLife < 0 )
 	{

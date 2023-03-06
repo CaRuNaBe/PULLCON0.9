@@ -36,6 +36,8 @@ namespace math
 		const vector4 operator +( const vector4& rhs ) const;
 		// ベクトルの減算 a - b
 		const vector4 operator -( const vector4& rhs ) const;
+		// ベクトルのかけ算 v * v
+		const vector4 operator *( const vector4& rhs ) const;
 		// ベクトルのスカラー倍 v * scalar
 		const vector4 operator *( const float rhs ) const;
 		// ベクトルのスカラー割  v/scalar
