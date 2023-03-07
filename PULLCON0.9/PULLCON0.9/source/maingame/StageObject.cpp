@@ -57,7 +57,10 @@ bool StageObject::Draw()
 	// ƒ‚ƒfƒ‹•`‰æ
 	MV1DrawModel( _handle );
 	SetUseLighting( TRUE );
-	DrawCollisionObject( color );
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
+	{
+		DrawCollisionObject(color);
+	}
 	return true;
 }
 

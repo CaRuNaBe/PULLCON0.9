@@ -55,8 +55,10 @@ void Player::Init()
 	_iFuel = 100;
 	_iLife = LIFEMAX;
 	_push = 0;
+	_isLerp = false;
 	_isHit = false;
 	_isHitObject = false;
+	_fTime = 0.f;
 	_fRotateAirscrew = 0.f;
 	_fAxialX = 0.f;
 	_fAxialZ = 0.f;
@@ -134,7 +136,7 @@ bool Player::Update()
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
 					if (obje->_CT == 0 && !_isHit) {
-						//_iLife -= obje->_iDamage;
+						_iLife -= obje->_iDamage;
 						_isHit = true;
 						_ST = 20;
 					}
@@ -324,18 +326,18 @@ bool Player::Update()
 		if ( _pull && _CT == 0 )
 		{
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
-			_cam._vTarget.x = _vPos.x;
-			_cam._vTarget.z = _vPos.z;
-			_cam._vTarget.y -= 1000.f;
+			_cam._vTarget = _vPos;
 			_cam._vPosEvent.y = _cam._vTarget.y + cos( theta ) * length3D;
 			length3D *= 0.5f;
 			length3D *= static_cast<float>(_iPieces + 1);
 			_cam._vPosEvent.x = _cam._vTarget.x + length3D * sin( theta ) * cos( camerad );
 			_cam._vPosEvent.z = _cam._vTarget.z + length3D * sin( theta ) * sin( camerad );
+			_isLerp = true;
+			_fTime = 0.0f;
 			_statePlayer = State::EVENT;
 		}
 	}
-	else if ( _statePlayer == State::EVENT )
+	else if ( _statePlayer == State::EVENT && !_isLerp)
 	{
 		vector4 move = {0.f, 2.f, 0.f};
 		if ( _pull && _CT > 0 )
@@ -396,6 +398,16 @@ bool Player::Update()
 	vector4 camPos      = _cam._vPos + v;
 	vector4 camPosEvent = _cam._vPosEvent + v;
 	vector4 camTarget = _cam._vTarget + v;
+	if (_isLerp) {
+		vector4 posStart = _cam._vTarget + _cam._vMemory;
+		vector4 posEnd = _cam._vPosEvent;
+		_fTime += 0.02f;
+		vector4 camPosNow = posStart * (1.0f - _fTime) + posEnd * _fTime;
+		camPosEvent = camPosNow + v;
+		if (_fTime > 1.0f) {
+			_isLerp = false;
+		}
+	}
 	if ( _statePlayer == State::EVENT )
 	{
 		SetCameraPositionAndTarget_UpVecY( ToDX(camPosEvent),ToDX(camTarget) );
@@ -416,11 +428,6 @@ bool Player::Draw()
 	SetFogEnable(TRUE);
 	SetFogColor(255, 255, 205);
 	SetFogStartEnd(5000.f, 400000.f);
-	// 注視点を描画
-	float linelength = 100.f;
-	DrawLine3D( VAdd( ToDX( _cam._vTarget ),VGet( -linelength,0,0 ) ),VAdd( ToDX( _cam._vTarget ),VGet( linelength,0,0 ) ),GetColor( 255,0,0 ) );
-	DrawLine3D( VAdd( ToDX( _cam._vTarget ),VGet( 0,-linelength,0 ) ),VAdd( ToDX( _cam._vTarget ),VGet( 0,linelength,0 ) ),GetColor( 0,255,0 ) );
-	DrawLine3D( VAdd( ToDX( _cam._vTarget ),VGet( 0,0,-linelength ) ),VAdd( ToDX( _cam._vTarget ),VGet( 0,0,linelength ) ),GetColor( 0,0,255 ) );
 
 	matrix44 rotaMatrix = matrix44();
 	matrix44 rotaAirscrewMatrix = matrix44();
@@ -460,11 +467,9 @@ bool Player::Draw()
 	MV1DrawModel( _handleAirscrew );
 	MV1DrawModel( _handleMagnet );
 	MV1DrawModel( _handleBackAirscrew );
-	// 対空砲の狙う位置を可視化
-	DrawSphere3D( ToDX( _vTarget ),100.f,8,GetColor( 255,0,0 ),GetColor( 0,0,0 ),TRUE );
 	SetUseLighting( TRUE );
 	// プレイヤーの弾の軌道を描画
-	DrawLine3D( ToDX( _vPos ),ToDX( _vTarget ),GetColor( 255,0,0 ) );
+	//DrawLine3D( ToDX( _vPos ),ToDX( _vTarget ),GetColor( 255,0,0 ) );
 
 	// コリジョン描画
 
@@ -476,13 +481,6 @@ bool Player::Draw()
 			color = {255, 0, 0};
 		}
 		DrawCollision( color );
-	}
-
-	VECTOR Pos = ConvWorldPosToScreenPos( ToDX( _vPos ) );
-	if ( _isHit )
-	{
-		// 作成したフォントで画面左上に『HIT!!』と白の文字列を描画する
-		DrawStringToHandle( static_cast<int>(Pos.x),static_cast<int>(Pos.y),"H I T!!",GetColor( 255,255,255 ),_handlefont );
 	}
 
 	// デバック表記

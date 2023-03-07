@@ -139,7 +139,6 @@ bool ClearObject::Draw()
 {
 	base::Draw();
 
-	DrawSphere3D( ToDX( _vObjective ),100.f,8,GetColor( 255,0,0 ),GetColor( 0,0,0 ),TRUE );
 	// ƒ‚ƒfƒ‹Šg‘å
 	MV1SetScale( _handle,VGet( _fScale,_fScale,_fScale ) );
 	// ƒ‚ƒfƒ‹‰ñ“]
