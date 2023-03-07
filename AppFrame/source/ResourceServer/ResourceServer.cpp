@@ -7,13 +7,15 @@
 
 // 静的メンバ実体
 ResourceMap	ResourceServer::_mapGraph;
-DivGraphMap	ResourceServer::_mapDivGraph;
+DivGraphMap ResourceServer::_textures;
+DIVGRAPHMAP	ResourceServer::_mapDivGraph;
 ResourceMap	ResourceServer::_mapSound;
 ResourceMap	ResourceServer::_mapMV1Model;
 
 void    ResourceServer::Init()
 {
 	_mapGraph.clear();
+	_textures.clear();
 	_mapDivGraph.clear();
 	_mapSound.clear();
 	_mapMV1Model.clear();
@@ -32,6 +34,13 @@ void	ResourceServer::ClearGraph()
 		DeleteGraph( itr->second );
 	}
 	_mapGraph.clear();
+
+	for (auto&& dgm : _textures) {
+		for (auto gh : dgm.second._handles) {
+			DeleteGraph(gh);
+		}
+	}
+	_textures.clear();
 
 	for ( auto itr = _mapDivGraph.begin(); itr != _mapDivGraph.end(); itr++ )
 	{
@@ -71,6 +80,58 @@ int		ResourceServer::LoadGraph( std::string FileName )
 	_mapGraph[FileName] = cg;
 
 	return cg;
+}
+
+void ResourceServer::LoadTextures(const DivGraphMap& divGraphMap) {
+	for (auto&& dgm : divGraphMap) {
+		auto& key = dgm.first;
+		// キーを検索する
+		auto it = _textures.find(key);
+		if (it != _textures.end()) {
+			continue;
+		}
+		// DivGraphをコピーする
+		auto dg = dgm.second;
+		auto allNum = dg._xNum * dg._yNum;
+		dg._handles.resize(allNum);
+		// 画像の分割読み込み
+		LoadDivGraph(dg._filename.c_str(),
+			allNum,
+			dg._xNum, dg._yNum,
+			dg._xSize, dg._ySize, dg._handles.data());
+		// DivGraphMapに追加する
+		_textures.emplace(key.c_str(), dg);
+	}
+}
+
+int ResourceServer::GetHandles(const std::string& key, int no) {
+	auto it = _textures.find(key);
+	if (it == _textures.end()) {
+		return -1;
+	}
+	auto gh = it->second._handles.at(no);
+	return gh;
+}
+bool ResourceServer::GetHandles(const std::string& key, std::vector<int>& handles) {
+	auto it = _textures.find(key);
+	if (it == _textures.end()) {
+		return false;
+	}
+	handles.resize(it->second._handles.size());
+	handles = it->second._handles;
+	return true;
+}
+int ResourceServer::GetAllNum(const std::string& key) {
+	auto it = _textures.find(key);
+	if (it == _textures.end()) {
+		return -1;
+	}
+	return it->second._xNum * it->second._yNum;
+}
+
+const DivGraph& ResourceServer::GetDivGraph(const std::string& key) {
+	auto it = _textures.find(key);
+	return it->second;
 }
 
 int		ResourceServer::LoadDivGraph( std::string FileName,int AllNum,int XNum,int YNum,int XSize,int YSize,int* HandleBuf )
