@@ -1,4 +1,5 @@
 #include "UIPullGage.h"
+#include "../ApplicationGlobal.h"
 namespace
 {
 	constexpr int  BASE_PULLGAGE_POSI_X = 800;
@@ -148,6 +149,7 @@ bool UIPullGage::Draw()
 		if ( _game.Getinput().GetKeyXinput( XINPUT_BUTTON_X ) )
 		{
 			DrawGraph( BUTTON_POS.IntX(),BUTTON_POS.IntY(),hundle_xbutton[0],TRUE );
+			PlaySoundMem( gGlobal._se["player_pull_button"],DX_PLAYTYPE_BACK );
 		}
 		else
 		{

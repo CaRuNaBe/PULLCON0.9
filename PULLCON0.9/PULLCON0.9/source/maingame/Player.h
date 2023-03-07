@@ -59,7 +59,6 @@ protected:
 	int    _handleBackAirscrew;
 	int    _handlefont;
 	int    _handleStage;
-	int    _se;
-	int    _seBullet;
+
 
 };

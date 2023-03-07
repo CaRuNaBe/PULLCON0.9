@@ -112,6 +112,7 @@ bool EnemySkyhunter::Update()
 	if ( _fire && _CT == 0 )
 	{
 		AddBullet();
+		SeGunShotPlay();
 		_CT = 10;
 	}
 

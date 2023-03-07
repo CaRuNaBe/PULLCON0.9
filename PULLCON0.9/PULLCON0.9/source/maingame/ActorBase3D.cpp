@@ -1,5 +1,6 @@
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
+#include "../ApplicationGlobal.h"
 ActorBase3D::ActorBase3D( ApplicationBase& game,ModeMainGame& mode )
 	:base( game )
 	,_mode( mode )
@@ -23,7 +24,7 @@ void ActorBase3D::Init()
 	_collision = {{0.f,0.f,0.f},0.f};
 	_collisionEvent = {{0.f,0.f,0.f},0.f};
 	_collisionSearch = {{0.f,0.f,0.f},0.f};
-
+	
 	_iFuel = 0;
 	_iLife = 0;
 	_iDamage = 0;
@@ -155,3 +156,9 @@ void ActorBase3D::DrawCollisionObject( vector4 color )
 	SetUseLighting( TRUE );
 #endif
 }
+
+void ActorBase3D::SeGunShotPlay()
+{
+	ChangeVolumeSoundMem( 255 * 40 / 100,gGlobal._se["se_gunshot"] );
+	PlaySoundMem( gGlobal._se["se_gunshot"],DX_PLAYTYPE_BACK );
+};

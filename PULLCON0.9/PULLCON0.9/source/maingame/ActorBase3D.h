@@ -59,6 +59,7 @@ public:
 		return _collisionSearch;
 	}
 
+	virtual void SeGunShotPlay();
 // À•W‚Ìİ’è
 	void SetPosition( const vector4& pos )
 	{
