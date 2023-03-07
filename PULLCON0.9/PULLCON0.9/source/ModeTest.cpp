@@ -28,7 +28,7 @@ ModeTest::ModeTest( ApplicationBase& game,int layer )
 	//object_main_game.Add( enemy3 );
 
 	auto enemy4 = std::make_shared<EnemyAAA>( _game,*this,4,4,1,4.0f,math::vector4( 6000,0,30000) );
-	enemy4->SetType(0);
+	enemy4->SetType(1);
 	object_main_game.Add( enemy4 );
 	 
 	//auto enemy5 = std::make_shared<EnemyAAA>( _game,*this,5,5,1,4.0f,math::vector4( 8000,0,0 ) );
