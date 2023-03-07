@@ -20,6 +20,7 @@ public:
 	{
 		is_EndSpeakScript = false;
 	}
+
 public:
 	bool is_EndSpeakScript;
 	std::shared_ptr<ScriptsData> image_pass_date;

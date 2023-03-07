@@ -38,11 +38,14 @@ ModeTitle::ModeTitle( ApplicationBase& game,int layer )
 
 	auto player = std::make_shared<TitlePlayer>( game,*this );
 	object_out_game.Add( player );
+	PlaySoundFile( "res/sound/title/title_bgm.wav",DX_PLAYTYPE_LOOP );
 	Initialize();
 };
 
 ModeTitle::~ModeTitle()
-{};
+{
+	StopSoundFile();
+};
 
 bool ModeTitle::Initialize()
 {
@@ -64,12 +67,13 @@ bool ModeTitle::Update()
 				_game.GetInstance()->GetModeServer()->Add( game );
 			}
 #if _DEBUG
-			if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_A)) {
-				_game.GetInstance()->GetModeServer()->Del(*this);
-				auto game = std::make_shared<ModeMainGame>(_game, 1);
-				game->Initialize(FILEPASS, GAMESCRIPT, FILENAME);
-				_game.GetInstance()->GetModeServer()->Add(game);
-		}
+			if ( _game.Getinput().GetKeyXinput( XINPUT_BUTTON_A ) )
+			{
+				_game.GetInstance()->GetModeServer()->Del( *this );
+				auto game = std::make_shared<ModeMainGame>( _game,1 );
+				game->Initialize( FILEPASS,GAMESCRIPT,FILENAME );
+				_game.GetInstance()->GetModeServer()->Add( game );
+			}
 #endif // _DEBUG
 
 		}

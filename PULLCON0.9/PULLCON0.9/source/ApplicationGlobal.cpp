@@ -12,7 +12,14 @@ namespace
 	const std::string MUSIC_ID_ARRYNAME = "musicid";
 	const std::string OBJECT_ID_FILEPASS = "res/string_date/gamescript/ObjectId.json";
 	const std::string OBJECT_ID_ARRYNAME = "ObjectId";
+
 }
+	// 使用する画像ファイルのテーブル
+const ResourceServer::DivGraphMap usedInGame{
+	{"effect_fire_player",  {"res/2D_image/effect/fx_PlayerDefaultFire.png", 3, 13, 512, 512}},
+	{"effect_defeat_enemy",   {"res/2D_image/effect/fx_Boom.png",  8, 5, 512, 512}},
+};
+
 ApplicationGlobal::ApplicationGlobal()
 {
 	is_EndSpeakScript = true;
@@ -24,6 +31,8 @@ ApplicationGlobal::~ApplicationGlobal()
 bool ApplicationGlobal::Init()
 {
 	is_EndSpeakScript = true;
+	// 上記ファイルを全て読み込む
+	ResourceServer::LoadTextures( usedInGame );
 
 	image_pass_date = std::make_shared<ScriptsData>();
 
@@ -55,3 +64,4 @@ bool ApplicationGlobal::Init()
 	_se["se_gunlanding"] = ResourceServer::LoadSoundMem( "res/sound/player/弾薬/通常弾/通常弾直撃音/normal_bullet_hit.wav" );
 		return true;
 }
+

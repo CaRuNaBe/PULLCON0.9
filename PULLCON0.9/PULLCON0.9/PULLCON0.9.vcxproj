@@ -163,6 +163,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\maingame\EffectDefeatEnemy.cpp" />
+    <ClCompile Include="source\maingame\EffectFirePlayer.cpp" />
+    <ClCompile Include="source\maingame\EffectBase.cpp" />
     <ClCompile Include="source\ApplicationGlobal.cpp" />
     <ClCompile Include="source\maingame\ActorBase3D.cpp" />
     <ClCompile Include="source\ModeTest.cpp" />
@@ -204,6 +207,9 @@
     <ClCompile Include="source\ui\UICursor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\maingame\EffectDefeatEnemy.h" />
+    <ClInclude Include="source\maingame\EffectFirePlayer.h" />
+    <ClInclude Include="source\maingame\EffectBase.h" />
     <ClInclude Include="source\ApplicationGlobal.h" />
     <ClInclude Include="source\maingame\ActorBase3D.h" />
     <ClInclude Include="source\ModeTest.h" />

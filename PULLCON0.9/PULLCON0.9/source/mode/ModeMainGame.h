@@ -44,7 +44,8 @@ public:
 	{
 		return object_main_game;
 	}
-
+	void AddEffectDefeatEnemy( const math::vector4& pos );
+	void AddEffectFirePlayer( const math::vector4& pos );
 private:
 	enum class ScriptState
 	{
