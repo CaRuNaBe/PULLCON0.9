@@ -25,8 +25,7 @@ Player::Player( ApplicationBase& game,ModeMainGame& mode )
 	_handleMagnet = ResourceServer::LoadMV1Model( file_pass[2].c_str() );
 	_handleBackAirscrew = ResourceServer::LoadMV1Model( file_pass[3].c_str() );
 
-	_se = ResourceServer::LoadSoundMem( "res/player/Audio/pull.wav" );
-	_seBullet = ResourceServer::LoadSoundMem( "res/player/Audio/normal_bullet_fast.wav" );
+
 	//デフォルトのフォントで、サイズ４０、太さ３のフォントを作成
 	_handlefont = CreateFontToHandle( NULL,40,3 );
 
@@ -35,6 +34,7 @@ Player::Player( ApplicationBase& game,ModeMainGame& mode )
 
 Player::~Player()
 {
+
 	MV1DeleteModel( _handleBody );
 
 	MV1DeleteModel( _handleAirscrew );
@@ -80,6 +80,7 @@ bool Player::Update()
 	// NUM状態ならPLAY状態に移行する
 	if ( _statePlayer == State::NUM )
 	{
+		PlaySoundMem( gGlobal._se["player_hovering"],DX_PLAYTYPE_LOOP );
 		// カメラの設定
 		_cam._vPos.x = _vPos.x;
 		_cam._vPos.y = _vPos.y + CAMERADEFAULT_POS_Y;
@@ -145,6 +146,7 @@ bool Player::Update()
 			if ((obje->GetType() == Type::kStageObject)) {
 				if (IsHitObject(*obje)) {
 					if (!_isHitObject) {
+						PlaySoundMem( gGlobal._se["player_object_crash"],DX_PLAYTYPE_BACK );
 						_iLife -= 5;
 					}
 					_isHit = true;
@@ -277,8 +279,7 @@ bool Player::Update()
 			if ( _cnt % 20 == 0 )
 			{
 				// SE再生
-				ChangeVolumeSoundMem( 255 * 40 / 100,_seBullet );
-				PlaySoundMem( _seBullet,DX_PLAYTYPE_BACK );
+				SeGunShotPlay();
 			}
 			// 弾生成
 			_fire = true;
@@ -368,8 +369,8 @@ bool Player::Update()
 				++_push;
 				if ( _push >= 12 )
 				{// 引っこ抜き完了
-					ChangeVolumeSoundMem( 255 * 40 / 100,_se );
-					PlaySoundMem( _se,DX_PLAYTYPE_BACK );
+					ChangeVolumeSoundMem( 255 * 40 / 100,gGlobal._se["pull"] );
+					PlaySoundMem( gGlobal._se["pull"],DX_PLAYTYPE_BACK );
 					_CT = 50;
 					_finish = true;
 
@@ -390,6 +391,7 @@ bool Player::Update()
 
 	vector4 v = { 0.f, 0.f, 0.f };
 	if (_isHit) {
+		PlaySoundMem( gGlobal._se["player_hovering"],DX_PLAYTYPE_BACK );
 		float rand = static_cast<float>(utility::get_random(-100, 100));
 		v = { rand,rand,rand };
 		v *= static_cast<float>(_ST) / 20.f;

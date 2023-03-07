@@ -36,6 +36,7 @@ bool AreaCommunication::Update()
 				if (gGlobal.GetIsEndSpeakScript() )
 				{
 					gGlobal.IsNotEndSpeakScript();
+					PlaySoundMem( gGlobal._se["comm_start"],DX_PLAYTYPE_BACK );
 						auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
 					_game.GetModeServer()->Add( story );
 

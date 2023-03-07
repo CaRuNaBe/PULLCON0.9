@@ -62,6 +62,9 @@ bool ClearObject::Update()
 					float randomZ = static_cast<float>(utility::get_random( -700,700 ));
 					_vTarget = {_vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ};
 				}
+				else
+				{
+				}
 			}
 			if ( obje->GetType() == Type::kBullet )
 			{
@@ -97,6 +100,7 @@ bool ClearObject::Update()
 	if ( _fire && _CT == 0 )
 	{
 		AddBullet();
+		SeGunShotPlay();
 		_CT = 5;
 	}
 
@@ -132,6 +136,7 @@ bool ClearObject::Update()
 
 void ClearObject::Damage()
 {
+	PlaySoundMem( gGlobal._se["gunship_death"],DX_PLAYTYPE_BACK );
 	_mode.GetObjectServer3D().Del( *this );
 }
 

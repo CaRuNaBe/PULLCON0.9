@@ -73,6 +73,7 @@ bool EnemyAAA::Update()
 
 	if ( _iLife < 0 )
 	{
+		PlaySoundMem( gGlobal._se["AAA_death"],DX_PLAYTYPE_BACK );
 		Damage();
 	}
 
@@ -218,6 +219,7 @@ bool EnemyAAA::Update()
 		{
 			float speed = 200.f;
 			_fSpeed = speed;
+			SeGunShotPlay();
 			AddBullet( bullet_state[1],bullet_state[2],bullet_state[3],bullet_state[4],bullet_state[5],bullet_state[6] );
 			_CT = 30;
 		}
@@ -272,6 +274,7 @@ bool EnemyAAA::Update()
 		{
 			float speed = 200.f;
 			_fSpeed += speed;
+			SeGunShotPlay();
 			AddBullet( bullet_state[1],bullet_state[2],bullet_state[3],bullet_state[4],bullet_state[5],bullet_state[6] );
 			_CT = 30;
 		}

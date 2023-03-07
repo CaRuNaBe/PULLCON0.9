@@ -201,7 +201,7 @@ bool ModeMainGame::Update()
 					{
 						cnt = 0;
 						is_player_danger = false;
-						game_over_timer = 600;
+						game_over_timer = 300;
 					}
 					if ( object_3d->GetLife() < dead || game_over_timer < 0 ||object_3d->GetFuel() < dead )
 					{
@@ -209,9 +209,14 @@ bool ModeMainGame::Update()
 						{
 							object_3d->SetUpdateSkip( true );
 						}
+						for ( auto&& se : gGlobal._se  )
+						{
+							StopSoundMem( se.second );
+						}
+						PlaySoundMem( gGlobal._se["player_death"],DX_PLAYTYPE_BACK );
 						cnt = 0;
 						is_player_danger = false;
-						game_over_timer = 600;
+						game_over_timer = 300;
 						GetLineNumber( stage_name,now_line );
 						auto story = std::make_shared<ModeSpeakScript>( _game,30,"gameover/gameover" );
 						_game.GetModeServer()->Add( story );
@@ -231,6 +236,10 @@ bool ModeMainGame::Update()
 			}
 			if ( gunship_num <= 0 )
 			{
+				for ( auto&& se : gGlobal._se )
+				{
+					StopSoundMem( se.second );
+				}
 				state = ScriptState::PARSING;
 			}
 
@@ -841,6 +850,7 @@ bool ModeMainGame::OnCommandStory( unsigned int line,std::vector<std::string>& s
 		}
 		state = ScriptState::STORY;
 		gGlobal.IsNotEndSpeakScript();
+		PlaySoundMem( gGlobal._se["comm_start"],DX_PLAYTYPE_BACK );
 		auto story = std::make_shared<ModeSpeakScript>( _game,30,scripts[1] );
 		_game.GetModeServer()->Add( story );
 		result = true;
