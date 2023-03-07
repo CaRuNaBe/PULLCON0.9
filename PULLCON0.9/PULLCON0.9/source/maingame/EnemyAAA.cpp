@@ -409,10 +409,7 @@ void EnemyAAA::AddBullet( const int& theta_split_num,const int& phi_split_num,co
 	}
 	else
 	{
-		if ( AAA_ID == 3 )
-		{
-			_iType = 1;
-		}
+	
 		Polar3D bullet_dir_pol = {{0,0,0},1.0f,0.0f,0.0f};
 		const auto THETA_ADD_NUM = math::utility::PI / theta_split_num;
 		const auto PHI_ADD_NUM = math::utility::TwoPi / phi_split_num;
