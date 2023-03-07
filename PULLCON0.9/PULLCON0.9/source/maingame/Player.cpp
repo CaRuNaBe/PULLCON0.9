@@ -47,8 +47,10 @@ void Player::Init()
 	_iFuel = 100;
 	_iLife = LIFEMAX;
 	_push = 0;
+	_isLerp = false;
 	_isHit = false;
 	_isHitObject = false;
+	_fTime = 0.f;
 	_fRotateAirscrew = 0.f;
 	_fAxialX = 0.f;
 	_fAxialZ = 0.f;
@@ -316,18 +318,18 @@ bool Player::Update()
 		if ( _pull && _CT == 0 )
 		{
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
-			_cam._vTarget.x = _vPos.x;
-			_cam._vTarget.z = _vPos.z;
-			_cam._vTarget.y -= 1000.f;
+			_cam._vTarget = _vPos;
 			_cam._vPosEvent.y = _cam._vTarget.y + cos( theta ) * length3D;
 			length3D *= 0.5f;
 			length3D *= static_cast<float>(_iPieces + 1);
 			_cam._vPosEvent.x = _cam._vTarget.x + length3D * sin( theta ) * cos( camerad );
 			_cam._vPosEvent.z = _cam._vTarget.z + length3D * sin( theta ) * sin( camerad );
+			_isLerp = true;
+			_fTime = 0.0f;
 			_statePlayer = State::EVENT;
 		}
 	}
-	else if ( _statePlayer == State::EVENT )
+	else if ( _statePlayer == State::EVENT && !_isLerp)
 	{
 		vector4 move = {0.f, 2.f, 0.f};
 		if ( _pull && _CT > 0 )
@@ -388,6 +390,16 @@ bool Player::Update()
 	vector4 camPos      = _cam._vPos + v;
 	vector4 camPosEvent = _cam._vPosEvent + v;
 	vector4 camTarget = _cam._vTarget + v;
+	if (_isLerp) {
+		vector4 posStart = _cam._vTarget + _cam._vMemory;
+		vector4 posEnd = _cam._vPosEvent;
+		_fTime += 0.02f;
+		vector4 camPosNow = posStart * (1.0f - _fTime) + posEnd * _fTime;
+		camPosEvent = camPosNow + v;
+		if (_fTime > 1.0f) {
+			_isLerp = false;
+		}
+	}
 	if ( _statePlayer == State::EVENT )
 	{
 		SetCameraPositionAndTarget_UpVecY( ToDX(camPosEvent),ToDX(camTarget) );
