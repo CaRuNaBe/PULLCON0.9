@@ -422,7 +422,6 @@ void EnemyAAA::AddBullet( const int& theta_split_num,const int& phi_split_num,co
 		const auto PHI_RADIAN_UPPER = utility::degree_to_radian( static_cast<float>(phi_degree_upper) );
 
 		const auto Y_UP = VGet( 0.f,1.f,0.f );
-		const auto Z_DOWN = VGet( 0.f,0.f,0.f );
 		for ( int i = 0; i < phi_split_num; i++ )
 		{
 			for ( int i = 0; i < theta_split_num; i++ )
@@ -443,15 +442,11 @@ void EnemyAAA::AddBullet( const int& theta_split_num,const int& phi_split_num,co
 					}
 					else
 					{
-			/*			vector4 yvec = {0.0f,-_vDir.GetY(),0.0f};
-						vector4 xzvec = {_vDir.GetX(),0.0f,_vDir.GetZ()};
-						auto vec = yvec - xzvec;
-						vec += {0.0f,1.0f,0.0f};
-						
-						MATRIX to_player_dxmatrix = MGetRotVec2( ToDX( vec ),ToDX( _vDir ) );
+						vector4 player_dir_xz = {_vDir.GetX(),0.0f,_vDir.GetZ()};
+						MATRIX to_player_dxmatrix = MGetRotVec2( VGet( 0.0f,0.0f,-1.0f ),ToDX( player_dir_xz ) );
 						VECTOR bullet_dx_dir = VTransform( ToDX( bullet_dir ),to_player_dxmatrix );
 
-						bullet_dir = ToMath( bullet_dx_dir );*/
+						bullet_dir = ToMath( bullet_dx_dir );
 					}
 				}
 
