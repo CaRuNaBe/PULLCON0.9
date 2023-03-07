@@ -9,7 +9,9 @@ GameStage::GameStage( ApplicationBase& game,ModeMainGame& mode,int stageid )
 }
 
 GameStage::~GameStage()
-{}
+{
+	MV1DeleteModel( _handle );
+}
 
 void GameStage::Init()
 {

@@ -20,7 +20,9 @@ StageObject::StageObject( ApplicationBase& game,ModeMainGame& mode,int objectid,
 }
 
 StageObject::~StageObject()
-{}
+{
+	MV1DeleteModel( _handle );
+}
 
 void StageObject::Init()
 {

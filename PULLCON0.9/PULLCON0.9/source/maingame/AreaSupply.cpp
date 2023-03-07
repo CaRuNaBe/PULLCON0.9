@@ -14,7 +14,9 @@ AreaSupply::AreaSupply( ApplicationBase& game,ModeMainGame& mode,float _radius )
 }
 
 AreaSupply::~AreaSupply()
-{}
+{
+	MV1DeleteModel( _handle );
+}
 
 void AreaSupply::Init()
 {

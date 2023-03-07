@@ -14,7 +14,9 @@ EnemySkyhunter::EnemySkyhunter( ApplicationBase& game,ModeMainGame& mode,EnemyCo
 }
 
 EnemySkyhunter::~EnemySkyhunter()
-{}
+{
+	MV1DeleteModel( _handle );
+}
 
 void EnemySkyhunter::Init()
 {

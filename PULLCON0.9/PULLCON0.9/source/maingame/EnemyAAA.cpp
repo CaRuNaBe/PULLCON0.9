@@ -40,7 +40,10 @@ EnemyAAA::EnemyAAA( ApplicationBase& game,ModeMainGame& mode,int min_id,int max_
 }
 
 EnemyAAA::~EnemyAAA()
-{}
+{
+	MV1DeleteModel( _handle_body );
+	MV1DeleteModel( _handle_turret );
+}
 
 void EnemyAAA::Init( int pile_num,vector4 _vPosi )
 {

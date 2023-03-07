@@ -13,7 +13,9 @@ EnemyKobae::EnemyKobae( ApplicationBase& game,ModeMainGame& mode )
 }
 
 EnemyKobae::~EnemyKobae()
-{}
+{
+	MV1DeleteModel( _handle );
+}
 
 void EnemyKobae::Init()
 {

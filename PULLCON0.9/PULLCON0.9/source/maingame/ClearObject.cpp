@@ -15,7 +15,9 @@ ClearObject::ClearObject( ApplicationBase& game,ModeMainGame& mode,float _radius
 }
 
 ClearObject::~ClearObject()
-{}
+{
+	MV1DeleteModel( _handle );
+}
 
 void ClearObject::Init()
 {

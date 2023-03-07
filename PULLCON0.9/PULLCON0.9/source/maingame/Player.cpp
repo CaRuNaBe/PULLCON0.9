@@ -34,7 +34,15 @@ Player::Player( ApplicationBase& game,ModeMainGame& mode )
 }
 
 Player::~Player()
-{}
+{
+	MV1DeleteModel( _handleBody );
+
+	MV1DeleteModel( _handleAirscrew );
+
+	MV1DeleteModel( _handleMagnet );
+
+	MV1DeleteModel( _handleBackAirscrew );
+}
 
 void Player::Init()
 {

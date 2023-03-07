@@ -9,6 +9,7 @@ SkySphere::SkySphere( ApplicationBase& game,ModeMainGame& mode,int objectid )
 
 SkySphere::~SkySphere()
 {
+	MV1DeleteModel( _handle );
 }
 
 void SkySphere::Init()

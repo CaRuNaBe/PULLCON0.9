@@ -15,24 +15,24 @@ AreaEnemySpawn::AreaEnemySpawn( ApplicationBase& game,ModeMainGame& mode,int spa
 {
 	_iSpawnFream = spawnfream;
 	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( AREAENEMYSPAWN_ID ) );
-	ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( KOBAE_ID ) );
-	ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( SKYHUNTER_ID ) );
+	MV1DeleteModel( ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( KOBAE_ID ) ) );
+	MV1DeleteModel( ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( SKYHUNTER_ID ) ) );
 
 	Init();
 }
 
 AreaEnemySpawn::~AreaEnemySpawn()
 {
-
+	MV1DeleteModel( _handle );
 }
 
 void AreaEnemySpawn::Init()
 {
 	base::Init();
 	_stateEnemySpawn = State::NUM;
-	
+
 	_isAddKobae = false;
-	_vPos = { 0.f, 5000.f, 100000.f };
+	_vPos = {0.f, 5000.f, 100000.f};
 	_fScale = 3.f;
 	_vEvent = _vPos;
 	_collision._fRadius = 1500.f * _fScale;
@@ -85,25 +85,29 @@ bool AreaEnemySpawn::Update()
 	}
 
 	// àÍíËä‘äuÇ≈ÉXÉ|Å[ÉìÇ≥ÇπÇÈ
-	if (_fire && _CT == 0) {
-		switch (_iEnemyType) {
-		case 1:
-			AddEnemyColumn();
-			break;
-		case 2:
-			AddEnemyKobae();
-			break;
-		case 3:
-			if (_isAddKobae) {
-				AddEnemyKobae();
-			}
-			else {
+	if ( _fire && _CT == 0 )
+	{
+		switch ( _iEnemyType )
+		{
+			case 1:
 				AddEnemyColumn();
-			}
-			_isAddKobae = !_isAddKobae;
-			break;
-		default:
-			break;
+				break;
+			case 2:
+				AddEnemyKobae();
+				break;
+			case 3:
+				if ( _isAddKobae )
+				{
+					AddEnemyKobae();
+				}
+				else
+				{
+					AddEnemyColumn();
+				}
+				_isAddKobae = !_isAddKobae;
+				break;
+			default:
+				break;
 		}
 		_CT = _iSpawnFream;
 	}
@@ -152,10 +156,11 @@ void AreaEnemySpawn::Damage()
 	_mode.GetObjectServer3D().Del( *this );
 }
 
-void AreaEnemySpawn::AddEnemyColumn() {
-	auto column = std::make_shared<EnemyColumn>(_game, _mode, _vPos);
-	column->SetPosition(_vPos);
-	_mode.GetObjectServer3D().Add(column);
+void AreaEnemySpawn::AddEnemyColumn()
+{
+	auto column = std::make_shared<EnemyColumn>( _game,_mode,_vPos );
+	column->SetPosition( _vPos );
+	_mode.GetObjectServer3D().Add( column );
 }
 
 void AreaEnemySpawn::AddEnemyKobae()
