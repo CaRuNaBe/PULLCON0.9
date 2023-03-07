@@ -422,9 +422,9 @@ void EnemyAAA::AddBullet( const int& theta_split_num,const int& phi_split_num,co
 		const auto PHI_RADIAN_UPPER = utility::degree_to_radian( static_cast<float>(phi_degree_upper) );
 
 		const auto Y_UP = VGet( 0.f,1.f,0.f );
-		for ( int i = 0; i < phi_split_num; i++ )
+		for ( int i = 0; i < theta_split_num; i++ )
 		{
-			for ( int i = 0; i < theta_split_num; i++ )
+			for ( int i = 0; i < phi_split_num; i++ )
 			{
 				auto bullet = std::make_shared<Bullet>( _game,_mode );
 				bullet->SetPosition( vBullet );
