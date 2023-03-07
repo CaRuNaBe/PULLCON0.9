@@ -29,8 +29,8 @@
 #include "../ui/UICursor.h"
 #include "../ui/UIPullGage.h"
 #include "ModeSpeakScript.h"
-
-
+#include "../maingame/EffectDefeatEnemy.h"
+#include "../maingame/EffectFirePlayer.h"
 namespace
 {
 	/** ゲームコマンド */
@@ -203,16 +203,17 @@ bool ModeMainGame::Update()
 						is_player_danger = false;
 						game_over_timer = 300;
 					}
-					if ( object_3d->GetLife() < dead || game_over_timer < 0 ||object_3d->GetFuel() < dead )
+					if ( object_3d->GetLife() <= dead || game_over_timer < 0 || object_3d->GetFuel() <= dead )
 					{
 						for ( auto& object_3d : object_main_game.GetObjects() )
 						{
 							object_3d->SetUpdateSkip( true );
 						}
-						for ( auto&& se : gGlobal._se  )
+						for ( auto&& se : gGlobal._se )
 						{
 							StopSoundMem( se.second );
 						}
+						StopSoundFile();
 						PlaySoundMem( gGlobal._se["player_death"],DX_PLAYTYPE_BACK );
 						cnt = 0;
 						is_player_danger = false;
@@ -236,11 +237,11 @@ bool ModeMainGame::Update()
 			}
 			if ( gunship_num <= 0 )
 			{
-				for ( auto&& se : gGlobal._se )
-				{
-					StopSoundMem( se.second );
-				}
-				state = ScriptState::PARSING;
+		
+				StopSoundFile();
+
+				wait_count = 300;
+				state = ScriptState::TIME_WAIT;
 			}
 
 			break;
@@ -283,8 +284,8 @@ bool ModeMainGame::Update()
 
 bool ModeMainGame::Draw()
 {
-	ChangeLightTypeDir(VGet(-1.0f, -1.0f, 1.0f));
-	SetGlobalAmbientLight(GetColorF(0.0f, 0.0f, 0.0f, 0.f));
+	ChangeLightTypeDir( VGet( -1.0f,-1.0f,1.0f ) );
+	SetGlobalAmbientLight( GetColorF( 0.0f,0.0f,0.0f,0.f ) );
 	object_main_game.Draw();
 	ui_player.Draw();
 
@@ -377,6 +378,10 @@ void ModeMainGame::PreParsing()
  */
 void ModeMainGame::Parsing()
 {
+	for ( auto&& se : gGlobal._se )
+	{
+		StopSoundMem( se.second );
+	}
 	object_main_game.Clear();
 	ui_player.Clear();
 	stage_name.clear();
@@ -648,6 +653,7 @@ bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& s
 		/* 現在経過時間を得る */
 		start_time = GetNowCount();
 		state = ScriptState::GAME;
+		PlaySoundFile( "res/sound/stage1_2_3bgm/stage1_2_3bgm.wav",DX_PLAYTYPE_LOOP );
 	}
 	else
 	{
@@ -2193,3 +2199,17 @@ bool ModeMainGame::CommandInputString( int posix,int posiy,std::string inputname
 	}
 	return result;
 }
+
+void ModeMainGame::AddEffectDefeatEnemy( const math::vector4& pos )
+{
+	auto effect = std::make_shared<EffectDefeatEnemy>( _game,*this );
+	effect->SetPosition( pos );
+	object_main_game.Add( effect );
+};
+
+void ModeMainGame::AddEffectFirePlayer( const math::vector4& pos )
+{
+	auto effect = std::make_shared<EffectFirePlayer>( _game,*this );
+	effect->SetPosition( pos );
+	object_main_game.Add( effect );
+};

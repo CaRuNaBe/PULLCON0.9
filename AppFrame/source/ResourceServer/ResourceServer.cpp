@@ -6,11 +6,11 @@
 #include "ResourceServer.h"
 
 // ê√ìIÉÅÉìÉoé¿ëÃ
-ResourceMap	ResourceServer::_mapGraph;
-DivGraphMap ResourceServer::_textures;
-DIVGRAPHMAP	ResourceServer::_mapDivGraph;
-ResourceMap	ResourceServer::_mapSound;
-ResourceMap	ResourceServer::_mapMV1Model;
+ResourceServer::ResourceMap	ResourceServer::_mapGraph;
+ResourceServer::DivGraphMap ResourceServer::_textures;
+ResourceServer::DIVGRAPHMAP	ResourceServer::_mapDivGraph;
+ResourceServer::ResourceMap	ResourceServer::_mapSound;
+ResourceServer::ResourceMap	ResourceServer::_mapMV1Model;
 
 void    ResourceServer::Init()
 {

@@ -221,6 +221,7 @@ bool EnemyAAA::Update()
 			float speed = 200.f;
 			_fSpeed = speed;
 			SeGunShotPlay();
+
 			AddBullet( bullet_state[1],bullet_state[2],bullet_state[3],bullet_state[4],bullet_state[5],bullet_state[6] );
 			_CT = 30;
 		}
@@ -306,7 +307,8 @@ bool EnemyAAA::Update()
 
 void EnemyAAA::Damage()
 {
-	_mode.GetObjectServer3D().Del(*this);
+	_mode.AddEffectDefeatEnemy( _vPos );
+	_mode.GetObjectServer3D().Del( *this );
 }
 
 bool EnemyAAA::Draw()
@@ -404,6 +406,7 @@ void EnemyAAA::GetSearch()
 void EnemyAAA::AddBullet( const int& theta_split_num,const int& phi_split_num,const int& theta_degree_lower,const int& theta_degree_upper,const int& phi_degree_lower,const int& phi_degree_upper )
 {
 	vector4 vBullet = {_vPos.x, _vPos.y + 100.f, _vPos.z};
+	_mode.AddEffectFirePlayer( vBullet );
 	if ( AAA_ID == 1 )
 	{
 		auto bullet = std::make_shared<Bullet>( _game,_mode );

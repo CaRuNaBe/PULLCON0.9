@@ -110,6 +110,11 @@
     <ClCompile Include="source\speakscript\SpeakScriptObject.cpp">
       <Filter>speakscript</Filter>
     </ClCompile>
+    <ClCompile Include="source\maingame\EffectBase.cpp">
+      <Filter>maingame</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectFirePlayer.cpp" />
+    <ClCompile Include="source\maingame\EffectDefeatEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationGlobal.h" />
@@ -221,6 +226,11 @@
     <ClInclude Include="source\speakscript\SpeakScriptObject.h">
       <Filter>speakscript</Filter>
     </ClInclude>
+    <ClInclude Include="source\maingame\EffectBase.h">
+      <Filter>maingame</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectFirePlayer.h" />
+    <ClInclude Include="source\maingame\EffectDefeatEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="mode">
