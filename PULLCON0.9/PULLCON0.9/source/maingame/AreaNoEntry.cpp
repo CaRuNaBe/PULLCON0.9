@@ -19,8 +19,11 @@ bool AreaNoEntry::Update()
 };
 bool AreaNoEntry::Draw()
 {
-	// コリジョン描画
-	vector4 color = {255, 0, 255};
-	DrawCollisionObject( color );
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
+	{
+		// コリジョン描画
+		vector4 color = { 255, 0, 255 };
+		DrawCollisionObject(color);
+	}
 	return true;
 };

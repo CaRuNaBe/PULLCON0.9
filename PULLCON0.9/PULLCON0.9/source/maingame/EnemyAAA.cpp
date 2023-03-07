@@ -70,7 +70,7 @@ bool EnemyAAA::Update()
 
 	if ( _iLife < 0 )
 	{
-		_mode.GetObjectServer3D().Del( *this );
+		Damage();
 	}
 
 	GetSearch();
@@ -174,7 +174,7 @@ bool EnemyAAA::Update()
 						_CT = 10;
 						_overlap = true;
 						obje->Damage();
-						Damage();
+						_iLife -= obje->_iDamage;
 					}
 				}
 			}
@@ -299,7 +299,7 @@ bool EnemyAAA::Update()
 
 void EnemyAAA::Damage()
 {
-	--_iLife;
+	_mode.GetObjectServer3D().Del(*this);
 }
 
 bool EnemyAAA::Draw()

@@ -128,7 +128,7 @@ bool Player::Update()
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
 					if (obje->_CT == 0 && !_isHit) {
-						//_iLife -= obje->_iDamage;
+						_iLife -= obje->_iDamage;
 						_isHit = true;
 						_ST = 20;
 					}
@@ -420,11 +420,6 @@ bool Player::Draw()
 	SetFogEnable(TRUE);
 	SetFogColor(255, 255, 205);
 	SetFogStartEnd(5000.f, 400000.f);
-	// 注視点を描画
-	float linelength = 100.f;
-	DrawLine3D( VAdd( ToDX( _cam._vTarget ),VGet( -linelength,0,0 ) ),VAdd( ToDX( _cam._vTarget ),VGet( linelength,0,0 ) ),GetColor( 255,0,0 ) );
-	DrawLine3D( VAdd( ToDX( _cam._vTarget ),VGet( 0,-linelength,0 ) ),VAdd( ToDX( _cam._vTarget ),VGet( 0,linelength,0 ) ),GetColor( 0,255,0 ) );
-	DrawLine3D( VAdd( ToDX( _cam._vTarget ),VGet( 0,0,-linelength ) ),VAdd( ToDX( _cam._vTarget ),VGet( 0,0,linelength ) ),GetColor( 0,0,255 ) );
 
 	matrix44 rotaMatrix = matrix44();
 	matrix44 rotaAirscrewMatrix = matrix44();
@@ -464,11 +459,9 @@ bool Player::Draw()
 	MV1DrawModel( _handleAirscrew );
 	MV1DrawModel( _handleMagnet );
 	MV1DrawModel( _handleBackAirscrew );
-	// 対空砲の狙う位置を可視化
-	DrawSphere3D( ToDX( _vTarget ),100.f,8,GetColor( 255,0,0 ),GetColor( 0,0,0 ),TRUE );
 	SetUseLighting( TRUE );
 	// プレイヤーの弾の軌道を描画
-	DrawLine3D( ToDX( _vPos ),ToDX( _vTarget ),GetColor( 255,0,0 ) );
+	//DrawLine3D( ToDX( _vPos ),ToDX( _vTarget ),GetColor( 255,0,0 ) );
 
 	// コリジョン描画
 
@@ -480,13 +473,6 @@ bool Player::Draw()
 			color = {255, 0, 0};
 		}
 		DrawCollision( color );
-	}
-
-	VECTOR Pos = ConvWorldPosToScreenPos( ToDX( _vPos ) );
-	if ( _isHit )
-	{
-		// 作成したフォントで画面左上に『HIT!!』と白の文字列を描画する
-		DrawStringToHandle( static_cast<int>(Pos.x),static_cast<int>(Pos.y),"H I T!!",GetColor( 255,255,255 ),_handlefont );
 	}
 
 	// デバック表記
