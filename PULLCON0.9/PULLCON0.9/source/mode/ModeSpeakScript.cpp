@@ -527,6 +527,7 @@ bool ModeSpeakScript::OnCommandMusicloop( unsigned int line,const std::vector<st
 	}
 
 	mgloop->SetMgHandle( bghandle );
+	ChangeVolumeSoundMem(255 * 40 / 100, mgloop->GetMgHandle());
 	PlaySoundMem( mgloop->GetMgHandle(),DX_PLAYTYPE_LOOP );
 	return true;
 };

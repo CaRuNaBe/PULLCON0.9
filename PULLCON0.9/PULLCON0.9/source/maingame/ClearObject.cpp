@@ -127,7 +127,7 @@ bool ClearObject::Update()
 	}
 
 	_collision._fRadius = 500.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 5.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 15.f;
 	_vEvent = _vPos;
 	UpdateCollision();  // コリジョン更新
 

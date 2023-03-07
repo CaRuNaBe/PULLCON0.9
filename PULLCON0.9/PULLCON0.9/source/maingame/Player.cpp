@@ -80,6 +80,7 @@ bool Player::Update()
 	// NUM状態ならPLAY状態に移行する
 	if ( _statePlayer == State::NUM )
 	{
+		ChangeVolumeSoundMem(255 * 40 / 100, gGlobal._se["player_hovering"]);
 		PlaySoundMem( gGlobal._se["player_hovering"],DX_PLAYTYPE_LOOP );
 		// カメラの設定
 		_cam._vPos.x = _vPos.x;
@@ -146,6 +147,7 @@ bool Player::Update()
 			if ((obje->GetType() == Type::kStageObject)) {
 				if (IsHitObject(*obje)) {
 					if (!_isHitObject) {
+						ChangeVolumeSoundMem(255 * 40 / 100, gGlobal._se["player_object_crash"]);
 						PlaySoundMem( gGlobal._se["player_object_crash"],DX_PLAYTYPE_BACK );
 						_iLife -= 5;
 					}
@@ -276,11 +278,8 @@ bool Player::Update()
 
 		if ( _game.Getinput().XinputEveryOtherRightTrigger( 10 ) )
 		{  // RT
-			if ( _cnt % 20 == 0 )
-			{
 				// SE再生
 				SeGunShotPlay();
-			}
 			// 弾生成
 			_fire = true;
 			vector4 vBullet = {_vPos.x, _vPos.y, _vPos.z};
@@ -369,7 +368,7 @@ bool Player::Update()
 				++_push;
 				if ( _push >= 12 )
 				{// 引っこ抜き完了
-					ChangeVolumeSoundMem( 255 * 40 / 100,gGlobal._se["pull"] );
+					ChangeVolumeSoundMem( 255 * 70 / 100,gGlobal._se["pull"] );
 					PlaySoundMem( gGlobal._se["pull"],DX_PLAYTYPE_BACK );
 					_CT = 50;
 					_finish = true;
@@ -391,8 +390,9 @@ bool Player::Update()
 
 	vector4 v = { 0.f, 0.f, 0.f };
 	if (_isHit) {
-		PlaySoundMem( gGlobal._se["player_hovering"],DX_PLAYTYPE_BACK );
-		float rand = static_cast<float>(utility::get_random(-100, 100));
+		ChangeVolumeSoundMem(255 * 40 / 100, gGlobal._se["se_gunlanding"]);
+		PlaySoundMem( gGlobal._se["se_gunlanding"],DX_PLAYTYPE_BACK );
+		float rand = static_cast<float>(utility::get_random(-200, 200));
 		v = { rand,rand,rand };
 		v *= static_cast<float>(_ST) / 20.f;
 	}
@@ -429,7 +429,7 @@ bool Player::Draw()
 	// フォグ設定
 	SetFogEnable(TRUE);
 	SetFogColor(255, 255, 205);
-	SetFogStartEnd(5000.f, 400000.f);
+	SetFogStartEnd(5000.f, 800000.f);
 
 	matrix44 rotaMatrix = matrix44();
 	matrix44 rotaAirscrewMatrix = matrix44();
@@ -485,13 +485,7 @@ bool Player::Draw()
 		DrawCollision( color );
 	}
 
-	// デバック表記
-	int x = 0,y = 0,size = 16;
-	SetFontSize( size );
-	y += size * 10;
-	DrawFormatString( x,y,GetColor( 255,255,255 ),"  Pieces = %d ",_iPieces ); y += size;
-	DrawFormatString( x,y,GetColor( 255,255,255 ),"  Speed = %f ",_fSpeed ); y += size;
-
+	
 	return true;
 }
 

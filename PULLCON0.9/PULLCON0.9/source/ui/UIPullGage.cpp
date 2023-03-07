@@ -149,6 +149,7 @@ bool UIPullGage::Draw()
 		if ( _game.Getinput().GetKeyXinput( XINPUT_BUTTON_X ) )
 		{
 			DrawGraph( BUTTON_POS.IntX(),BUTTON_POS.IntY(),hundle_xbutton[0],TRUE );
+			ChangeVolumeSoundMem(255 * 40 / 100, gGlobal._se["player_pull_button"]);
 			PlaySoundMem( gGlobal._se["player_pull_button"],DX_PLAYTYPE_BACK );
 		}
 		else

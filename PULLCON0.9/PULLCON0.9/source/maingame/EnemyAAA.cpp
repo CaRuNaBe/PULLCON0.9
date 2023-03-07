@@ -73,6 +73,7 @@ bool EnemyAAA::Update()
 
 	if ( _iLife < 0 )
 	{
+		ChangeVolumeSoundMem(255 * 40 / 100, gGlobal._se["AAA_death"]);
 		PlaySoundMem( gGlobal._se["AAA_death"],DX_PLAYTYPE_BACK );
 		Damage();
 	}
