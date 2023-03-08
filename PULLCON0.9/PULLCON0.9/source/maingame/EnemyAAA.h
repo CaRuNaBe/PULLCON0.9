@@ -24,7 +24,7 @@ public:
 		WEAPON//•ºŠí‰»
 	};
 
-	virtual void Init( int pile_num,vector4 _vPosi );
+	virtual void Init( int pile_num,vector4 _vPosi, float scale);
 	virtual bool Update();
 	virtual bool Draw();
 

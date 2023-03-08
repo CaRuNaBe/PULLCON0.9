@@ -10,6 +10,8 @@ namespace
 ClearObject::ClearObject( ApplicationBase& game,ModeMainGame& mode,float _radius )
 	:base( game,mode )
 {
+	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(GUNSHIP_ID));
+
 	Init();
 	radius = _radius;
 }
@@ -25,14 +27,9 @@ void ClearObject::Init()
 
 	_stateClearObject = State::NUM;
 
-	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( GUNSHIP_ID ) );
-
-	_vObjective = {_vPos.x ,_vPos.y, _vPos.z};
-	_vPos = {_vObjective.x - 5000.f, _vObjective.y, _vObjective.z};
-	_vEvent = _vPos;
 	_fScale = 3.f;
 	_collision._fRadius = 500.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 2.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 15.f;
 
 	_iLife = 100;
 

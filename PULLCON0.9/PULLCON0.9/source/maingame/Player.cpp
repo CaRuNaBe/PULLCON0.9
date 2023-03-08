@@ -65,11 +65,6 @@ void Player::Init()
 
 	_collision._fRadius = 500.f * _fScale;
 
-	// ÉJÉÅÉâÇÃê›íË
-	_cam._vPos.x = _vPos.x;
-	_cam._vPos.y = _vPos.y + CAMERADEFAULT_POS_Y;
-	_cam._vPos.z = _vPos.z + CAMERADEFAULT_POS_XZ;
-	_cam._vTarget = {_vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z};
 	_cam._clipNear = 100.f;
 	_cam._clipFar = 30000000.f;
 }

@@ -33,9 +33,7 @@ void AreaEnemySpawn::Init()
 	_stateEnemySpawn = State::NUM;
 
 	_isAddKobae = false;
-	_vPos = {0.f, 5000.f, 100000.f};
 	_fScale = 3.f;
-	_vEvent = _vPos;
 	_collision._fRadius = 1500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 20.f;
 
@@ -48,8 +46,9 @@ bool AreaEnemySpawn::Update()
 
 	if ( _stateEnemySpawn == State::NUM )
 	{
+		_vEvent = _vPos;
 		_collision._vCenter = _vPos;
-		_collisionEvent._vCenter = _vPos;
+		UpdateCollision();  // コリジョン更新
 		_stateEnemySpawn = State::WAIT;
 	}
 
