@@ -80,7 +80,7 @@ bool Player::Update()
 	// NUM状態ならPLAY状態に移行する
 	if ( _statePlayer == State::NUM )
 	{
-		ChangeVolumeSoundMem(255 * 40 / 100, gGlobal._se["player_hovering"]);
+		ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["player_hovering"]);
 		PlaySoundMem( gGlobal._se["player_hovering"],DX_PLAYTYPE_LOOP );
 		// カメラの設定
 		_cam._vPos.x = _vPos.x;
@@ -141,7 +141,7 @@ bool Player::Update()
 				{
 					if ( obje->_CT == 0 && !_isHit )
 					{
-						_iLife -= obje->_iDamage;
+						//_iLife -= obje->_iDamage;
 						_isHit = true;
 						_ST = 20;
 					}
@@ -150,7 +150,7 @@ bool Player::Update()
 			if ((obje->GetType() == Type::kStageObject)) {
 				if (IsHitObject(*obje)) {
 					if (!_isHitObject) {
-						ChangeVolumeSoundMem(255 * 40 / 100, gGlobal._se["player_object_crash"]);
+						ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["player_object_crash"]);
 						PlaySoundMem( gGlobal._se["player_object_crash"],DX_PLAYTYPE_BACK );
 						_iLife -= 5;
 					}
@@ -186,7 +186,7 @@ bool Player::Update()
 		// 燃料消費
 		if ( _cnt % 60 == 0 )
 		{
-			--_iFuel;
+			//--_iFuel;
 			if ( _iFuel < 0 )
 			{
 				_iFuel = 0;
@@ -265,12 +265,12 @@ bool Player::Update()
 		vector4 v = {-1.f, 0.f, 0.f};
 		rad = atan2( v.z,v.x );
 		// 弾にバラつきを持たせる
-		float randomDeg = static_cast<float>(utility::get_random( -3,3 ));
+		float randomDeg = static_cast<float>(utility::get_random( -1,1 ));
 		float randomRad = utility::degree_to_radian( randomDeg );
 		v.x = cos( rad + camerad + randomRad );
 		v.z = sin( rad + camerad + randomRad );
 		// 弾にバラつきを持たせる
-		randomDeg = static_cast<float>(utility::get_random( -3,3 ));
+		randomDeg = static_cast<float>(utility::get_random( -1,1 ));
 		randomRad = utility::degree_to_radian( randomDeg );
 		v.y = sin( _fRotatX + randomRad );
 		// 弾の向きベクトル
@@ -391,7 +391,7 @@ bool Player::Update()
 				++_push;
 				if ( _push >= 12 )
 				{// 引っこ抜き完了
-					ChangeVolumeSoundMem( 255 * 70 / 100,gGlobal._se["pull"] );
+					ChangeVolumeSoundMem( 255 * 90 / 100,gGlobal._se["pull"] );
 					PlaySoundMem( gGlobal._se["pull"],DX_PLAYTYPE_BACK );
 					_CT = 50;
 					_finish = true;
@@ -413,7 +413,7 @@ bool Player::Update()
 
 	vector4 v = { 0.f, 0.f, 0.f };
 	if (_isHit) {
-		ChangeVolumeSoundMem(255 * 40 / 100, gGlobal._se["se_gunlanding"]);
+		ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["se_gunlanding"]);
 		PlaySoundMem( gGlobal._se["se_gunlanding"],DX_PLAYTYPE_BACK );
 		float rand = static_cast<float>(utility::get_random(-200, 200));
 		v = { rand,rand,rand };
@@ -607,6 +607,7 @@ void Player::AddBullet( vector4 pos )
 	bullet->SetPosition( pos );
 	_mode.AddEffectFirePlayer( pos );
 	bullet->SetDir( _vDir );
+	bullet->SetSpeed(_fSpeed * 2.f);
 	bullet->_fScale = 3.f;
 	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
