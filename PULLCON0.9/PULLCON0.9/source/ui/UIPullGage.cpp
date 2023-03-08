@@ -81,7 +81,7 @@ bool UIPullGage::Draw()
 
 	if ( !is_hide )
 	{
-		DrawBox( _game.DispBasics(),_game.DispBasics(),_game.DispBasics() + 500,_game.DispSizeH(),brack,TRUE );
+		DrawBox( _game.DispBasics(),_game.DispBasics(),_game.DispSizeW(),_game.DispBasics() + 100,brack,TRUE );
 		DrawGraph( BASE_POS.IntX(),BASE_POS.IntY(),hundle_pullgage[1],TRUE );
 
 		auto BASE_IMAGE_CENTER = BASE_POS.GetCentor( BASE_IMAGE_SIZE );
@@ -146,10 +146,10 @@ bool UIPullGage::Draw()
 		auto triangle_angle = math::utility::degree_to_radian( triangle_pol.GetTheta() + 90 );
 		DrawRotaGraph( triangle_pos.IntX(),triangle_pos.IntY(),1.0,triangle_angle,hundle_pullgage[4],TRUE,TRUE );
 
-		if ( _game.Getinput().GetKeyXinput( XINPUT_BUTTON_X ) )
+		if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
 		{
 			DrawGraph( BUTTON_POS.IntX(),BUTTON_POS.IntY(),hundle_xbutton[0],TRUE );
-			ChangeVolumeSoundMem(255 * 40 / 100, gGlobal._se["player_pull_button"]);
+			ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["player_pull_button"]);
 			PlaySoundMem( gGlobal._se["player_pull_button"],DX_PLAYTYPE_BACK );
 		}
 		else
@@ -157,7 +157,7 @@ bool UIPullGage::Draw()
 			DrawGraph( BUTTON_POS.IntX(),BUTTON_POS.IntY(),hundle_xbutton[1],TRUE );
 		}
 
-		DrawBox( _game.DispSizeW() - 500,_game.DispBasics(),_game.DispSizeW(),_game.DispSizeH(),brack,TRUE );
+		DrawBox( _game.DispBasics(),_game.DispSizeH() - 100,_game.DispSizeW(),_game.DispSizeH(),brack,TRUE );
 	};
 
 	return true;

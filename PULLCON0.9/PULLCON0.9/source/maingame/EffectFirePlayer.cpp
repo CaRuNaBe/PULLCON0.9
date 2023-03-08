@@ -37,7 +37,7 @@ bool EffectFirePlayer::Draw()
 {
 	EffectBase::Draw();
 
-	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,5000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
+	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,2500.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
 
 	return true;
 }

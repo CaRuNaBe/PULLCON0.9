@@ -12,7 +12,7 @@ Bullet::Bullet( ApplicationBase& game,ModeMainGame& mode )
 	_cgPurple = ResourceServer::LoadMV1Model( "res/3D_model/ammo/AmmoModel_Ver1/Ammo_Purple.mv1" );
 	_cgYellow = ResourceServer::LoadMV1Model( "res/3D_model/ammo/AmmoModel_Ver1/Ammo.mv1" );
 	_cg = 0;
-	_handle = ResourceServer::LoadMV1Model( "res/3D_model/ammo/AmmoModel_Ver1/Ammo.mv1" );
+	_handle = 0;
 	Init();
 }
 
@@ -22,7 +22,6 @@ Bullet::~Bullet()
 	MV1DeleteModel( _cgGreen );
 	MV1DeleteModel( _cgPurple );
 	MV1DeleteModel( _cgYellow );
-	MV1DeleteModel( _handle );
 }
 
 void Bullet::Init()
