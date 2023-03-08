@@ -25,6 +25,7 @@ bool ApplicationBase::Initialize( HINSTANCE hInstance )
 	{
 		ChangeWindowMode( true );							// ウィンドウモードに指定する
 	}
+	SetZBufferBitDepth(32);
 	SetGraphMode( DispSizeW(),DispSizeH(),32 );
 
 
