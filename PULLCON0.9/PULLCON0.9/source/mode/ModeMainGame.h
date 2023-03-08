@@ -36,7 +36,6 @@ public:
 
 
 	///////////////////////////////////////
-	bool _clear;
 	bool	_dbgCollisionDraw;		// コリジョン表示/非表示
 	/////////////////////////////////////////////
 
@@ -161,7 +160,6 @@ private:
 	bool is_cannotdelete;
 
 	int _cg;
-	int _handlefont;
 	int _se;
 	float world_range_x;
 	float world_range_y;

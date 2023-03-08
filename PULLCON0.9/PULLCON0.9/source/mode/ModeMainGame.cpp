@@ -89,13 +89,6 @@ ModeMainGame::ModeMainGame( ApplicationBase& game,int layer )
 	scripts_data = std::make_unique<ScriptsData>();
 
 	///////////////////////////////////////////////////////
-	/*
-	PlaySoundMem(_se, DX_PLAYTYPE_LOOP);
-	デフォルトのフォントで、サイズ４０、太さ３のフォントを作成し
-	作成したデータの識別番号を変数 FontHandle に保存する
-	*/
-	_handlefont = CreateFontToHandle( NULL,40,3 );
-	_clear = false;
 	_dbgCollisionDraw = false;
 	///////////////////////////////////////////////////////
 
@@ -237,7 +230,7 @@ bool ModeMainGame::Update()
 			}
 			if ( gunship_num <= 0 )
 			{
-		
+
 				StopSoundFile();
 
 				wait_count = 300;
@@ -326,7 +319,7 @@ bool ModeMainGame::Draw()
 bool ModeMainGame::DebugDraw()
 {
 	math::vector4 posi;
-	DrawFormatString( 1000,0,GetColor( 255,255,255 ),"State%d",state );
+
 	for ( auto&& obj : object_main_game.GetObjects() )
 	{
 		if ( obj->GetType() == ActorBase3D::Type::kPlayer )
@@ -335,13 +328,9 @@ bool ModeMainGame::DebugDraw()
 			break;
 		}
 	}
-	int x = 0,y = 500,size = 16;
-	DrawFormatString( x,y,GetColor( 255,0,0 ),"  pos    = (%5.2f, %5.2f, %5.2f)",posi.x,posi.y,posi.z );
-	if ( _clear )
-	{
-	// 作成したフォントで画面左上に『CLEAR』と黄色の文字列を描画する
-		DrawStringToHandle( _game.DispSizeW() / 2,_game.DispSizeH() / 2,"C L E A R!!",GetColor( 255,255,0 ),_handlefont );
-	}
+	int x = 0,y = 500;
+	DrawFormatString( x,y,GetColor( 255,0,0 )," player_pos=(%5.2f, %5.2f, %5.2f)",posi.x,posi.y,posi.z ); y += 16;
+	DrawFormatString( x,y,GetColor( 255,255,255 ),"State%d",state );
 	return true;
 };
 /**
@@ -2024,13 +2013,9 @@ void ModeMainGame::Edit()
 
 bool ModeMainGame::OnEditCommandAdd( const std::string& command )
 {
-
 	int	x = 0,y = 0;
-
 	std::string buf;
 	auto cchar = const_cast<char*>(buf.c_str());
-
-
 	std::vector < std::string >_script;
 	const std::string FILEPASS = "res/string_date/gamescript/gamecommand.json";
 	const std::string ARREYNAME = "gamecommand";
@@ -2079,13 +2064,13 @@ bool ModeMainGame::OnEditCommandDelete( const std::string& command )
 	for ( unsigned int i = 0; i <= maxline; i++ )
 	{
 		auto script = scripts_data->GetScriptLine( i );
-		auto stringnew = "番号%d" + script;
+		auto stringnew = "番号%d_" + script;
 		DrawFormatString( x,y,GetColor( 255,255,255 ),stringnew.c_str(),i + 1 );
 		y += 18;
-		if ( i > 54 )
+		if ( i == 56|| i == 116|| i == 176 )
 		{
 			y = 0;
-			x = 400;
+			x += 600;
 		}
 	}
 	if ( KeyInputSingleCharString( 0,500,30,cchar,TRUE ) == 1 )
