@@ -220,7 +220,6 @@ void EnemyKobae::AddBullet()
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
 	bullet->SetSpeed( speed );
-	bullet->_fScale = 5.f;
 	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }

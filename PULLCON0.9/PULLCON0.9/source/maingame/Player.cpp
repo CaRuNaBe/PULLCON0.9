@@ -603,7 +603,6 @@ void Player::AddBullet( vector4 pos )
 	_mode.AddEffectFirePlayer( pos );
 	bullet->SetDir( _vDir );
 	bullet->SetSpeed(_fSpeed * 2.f);
-	bullet->_fScale = 3.f;
-	bullet->_iType = 1;
+	bullet->_iType = 2;
 	_mode.GetObjectServer3D().Add( bullet );
 }

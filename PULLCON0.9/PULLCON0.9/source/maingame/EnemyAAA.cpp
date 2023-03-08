@@ -354,7 +354,6 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 		bullet->SetPosition(vBullet);
 		bullet->SetDir(_vDir);
 		bullet->SetSpeed(_fSpeed);
-		bullet->_fScale = 7.f;
 		bullet->_ST = 300;
 		_mode.GetObjectServer3D().Add(bullet);
 	}
@@ -394,7 +393,6 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 
 				bullet->SetDir(bullet_dir);
 				bullet->SetSpeed(_fSpeed);
-				bullet->_fScale = 7.f;
 				bullet->_ST = 300;
 				bullet_dir_pol.PhiIncrement(PHI_ADD_NUM);
 
