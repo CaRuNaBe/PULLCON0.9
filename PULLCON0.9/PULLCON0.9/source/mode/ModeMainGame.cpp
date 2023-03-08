@@ -113,7 +113,6 @@ void ModeMainGame::Destroy()
 	max_line = 0;
 	now_line = 0;
 	wait_count = 0;
-	scripts_data->WriteJson( FILENAME,GAMESCRIPT );
 	scripts_data.reset();
 	label_list.clear();
 	crfi_list.clear();
@@ -432,7 +431,7 @@ void ModeMainGame::Parsing()
 
 			if ( string_comand == COMMAND_GAMESTART )
 			{
-				state = ScriptState::EDIT;
+				state = ScriptState::GAME;
 			}
 			++now_line;
 		}
