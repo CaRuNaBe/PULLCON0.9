@@ -74,7 +74,7 @@ bool EnemySkyhunter::Update()
 			{
 				if ( IsHitObject( *obje ) )
 				{
-					if ( obje->_CT == 0 )
+					if (obje->_iType != 1)
 					{
 						_CT = 10;
 						_overlap = true;

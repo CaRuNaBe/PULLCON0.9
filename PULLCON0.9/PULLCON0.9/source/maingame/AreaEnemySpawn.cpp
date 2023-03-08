@@ -73,7 +73,7 @@ bool AreaEnemySpawn::Update()
 			{
 				if ( IsHitObject( *obje ) )
 				{
-					if ( obje->_CT == 0 )
+					if (obje->_iType != 1)
 					{
 						_overlap = true;
 						obje->Damage();

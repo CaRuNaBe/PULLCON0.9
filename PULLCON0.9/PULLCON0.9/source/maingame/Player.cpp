@@ -134,7 +134,7 @@ bool Player::Update()
 			{
 				if ( IsHitObject( *obje ) )
 				{
-					if ( obje->_CT == 0 && !_isHit )
+					if (obje->_iType != 2 && !_isHit )
 					{
 						//_iLife -= obje->_iDamage;
 						_isHit = true;

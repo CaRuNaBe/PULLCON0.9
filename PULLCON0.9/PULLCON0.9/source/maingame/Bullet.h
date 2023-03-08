@@ -15,7 +15,6 @@ public:
 
 	virtual void Damage();
 
-	int    _iType;
 protected:
 
 	int    _handleBlue;

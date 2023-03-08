@@ -52,7 +52,7 @@ void EnemyAAA::Init(int pile_num, vector4 _vPosi, float scale) {
 	_vDir = { 0.f, 0.f, -1.f };
 	_iLife = 50;
 
-	_iType = 0;
+	_iEnemyType = 0;
 	_iPossession = pile_num;
 	_fAxialX = 0.f;
 	_fAxialY = 0.f;
@@ -90,7 +90,7 @@ bool EnemyAAA::Update() {
 							// 起動状態に移行
 							_stateAAA = State::PLAY;
 							_coll = true;
-							if (_iType == 0) {
+							if (_iEnemyType == 0) {
 								_vRelation = obje->_vPos;
 								// 弾にバラつきを持たせる
 								float randomX = static_cast<float>(utility::get_random(-700, 700));
@@ -126,6 +126,7 @@ bool EnemyAAA::Update() {
 					_fRotatY = obje->_fRotatY + utility::PiOver2;
 					_fire = obje->_fire;
 					_fSpeed = obje->_fSpeed;
+					_iType = 2;
 				}
 			}
 			if (obje->GetType() == Type::kEnemyAAA) {
@@ -144,7 +145,7 @@ bool EnemyAAA::Update() {
 			}
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
-					if (obje->_CT == 0) {
+					if (obje->_iType != 0) {
 						_CT = 10;
 						_overlap = true;
 						obje->Damage();
@@ -170,7 +171,7 @@ bool EnemyAAA::Update() {
 		float theta = acos(sy / length3D);
 
 		// プレイヤーを狙わない対空砲
-		if (_iType == 1) {
+		if (_iEnemyType == 1) {
 			rad = utility::degree_to_radian(_fAxialY);
 			theta = utility::degree_to_radian(_fAxialX);
 			_fRotatX = theta;
@@ -192,7 +193,7 @@ bool EnemyAAA::Update() {
 			_CT = 30;
 		}
 
-		if (_iType == 0) {
+		if (_iEnemyType == 0) {
 			// 三次元極座標(r(length3D),θ(theta),φ(rad))
 			sx = _vRelation.x - _vPos.x;
 			sy = _vRelation.y - _vPos.y;
@@ -354,6 +355,7 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 		bullet->SetPosition(vBullet);
 		bullet->SetDir(_vDir);
 		bullet->SetSpeed(_fSpeed);
+		bullet->_iType = _iType;
 		bullet->_ST = 300;
 		_mode.GetObjectServer3D().Add(bullet);
 	}
@@ -374,7 +376,7 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 
 				auto bullet_dir = bullet_dir_pol.ToVector4();
 
-				if (_iType == 0) {
+				if (_iEnemyType == 0) {
 					if (bullet_state[0] == 1) {
 						MATRIX to_player_dxmatrix = MGetRotVec2(Y_UP, ToDX(_vDir));
 						VECTOR bullet_dx_dir = VTransform(ToDX(bullet_dir), to_player_dxmatrix);
@@ -393,6 +395,7 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 
 				bullet->SetDir(bullet_dir);
 				bullet->SetSpeed(_fSpeed);
+				bullet->_iType = _iType;
 				bullet->_ST = 300;
 				bullet_dir_pol.PhiIncrement(PHI_ADD_NUM);
 
