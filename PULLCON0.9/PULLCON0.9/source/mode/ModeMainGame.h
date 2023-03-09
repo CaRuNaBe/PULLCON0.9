@@ -13,7 +13,6 @@
 #include <memory>
 #include <string>
 #include <array>
-#include <string_view>
 
 class CommandLabel;
 class CommandChoice;
@@ -153,8 +152,8 @@ private:
 	float feedcount;
 	/** ステージ名 */
 	std::string  stage_name;
-	std::string* game_over_name;
-	std::string* game_clear_name;
+	std::string game_over_name;
+	std::string game_clear_name;
 	/** ゲームスタート時間 */
 	int start_time;
 

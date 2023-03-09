@@ -119,8 +119,8 @@ void ModeMainGame::Destroy()
 	crfo_list.clear();
 	stage_name.clear();
 	scripts_data = nullptr;
-	game_over_name = nullptr;
-	game_clear_name = nullptr;
+	game_over_name = "";
+	game_clear_name = "";
 }
 
 void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname )
@@ -137,8 +137,8 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 	is_cannotdelete = false;
 	game_over_timer = 600;
 	is_player_danger = false;
-	game_over_name = nullptr;
-	game_clear_name = nullptr;
+	game_over_name = "";
+	game_clear_name = "";
 	if ( !scripts_data->LoadJson( jsonpath,scriptsname,jsonname ) )
 	{
 		return;
@@ -216,7 +216,7 @@ bool ModeMainGame::Update()
 						is_player_danger = false;
 						game_over_timer = 300;
 						GetLineNumber( stage_name,now_line );
-						auto gameover = std::make_shared<ModeSpeakScript>( _game,30,game_over_name->c_str());
+						auto gameover = std::make_shared<ModeSpeakScript>( _game,30,game_over_name.c_str() );
 						_game.GetModeServer()->Add( gameover );
 						gGlobal.IsNotEndSpeakScript();
 						state = ScriptState::STORY;
@@ -247,7 +247,7 @@ bool ModeMainGame::Update()
 				cnt = 0;
 				is_player_danger = false;
 				game_over_timer = 300;
-				auto game_clear = std::make_shared<ModeSpeakScript>( _game,30,game_clear_name->c_str() );
+				auto game_clear = std::make_shared<ModeSpeakScript>( _game,30,game_clear_name.c_str() );
 				_game.GetModeServer()->Add( game_clear );
 				gGlobal.IsNotEndSpeakScript();
 				state = ScriptState::STORY;
@@ -650,7 +650,7 @@ bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& s
 {
 	if ( state != ScriptState::EDIT )
 	{
-		const size_t SCRIPTSIZE = 4;
+		const size_t SCRIPTSIZE = 2;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return false;
@@ -658,15 +658,6 @@ bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& s
 		/* 現在経過時間を得る */
 		start_time = GetNowCount();
 		state = ScriptState::GAME;
-
-		game_over_name = &scripts[1];
-		game_clear_name = &scripts[2];
-		int music_id = 0;
-		if ( !(string::ToInt( scripts[3],music_id )) )
-		{
-			return false;
-		}
-		PlaySoundFile( gGlobal.music_pass_date->GetScriptLine(music_id).c_str(),DX_PLAYTYPE_LOOP);
 	}
 	else
 	{
@@ -674,20 +665,6 @@ bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& s
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return false;
-		}
-		std::array < std::string,3 > input_str =
-		{
-			"ゲームクリア画面のストーリーid(ファイル名/ストーリー名)",
-			"ゲームオーバー画面のストーリーid(ファイル名/ストーリー名)",
-			"bgmのミュージックid"
-		};
-
-		for ( int i = 0; i < input_str.size(); i++ )
-		{
-			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
-			{
-				return false;
-			};
 		}
 	}
 	return true;
@@ -924,7 +901,7 @@ bool ModeMainGame::OnCommandStage( unsigned int line,std::vector<std::string>& s
 	if ( state != ScriptState::EDIT )
 	{
 
-		const size_t SCRIPTSIZE = 5;
+		const size_t SCRIPTSIZE = 8;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -946,6 +923,14 @@ bool ModeMainGame::OnCommandStage( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
+		game_clear_name = scripts[5];
+		game_over_name = scripts[6];
+		int music_id = 0;
+		if ( !(string::ToInt( scripts[7],music_id )) )
+		{
+			return false;
+		}
+		PlaySoundFile( gGlobal.music_pass_date->GetScriptLine( music_id ).c_str(),DX_PLAYTYPE_LOOP );
 
 		auto stage = std::make_shared<GameStage>( _game,*this,object_id );
 		object_main_game.Add( stage );
@@ -959,12 +944,15 @@ bool ModeMainGame::OnCommandStage( unsigned int line,std::vector<std::string>& s
 		{
 			return result;
 		}
-		std::array < std::string,4 > input_str =
+		std::array < std::string,7 > input_str =
 		{
 			"オブジェクトid(企画書参照)を記入してください",
 			"世界の移動範囲x軸最高値",
 			"世界の移動範囲y軸最高値",
-			"世界の移動範囲z軸最高値"
+			"世界の移動範囲z軸最高値",
+			"ゲームクリア画面のストーリーid(ファイル名/ストーリー名)",
+			"ゲームオーバー画面のストーリーid(ファイル名/ストーリー名)",
+			"bgmのミュージックid"
 		};
 		result = true;
 		for ( int i = 0; i < input_str.size(); i++ )
