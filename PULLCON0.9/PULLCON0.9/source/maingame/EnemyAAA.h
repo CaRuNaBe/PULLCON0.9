@@ -24,7 +24,7 @@ public:
 		WEAPON//兵器化
 	};
 
-	virtual void Init( int pile_num,vector4 _vPosi );
+	virtual void Init( int pile_num,vector4 _vPosi, float scale);
 	virtual bool Update();
 	virtual bool Draw();
 
@@ -44,12 +44,12 @@ public:
 	}
 	void SetType( int _aim_player )
 	{
-		_iType = _aim_player;
+		_iEnemyType = _aim_player;
 	}
 protected:
 	State   _stateAAA;
 
-	int    _iType;  // タイプ 0,追尾式 1,固定式
+	int    _iEnemyType;  // タイプ 0,追尾式 1,固定式
 	int    _iPossession;  // 対空砲パーツの所有数
 	float  _fAxialY;  // Y軸回転(度数法)	
 	float  _fAxialX;  // X軸回転(度数法)

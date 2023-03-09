@@ -10,6 +10,8 @@ namespace
 ClearObject::ClearObject( ApplicationBase& game,ModeMainGame& mode,float _radius )
 	:base( game,mode )
 {
+	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(GUNSHIP_ID));
+
 	Init();
 	radius = _radius;
 }
@@ -25,14 +27,9 @@ void ClearObject::Init()
 
 	_stateClearObject = State::NUM;
 
-	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( GUNSHIP_ID ) );
-
-	_vObjective = {_vPos.x ,_vPos.y, _vPos.z};
-	_vPos = {_vObjective.x - 5000.f, _vObjective.y, _vObjective.z};
-	_vEvent = _vPos;
 	_fScale = 3.f;
 	_collision._fRadius = 500.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 2.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 15.f;
 
 	_iLife = 100;
 
@@ -70,7 +67,7 @@ bool ClearObject::Update()
 			{
 				if ( IsHitObject( *obje ) )
 				{
-					if ( obje->_CT == 0 )
+					if (obje->_iType != 1)
 					{
 						_CT = 10;
 						_overlap = true;
@@ -175,7 +172,6 @@ void ClearObject::AddBullet()
 	auto bullet = std::make_shared<Bullet>( _game,_mode );
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
-	bullet->_fScale = 5.f;
 	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }

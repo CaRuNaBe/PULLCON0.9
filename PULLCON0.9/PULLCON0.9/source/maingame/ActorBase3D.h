@@ -134,6 +134,7 @@ public:
 	int   _iDamage;  // 与えるダメージ
 	int   _iPieces;  // 個数
 	int   _iPart;    // 各パーツの番号
+	int   _iType;    // 使用する弾の種類
 	float _fSpeed;   // 速度
 	float _fScale;   // 大きさ
 	float _fRotatX;  // X軸回転

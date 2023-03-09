@@ -30,7 +30,7 @@ void EnemyKobae::Init()
 	_fSpeed = 200.f;
 	_collision._vCenter = _vPos;
 	_collision._fRadius = 500.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 13.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
 
 	_iLife = 100;
@@ -94,7 +94,7 @@ bool EnemyKobae::Update()
 			{
 				if ( IsHitObject( *obje ) )
 				{
-					if ( obje->_CT == 0 )
+					if ( obje->_iType != 1 )
 					{
 						_CT = 10;
 						_overlap = true;
@@ -150,7 +150,7 @@ bool EnemyKobae::Update()
 	}
 
 	_collision._fRadius = 500.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 13.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
 	_vEvent = _vPos;
 	UpdateCollision();  // コリジョン更新
@@ -220,7 +220,6 @@ void EnemyKobae::AddBullet()
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
 	bullet->SetSpeed( speed );
-	bullet->_fScale = 5.f;
 	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }

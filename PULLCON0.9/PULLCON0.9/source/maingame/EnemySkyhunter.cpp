@@ -10,6 +10,8 @@ EnemySkyhunter::EnemySkyhunter( ApplicationBase& game,ModeMainGame& mode,EnemyCo
 	:base( game,mode )
 	,_column( skyhunter )
 {
+	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(SKYHUNTER_ID));
+
 	Init();
 }
 
@@ -22,17 +24,12 @@ void EnemySkyhunter::Init()
 {
 	base::Init();
 
-	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( SKYHUNTER_ID ) );
-
 	_stateEnemySkyhunter = State::WAIT;
 
-	_vPos = {0.f, 10000.f, 50000.f};
-	_vEvent = _vPos;
 	_fScale = 2.f;
 	_fSpeed = 150.f;
-	_collision._vCenter = _vPos;
 	_collision._fRadius = 500.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 5.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 
 	_iLife = 100;
 
@@ -77,7 +74,7 @@ bool EnemySkyhunter::Update()
 			{
 				if ( IsHitObject( *obje ) )
 				{
-					if ( obje->_CT == 0 )
+					if (obje->_iType != 1)
 					{
 						_CT = 10;
 						_overlap = true;
@@ -142,7 +139,7 @@ bool EnemySkyhunter::Update()
 	}
 
 	_collision._fRadius = 500.f * _fScale;
-	_collisionEvent._fRadius = _collision._fRadius * 13.f * _fScale;
+	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 	_vEvent = _vPos;
 	UpdateCollision();  // コリジョン更新
 
@@ -191,7 +188,6 @@ void EnemySkyhunter::AddBullet()
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
 	bullet->SetSpeed( speed );
-	bullet->_fScale = 5.f;
 	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }

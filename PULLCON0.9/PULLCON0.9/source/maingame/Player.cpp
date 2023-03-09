@@ -65,11 +65,6 @@ void Player::Init()
 
 	_collision._fRadius = 500.f * _fScale;
 
-	// ƒJƒƒ‰‚ÌÝ’è
-	_cam._vPos.x = _vPos.x;
-	_cam._vPos.y = _vPos.y + CAMERADEFAULT_POS_Y;
-	_cam._vPos.z = _vPos.z + CAMERADEFAULT_POS_XZ;
-	_cam._vTarget = {_vPos.x, _vPos.y + CAMERATARGET_Y, _vPos.z};
 	_cam._clipNear = 100.f;
 	_cam._clipFar = 30000000.f;
 }
@@ -139,7 +134,7 @@ bool Player::Update()
 			{
 				if ( IsHitObject( *obje ) )
 				{
-					if ( obje->_CT == 0 && !_isHit )
+					if (obje->_iType != 2 && !_isHit )
 					{
 						//_iLife -= obje->_iDamage;
 						_isHit = true;
@@ -608,7 +603,6 @@ void Player::AddBullet( vector4 pos )
 	_mode.AddEffectFirePlayer( pos );
 	bullet->SetDir( _vDir );
 	bullet->SetSpeed(_fSpeed * 2.f);
-	bullet->_fScale = 3.f;
-	bullet->_iType = 1;
+	bullet->_iType = 2;
 	_mode.GetObjectServer3D().Add( bullet );
 }
