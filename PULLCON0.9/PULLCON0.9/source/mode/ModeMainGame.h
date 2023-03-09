@@ -152,21 +152,22 @@ private:
 	float feedcount;
 	/** ステージ名 */
 	std::string  stage_name;
+	std::string game_over_name;
+	std::string game_clear_name;
 	/** ゲームスタート時間 */
 	int start_time;
 
 	bool is_notcant;
 	bool is_notcommand;
 	bool is_cannotdelete;
+	bool is_player_danger;
 
-	int _cg;
-	int _se;
 	float world_range_x;
 	float world_range_y;
 	float world_range_z;
 	int cg_outobarea[74];
 	int game_over_timer;
-	bool is_player_danger;
+
 protected:
 	ObjectServer<ActorBase3D> object_main_game;
 	GameServer<UIBase> ui_player;
