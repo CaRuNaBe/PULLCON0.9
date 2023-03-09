@@ -135,6 +135,8 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 	is_cannotdelete = false;
 	game_over_timer = 600;
 	is_player_danger = false;
+	game_over_name = nullptr;
+	game_clear_name = nullptr;
 	if ( !scripts_data->LoadJson( jsonpath,scriptsname,jsonname ) )
 	{
 		return;
@@ -634,7 +636,7 @@ bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& s
 {
 	if ( state != ScriptState::EDIT )
 	{
-		const size_t SCRIPTSIZE = 2;
+		const size_t SCRIPTSIZE = 4;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return false;
@@ -642,7 +644,8 @@ bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& s
 		/* 現在経過時間を得る */
 		start_time = GetNowCount();
 		state = ScriptState::GAME;
-		PlaySoundFile( "res/sound/stage1_2_3bgm/stage1_2_3bgm.wav",DX_PLAYTYPE_LOOP );
+
+		PlaySoundFile( ,DX_PLAYTYPE_LOOP );
 	}
 	else
 	{
@@ -650,6 +653,20 @@ bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& s
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return false;
+		}
+		std::array < std::string,3 > input_str =
+		{
+			"ゲームクリア画面のストーリーid(ファイル名/ストーリー名)",
+			"ゲームオーバー画面のストーリーid(ファイル名/ストーリー名)",
+			"bgmのミュージックid"
+		};
+
+		for ( int i = 0; i < input_str.size(); i++ )
+		{
+			if ( !CommandInputString( 0,0,input_str[i],scripts ) )
+			{
+				return false;
+			};
 		}
 	}
 	return true;
@@ -2067,7 +2084,7 @@ bool ModeMainGame::OnEditCommandDelete( const std::string& command )
 		auto stringnew = "番号%d_" + script;
 		DrawFormatString( x,y,GetColor( 255,255,255 ),stringnew.c_str(),i + 1 );
 		y += 18;
-		if ( i == 56|| i == 116|| i == 176 )
+		if ( i == 56 || i == 116 || i == 176 )
 		{
 			y = 0;
 			x += 600;
