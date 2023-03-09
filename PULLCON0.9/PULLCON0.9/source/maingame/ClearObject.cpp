@@ -31,7 +31,7 @@ void ClearObject::Init()
 	_collision._fRadius = 500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 15.f;
 
-	_iLife = 100;
+	_iLife = 10000;
 
 }
 
@@ -107,7 +107,7 @@ bool ClearObject::Update()
 	length3D = sqrt( sx * sx + sz * sz );
 	rad = atan2( sz,sx );
 	// Šp‘¬“x
-	rad += utility::TwoPi / (24.f * 60.f);
+	rad += utility::TwoPi / (12.f * 60.f);
 
 	_vPos.x = _vObjective.x + cos( rad ) * length3D;
 	_vPos.z = _vObjective.z + sin( rad ) * length3D;
