@@ -24,7 +24,7 @@ void Bullet::Init()
 {
 	base::Init();
 
-	_iDamage = 1;
+	_iDamage = 100;
 	_fSpeed = 800.f;
 
 	_collision._fRadius = 150.f;

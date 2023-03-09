@@ -50,7 +50,8 @@ void EnemyAAA::Init(int pile_num, vector4 _vPosi, float scale) {
 	_collisionEvent._fRadius = 600.f * _fScale;
 	_collisionSearch._fRadius = _collision._fRadius * 70.f;
 	_vDir = { 0.f, 0.f, -1.f };
-	_iLife = 50;
+	_iLife = 5000;
+	_iDamage = 500;
 
 	_iEnemyType = 0;
 	_iPossession = pile_num;
@@ -127,6 +128,9 @@ bool EnemyAAA::Update() {
 					_fire = obje->_fire;
 					_fSpeed = obje->_fSpeed;
 					_iType = 2;
+					if (AAA_ID == 2) {
+						_iDamage = 500 * 100;
+					}
 				}
 			}
 			if (obje->GetType() == Type::kEnemyAAA) {
@@ -355,6 +359,7 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 		bullet->SetPosition(vBullet);
 		bullet->SetDir(_vDir);
 		bullet->SetSpeed(_fSpeed);
+		bullet->_iDamage = _iDamage;
 		bullet->_iType = _iType;
 		bullet->_ST = 300;
 		_mode.GetObjectServer3D().Add(bullet);
@@ -395,6 +400,7 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 
 				bullet->SetDir(bullet_dir);
 				bullet->SetSpeed(_fSpeed);
+				bullet->_iDamage = _iDamage;
 				bullet->_iType = _iType;
 				bullet->_ST = 300;
 				bullet_dir_pol.PhiIncrement(PHI_ADD_NUM);

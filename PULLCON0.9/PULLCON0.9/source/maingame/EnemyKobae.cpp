@@ -27,13 +27,13 @@ void EnemyKobae::Init()
 
 	_vEvent = _vPos;
 	_fScale = 2.f;
-	_fSpeed = 200.f;
+	_fSpeed = 400.f;
 	_collision._vCenter = _vPos;
 	_collision._fRadius = 500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
 
-	_iLife = 100;
+	_iLife = 10000;
 
 }
 
