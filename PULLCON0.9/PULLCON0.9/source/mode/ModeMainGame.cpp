@@ -119,6 +119,8 @@ void ModeMainGame::Destroy()
 	crfo_list.clear();
 	stage_name.clear();
 	scripts_data = nullptr;
+	game_over_name = nullptr;
+	game_clear_name = nullptr;
 }
 
 void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std::string jsonname )
@@ -214,8 +216,8 @@ bool ModeMainGame::Update()
 						is_player_danger = false;
 						game_over_timer = 300;
 						GetLineNumber( stage_name,now_line );
-						auto story = std::make_shared<ModeSpeakScript>( _game,30,"gameover/gameover" );
-						_game.GetModeServer()->Add( story );
+						auto gameover = std::make_shared<ModeSpeakScript>( _game,30,game_over_name->c_str());
+						_game.GetModeServer()->Add( gameover );
 						gGlobal.IsNotEndSpeakScript();
 						state = ScriptState::STORY;
 					}
@@ -232,11 +234,23 @@ bool ModeMainGame::Update()
 			}
 			if ( gunship_num <= 0 )
 			{
-
 				StopSoundFile();
 
-				wait_count = 300;
-				state = ScriptState::TIME_WAIT;
+				for ( auto& object_3d : object_main_game.GetObjects() )
+				{
+					object_3d->SetUpdateSkip( true );
+				}
+				for ( auto&& se : gGlobal._se )
+				{
+					StopSoundMem( se.second );
+				}
+				cnt = 0;
+				is_player_danger = false;
+				game_over_timer = 300;
+				auto game_clear = std::make_shared<ModeSpeakScript>( _game,30,game_clear_name->c_str() );
+				_game.GetModeServer()->Add( game_clear );
+				gGlobal.IsNotEndSpeakScript();
+				state = ScriptState::STORY;
 			}
 
 			break;
@@ -645,7 +659,14 @@ bool ModeMainGame::OnCommandStart( unsigned int line,std::vector<std::string>& s
 		start_time = GetNowCount();
 		state = ScriptState::GAME;
 
-		PlaySoundFile( ,DX_PLAYTYPE_LOOP );
+		game_over_name = &scripts[1];
+		game_clear_name = &scripts[2];
+		int music_id = 0;
+		if ( !(string::ToInt( scripts[3],music_id )) )
+		{
+			return false;
+		}
+		PlaySoundFile( gGlobal.music_pass_date->GetScriptLine(music_id).c_str(),DX_PLAYTYPE_LOOP);
 	}
 	else
 	{
