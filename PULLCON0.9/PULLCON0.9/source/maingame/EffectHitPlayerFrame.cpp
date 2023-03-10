@@ -1,17 +1,17 @@
-#include "EffectFirePlayer.h"
-EffectFirePlayer::EffectFirePlayer( ApplicationBase& game,ModeMainGame& mode )
+#include "EffectHitPlayerFrame.h"
+EffectHitPlayerFrame::EffectHitPlayerFrame( ApplicationBase& game,ModeMainGame& mode )
 	:EffectBase( game,mode )
 {
 	Init();
 	// リソースサーバーからハンドルを取得する
-	ResourceServer::GetHandles( "effect_fire_player",_grAllHandles );
+	ResourceServer::GetHandles( "effect_hit_player_frame",_grAllHandles );
 	_animeMax = static_cast<int>(_grAllHandles.size());
 }
 
-EffectFirePlayer::~EffectFirePlayer()
+EffectHitPlayerFrame::~EffectHitPlayerFrame()
 {}
 
-void EffectFirePlayer::Init()
+void EffectHitPlayerFrame::Init()
 {
 	EffectBase::Init();
 
@@ -20,7 +20,7 @@ void EffectFirePlayer::Init()
 
 }
 
-bool EffectFirePlayer::Update()
+bool EffectHitPlayerFrame::Update()
 {
 	EffectBase::Update();
 
@@ -33,7 +33,7 @@ bool EffectFirePlayer::Update()
 	return true;
 }
 
-bool EffectFirePlayer::Draw()
+bool EffectHitPlayerFrame::Draw()
 {
 	EffectBase::Draw();
 	SetWriteZBuffer3D( false );

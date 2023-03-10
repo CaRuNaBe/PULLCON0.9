@@ -17,51 +17,6 @@
     <ClCompile Include="source\mode\ModeTitle.cpp">
       <Filter>mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\maingame\StageObject.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\SkySphere.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\Player.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\GameStage.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\EnemySkyhunter.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\EnemyKobae.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\EnemyColumn.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\EnemyAAA.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\ActorBase3D.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\ClearObject.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\Bullet.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\AreaSupply.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\AreaNoEntry.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\AreaEnemySpawn.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
-    <ClCompile Include="source\maingame\AreaCommunication.cpp">
-      <Filter>maingame</Filter>
-    </ClCompile>
     <ClCompile Include="source\title\ActorBase2d.cpp">
       <Filter>title</Filter>
     </ClCompile>
@@ -111,10 +66,74 @@
       <Filter>speakscript</Filter>
     </ClCompile>
     <ClCompile Include="source\maingame\EffectBase.cpp">
-      <Filter>maingame</Filter>
+      <Filter>maingame\effect</Filter>
     </ClCompile>
-    <ClCompile Include="source\maingame\EffectFirePlayer.cpp" />
-    <ClCompile Include="source\maingame\EffectDefeatEnemy.cpp" />
+    <ClCompile Include="source\maingame\EffectDeathObject.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectFirePlayer.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectHitPlayerFrame.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectSpawnAmmo.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectDestroyAmmo.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemySkyhunter.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyKobae.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyColumn.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyAAA.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\ClearObject.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\GameStage.cpp">
+      <Filter>maingame\stageobject</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\SkySphere.cpp">
+      <Filter>maingame\stageobject</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\StageObject.cpp">
+      <Filter>maingame\stageobject</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaCommunication.cpp">
+      <Filter>maingame\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaEnemySpawn.cpp">
+      <Filter>maingame\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaNoEntry.cpp">
+      <Filter>maingame\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaSupply.cpp">
+      <Filter>maingame\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\ActorBase3D.cpp">
+      <Filter>maingame\base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\Player.cpp">
+      <Filter>maingame\player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\Bullet.cpp">
+      <Filter>maingame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectHitBlackSmoke.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectFireGunship.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationGlobal.h" />
@@ -132,51 +151,6 @@
     </ClInclude>
     <ClInclude Include="source\mode\ModeTitle.h">
       <Filter>mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\StageObject.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\SkySphere.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\Player.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\GameStage.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\EnemySkyhunter.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\EnemyKobae.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\EnemyColumn.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\EnemyAAA.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\ActorBase3D.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\ClearObject.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\Bullet.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\AreaSupply.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\AreaNoEntry.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\AreaEnemySpawn.h">
-      <Filter>maingame</Filter>
-    </ClInclude>
-    <ClInclude Include="source\maingame\AreaCommunication.h">
-      <Filter>maingame</Filter>
     </ClInclude>
     <ClInclude Include="source\title\ActorBase2d.h">
       <Filter>title</Filter>
@@ -227,10 +201,74 @@
       <Filter>speakscript</Filter>
     </ClInclude>
     <ClInclude Include="source\maingame\EffectBase.h">
-      <Filter>maingame</Filter>
+      <Filter>maingame\effect</Filter>
     </ClInclude>
-    <ClInclude Include="source\maingame\EffectFirePlayer.h" />
-    <ClInclude Include="source\maingame\EffectDefeatEnemy.h" />
+    <ClInclude Include="source\maingame\EffectDeathObject.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectFirePlayer.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectHitPlayerFrame.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectSpawnAmmo.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectDestroyAmmo.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemySkyhunter.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyKobae.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyColumn.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyAAA.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\ClearObject.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\GameStage.h">
+      <Filter>maingame\stageobject</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\SkySphere.h">
+      <Filter>maingame\stageobject</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\StageObject.h">
+      <Filter>maingame\stageobject</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaCommunication.h">
+      <Filter>maingame\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaEnemySpawn.h">
+      <Filter>maingame\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaNoEntry.h">
+      <Filter>maingame\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaSupply.h">
+      <Filter>maingame\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\ActorBase3D.h">
+      <Filter>maingame\base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\Player.h">
+      <Filter>maingame\player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\Bullet.h">
+      <Filter>maingame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectHitBlackSmoke.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectFireGunship.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="mode">
@@ -247,6 +285,27 @@
     </Filter>
     <Filter Include="speakscript">
       <UniqueIdentifier>{09073051-26f9-427e-b6cc-72392150c292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\effect">
+      <UniqueIdentifier>{fbfb6d93-ff10-45e7-9ef8-8a76d6c7edb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\enemy">
+      <UniqueIdentifier>{1c13089f-d0ea-4632-82d8-40cf5ff624b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\stageobject">
+      <UniqueIdentifier>{60d8fd89-5f54-4fab-a65a-794374b3b1fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\area">
+      <UniqueIdentifier>{4c76b2a7-e728-47cd-b063-b11201e93e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\base">
+      <UniqueIdentifier>{ae07e5ca-a592-4e03-9b25-c17e27238bfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\player">
+      <UniqueIdentifier>{9aeceb63-bd17-4a02-886d-8c251a45f0c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\bullet">
+      <UniqueIdentifier>{0791e436-46f0-4dcf-b134-fc64703cb5ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

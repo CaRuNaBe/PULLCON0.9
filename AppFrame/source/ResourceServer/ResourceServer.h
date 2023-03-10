@@ -33,7 +33,7 @@ public:
 	static void	ClearGraph();
 
 	//画像一括読み込み
-	// div_graph_map　DivGraphMapテーブル
+	// div_graph_map DivGraphMapテーブル
 	static void LoadTextures( const DivGraphMap& div_graph_map );
 
 	static int LoadGraph( std::string FileName );

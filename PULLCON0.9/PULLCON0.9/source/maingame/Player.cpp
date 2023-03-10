@@ -6,7 +6,7 @@
 
 namespace
 {
-	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置　プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
+	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
 	const float CAMERADEFAULT_POS_Y = 2500.f;   // プレイヤーを原点としたときのカメラのY座標
 	const float CAMERADEFAULT_POS_XZ = -4000.f;   // プレイヤーを原点としたときのカメラのXZ座標のベクトルの長さ
 	const float PLAYERLENGTH = 2000.f;   // プレイヤーの奥行きの長さ

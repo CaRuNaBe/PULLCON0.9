@@ -153,7 +153,7 @@ bool AreaEnemySpawn::Draw()
 
 void AreaEnemySpawn::Damage()
 {
-	_mode.AddEffectDefeatEnemy( _vPos );
+	_mode.AddEffectDeathObject( _vPos );
 	_mode.GetObjectServer3D().Del( *this );
 }
 

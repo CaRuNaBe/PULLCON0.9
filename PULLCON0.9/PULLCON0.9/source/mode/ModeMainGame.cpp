@@ -29,8 +29,14 @@
 #include "../ui/UICursor.h"
 #include "../ui/UIPullGage.h"
 #include "ModeSpeakScript.h"
-#include "../maingame/EffectDefeatEnemy.h"
+
+#include "../maingame/EffectDeathObject.h"
+#include "../maingame/EffectDestroyAmmo.h"
+#include "../maingame/EffectFireGunship.h"
 #include "../maingame/EffectFirePlayer.h"
+#include "../maingame/EffectHitBlackSmoke.h"
+#include "../maingame/EffectHitPlayerFrame.h"
+#include "../maingame/EffectSpawnAmmo.h"
 namespace
 {
 	/** ゲームコマンド */
@@ -57,7 +63,7 @@ namespace
 	const std::string COMMAND_SUPPLY = "Supply";//回復エリアの生成
 	const std::string COMMAND_AREACOMMUNICATION = "Communication";//会話エリア発生エリアの設定
 	const std::string COMMAND_NOENTRY = "NoEntry";//侵入不能エリア生成
-
+	
 
 
 	//編集コマンド
@@ -2211,9 +2217,37 @@ bool ModeMainGame::CommandInputString( int posix,int posiy,std::string inputname
 	return result;
 }
 
-void ModeMainGame::AddEffectDefeatEnemy( const math::vector4& pos )
+void ModeMainGame::AddEffectHitPlayerFrame( const math::vector4& pos )
 {
-	auto effect = std::make_shared<EffectDefeatEnemy>( _game,*this );
+	auto effect = std::make_shared<EffectHitPlayerFrame>( _game,*this );
+	effect->SetPosition( pos );
+	object_main_game.Add( effect );
+};
+
+void ModeMainGame::AddEffectSpawnAmmo( const math::vector4& pos )
+{
+	auto effect = std::make_shared<EffectSpawnAmmo>( _game,*this );
+	effect->SetPosition( pos );
+	object_main_game.Add( effect );
+};
+
+void ModeMainGame::AddEffectDestroyAmmo( const math::vector4& pos )
+{
+	auto effect = std::make_shared<EffectDestroyAmmo>( _game,*this );
+	effect->SetPosition( pos );
+	object_main_game.Add( effect );
+};
+
+void ModeMainGame::AddEffectHitBlackSmoke( const math::vector4& pos )
+{
+	auto effect = std::make_shared<EffectHitBlackSmoke>( _game,*this );
+	effect->SetPosition( pos );
+	object_main_game.Add( effect );
+};
+
+void ModeMainGame::AddEffectDeathObject( const math::vector4& pos )
+{
+	auto effect = std::make_shared<EffectDeathObject>( _game,*this );
 	effect->SetPosition( pos );
 	object_main_game.Add( effect );
 };
@@ -2221,6 +2255,13 @@ void ModeMainGame::AddEffectDefeatEnemy( const math::vector4& pos )
 void ModeMainGame::AddEffectFirePlayer( const math::vector4& pos )
 {
 	auto effect = std::make_shared<EffectFirePlayer>( _game,*this );
+	effect->SetPosition( pos );
+	object_main_game.Add( effect );
+};
+
+void ModeMainGame::AddEffectFireGunship( const math::vector4& pos )
+{
+	auto effect = std::make_shared<EffectFireGunship>( _game,*this );
 	effect->SetPosition( pos );
 	object_main_game.Add( effect );
 };

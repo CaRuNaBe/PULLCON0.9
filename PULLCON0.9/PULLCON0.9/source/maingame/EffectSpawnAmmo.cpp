@@ -1,17 +1,17 @@
-#include "EffectFirePlayer.h"
-EffectFirePlayer::EffectFirePlayer( ApplicationBase& game,ModeMainGame& mode )
+#include "EffectSpawnAmmo.h"
+EffectSpawnAmmo::EffectSpawnAmmo( ApplicationBase& game,ModeMainGame& mode )
 	:EffectBase( game,mode )
 {
 	Init();
 	// リソースサーバーからハンドルを取得する
-	ResourceServer::GetHandles( "effect_fire_player",_grAllHandles );
+	ResourceServer::GetHandles( "effect_spawn_ammo",_grAllHandles );
 	_animeMax = static_cast<int>(_grAllHandles.size());
 }
 
-EffectFirePlayer::~EffectFirePlayer()
+EffectSpawnAmmo::~EffectSpawnAmmo()
 {}
 
-void EffectFirePlayer::Init()
+void EffectSpawnAmmo::Init()
 {
 	EffectBase::Init();
 
@@ -20,7 +20,7 @@ void EffectFirePlayer::Init()
 
 }
 
-bool EffectFirePlayer::Update()
+bool EffectSpawnAmmo::Update()
 {
 	EffectBase::Update();
 
@@ -33,7 +33,7 @@ bool EffectFirePlayer::Update()
 	return true;
 }
 
-bool EffectFirePlayer::Draw()
+bool EffectSpawnAmmo::Draw()
 {
 	EffectBase::Draw();
 	SetWriteZBuffer3D( false );

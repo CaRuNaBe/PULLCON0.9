@@ -1,17 +1,17 @@
-#include "EffectFirePlayer.h"
-EffectFirePlayer::EffectFirePlayer( ApplicationBase& game,ModeMainGame& mode )
+#include "EffectHitBlackSmoke.h"
+EffectHitBlackSmoke::EffectHitBlackSmoke( ApplicationBase& game,ModeMainGame& mode )
 	:EffectBase( game,mode )
 {
 	Init();
 	// リソースサーバーからハンドルを取得する
-	ResourceServer::GetHandles( "effect_fire_player",_grAllHandles );
+	ResourceServer::GetHandles( "effect_hit_black_smoke",_grAllHandles );
 	_animeMax = static_cast<int>(_grAllHandles.size());
 }
 
-EffectFirePlayer::~EffectFirePlayer()
+EffectHitBlackSmoke::~EffectHitBlackSmoke()
 {}
 
-void EffectFirePlayer::Init()
+void EffectHitBlackSmoke::Init()
 {
 	EffectBase::Init();
 
@@ -20,7 +20,7 @@ void EffectFirePlayer::Init()
 
 }
 
-bool EffectFirePlayer::Update()
+bool EffectHitBlackSmoke::Update()
 {
 	EffectBase::Update();
 
@@ -33,7 +33,7 @@ bool EffectFirePlayer::Update()
 	return true;
 }
 
-bool EffectFirePlayer::Draw()
+bool EffectHitBlackSmoke::Draw()
 {
 	EffectBase::Draw();
 	SetWriteZBuffer3D( false );

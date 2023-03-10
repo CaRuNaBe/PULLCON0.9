@@ -134,7 +134,7 @@ bool ClearObject::Update()
 void ClearObject::Damage()
 {
 	PlaySoundMem( gGlobal._se["gunship_death"],DX_PLAYTYPE_BACK );
-	_mode.AddEffectDefeatEnemy( _vPos );
+	_mode.AddEffectDeathObject( _vPos );
 	_mode.GetObjectServer3D().Del( *this );
 }
 

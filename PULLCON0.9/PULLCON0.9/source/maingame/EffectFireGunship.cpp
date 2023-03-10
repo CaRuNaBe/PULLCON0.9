@@ -1,17 +1,17 @@
-#include "EffectDefeatEnemy.h"
-EffectDefeatEnemy::EffectDefeatEnemy( ApplicationBase& game,ModeMainGame& mode )
+#include "EffectFireGunship.h"
+EffectFireGunship::EffectFireGunship( ApplicationBase& game,ModeMainGame& mode )
 	:EffectBase( game,mode )
 {
 	Init();
 	// リソースサーバーからハンドルを取得する
-	ResourceServer::GetHandles( "effect_defeat_enemy",_grAllHandles );
+	ResourceServer::GetHandles( "effect_fire_gunship",_grAllHandles );
 	_animeMax = static_cast<int>(_grAllHandles.size());
 }
 
-EffectDefeatEnemy::~EffectDefeatEnemy()
+EffectFireGunship::~EffectFireGunship()
 {}
 
-void EffectDefeatEnemy::Init()
+void EffectFireGunship::Init()
 {
 	EffectBase::Init();
 
@@ -20,7 +20,7 @@ void EffectDefeatEnemy::Init()
 
 }
 
-bool EffectDefeatEnemy::Update()
+bool EffectFireGunship::Update()
 {
 	EffectBase::Update();
 
@@ -32,11 +32,13 @@ bool EffectDefeatEnemy::Update()
 	return true;
 }
 
-bool EffectDefeatEnemy::Draw()
+bool EffectFireGunship::Draw()
 {
 	EffectBase::Draw();
-
+		// Ｚバッファへの書き込みを有効にする
+	SetWriteZBuffer3D( false );
 	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,40000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
-
+		// Ｚバッファへの書き込みを有効にする
+	SetWriteZBuffer3D( true );
 	return true;
 }
