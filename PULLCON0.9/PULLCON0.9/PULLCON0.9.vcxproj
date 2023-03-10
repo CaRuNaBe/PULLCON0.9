@@ -163,11 +163,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\maingame\EffectDefeatEnemy.cpp" />
+    <ClCompile Include="source\maingame\EffectFireGunship.cpp" />
+    <ClCompile Include="source\maingame\EffectHitBlackSmoke.cpp" />
+    <ClCompile Include="source\maingame\EffectSpawnAmmo.cpp" />
+    <ClCompile Include="source\maingame\EffectHitPlayerFrame.cpp" />
+    <ClCompile Include="source\maingame\EffectDeathObject.cpp" />
     <ClCompile Include="source\maingame\EffectFirePlayer.cpp" />
     <ClCompile Include="source\maingame\EffectBase.cpp" />
     <ClCompile Include="source\ApplicationGlobal.cpp" />
     <ClCompile Include="source\maingame\ActorBase3D.cpp" />
+    <ClCompile Include="source\maingame\EffectDestroyAmmo.cpp" />
     <ClCompile Include="source\ModeTest.cpp" />
     <ClCompile Include="source\ObjectBase.cpp" />
     <ClCompile Include="source\title\ActorBase2d.cpp" />
@@ -207,11 +212,16 @@
     <ClCompile Include="source\ui\UICursor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\maingame\EffectDefeatEnemy.h" />
+    <ClInclude Include="source\maingame\EffectFireGunship.h" />
+    <ClInclude Include="source\maingame\EffectHitBlackSmoke.h" />
+    <ClInclude Include="source\maingame\EffectSpawnAmmo.h" />
+    <ClInclude Include="source\maingame\EffectHitPlayerFrame.h" />
+    <ClInclude Include="source\maingame\EffectDeathObject.h" />
     <ClInclude Include="source\maingame\EffectFirePlayer.h" />
     <ClInclude Include="source\maingame\EffectBase.h" />
     <ClInclude Include="source\ApplicationGlobal.h" />
     <ClInclude Include="source\maingame\ActorBase3D.h" />
+    <ClInclude Include="source\maingame\EffectDestroyAmmo.h" />
     <ClInclude Include="source\ModeTest.h" />
     <ClInclude Include="source\ObjectBase.h" />
     <ClInclude Include="source\title\ActorBase2d.h" />

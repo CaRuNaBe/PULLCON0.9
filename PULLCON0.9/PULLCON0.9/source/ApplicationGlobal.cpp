@@ -16,8 +16,13 @@ namespace
 }
 	// 使用する画像ファイルのテーブル
 const ResourceServer::DivGraphMap usedInGame{
+	{"effect_hit_player_frame",   {"res/2D_image/effect/fx_FrameAmmo.png",  8, 2, 512, 512}},
+	{"effect_spawn_ammo",   {"res/2D_image/effect/fx_SpawnAmmo.png",  3, 1, 512, 512}},
+	{"effect_destroy_ammo",   {"res/2D_image/effect/fx_DestroyAmmo.png",  6, 2, 512, 512}},
+	{"effect_hit_black_smoke",  {"res/2D_image/effect/fx_BlackSmoke.png", 3, 6, 512, 512}},
+	{"effect_death_object",   {"res/2D_image/effect/fx_Boom.png",  8, 5, 512, 512}},
 	{"effect_fire_player",  {"res/2D_image/effect/fx_PlayerDefaultFire.png", 3, 13, 512, 512}},
-	{"effect_defeat_enemy",   {"res/2D_image/effect/fx_Boom.png",  8, 5, 512, 512}},
+	{"effect_fire_gunship",  {"res/2D_image/effect/fx_GunShipFire.png", 2, 2, 512, 512}},
 };
 
 ApplicationGlobal::ApplicationGlobal()
