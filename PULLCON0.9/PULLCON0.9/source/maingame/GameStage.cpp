@@ -5,7 +5,7 @@ GameStage::GameStage( ApplicationBase& game,ModeMainGame& mode,int stageid )
 {
 	Init();
 	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( stageid ).c_str() );
-	MV1SetupCollInfo(_handle, 0, 16, 16, 16);
+	MV1SetupCollInfo(_handle, -1, 16, 16, 16);
 }
 
 GameStage::~GameStage()

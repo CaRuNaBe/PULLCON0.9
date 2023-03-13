@@ -159,7 +159,7 @@ bool Player::Update()
 			{
 				auto stage = std::static_pointer_cast<GameStage>(obje);
 				_handleStage = stage->GetHandle();
-				MV1RefreshCollInfo( _handleStage,0 );
+				MV1RefreshCollInfo( _handleStage,-1 );
 			}
 		}
 	}
@@ -245,8 +245,8 @@ bool Player::Update()
 
 		MV1_COLL_RESULT_POLY hitPoly;
 		vector4 posStart = _vPos + dir;
-		vector4 posEnd = {posStart.x, posStart.y - 1000.f, posStart.z};
-		hitPoly = MV1CollCheck_Line( _handleStage,0,ToDX( posStart ),ToDX( posEnd ) );
+		vector4 posEnd = {posStart.x, posStart.y - 3000.f, posStart.z};
+		hitPoly = MV1CollCheck_Line( _handleStage,-1,ToDX( posStart ),ToDX( posEnd ) );
 		if ( hitPoly.HitFlag )
 		{
 			dir += ToMath( hitPoly.HitPosition ) - posEnd;
