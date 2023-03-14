@@ -93,10 +93,12 @@ bool ClearObject::Update()
 	_vDir.y = cos( theta );
 	_vDir.Normalized();
 
+	vector4 effectPos = _vPos + _vDir * _collision._fRadius;
 	// ˆê’èŠÔŠu‚ÅŒ‚‚Â
 	if ( _fire && _CT == 0 )
 	{
 		AddBullet();
+		_mode.AddEffectFireGunship(effectPos);
 		SeGunShotPlay();
 		_CT = 5;
 	}
@@ -169,9 +171,11 @@ bool ClearObject::Draw()
 void ClearObject::AddBullet()
 {
 	vector4 vBullet = {_vPos.x, _vPos.y - 500.f, _vPos.z};
+	float speed = 1600.f;
 	auto bullet = std::make_shared<Bullet>( _game,_mode );
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
+	bullet->SetSpeed(speed);
 	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }

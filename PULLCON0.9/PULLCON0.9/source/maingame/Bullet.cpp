@@ -28,7 +28,6 @@ void Bullet::Init()
 
 	_collision._fRadius = 150.f;
 
-	_CT = 10;
 	_ST = 90;
 }
 
@@ -68,6 +67,7 @@ bool Bullet::Update()
 
 void Bullet::Damage()
 {
+	_mode.AddEffectDestroyAmmo(_vPos);
 	_mode.GetObjectServer3D().Del( *this );
 }
 

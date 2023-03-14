@@ -136,8 +136,9 @@ bool Player::Update()
 				{
 					if (obje->_iType != 2 && !_isHit )
 					{
+						_mode.AddEffectHitPlayerFrame(_vPos);
 						_iLife -= obje->_iDamage;
-						obje->_iDamage;
+						obje->Damage();
 						_isHit = true;
 						_ST = 20;
 					}
@@ -159,7 +160,7 @@ bool Player::Update()
 			{
 				auto stage = std::static_pointer_cast<GameStage>(obje);
 				_handleStage = stage->GetHandle();
-				MV1RefreshCollInfo( _handleStage,0 );
+				MV1RefreshCollInfo( _handleStage,-1 );
 			}
 		}
 	}
@@ -178,15 +179,6 @@ bool Player::Update()
 				_fSpeed = speed;
 			}
 			_finish = false;
-		}
-		// 燃料消費
-		if ( _cnt % 60 == 0 )
-		{
-			--_iFuel;
-			if ( _iFuel < 0 )
-			{
-				_iFuel = 0;
-			}
 		}
 
 		// スティック押し込みで速度操作
@@ -245,8 +237,8 @@ bool Player::Update()
 
 		MV1_COLL_RESULT_POLY hitPoly;
 		vector4 posStart = _vPos + dir;
-		vector4 posEnd = {posStart.x, posStart.y - 1000.f, posStart.z};
-		hitPoly = MV1CollCheck_Line( _handleStage,0,ToDX( posStart ),ToDX( posEnd ) );
+		vector4 posEnd = {posStart.x, posStart.y - 3000.f, posStart.z};
+		hitPoly = MV1CollCheck_Line( _handleStage,-1,ToDX( posStart ),ToDX( posEnd ) );
 		if ( hitPoly.HitFlag )
 		{
 			dir += ToMath( hitPoly.HitPosition ) - posEnd;
@@ -401,6 +393,18 @@ bool Player::Update()
 	_collision._fRadius = 500.f * _fScale;
 	UpdateCollision();   // コリジョン更新
 
+	// 燃料消費
+	if (_cnt % 60 == 0) {
+		--_iFuel;
+		if (_iFuel < 0) {
+			_iFuel = 0;
+		}
+	}
+	if (_iLife < LIFEMAX / 3) {
+		if (_cnt % 20 == 0) {
+			_mode.AddEffectHitBlackSmoke(_vPos);
+		}
+	}
 	if ( _ST == 0 )
 	{
 		_isHit = false;
@@ -604,7 +608,7 @@ void Player::AddBullet( vector4 pos )
 	_mode.AddEffectFirePlayer( pos );
 	bullet->SetDir( _vDir );
 	bullet->SetSpeed(_fSpeed * 2.f);
-	bullet->_iDamage = 1;
+	bullet->_iDamage = 10000;
 	bullet->_iType = 2;
 	_mode.GetObjectServer3D().Add( bullet );
 }

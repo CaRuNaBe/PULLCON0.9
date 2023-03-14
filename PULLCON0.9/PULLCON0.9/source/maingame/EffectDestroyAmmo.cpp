@@ -22,7 +22,7 @@ void EffectDestroyAmmo::Init()
 
 bool EffectDestroyAmmo::Update()
 {
-	EffectDestroyAmmo::Update();
+	EffectBase::Update();
 
 	if ( _animeCnt == _animeMax )
 	{
@@ -37,7 +37,7 @@ bool EffectDestroyAmmo::Draw()
 	EffectBase::Draw();
 		// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D( false );
-	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,40000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
+	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,4000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
 		// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D( true );
 	return true;
