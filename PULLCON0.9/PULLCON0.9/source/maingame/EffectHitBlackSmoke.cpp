@@ -23,13 +23,14 @@ void EffectHitBlackSmoke::Init()
 bool EffectHitBlackSmoke::Update()
 {
 	EffectBase::Update();
-
+	if (_cnt % 2 == 0) {
+		_animeCnt++;
+	}
+	_vPos.y += 50.f;
 	if ( _animeCnt == _animeMax )
 	{
 		_mode.GetObjectServer3D().Del( *this );
 	}
-
-	_animeCnt++;
 	return true;
 }
 

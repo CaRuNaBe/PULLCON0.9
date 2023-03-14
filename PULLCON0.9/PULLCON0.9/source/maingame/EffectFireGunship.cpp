@@ -37,7 +37,7 @@ bool EffectFireGunship::Draw()
 	EffectBase::Draw();
 		// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D( false );
-	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,40000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
+	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,8000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
 		// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D( true );
 	return true;
