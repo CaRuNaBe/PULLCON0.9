@@ -1,10 +1,9 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase2d.h"
+#include "ActorTitle.h"
 #include "../mode/ModeTitle.h"
-class EndLogo:public ActorBase2d
+class EndLogo:public ActorTitle
 {
-	using Actor2d = ActorBase2d;
 		/**
 	 * オブジェクトの状態.
 	 */
@@ -14,14 +13,14 @@ class EndLogo:public ActorBase2d
 		PULLED//引っ張られている
 	};
 public:
-	EndLogo( ApplicationBase& game,ModeTitle& mode );
+	EndLogo( ApplicationBase& game,int layer,ModeTitle& mode );
 	~EndLogo();
 	virtual Type	GetType()//自分が何者か
 	{
 		return Type::KENDLOGO;
 	}
 
-	void	Init();//初期化
+	void	Initialize();//初期化
 	bool	Update();
 	bool	Draw();
 

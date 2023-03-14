@@ -1,20 +1,20 @@
 #include "TitleLogo.h"
 #include "Dxlib.h"
-TitleLogo::TitleLogo( ApplicationBase& game,ModeTitle& mode )
-	: ActorBase2d( game,mode )
+TitleLogo::TitleLogo( ApplicationBase& game,int layer,ModeTitle& mode )
+	: ActorTitle( game,layer,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/2D_image/title/ui_Title_Logo.png" );
 
-	Init();
+	Initialize();
 }
 
 TitleLogo::~TitleLogo()
 {
 }
 
-void TitleLogo::Init()
+void TitleLogo::Initialize()
 {
-	ActorBase2d::Init();
+	ActorTitle::Initialize();
 
 	_pos = {400.0f,100.0f};
 	_size.x = 1202.0f;
@@ -24,12 +24,12 @@ void TitleLogo::Init()
 	_colSize.x = 1202.0f;
 	_colSize.y = 300.0f;
 	_spd = 0;
-	_easing = Easing::GetMode( "Linear" );
+	_easing = math::Easing::GetMode( "Linear" );
 }
 
 bool TitleLogo::Update()
 {
-	ActorBase2d::Update();
+	ActorTitle::Update();
 	float start = 100.f;
 	float stop = 300.f;
 
@@ -44,7 +44,7 @@ bool TitleLogo::Update()
 
 bool TitleLogo::Draw()
 {
-	ActorBase2d::Draw();
+	ActorTitle::Draw();
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	DrawCollision();	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	return true;

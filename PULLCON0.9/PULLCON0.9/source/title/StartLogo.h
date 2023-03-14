@@ -7,11 +7,10 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
-#include "ActorBase2d.h"
+#include "ActorTitle.h"
 #include "../mode/ModeTitle.h"
-class StartLogo:public ActorBase2d
+class StartLogo:public ActorTitle
 {
-	using Actor2d = ActorBase2d;
 	/**
 	 * オブジェクトの状態.
 	 */
@@ -21,14 +20,14 @@ class StartLogo:public ActorBase2d
 		PULLED//引っ張られている
 	};
 public:
-	StartLogo( ApplicationBase& game,ModeTitle& mode );
+	StartLogo( ApplicationBase& game,int layer,ModeTitle& mode );
 	~StartLogo();
 	virtual Type	GetType()//自分が何者か
 	{
 		return Type::KGAMESTARTLOGO;
 	}
 
-	void	Init();//初期化
+	void	Initialize();//初期化
 	bool	Update();
 	bool	Draw();
 

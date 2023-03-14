@@ -1,18 +1,17 @@
-#include "ActorBase2d.h"
+#include "ActorTitle.h"
 
-ActorBase2d::ActorBase2d( ApplicationBase& game,ModeTitle& mode )
-	:base( game )
+ActorTitle::ActorTitle( ApplicationBase& game,int layer,ModeTitle& mode )
+	:GameBase( game,layer )
 	,_mode( mode )
 {
-	Init();
+	Initialize();
 }
 
-ActorBase2d::~ActorBase2d()
+ActorTitle::~ActorTitle()
 {}
 
-void ActorBase2d::Init()
+void ActorTitle::Initialize()
 {
-	base::Init();
 	// èÓïÒÇÃèâä˙âª
 	_pos = {0,0};
 	_size = {0,0};
@@ -22,20 +21,19 @@ void ActorBase2d::Init()
 	_spd = 0.0f;
 }
 
-bool ActorBase2d::Update()
+bool ActorTitle::Update()
 {
-	base::Update();
 	_cnt++;
 	return true;
 }
 
-void	ActorBase2d::UpdateCollision()
+void ActorTitle::UpdateCollision()
 {
 	_collision.min = _pos + _colPos;
 	_collision.max = _pos + _colPos + _colSize;
 }
 
-bool	ActorBase2d::IsHitObject( ActorBase2d& object )
+ bool  ActorTitle::IsHitObject(  ActorTitle&  object )
 {
 	// AABBÇ≈ìñÇΩÇËîªíË
 	if ( Intersect( object.GetCollision(),_collision ) )
@@ -45,16 +43,19 @@ bool	ActorBase2d::IsHitObject( ActorBase2d& object )
 	return false;
 }
 
-bool ActorBase2d::Draw()
+bool ActorTitle::Draw()
 {
-	base::Draw();
 	return true;
 }
 
-void ActorBase2d::DrawCollision()
+bool ActorTitle::DebugDraw()
 {
-#if _DEBUG
+	DrawCollision();
+	return true;
+}
+
+void ActorTitle::DrawCollision()
+{
 	_collision.Draw( rand() % 256,rand() % 256,rand() % 256 );
-#endif
 }
 

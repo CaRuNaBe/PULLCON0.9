@@ -2,8 +2,8 @@
 #include "TitlePlayer.h"
 
 
-TitlePlayer::TitlePlayer( ApplicationBase& game,ModeTitle& mode )
-	: ActorBase2d( game,mode )
+TitlePlayer::TitlePlayer( ApplicationBase& game,int layer,ModeTitle& mode )
+	: ActorTitle( game,layer,mode )
 {
 	cg_player = ResourceServer::LoadGraph( "res/2D_image/title/cg_Heli.png" );
 	cg_ui[0] = ResourceServer::LoadGraph( "res/2D_image/title/ui_push_guide_1.png" );
@@ -11,19 +11,19 @@ TitlePlayer::TitlePlayer( ApplicationBase& game,ModeTitle& mode )
 	cg_ui[2] = ResourceServer::LoadGraph( "res/2D_image/title/ui_push_guide_3.png" );
 	cg_ui[3] = ResourceServer::LoadGraph( "res/2D_image/title/ui_push_guide_3.png" );
 
-	Init();
+	Initialize();
 }
 
 TitlePlayer::~TitlePlayer()
 {
 }
 
-void TitlePlayer::Init()
+void TitlePlayer::Initialize()
 {
-	ActorBase2d::Init();
+	ActorTitle::Initialize();
 
 	// プレイヤー情報の初期化
-	_pos = {static_cast<float>(utility::get_random( 0,1920 )),static_cast<float>(utility::get_random( 0,1000 ))};//ランダムの位置にスポーン
+	_pos = {static_cast<float>(math::utility::get_random( 0,1920 )),static_cast<float>(math::utility::get_random( 0,1000 ))};//ランダムの位置にスポーン
 	_size = {180.0f,175.0f};//オブジェクトのサイズ定義
 	_colPos.x = 0.0f;
 	_colPos.y = 0.0f;
@@ -31,7 +31,7 @@ void TitlePlayer::Init()
 	_colSize.y = 175.0f;
 	_spd = 8;
 	waitTime = 0;
-	auto juge = static_cast<int>(utility::get_random( 0,1 ));//ランダムの値を取得
+	auto juge = static_cast<int>(math::utility::get_random( 0,1 ));//ランダムの値を取得
 	if ( juge % 2 == 0 )
 	{
 		isRight = true;//2で割り切れたら右向き
@@ -46,10 +46,10 @@ void TitlePlayer::Init()
 
 bool TitlePlayer::Update()
 {
-	ActorBase2d::Update();
+	ActorTitle::Update();
 	// キー入力を判定して、主人公を移動させる
 	// Vector2を利用して斜め移動でも問題ないように
-	Vector2 dir = {_game.Getinput().GetLstickX(),-(_game.Getinput().GetLstickY())};		// 方向を指定
+	math::Vector2 dir = {_game.Getinput().GetLstickX(),-(_game.Getinput().GetLstickY())};		// 方向を指定
 
 	if ( dir.x != 0 || dir.y != 0 )
 	{
@@ -89,7 +89,7 @@ bool TitlePlayer::Update()
 
 	for ( auto&& obje : _mode.Get2DobjectServer().GetObjects() )
 	{
-		if ( (obje->GetType() == ActorBase2d::Type::KGAMESTARTLOGO) || (obje->GetType() == ActorBase2d::Type::KCREDITLOGO) || (obje->GetType() == ActorBase2d::Type::KENDLOGO) )
+		if ( (obje->GetType() == ActorTitle::Type::KGAMESTARTLOGO) || (obje->GetType() == ActorTitle::Type::KCREDITLOGO) || (obje->GetType() == ActorTitle::Type::KENDLOGO) )
 		{
 			if ( IsHitObject( *obje ) )
 			{
@@ -147,7 +147,7 @@ bool TitlePlayer::Update()
 
 bool TitlePlayer::Draw()
 {
-	ActorBase2d::Draw();
+	ActorTitle::Draw();
 	if ( !isRight )
 	{
 		DrawGraph( _pos.IntX(),_pos.IntY(),cg_player,TRUE );
@@ -159,8 +159,8 @@ bool TitlePlayer::Draw()
 
 	if ( isUidraw )
 	{
-		const Vector2 UISIZE = {150,66};
-		Vector2 uiposi = {(_pos.x) - (UISIZE.x),_pos.y};
+		const math::Vector2 UISIZE = {150,66};
+		math::Vector2 uiposi = {(_pos.x) - (UISIZE.x),_pos.y};
 
 		if ( uiposi.x < 0.0f )
 		{

@@ -7,20 +7,19 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
-#include "ActorBase2d.h"
+#include "ActorTitle.h"
 #include "../mode/ModeTitle.h"
-class TitleLogo:public ActorBase2d
+class TitleLogo:public ActorTitle
 {
-	using Actor2d = ActorBase2d;
 public:
-	TitleLogo( ApplicationBase& game,ModeTitle& mode );
+	TitleLogo( ApplicationBase& game,int layer,ModeTitle& mode );
 	~TitleLogo();
 	virtual Type	GetType()//©•ª‚ª‰½Ò‚©
 	{
 		return Type::KTITLELOGO;
 	}
 
-	void	Init();//‰Šú‰»
+	void	Initialize();//‰Šú‰»
 	bool	Update();
 	bool	Draw();
 

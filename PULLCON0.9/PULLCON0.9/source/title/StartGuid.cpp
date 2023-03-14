@@ -1,32 +1,32 @@
 #include "StartGuid.h"
 #include "Dxlib.h"
-StartGuid::StartGuid( ApplicationBase& game,ModeTitle& mode )
-	: ActorBase2d( game,mode )
+StartGuid::StartGuid( ApplicationBase& game,int layer,ModeTitle& mode )
+	: ActorTitle( game,layer,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/2D_image/title/ui_Title_StartMenuIcon.png" );
 
-	Init();
+	Initialize();
 }
 
 StartGuid::~StartGuid()
 {
 }
 
-void StartGuid::Init()
+void StartGuid::Initialize()
 {
-	ActorBase2d::Init();
+	ActorTitle::Initialize();
 
 	_pos = {380.0f,800.0f};
 	_size = {280.0f,86.0f};
 	_colPos = {0.0f,0.0f};
 	_colSize = {280.0f,86.0f};
 	_spd = 0;
-	_easing = Easing::GetMode( "Linear" );
+	_easing = math::Easing::GetMode( "Linear" );
 }
 
 bool StartGuid::Update()
 {
-	ActorBase2d::Update();
+	ActorTitle::Update();
 	float start = 800.0f;
 	float stop = 1000.0f;
 
@@ -40,7 +40,7 @@ bool StartGuid::Update()
 
 bool StartGuid::Draw()
 {
-	ActorBase2d::Draw();
+	ActorTitle::Draw();
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	DrawCollision();	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	return true;

@@ -19,24 +19,24 @@ namespace
 ModeTitle::ModeTitle( ApplicationBase& game,int layer )
 	:GameBase( game,layer )
 {
-	auto titlelogo = std::make_shared<TitleLogo>( game,*this );
+	auto titlelogo = std::make_shared<TitleLogo>( game,0,*this );
 	object_out_game.Add( titlelogo );
 
-	auto creditlogo = std::make_shared<CreditLogo>( game,*this );
+	auto creditlogo = std::make_shared<CreditLogo>( game,1,*this );
 	object_out_game.Add( creditlogo );
-	auto startlogo = std::make_shared<StartLogo>( game,*this );
+	auto startlogo = std::make_shared<StartLogo>( game,2,*this );
 	object_out_game.Add( startlogo );
-	auto endlogo = std::make_shared<EndLogo>( game,*this );
+	auto endlogo = std::make_shared<EndLogo>( game,3,*this );
 	object_out_game.Add( endlogo );
 
-	auto creditguid = std::make_shared<CreditGuid>( game,*this );
+	auto creditguid = std::make_shared<CreditGuid>( game,4,*this );
 	object_out_game.Add( creditguid );
-	auto startguid = std::make_shared<StartGuid>( game,*this );
+	auto startguid = std::make_shared<StartGuid>( game,5,*this );
 	object_out_game.Add( startguid );
-	auto endguid = std::make_shared<EndGuid>( game,*this );
+	auto endguid = std::make_shared<EndGuid>( game,6,*this );
 	object_out_game.Add( endguid );
 
-	auto player = std::make_shared<TitlePlayer>( game,*this );
+	auto player = std::make_shared<TitlePlayer>( game,7,*this );
 	object_out_game.Add( player );
 	PlaySoundFile( "res/sound/title/title_bgm.wav",DX_PLAYTYPE_LOOP );
 	Initialize();
@@ -55,9 +55,10 @@ bool ModeTitle::Initialize()
 bool ModeTitle::Update()
 {
 	object_out_game.Update();
+
 	for ( auto&& obje : object_out_game.GetObjects() )
 	{
-		if ( (obje->GetType() == ActorBase2d::Type::KGAMESTARTLOGO) )
+		if ( (obje->GetType() == ActorTitle::Type::KGAMESTARTLOGO) )
 		{
 			if ( obje->GetPosition().y < 100 )
 			{
@@ -75,7 +76,6 @@ bool ModeTitle::Update()
 				_game.GetInstance()->GetModeServer()->Add( game );
 			}
 #endif // _DEBUG
-
 		}
 	}
 	return true;
@@ -89,5 +89,6 @@ bool ModeTitle::Draw()
 
 bool ModeTitle::DebugDraw()
 {
+
 	return true;
 };

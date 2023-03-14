@@ -175,7 +175,7 @@
     <ClCompile Include="source\maingame\EffectDestroyAmmo.cpp" />
     <ClCompile Include="source\ModeTest.cpp" />
     <ClCompile Include="source\ObjectBase.cpp" />
-    <ClCompile Include="source\title\ActorBase2d.cpp" />
+    <ClCompile Include="source\title\ActorTitle.cpp" />
     <ClCompile Include="source\ui\UIPullGage.cpp" />
     <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp" />
     <ClCompile Include="source\ui\UIBase.cpp" />
@@ -224,7 +224,7 @@
     <ClInclude Include="source\maingame\EffectDestroyAmmo.h" />
     <ClInclude Include="source\ModeTest.h" />
     <ClInclude Include="source\ObjectBase.h" />
-    <ClInclude Include="source\title\ActorBase2d.h" />
+    <ClInclude Include="source\title\ActorTitle.h" />
     <ClInclude Include="source\ui\UIPullGage.h" />
     <ClInclude Include="source\speakscript\ActorBaseSpeak.h" />
     <ClInclude Include="source\ui\UIBase.h" />

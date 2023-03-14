@@ -7,12 +7,11 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
-#include "ActorBase2d.h"
+#include "ActorTitle.h"
 #include "../mode/ModeTitle.h"
 #include "array"
-class TitlePlayer:public ActorBase2d
+class TitlePlayer:public ActorTitle
 {
-	using Actor2d = ActorBase2d;
 public:
 	/**
 	 * プレイヤーの状態.
@@ -23,7 +22,7 @@ public:
 		WAIT//待つ
 	};
 	/** コンストラクタ */
-	TitlePlayer( ApplicationBase& game,ModeTitle& mode );
+	TitlePlayer( ApplicationBase& game,int layer,ModeTitle& mode );
 	/** デストラクタ */
 	~TitlePlayer();
 
@@ -32,12 +31,12 @@ public:
 		return Type::KPLAYER;
 	}
 
-	void	Init();//初期化
+	void	Initialize();//初期化
 	bool	Update();//更新
 	bool	Draw();//描画
 
 private:
-	int		cg_player;		// プレイヤー画像
+	int cg_player;		// プレイヤー画像
 	std::array<int,4> cg_ui;//ui画像
 	bool isRight;//右向き描画してる時true
 	bool isUidraw;//ボタン表示判定trueの時表示

@@ -1,20 +1,20 @@
 #include "StartLogo.h"
 
 #include "Dxlib.h"
-StartLogo::StartLogo( ApplicationBase& game,ModeTitle& mode )
-	: ActorBase2d( game,mode )
+StartLogo::StartLogo( ApplicationBase& game,int layer,ModeTitle& mode )
+	: ActorTitle( game,layer,mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/2D_image/title/ui_Title_StartLogo.png" );
 
-	Init();
+	Initialize();
 }
 
 StartLogo::~StartLogo()
 {}
 
-void StartLogo::Init()
+void StartLogo::Initialize()
 {
-	ActorBase2d::Init();
+	ActorTitle::Initialize();
 
 	// プレイヤー情報の初期化
 	_pos = {450.0f,900.0f};
@@ -26,16 +26,16 @@ void StartLogo::Init()
 
 bool StartLogo::Update()
 {
-	ActorBase2d::Update();
+	ActorTitle::Update();
 	for ( auto&& obje : _mode.Get2DobjectServer().GetObjects() )
 	{
-		if ( (obje->GetType() == ActorBase2d::Type::KPLAYER) )
+		if ( (obje->GetType() == ActorTitle::Type::KPLAYER) )
 		{
 			if ( IsHitObject( *obje ) )
 			{
 				if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
 				{
-					_spd = static_cast<float>(utility::get_random( 5,20 ));
+					_spd = static_cast<float>(math::utility::get_random( 5,20 ));
 					_pos.y -= _spd;		// 位置を動かす  
 					if ( _pos.y < 500 )
 					{
@@ -54,7 +54,7 @@ bool StartLogo::Update()
 
 bool StartLogo::Draw()
 {
-	ActorBase2d::Draw();
+	ActorTitle::Draw();
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
 	DrawCollision();	// コリジョン描画
 	return true;

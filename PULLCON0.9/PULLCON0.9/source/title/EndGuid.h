@@ -1,10 +1,9 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase2d.h"
+#include "ActorTitle.h"
 #include "../mode/ModeTitle.h"
-class EndGuid:public ActorBase2d
+class EndGuid:public ActorTitle
 {
-	using Actor2d = ActorBase2d;
 		 /**
 		* オブジェクトの状態.
 		*/
@@ -14,14 +13,14 @@ class EndGuid:public ActorBase2d
 		PULLED//引っ張られている
 	};
 public:
-	EndGuid( ApplicationBase& game,ModeTitle& mode );
+	EndGuid( ApplicationBase& game,int laysr,ModeTitle& mode );
 	~EndGuid();
-	virtual Type	GetType()//自分が何者か
+	virtual Type GetType()//自分が何者か
 	{
 		return Type::KENDGUID;
 	}
 
-	void	Init();//初期化
+	void	Initialize();//初期化
 	bool	Update();
 	bool	Draw();
 

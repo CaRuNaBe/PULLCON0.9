@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="source\ApplicationGlobal.cpp" />
-    <ClCompile Include="source\ObjectBase.cpp" />
     <ClCompile Include="source\ApplicationMain.cpp" />
     <ClCompile Include="source\ModeTest.cpp" />
     <ClCompile Include="source\mode\ModeMainGame.cpp">
@@ -17,7 +16,7 @@
     <ClCompile Include="source\mode\ModeTitle.cpp">
       <Filter>mode</Filter>
     </ClCompile>
-    <ClCompile Include="source\title\ActorBase2d.cpp">
+    <ClCompile Include="source\title\ActorTitle.cpp">
       <Filter>title</Filter>
     </ClCompile>
     <ClCompile Include="source\title\CreditGuid.cpp">
@@ -134,10 +133,12 @@
     <ClCompile Include="source\maingame\EffectFireGunship.cpp">
       <Filter>maingame\effect</Filter>
     </ClCompile>
+    <ClCompile Include="source\ObjectBase.cpp">
+      <Filter>maingame\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationGlobal.h" />
-    <ClInclude Include="source\ObjectBase.h" />
     <ClInclude Include="source\ApplicationMain.h" />
     <ClInclude Include="source\ModeTest.h" />
     <ClInclude Include="source\mode\ModeMainGame.h">
@@ -152,7 +153,7 @@
     <ClInclude Include="source\mode\ModeTitle.h">
       <Filter>mode</Filter>
     </ClInclude>
-    <ClInclude Include="source\title\ActorBase2d.h">
+    <ClInclude Include="source\title\ActorTitle.h">
       <Filter>title</Filter>
     </ClInclude>
     <ClInclude Include="source\title\CreditGuid.h">
@@ -268,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="source\maingame\EffectFireGunship.h">
       <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ObjectBase.h">
+      <Filter>maingame\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

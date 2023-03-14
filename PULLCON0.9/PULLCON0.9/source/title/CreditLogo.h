@@ -7,12 +7,11 @@
  *********************************************************************/
 #pragma once
 #include "appframe.h"
-#include "ActorBase2d.h"
+#include "ActorTitle.h"
 #include "../mode/ModeTitle.h"
 class CreditLogo:
-	public ActorBase2d
+	public ActorTitle
 {
-	using Actor2d = ActorBase2d;
 		/**
 	 * オブジェクトの状態.
 	 */
@@ -22,9 +21,9 @@ class CreditLogo:
 		PULLED//引っ張られている
 	};
 public:
-	CreditLogo( ApplicationBase& game,ModeTitle& mode );
+	CreditLogo( ApplicationBase& game,int layer,ModeTitle& mode );
 	~CreditLogo();
-	virtual Type	GetType()//自分が何者か
+	virtual Type GetType()//自分が何者か
 	{
 		return Type::KCREDITLOGO;
 	}

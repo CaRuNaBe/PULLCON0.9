@@ -1,6 +1,5 @@
 
 #include "Bullet.h"
-#include "EffectTrail.h"
 
 
 Bullet::Bullet( ApplicationBase& game,ModeMainGame& mode )
