@@ -63,7 +63,7 @@ namespace
 	const std::string COMMAND_SUPPLY = "Supply";//回復エリアの生成
 	const std::string COMMAND_AREACOMMUNICATION = "Communication";//会話エリア発生エリアの設定
 	const std::string COMMAND_NOENTRY = "NoEntry";//侵入不能エリア生成
-	
+
 
 
 	//編集コマンド
@@ -351,7 +351,7 @@ bool ModeMainGame::DebugDraw()
 		}
 	}
 	int x = 0,y = 500;
-	DrawFormatString( x,y,GetColor( 255,0,0 )," player_pos=(%5.2f, %5.2f, %5.2f)",posi.x,posi.y,posi.z ); y += 16;
+	DrawFormatString( x,y,GetColor( 255,0,0 ),"player_pos=(%5.2f, %5.2f, %5.2f)",posi.x,posi.y,posi.z ); y += 16;
 	DrawFormatString( x,y,GetColor( 255,255,255 ),"State%d",state );
 	return true;
 };
@@ -1716,7 +1716,9 @@ bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,std::vector<std::string
 		vector4 posi;
 		int spawn_id = 0;
 		int spawn_fream = 0;
-		const size_t SCRIPTSIZE = 6;
+				/** 大きさ */
+		float scale = 1.0f;
+		const size_t SCRIPTSIZE = 7;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -1735,8 +1737,13 @@ bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,std::vector<std::string
 		{
 			return result;
 		};
+		if ( !(string::ToFloat( scripts[6],scale )) )
+		{
+			return result;
+		}
 		auto spawn_eria = std::make_shared<AreaEnemySpawn>( _game,*this,spawn_fream,spawn_id );
 		spawn_eria->SetPosition( posi );
+		spawn_eria->SetScale( scale );
 		object_main_game.Add( spawn_eria );
 		result = true;
 	}
@@ -1747,14 +1754,14 @@ bool ModeMainGame::OnCommandAreaSpawn( unsigned int line,std::vector<std::string
 		{
 			return result;
 		}
-		std::array < std::string,5> input_str =
+		std::array < std::string,6> input_str =
 		{
 			"x座標",
 			"y座標",
 			"z座標",
 			"スポーン間隔(フレーム数)",
-			"敵の種類(1スカイハンターズ; 2コバエーズ; 3両方)"
-
+			"敵の種類(1スカイハンターズ; 2コバエーズ; 3両方)",
+			"スケール"
 		};
 		result = true;
 		for ( int i = 0; i < input_str.size(); i++ )
@@ -1776,7 +1783,9 @@ bool ModeMainGame::OnCommandSupply( unsigned int line,std::vector<std::string>& 
 	{
 		vector4 posi;
 		float radius = 0.0f;
-		const size_t SCRIPTSIZE = 5;
+		/** 大きさ */
+		float scale = 1.0f;
+		const size_t SCRIPTSIZE = 6;
 		if ( scripts.size() != SCRIPTSIZE )
 		{
 			return result;
@@ -1791,7 +1800,12 @@ bool ModeMainGame::OnCommandSupply( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		}
+		if ( !(string::ToFloat( scripts[5],scale )) )
+		{
+			return result;
+		}
 		auto supplyeria = std::make_shared<AreaSupply>( _game,*this,radius );
+		supplyeria->SetScale( scale );
 		supplyeria->SetPosition( posi );
 		object_main_game.Add( supplyeria );
 		result = true;
@@ -1803,12 +1817,13 @@ bool ModeMainGame::OnCommandSupply( unsigned int line,std::vector<std::string>& 
 		{
 			return result;
 		}
-		std::array < std::string,4> input_str =
+		std::array < std::string,5> input_str =
 		{
 			"x座標",
 			"y座標",
 			"z座標",
-			"球の半径"
+			"球の半径",
+			"スケール"
 		};
 		result = true;
 		for ( int i = 0; i < input_str.size(); i++ )
