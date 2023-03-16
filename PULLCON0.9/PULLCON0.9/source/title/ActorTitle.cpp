@@ -33,7 +33,7 @@ void ActorTitle::UpdateCollision()
 	_collision.max = _pos + _colPos + _colSize;
 }
 
- bool  ActorTitle::IsHitObject(  ActorTitle&  object )
+ bool ActorTitle::IsHitObject(  ActorTitle&  object )
 {
 	// AABB‚Å“–‚½‚è”»’è
 	if ( Intersect( object.GetCollision(),_collision ) )

@@ -4,7 +4,6 @@
 class ActorTitle;
 class ModeTitle:public GameBase
 {
-	using base = GameBase;
 public:
 	ModeTitle( ApplicationBase& game,int layer );
 	virtual ~ModeTitle();
@@ -17,5 +16,12 @@ public:
 		return object_out_game;
 	}
 private:
+	enum class State
+	{
+		BASE,
+		CREDIT
+	};
+	using SwitchFunctionTitle = std::map<ModeTitle::State,bool(ModeTitle::*)()>;
+	State title_state;
 	GameServer2<ActorTitle> object_out_game;
 };

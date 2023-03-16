@@ -5,13 +5,13 @@ CreditLogo::CreditLogo( ApplicationBase& game,int layer,ModeTitle& mode )
 {
 	_cg = ResourceServer::LoadGraph( "res/2D_image/title/ui_Title_CreditLogo.png" );
 
-	Init();
+	Initialize();
 }
 
 CreditLogo::~CreditLogo()
 {}
 
-void CreditLogo::Init()
+void CreditLogo::Initialize()
 {
 	ActorTitle::Initialize();
 	_pos = {900.0f,900.0f};

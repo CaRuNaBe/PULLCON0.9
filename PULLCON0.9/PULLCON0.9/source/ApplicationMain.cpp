@@ -65,6 +65,10 @@ bool ApplicationMain::Input()
 bool ApplicationMain::Update()
 {
 	base::Update();
+	if ( is_game_end )
+	{
+		return false;
+	}
 	return true;
 }
 

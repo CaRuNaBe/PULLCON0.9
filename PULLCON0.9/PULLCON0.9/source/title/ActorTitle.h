@@ -39,7 +39,7 @@ public:
 	{
 		return _pos;
 	}
-	virtual void SetPosition( math::Vector2& pos )
+	virtual void SetPosition( const math::Vector2& pos )
 	{
 		_pos = pos;
 	}

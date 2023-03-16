@@ -30,7 +30,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In
 	while(ProcessMessage() == 0)		// プログラムが終了するまでループ
 	{
 		appBase->Input();
-		appBase->Update();
+
+		if ( !appBase->Update() )
+		{
+			break;
+		};
 		appBase->Draw();
 	}
 

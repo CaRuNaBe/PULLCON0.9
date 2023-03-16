@@ -1,6 +1,8 @@
 #include "ModeTitle.h"
 #include "../ApplicationMain.h"
+#include "../ApplicationGlobal.h"
 #include "ModeMainGame.h"
+#include "ModeSpeakScript.h"
 #include "../title/TitlePlayer.h"
 #include "../title/TitleLogo.h"
 
@@ -15,10 +17,14 @@ namespace
 	const std::string FILENAME = "pullcon0.9.json";//ファイル名
 	const std::string FILEPASS = "res/string_date/gamescript/" + FILENAME;//ファイルパス
 	const std::string GAMESCRIPT = "pullcon0.9";//スクリプト名
+	const math::Vector2 CREDITLOGO_INITIAL_POS = {1350.0f ,900.0f};
 }
+
+
 ModeTitle::ModeTitle( ApplicationBase& game,int layer )
 	:GameBase( game,layer )
 {
+	title_state = State::BASE;
 	auto titlelogo = std::make_shared<TitleLogo>( game,0,*this );
 	object_out_game.Add( titlelogo );
 
@@ -55,29 +61,68 @@ bool ModeTitle::Initialize()
 bool ModeTitle::Update()
 {
 	object_out_game.Update();
-
-	for ( auto&& obje : object_out_game.GetObjects() )
+	switch ( title_state )
 	{
-		if ( (obje->GetType() == ActorTitle::Type::KGAMESTARTLOGO) )
-		{
-			if ( obje->GetPosition().y < 100 )
+		case ModeTitle::State::BASE:
+			for ( auto&& obje : object_out_game.GetObjects() )
 			{
-				_game.GetInstance()->GetModeServer()->Del( *this );
-				auto game = std::make_shared<ModeMainGame>( _game,1 );
-				game->Initialize( FILEPASS,GAMESCRIPT,FILENAME );
-				_game.GetInstance()->GetModeServer()->Add( game );
-			}
+				if ( (obje->GetType() == ActorTitle::Type::KGAMESTARTLOGO) )
+				{
+					if ( obje->GetPosition().y < 300 )
+					{
+						_game.GetInstance()->GetModeServer()->Del( *this );
+						auto game = std::make_shared<ModeMainGame>( _game,1 );
+						game->Initialize( FILEPASS,GAMESCRIPT,FILENAME );
+						_game.GetInstance()->GetModeServer()->Add( game );
+						break;
+					}
 #if _DEBUG
-			if ( _game.Getinput().GetKeyXinput( XINPUT_BUTTON_A ) )
-			{
-				_game.GetInstance()->GetModeServer()->Del( *this );
-				auto game = std::make_shared<ModeMainGame>( _game,1 );
-				game->Initialize( FILEPASS,GAMESCRIPT,FILENAME );
-				_game.GetInstance()->GetModeServer()->Add( game );
-			}
+					if ( _game.Getinput().GetKeyXinput( XINPUT_BUTTON_A ) )
+					{
+
+						auto game = std::make_shared<ModeMainGame>( _game,1 );
+						game->Initialize( FILEPASS,GAMESCRIPT,FILENAME );
+						break;
+					}
 #endif // _DEBUG
-		}
+				}
+				if ( (obje->GetType() == ActorTitle::Type::KCREDITLOGO) )
+				{
+					if ( obje->GetPosition().y < 300 )
+					{
+						obje->SetPosition( CREDITLOGO_INITIAL_POS );
+						auto credit = std::make_shared<ModeSpeakScript>( _game,99,"credit/credit" );
+						_game.GetInstance()->GetModeServer()->Add( credit );
+						gGlobal.IsNotEndSpeakScript();
+						title_state = State::CREDIT;
+						break;
+					}
+				}
+				if ( (obje->GetType() == ActorTitle::Type::KENDLOGO) )
+				{
+					if ( obje->GetPosition().y < 300 )
+					{
+						_game.IsGameEnd();
+						_game.GetInstance()->GetModeServer()->Del( *this );
+						break;
+					}
+				}
+			}
+			break;
+		case ModeTitle::State::CREDIT:
+			if ( gGlobal.GetIsEndSpeakScript() )
+			{
+				for ( auto&& obje : object_out_game.GetObjects() )
+				{
+					obje->Initialize();
+				}
+				title_state = State::BASE;
+			}
+			break;
+		default:
+			break;
 	}
+
 	return true;
 }
 
@@ -89,6 +134,5 @@ bool ModeTitle::Draw()
 
 bool ModeTitle::DebugDraw()
 {
-
 	return true;
 };

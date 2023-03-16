@@ -28,7 +28,7 @@ public:
 		return Type::KCREDITLOGO;
 	}
 
-	void	Init();//‰Šú‰»
+	void	Initialize();//‰Šú‰»
 	bool	Update();
 	bool	Draw();
 

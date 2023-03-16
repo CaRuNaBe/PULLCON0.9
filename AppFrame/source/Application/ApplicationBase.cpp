@@ -12,8 +12,7 @@ ApplicationBase::ApplicationBase()
 }
 
 ApplicationBase::~ApplicationBase()
-{
-}
+{}
 
 bool ApplicationBase::Initialize( HINSTANCE hInstance )
 {
@@ -25,7 +24,7 @@ bool ApplicationBase::Initialize( HINSTANCE hInstance )
 	{
 		ChangeWindowMode( true );							// ウィンドウモードに指定する
 	}
-	SetZBufferBitDepth(32);
+	SetZBufferBitDepth( 32 );
 	SetGraphMode( DispSizeW(),DispSizeH(),32 );
 
 
@@ -46,6 +45,7 @@ bool ApplicationBase::Initialize( HINSTANCE hInstance )
 
 	font_hundle = 0;
 	font_size = 29;
+	is_game_end = false;
 	return true;
 }
 
@@ -68,6 +68,7 @@ bool ApplicationBase::Input()
 bool ApplicationBase::Update()
 {
 	_BaseServer->Update();
+
 	return true;
 }
 

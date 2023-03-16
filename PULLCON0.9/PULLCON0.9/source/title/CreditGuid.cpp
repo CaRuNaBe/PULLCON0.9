@@ -41,6 +41,5 @@ bool CreditGuid::Draw()
 {
 	ActorTitle::Draw();
 	DrawGraph( _pos.IntX(),_pos.IntY(),_cg,TRUE );
-	DrawCollision();	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	return true;
 }

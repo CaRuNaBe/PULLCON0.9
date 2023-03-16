@@ -61,6 +61,10 @@ public:
 	{
 		return font_size;
 	}
+	void IsGameEnd()
+	{
+		is_game_end = true;
+	}
 protected:
 	static	ApplicationBase* _lpInstance;
 
@@ -68,4 +72,5 @@ protected:
 	InputManager _input;//inputクラスインスタス
 	int font_hundle;
 	int font_size;
+	bool is_game_end;
 };
