@@ -33,11 +33,11 @@ bool AreaCommunication::Update()
 		{
 			if ( IsHitObject( *obje ) )
 			{
-				if (gGlobal.GetIsEndSpeakScript() )
+				if ( gGlobal.GetIsEndSpeakScript() )
 				{
 					gGlobal.IsNotEndSpeakScript();
 					PlaySoundMem( gGlobal._se["comm_start"],DX_PLAYTYPE_BACK );
-						auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
+					auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
 					_game.GetModeServer()->Add( story );
 
 					_mode.GetObjectServer3D().Del( *this );
@@ -54,9 +54,9 @@ bool AreaCommunication::Draw()
 {
 	base::Draw();
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-
+#if _DEBUG
 	vector4 color = {255, 255, 255};
 	DrawCollision( color );
-
+#endif
 	return true;
 }

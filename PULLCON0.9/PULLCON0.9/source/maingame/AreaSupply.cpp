@@ -33,6 +33,11 @@ bool AreaSupply::Update()
 		{
 			if ( Intersect( obje->_collision,_collisionEvent ) )
 			{
+				if ( !(CheckSoundMem( gGlobal._se["se_supply"] )) )
+				{
+					PlaySoundMem( gGlobal._se["se_supply"],DX_PLAYTYPE_LOOP );
+				}
+
 				_event = true;
 				if ( _cnt % 10 == 0 )
 				{
@@ -43,7 +48,12 @@ bool AreaSupply::Update()
 					}
 				}
 			}
+			else
+			{
+				StopSoundMem( gGlobal._se["se_supply"] );
+			}
 		}
+		break;
 	}
 
 	_collisionEvent._fRadius = _fRadius * _fScale;

@@ -21,8 +21,7 @@ ModeResourceRoad::ModeResourceRoad( ApplicationBase& game,int layer )
 };
 
 ModeResourceRoad::~ModeResourceRoad()
-{
-};
+{};
 bool ModeResourceRoad::Initialize()
 {
 	return true;

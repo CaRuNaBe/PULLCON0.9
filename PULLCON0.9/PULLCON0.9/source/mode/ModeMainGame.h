@@ -134,7 +134,7 @@ private:
 	/** ScriptsDataにアクセスするポインタ */
 	std::unique_ptr<ScriptsData> scripts_data;
 	/** ステージ名を格納するvector */
-	std::vector<std::unique_ptr<CommandLabel>> label_list;
+	std::vector < std::unique_ptr <CommandLabel>> label_list;
 	std::vector < std::unique_ptr < CommandCrFeedIn>> crfi_list;
 	std::vector < std::unique_ptr < CommandCrFeedOut>> crfo_list;
 
@@ -156,7 +156,7 @@ private:
 	/** フェードアウトインするときに使うフレーム数 */
 	float feedcount;
 	/** ステージ名 */
-	std::string  stage_name;
+	std::string stage_name;
 	std::string game_over_name;
 	std::string game_clear_name;
 	/** ゲームスタート時間 */

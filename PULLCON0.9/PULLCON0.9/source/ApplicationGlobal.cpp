@@ -65,8 +65,9 @@ bool ApplicationGlobal::Init()
 	_se["player_death"] = ResourceServer::LoadSoundMem( "res/sound/player/ƒwƒŠ€–S”š”­‰¹/heli_death_explosion.wav" );
 	_se["player_pull_button"] = ResourceServer::LoadSoundMem( "res/sound/player/ˆø‚Á‚±”²‚«ƒ{ƒ^ƒ“‰¹/pull_button_push.wav" );
 
-	_se["se_gunshot"]= ResourceServer::LoadSoundMem( "res/sound/player/’e–ò/’Êí’e/’Êí’e”­Ë‰¹/normal_bullet_fast.wav" );
+	_se["se_gunshot"] = ResourceServer::LoadSoundMem( "res/sound/player/’e–ò/’Êí’e/’Êí’e”­Ë‰¹/normal_bullet_fast.wav" );
 	_se["se_gunlanding"] = ResourceServer::LoadSoundMem( "res/sound/player/’e–ò/’Êí’e/’Êí’e’¼Œ‚‰¹/normal_bullet_hit.wav" );
-		return true;
+	_se["se_supply"] = ResourceServer::LoadSoundMem( "res/sound/player/supply/supply.wav" );
+	return true;
 }
 
