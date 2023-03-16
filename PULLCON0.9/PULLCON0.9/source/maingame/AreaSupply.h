@@ -16,6 +16,5 @@ public:
 protected:
 	int    _handle;
 	float radius;
-	bool is_refueling;
 };
 
