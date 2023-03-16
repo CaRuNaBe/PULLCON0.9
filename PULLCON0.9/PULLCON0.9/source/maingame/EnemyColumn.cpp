@@ -16,7 +16,7 @@ void EnemyColumn::Init() {
 	_stateEnemyColumn = State::WAIT;
 
 	_iPieces = 3;
-	_fSpeed = 150.f;
+	_fSpeed = 300.f;
 	_fScale = 2.0f;
 
 	_collision._fRadius = 500.f * _fScale;

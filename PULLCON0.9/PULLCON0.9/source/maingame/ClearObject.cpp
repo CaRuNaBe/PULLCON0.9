@@ -67,7 +67,7 @@ bool ClearObject::Update()
 			{
 				if ( IsHitObject( *obje ) )
 				{
-					if (obje->_iType != 1)
+					if (obje->_iType == 2)
 					{
 						_CT = 10;
 						_overlap = true;

@@ -394,14 +394,14 @@ bool Player::Update()
 	UpdateCollision();   // コリジョン更新
 
 	// 燃料消費
-	if (_cnt % 60 == 0) {
+	if (_cnt % 30 == 0) {
 		--_iFuel;
 		if (_iFuel < 0) {
 			_iFuel = 0;
 		}
 	}
 	if (_iLife < LIFEMAX / 3) {
-		if (_cnt % 20 == 0) {
+		if (_cnt % 10 == 0) {
 			_mode.AddEffectHitBlackSmoke(_vPos);
 		}
 	}
