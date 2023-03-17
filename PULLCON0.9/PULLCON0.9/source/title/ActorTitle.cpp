@@ -56,6 +56,8 @@ bool ActorTitle::DebugDraw()
 
 void ActorTitle::DrawCollision()
 {
+#if _DEBUG
 	_collision.Draw( rand() % 256,rand() % 256,rand() % 256 );
+#endif
 }
 

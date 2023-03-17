@@ -133,6 +133,7 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 {
 	state = ScriptState::PREPARSING;
 	ResourceServer::LoadDivGraph( "res/2D_image/outarea/ui_OutOfArea_Sheet.png",DANGER_ANIME_MAX,5,15,960,540,cg_outobarea );
+	cg_in_supply = ResourceServer::LoadGraph("res/2D_image/Fuelgage/ui_FuelVerTriangle.png");
 	start_time = 0;
 	max_line = 0;
 	now_line = 0;
@@ -143,6 +144,7 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 	is_cannotdelete = false;
 	game_over_timer = 600;
 	is_player_danger = false;
+	is_player_in_supply = false;
 	game_over_name = "";
 	game_clear_name = "";
 	if ( !scripts_data->LoadJson( jsonpath,scriptsname,jsonname ) )
@@ -158,8 +160,8 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 bool ModeMainGame::Update()
 {
 	cnt++;
+	is_player_in_supply = false;
 	object_main_game.Update();
-
 	ui_player.Update();
 	int dead = 0;
 	int gunship_num = 0;
@@ -229,6 +231,7 @@ bool ModeMainGame::Update()
 					}
 					break;
 				}
+
 			}
 
 			for ( auto& object_3d : object_main_game.GetObjects() )
@@ -237,15 +240,18 @@ bool ModeMainGame::Update()
 				{
 					gunship_num++;
 				}
+				if ( object_3d->GetType() == ActorBase3D::Type::kAreaSupply )
+				{
+					if ( object_3d->GetEvent() )
+					{
+						is_player_in_supply = true;
+					}
+				}
 			}
 			if ( gunship_num <= 0 )
 			{
 				StopSoundFile();
 
-				for ( auto& object_3d : object_main_game.GetObjects() )
-				{
-					object_3d->SetUpdateSkip( true );
-				}
 				for ( auto&& se : gGlobal._se )
 				{
 					StopSoundMem( se.second );
@@ -311,13 +317,14 @@ bool ModeMainGame::Draw()
 		case ScriptState::EDIT:
 			Edit();
 			break;
-
-
-
 		case ScriptState::GAME:
 			if ( is_player_danger )
 			{
 				DrawExtendGraph( _game.DispBasics(),_game.DispBasics(),_game.DispSizeW(),_game.DispSizeH(),cg_outobarea[cnt % DANGER_ANIME_MAX],TRUE );
+			}
+			if ( is_player_in_supply )
+			{
+				DrawGraph( 790,540,cg_in_supply,true );
 			}
 			break;
 		case ScriptState::CRFEEDIN:

@@ -166,11 +166,13 @@ private:
 	bool is_notcommand;
 	bool is_cannotdelete;
 	bool is_player_danger;
+	bool is_player_in_supply;
 
 	float world_range_x;
 	float world_range_y;
 	float world_range_z;
 	int cg_outobarea[74];
+	int cg_in_supply;
 	int game_over_timer;
 
 protected:
