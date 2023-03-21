@@ -29,7 +29,7 @@ void EnemyKobae::Init()
 	_fScale = 2.f;
 	_fSpeed = 400.f;
 	_collision._vCenter = _vPos;
-	_collision._fRadius = 500.f * _fScale;
+	_collision._fRadius = 1000.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
 
@@ -149,7 +149,7 @@ bool EnemyKobae::Update()
 		Damage();
 	}
 
-	_collision._fRadius = 500.f * _fScale;
+	_collision._fRadius = 1000.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
 	_vEvent = _vPos;

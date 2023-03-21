@@ -28,7 +28,7 @@ void EnemySkyhunter::Init()
 
 	_fScale = 2.f;
 	_fSpeed = 300.f;
-	_collision._fRadius = 500.f * _fScale;
+	_collision._fRadius = 1000.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 
 	_iLife = 10000;
@@ -138,7 +138,7 @@ bool EnemySkyhunter::Update()
 		Damage();
 	}
 
-	_collision._fRadius = 500.f * _fScale;
+	_collision._fRadius = 1000.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 	_vEvent = _vPos;
 	UpdateCollision();  // コリジョン更新
