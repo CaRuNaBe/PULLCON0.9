@@ -3,6 +3,8 @@
 ActorTitle::ActorTitle( ApplicationBase& game,int layer,ModeTitle& mode )
 	:GameBase( game,layer )
 	,_mode( mode )
+	,low_movement_pull( 50 )
+	,up_movement_pull( 70 )
 {
 	Initialize();
 }
@@ -33,7 +35,7 @@ void ActorTitle::UpdateCollision()
 	_collision.max = _pos + _colPos + _colSize;
 }
 
- bool ActorTitle::IsHitObject(  ActorTitle&  object )
+bool ActorTitle::IsHitObject( ActorTitle& object )
 {
 	// AABB‚Å“–‚½‚è”»’è
 	if ( Intersect( object.GetCollision(),_collision ) )

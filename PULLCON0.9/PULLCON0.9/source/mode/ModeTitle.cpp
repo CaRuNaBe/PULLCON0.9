@@ -17,7 +17,7 @@ namespace
 	const std::string FILENAME = "pullcon0.9.json";//ファイル名
 	const std::string FILEPASS = "res/string_date/gamescript/" + FILENAME;//ファイルパス
 	const std::string GAMESCRIPT = "pullcon0.9";//スクリプト名
-	const math::Vector2 CREDITLOGO_INITIAL_POS = {1350.0f ,900.0f};
+	constexpr int START_UP_LINE = 600;
 }
 
 
@@ -68,7 +68,7 @@ bool ModeTitle::Update()
 			{
 				if ( (obje->GetType() == ActorTitle::Type::KGAMESTARTLOGO) )
 				{
-					if ( obje->GetPosition().y < 300 )
+					if ( obje->GetPosition().y < START_UP_LINE )
 					{
 						_game.GetInstance()->GetModeServer()->Del( *this );
 						auto game = std::make_shared<ModeMainGame>( _game,1 );
@@ -88,9 +88,8 @@ bool ModeTitle::Update()
 				}
 				if ( (obje->GetType() == ActorTitle::Type::KCREDITLOGO) )
 				{
-					if ( obje->GetPosition().y < 300 )
+					if ( obje->GetPosition().y < START_UP_LINE )
 					{
-						obje->SetPosition( CREDITLOGO_INITIAL_POS );
 						auto credit = std::make_shared<ModeSpeakScript>( _game,99,"credit/credit" );
 						_game.GetInstance()->GetModeServer()->Add( credit );
 						gGlobal.IsNotEndSpeakScript();
@@ -100,7 +99,7 @@ bool ModeTitle::Update()
 				}
 				if ( (obje->GetType() == ActorTitle::Type::KENDLOGO) )
 				{
-					if ( obje->GetPosition().y < 300 )
+					if ( obje->GetPosition().y < START_UP_LINE )
 					{
 						_game.IsGameEnd();
 						_game.GetInstance()->GetModeServer()->Del( *this );

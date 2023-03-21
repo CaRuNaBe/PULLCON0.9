@@ -37,7 +37,7 @@ bool EndLogo::Update()
 			{
 				if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
 				{
-					_spd = static_cast<float>(math::utility::get_random( 5,20 ));
+					_spd = static_cast<float>(math::utility::get_random( low_movement_pull,up_movement_pull ));
 					_pos.y -= _spd;		// ˆÊ’u‚ð“®‚©‚·  
 				}
 			}

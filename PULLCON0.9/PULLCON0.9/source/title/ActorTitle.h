@@ -61,4 +61,6 @@ protected:
 	math::Vector2	_colPos,_colSize;	// 当たり判定位置サイズ(_posからの差分)
 	math::EasingMode _easing = nullptr;
 	int		_cnt;		// 動作カウンタ
+	const int low_movement_pull;
+	const int up_movement_pull;
 };
