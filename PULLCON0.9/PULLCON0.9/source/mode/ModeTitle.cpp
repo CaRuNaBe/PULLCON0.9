@@ -79,6 +79,7 @@ bool ModeTitle::Update()
 #if _DEBUG
 					if ( _game.Getinput().GetKeyXinput( XINPUT_BUTTON_A ) )
 					{
+						_game.GetInstance()->GetModeServer()->Del( *this );
 						auto game = std::make_shared<ModeMainGame>( _game,1 );
 						game->Initialize( FILEPASS,GAMESCRIPT,FILENAME );
 						_game.GetInstance()->GetModeServer()->Add( game );
