@@ -60,6 +60,7 @@ void Player::Init()
 	_isHitObject = false;
 	_fTime = 0.f;
 	_fRotateAirscrew = 0.f;
+	_fRotateBackAirscrew = 0.f;
 	_fAxialX = 0.f;
 	_fAxialZ = 0.f;
 
@@ -212,6 +213,9 @@ bool Player::Update()
 			diry += -1;
 			_fRotateAirscrew -= utility::PI / 18.f;
 		}
+		// プロペラの回転軸
+		_fRotateAirscrew += utility::PI / 6.f;
+		_fRotateBackAirscrew += utility::PI / 6.f;
 
 		//キャラの移動
 		vector4 dir = {-(_game.Getinput().GetLstickY()),0,_game.Getinput().GetLstickX()};   // int値が入る
@@ -458,12 +462,13 @@ bool Player::Draw()
 
 	matrix44 rotaMatrix = matrix44();
 	matrix44 rotaAirscrewMatrix = matrix44();
+	matrix44 rotaBackAirscrewMatrix = matrix44();
 	matrix44 posMatrix = matrix44();
 	matrix44 posAirscrewMatrix = matrix44();
+	matrix44 posBackAirscrewMatrix = matrix44();
 	matrix44 matrix = matrix44();
 	matrix44 airscrewMatrix = matrix44();
-	// プロペラの回転軸
-	_fRotateAirscrew += utility::PI / 6.f;
+	matrix44 backAirscrewMatrix = matrix44();
 	// モデルの回転値
 	float rX = utility::degree_to_radian( 5.f );   // 少し上向きに
 	if ( _statePlayer == State::PLAY )
@@ -471,22 +476,24 @@ bool Player::Draw()
 		rX += _fRotatX + _fAxialX;   // カメラを動かした分プラス
 	}
 	rotaAirscrewMatrix.rotate_y( _fRotateAirscrew,false );
+	rotaBackAirscrewMatrix.rotate_x( _fRotateBackAirscrew,false );
 	rotaMatrix.rotate_z( _fAxialZ,false );
 	rotaMatrix.rotate_x( rX,false );
 	rotaMatrix.rotate_y( _fRotatY,false );
-	// モデル拡大
-	MV1SetScale( _handleBody,VGet( _fScale,_fScale,_fScale ) );
 	// 位置
 	vector4 posAirscrew = {0.f, 0.f, -200.f};
+	vector4 posBackAirscrew = {40.f, 450.f, 860.f};
 	posMatrix.transfer( _vPos.x,_vPos.y,_vPos.z,false );
 	posAirscrewMatrix.transfer( posAirscrew.x,posAirscrew.y,posAirscrew.z,false );
+	posBackAirscrewMatrix.transfer(posBackAirscrew.x, posBackAirscrew.y, posBackAirscrew.z, false);
 	// 行列設定反映
 	matrix = rotaMatrix * posMatrix;
 	airscrewMatrix = rotaAirscrewMatrix * posAirscrewMatrix * matrix;
+	backAirscrewMatrix = rotaBackAirscrewMatrix * posBackAirscrewMatrix * matrix;
 	MV1SetMatrix( _handleBody,ToDX( matrix ) );
 	MV1SetMatrix( _handleAirscrew,ToDX( airscrewMatrix ) );
 	MV1SetMatrix( _handleMagnet,ToDX( matrix ) );
-	MV1SetMatrix( _handleBackAirscrew,ToDX( matrix ) );
+	MV1SetMatrix(_handleBackAirscrew, ToDX(backAirscrewMatrix));
 
 	// モデル描画
 	SetUseLighting( FALSE );

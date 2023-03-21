@@ -45,13 +45,14 @@ protected:
 	State  _statePlayer;
 
 	vector4 _vMoveDir;
-	int    _push;             // ボタン連打回数
-	bool   _isLerp;           // 線形補間するか
-	bool   _isHit;            // 当たったか
-	bool   _isHitObject;      // オブジクトと当たったか
-	float  _fSpeedIint;       // プレイヤーの速度の初期値
-	float  _fTime;            // 線形補間の経過時間
-	float  _fRotateAirscrew;  // プロペラの回転
+	int    _push;                 // ボタン連打回数
+	bool   _isLerp;               // 線形補間するか
+	bool   _isHit;                // 当たったか
+	bool   _isHitObject;          // オブジクトと当たったか
+	float  _fSpeedIint;           // プレイヤーの速度の初期値
+	float  _fTime;                // 線形補間の経過時間
+	float  _fRotateAirscrew;      // プロペラの回転
+	float  _fRotateBackAirscrew;  // バックプロペラの回転
 	float  _fAxialX;
 	float  _fAxialZ;
 
