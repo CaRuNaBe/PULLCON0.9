@@ -28,6 +28,7 @@
 #include "../ui/UIFuelGage.h"
 #include "../ui/UICursor.h"
 #include "../ui/UIPullGage.h"
+#include "../ui/UITutorial.h"
 #include "ModeSpeakScript.h"
 
 #include "../maingame/EffectDeathObject.h"
@@ -1063,6 +1064,8 @@ bool ModeMainGame::OnCommandPLayer( unsigned int line,std::vector<std::string>& 
 		ui_player.Add( std::move( fuel_gage ) );
 		auto hp_gage = std::make_unique<UIHpGage>( _game,4,*this );
 		ui_player.Add( std::move( hp_gage ) );
+		auto hp_tutorial = std::make_unique<UITutorial>( _game,4,*this );
+		ui_player.Add( std::move( hp_tutorial ) );
 		auto cursor = std::make_unique<UICursor>( _game,2,*this );
 		ui_player.Add( std::move( cursor ) );
 		auto pullgage = std::make_unique<UIPullGage>( _game,3,*this );

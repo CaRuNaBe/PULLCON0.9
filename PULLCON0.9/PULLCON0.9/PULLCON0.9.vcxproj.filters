@@ -136,6 +136,9 @@
     <ClCompile Include="source\ObjectBase.cpp">
       <Filter>maingame\base</Filter>
     </ClCompile>
+    <ClCompile Include="source\ui\UITutorial.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ApplicationGlobal.h" />
@@ -272,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="source\ObjectBase.h">
       <Filter>maingame\base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UITutorial.h">
+      <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
