@@ -52,8 +52,9 @@ bool AreaSupply::Update()
 			{
 				StopSoundMem( gGlobal._se["se_supply"] );
 			}
+			break;
 		}
-		break;
+	
 	}
 
 	_collisionEvent._fRadius = _fRadius * _fScale;
