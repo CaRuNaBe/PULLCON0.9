@@ -128,7 +128,7 @@ bool EnemyAAA::Update() {
 					_fire = obje->_fire;
 					_fSpeed = obje->_fSpeed;
 					_iType = 2;
-					if (AAA_ID == 2) {
+					if (AAA_ID == 2 || AAA_ID == 9) {
 						_iDamage = 500 * 100;
 					}
 				}
