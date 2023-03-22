@@ -52,10 +52,14 @@ bool AreaEnemySpawn::Update()
 		_stateEnemySpawn = State::WAIT;
 	}
 
+	// スポーンさせた数をカウント
+	int countEnemy = 0;
+
 	for ( auto&& obje : _mode.GetObjectServer3D().GetObjects() )
 	{
 		if ( obje->GetType() == Type::kPlayer
-			|| obje->GetType() == Type::kBullet )
+			|| obje->GetType() == Type::kBullet
+			|| obje->GetType() == Type::kEnemySkyhunter )
 		{
 			if ( obje->GetType() == Type::kPlayer )
 			{
@@ -81,7 +85,14 @@ bool AreaEnemySpawn::Update()
 					}
 				}
 			}
+			if (obje->GetType() == Type::kEnemySkyhunter) {
+				++countEnemy;
+			}
 		}
+	}
+
+	if (countEnemy > 20) {
+		_fire = false;
 	}
 
 	// 一定間隔でスポーンさせる
