@@ -91,6 +91,7 @@ bool ModeTitle::Update()
 				{
 					if ( obje->GetPosition().y < START_UP_LINE )
 					{
+						StopSoundFile();
 						auto credit = std::make_shared<ModeSpeakScript>( _game,99,"credit/credit" );
 						_game.GetInstance()->GetModeServer()->Add( credit );
 						gGlobal.IsNotEndSpeakScript();
@@ -117,7 +118,9 @@ bool ModeTitle::Update()
 					obje->Initialize();
 				}
 				title_state = State::BASE;
+				PlaySoundFile( "res/sound/title/title_bgm.wav",DX_PLAYTYPE_LOOP );
 			}
+
 			break;
 		default:
 			break;
