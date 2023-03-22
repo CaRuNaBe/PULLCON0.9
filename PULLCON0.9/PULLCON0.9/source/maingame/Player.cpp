@@ -213,9 +213,6 @@ bool Player::Update()
 			diry += -1;
 			_fRotateAirscrew -= utility::PI / 18.f;
 		}
-		// プロペラの回転軸
-		_fRotateAirscrew += utility::PI / 6.f;
-		_fRotateBackAirscrew += utility::PI / 6.f;
 
 		//キャラの移動
 		vector4 dir = {-(_game.Getinput().GetLstickY()),0,_game.Getinput().GetLstickX()};   // int値が入る
@@ -396,6 +393,10 @@ bool Player::Update()
 
 	_collision._fRadius = 500.f * _fScale;
 	UpdateCollision();   // コリジョン更新
+
+		// プロペラの回転
+	_fRotateAirscrew += utility::PI / 6.f;
+	_fRotateBackAirscrew += utility::PI / 6.f;
 
 	// 燃料消費
 	if (_cnt % 30 == 0) {
