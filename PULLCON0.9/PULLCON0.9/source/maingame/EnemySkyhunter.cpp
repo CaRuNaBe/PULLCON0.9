@@ -183,11 +183,9 @@ bool EnemySkyhunter::Draw()
 void EnemySkyhunter::AddBullet()
 {
 	vector4 vBullet = {_vPos.x, _vPos.y - 500.f, _vPos.z};
-	float speed = 400.f;
 	auto bullet = std::make_shared<Bullet>( _game,_mode );
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
-	bullet->SetSpeed( speed );
 	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }
