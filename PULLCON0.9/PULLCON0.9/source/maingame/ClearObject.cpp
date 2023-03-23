@@ -175,6 +175,7 @@ void ClearObject::AddBullet()
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
 	bullet->SetSpeed(bullet->_fSpeed * 4.f);
+	bullet->_iDamage = 500;
 	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }
