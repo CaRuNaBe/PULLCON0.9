@@ -15,6 +15,8 @@ public:
 private:
 	int handle_hp_body;
 	int handle_hp_gage;
+	int handle_hp_alert;
 	float hp_gage_now_posi;
+	bool is_alert;
 };
 
