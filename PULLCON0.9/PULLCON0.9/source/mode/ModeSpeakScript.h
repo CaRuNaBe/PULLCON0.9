@@ -29,7 +29,7 @@ public:
 	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
 	virtual bool DebugDraw();
-	GameServer<ActorBaseSpeak>& GetObjectServerSpeak()
+	GameServerUnique<ActorBaseSpeak>& GetObjectServerSpeak()
 	{
 		return speak_object;
 	}
@@ -89,7 +89,7 @@ private:
 	void DrawTime();
 	void DrawScriptString();
 	void DrawRect();
-	GameServer<ActorBaseSpeak> speak_object;
+	GameServerUnique<ActorBaseSpeak> speak_object;
 	std::unique_ptr<ScriptsData> scripts_data;
 	std::unique_ptr<CommandMoviePlay>movie_play;
 

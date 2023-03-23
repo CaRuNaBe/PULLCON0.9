@@ -11,7 +11,7 @@ public:
 	virtual bool Update();
 	virtual bool Draw();
 	virtual bool DebugDraw();
-	GameServer2<ActorTitle>& Get2DobjectServer()
+	GameServerShared<ActorTitle>& Get2DobjectServer()
 	{
 		return object_out_game;
 	}
@@ -23,5 +23,5 @@ private:
 	};
 	using SwitchFunctionTitle = std::map<ModeTitle::State,bool(ModeTitle::*)()>;
 	State title_state;
-	GameServer2<ActorTitle> object_out_game;
+	GameServerShared<ActorTitle> object_out_game;
 };

@@ -59,8 +59,7 @@ protected:
 	float _spd; // 移動速度
 	math::AABB _collision; // 当たり判定用矩形
 	math::Vector2	_colPos,_colSize;	// 当たり判定位置サイズ(_posからの差分)
-	math::EasingMode _easing = nullptr;
 	int		_cnt;		// 動作カウンタ
-	const int low_movement_pull;
-	const int up_movement_pull;
+	const int LOW_MOVEMENT_PULL;
+	const int UP_MOVEMENT_PULL;
 };

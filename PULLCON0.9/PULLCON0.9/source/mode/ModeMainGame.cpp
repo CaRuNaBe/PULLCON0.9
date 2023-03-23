@@ -260,7 +260,7 @@ bool ModeMainGame::Update()
 				cnt = 0;
 				is_player_danger = false;
 				game_over_timer = 300;
-				auto game_clear = std::make_shared<ModeSpeakScript>( _game,30,game_clear_name.c_str() );
+				auto game_clear = std::make_shared<ModeSpeakScript>( _game,30,game_clear_name );
 				_game.GetModeServer()->Add( game_clear );
 				gGlobal.IsNotEndSpeakScript();
 				state = ScriptState::STORY;

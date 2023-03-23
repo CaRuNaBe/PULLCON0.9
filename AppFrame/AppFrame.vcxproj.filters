@@ -31,10 +31,7 @@
     <ClInclude Include="source\Application\ApplicationBase.h">
       <Filter>source\Application</Filter>
     </ClInclude>
-    <ClInclude Include="source\Application\input_manager.h">
-      <Filter>source\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Application\UtilMacro.h">
+    <ClInclude Include="source\Application\InputManager.h">
       <Filter>source\Application</Filter>
     </ClInclude>
     <ClInclude Include="source\Base\ObjectServer.h">
@@ -122,13 +119,13 @@
     <ClInclude Include="source\Base\GameBase.h">
       <Filter>source\Base</Filter>
     </ClInclude>
-    <ClInclude Include="source\Base\GameServer.h">
+    <ClInclude Include="source\Base\GameServerUnique.h">
       <Filter>source\Base</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\Polar2.h">
       <Filter>source\Math</Filter>
     </ClInclude>
-    <ClInclude Include="source\Base\GameServer2.h">
+    <ClInclude Include="source\Base\GameServerShared.h">
       <Filter>source\Base</Filter>
     </ClInclude>
     <ClInclude Include="source\Script\CommandDrawTime.h">
@@ -155,7 +152,7 @@
     <ClCompile Include="source\Application\ApplicationBase.cpp">
       <Filter>source\Application</Filter>
     </ClCompile>
-    <ClCompile Include="source\Application\input_manager.cpp">
+    <ClCompile Include="source\Application\InputManager.cpp">
       <Filter>source\Application</Filter>
     </ClCompile>
     <ClCompile Include="source\Base\ObjectServer.cpp">
@@ -236,7 +233,7 @@
     <ClCompile Include="source\Script\CommandMessage.cpp">
       <Filter>source\Sclipt</Filter>
     </ClCompile>
-    <ClCompile Include="source\Base\GameServer.cpp">
+    <ClCompile Include="source\Base\GameServerUnique.cpp">
       <Filter>source\Base</Filter>
     </ClCompile>
     <ClCompile Include="source\Base\GameBase.cpp">
@@ -245,7 +242,7 @@
     <ClCompile Include="source\Math\Polar2.cpp">
       <Filter>source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="source\Base\GameServer2.cpp">
+    <ClCompile Include="source\Base\GameServerShared.cpp">
       <Filter>source\Base</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandDrawTime.cpp">

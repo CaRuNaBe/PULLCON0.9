@@ -9,8 +9,7 @@ EndLogo::EndLogo( ApplicationBase& game,int layer,ModeTitle& mode )
 }
 
 EndLogo::~EndLogo()
-{
-}
+{}
 
 void EndLogo::Initialize()
 {
@@ -37,7 +36,7 @@ bool EndLogo::Update()
 			{
 				if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_X ) )
 				{
-					_spd = static_cast<float>(math::utility::get_random( low_movement_pull,up_movement_pull ));
+					_spd = static_cast<float>(math::utility::get_random( LOW_MOVEMENT_PULL,UP_MOVEMENT_PULL ));
 					_pos.y -= _spd;		// ˆÊ’u‚ð“®‚©‚·  
 				}
 			}

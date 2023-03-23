@@ -10,8 +10,8 @@
 
 
 #include "Base/GameBase.h"
-#include "Base/GameServer.h"
-#include "Base/GameServer2.h"
+#include "Base/GameServerUnique.h"
+#include "Base/GameServerShared.h"
 #include "base/ObjectServer.h"
 
 #include "Script/ScriptsData.h"

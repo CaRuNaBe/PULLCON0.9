@@ -20,19 +20,11 @@ void EndGuid::Initialize()
 	_colPos = {0.0f,0.0f};
 	_colSize = {91.0f,86.0f};
 	_spd = 0;
-	_easing = math::Easing::GetMode( "Linear" );
 }
 
 bool EndGuid::Update()
 {
 	ActorTitle::Update();
-	float start = 800.0f;
-	float stop = 1000.0f;
-
-	auto a = math::utility::TwoPi / 120.f;
-	float b = std::atan( std::sin( static_cast <float>(a * _cnt) ) );
-	b *= 10;
-	_pos.y = _easing( b,start,stop,60.f );
 	UpdateCollision();	// コリジョン更新
 	return true;
 }

@@ -15,8 +15,7 @@ TitlePlayer::TitlePlayer( ApplicationBase& game,int layer,ModeTitle& mode )
 }
 
 TitlePlayer::~TitlePlayer()
-{
-}
+{}
 
 void TitlePlayer::Initialize()
 {

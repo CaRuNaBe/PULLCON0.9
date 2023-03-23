@@ -1,4 +1,4 @@
-#include "input_manager.h"
+#include "InputManager.h"
 namespace
 {
 	const XINPUT_STATE InitializeXinput()

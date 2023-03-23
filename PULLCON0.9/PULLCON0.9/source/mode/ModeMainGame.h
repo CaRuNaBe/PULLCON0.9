@@ -177,5 +177,5 @@ private:
 
 protected:
 	ObjectServer<ActorBase3D> object_main_game;
-	GameServer<UIBase> ui_player;
+	GameServerUnique<UIBase> ui_player;
 };

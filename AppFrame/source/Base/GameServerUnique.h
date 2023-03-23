@@ -9,17 +9,16 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
-template<class T> class GameServer2
+template<class T> class GameServerUnique
 {
-	using GameBasePtr = std::shared_ptr<T>;
+	using GameBasePtr = std::unique_ptr<T>;
 	using TypeModes = std::vector<GameBasePtr>;
 public:
 	/** コンストラクタ */
-	GameServer2():_updating( false )
-	{
-	}
+	GameServerUnique():_updating( false )
+	{}
 	/** デストラクタ */
-	~GameServer2()
+	~GameServerUnique()
 	{
 		Clear();
 	}
@@ -38,11 +37,11 @@ public:
 	{
 		if ( _updating )
 		{
-			_vPendingObjects.push_back(  object  );
+			_vPendingObjects.push_back( std::move( object ) );
 		}
 		else
 		{
-			_vObjects.push_back( object  );
+			_vObjects.push_back( std::move( object ) );
 		}
 	}
 	/** 削除予約する */
@@ -64,10 +63,10 @@ public:
 		}
 
 		// レイヤーによるソート
-		std::sort( _vObjects.begin(),_vObjects.end(),[]( const GameBasePtr& ch1,const GameBasePtr& ch2 )
-							 {
-								 return ch1->GetLayer() < ch2->GetLayer();
-							 } );
+		std::sort( _vObjects.begin(),_vObjects.end(),[] ( const GameBasePtr& ch1,const GameBasePtr& ch2 )
+		{
+			return ch1->GetLayer() < ch2->GetLayer();
+		} );
 
 		_updating = false;//処理終了
 		AddPendingObjects();//_vObjectsに追加し次のフレームから動かす

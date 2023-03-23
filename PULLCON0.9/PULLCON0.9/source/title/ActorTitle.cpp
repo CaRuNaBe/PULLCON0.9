@@ -3,8 +3,8 @@
 ActorTitle::ActorTitle( ApplicationBase& game,int layer,ModeTitle& mode )
 	:GameBase( game,layer )
 	,_mode( mode )
-	,low_movement_pull( 50 )
-	,up_movement_pull( 70 )
+	,LOW_MOVEMENT_PULL( 40 )
+	,UP_MOVEMENT_PULL( 60 )
 {
 	Initialize();
 }
