@@ -6,6 +6,7 @@
 namespace {
 	constexpr int BODY = 1;
 	constexpr int TURRET = 0;
+	constexpr float BULLET_DEFAULT_SPEED = 600.f;
 	const std::string DELIMITER = ",";
 	const std::string BULLET_STATE_PASS = "res/string_date/gamescript/bullet_state/";
 	const std::string BULLET_STATE = "bullet_state";
@@ -189,8 +190,7 @@ bool EnemyAAA::Update() {
 
 		// ˆê’èŠÔŠu‚ÅŒ‚‚Â
 		if (_CT == 0) {
-			float speed = 200.f;
-			_fSpeed = speed;
+			_fSpeed = BULLET_DEFAULT_SPEED;
 			SeGunShotPlay();
 
 			AddBullet(bullet_state[1], bullet_state[2], bullet_state[3], bullet_state[4], bullet_state[5], bullet_state[6]);
@@ -241,8 +241,7 @@ bool EnemyAAA::Update() {
 
 		// ƒvƒŒƒCƒ„[‚ªËŒ‚‚µ‚Ä‚¢‚½‚çˆê’èŠÔŠu‚ÅŒ‚‚Â
 		if (_fire && _CT == 0) {
-			float speed = 200.f;
-			_fSpeed += speed;
+			_fSpeed += BULLET_DEFAULT_SPEED;
 			AddBullet(bullet_state[1], bullet_state[2], bullet_state[3], bullet_state[4], bullet_state[5], bullet_state[6]);
 			_CT = 30;
 		}
@@ -337,19 +336,6 @@ void EnemyAAA::GetSearch() {
 		}
 	}
 }
-
-//void EnemyAAA::AddBullet()
-//{
-//	vector4 vBullet = {_vPos.x, _vPos.y + 100.f, _vPos.z};
-//
-//	auto bullet = std::make_shared<Bullet>( _game,_mode );
-//	bullet->SetPosition( vBullet );
-//	bullet->SetDir( _vDir );
-//	bullet->SetSpeed( _fSpeed );
-//	bullet->_fScale = 7.f;
-//	bullet->_ST = 300;
-//	_mode.GetObjectServer3D().Add( bullet );
-//}
 
 void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, const int& theta_degree_lower, const int& theta_degree_upper, const int& phi_degree_lower, const int& phi_degree_upper) {
 	vector4 vBullet = { _vPos.x, _vPos.y + 100.f, _vPos.z };
