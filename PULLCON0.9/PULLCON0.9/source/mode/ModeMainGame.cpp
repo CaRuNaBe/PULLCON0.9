@@ -398,11 +398,6 @@ void ModeMainGame::PreParsing()
  */
 void ModeMainGame::Parsing()
 {
-	for ( auto&& se : gGlobal._se )
-	{
-		StopSoundMem( se.second );
-	}
-
 	for ( auto&& mode : _game.GetModeServer()->GetObjects() )
 	{
 		if ( mode.get() != this )
@@ -410,6 +405,13 @@ void ModeMainGame::Parsing()
 			mode->Dead();
 		}
 	}
+
+	for ( auto&& se : gGlobal._se )
+	{
+		StopSoundMem( se.second );
+	}
+
+
 	object_main_game.Clear();
 	ui_player.Clear();
 	stage_name.clear();
