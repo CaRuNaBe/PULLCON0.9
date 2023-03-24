@@ -182,16 +182,6 @@ bool Player::Update()
 			_finish = false;
 		}
 
-		// スティック押し込みで速度操作
-		if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_RIGHT_THUMB ) )
-		{
-			_fSpeed += 30.f;
-		}
-		if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_LEFT_THUMB ) )
-		{
-			_fSpeed -= 30.f;
-		}
-
 		// カメラの向いている角度を取得
 		float sx = _cam._vPos.x - _cam._vTarget.x;
 		float sy = _cam._vPos.y - _cam._vTarget.y;
