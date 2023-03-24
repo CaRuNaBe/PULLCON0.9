@@ -48,11 +48,11 @@ void EnemyAAA::Init(int pile_num, vector4 _vPosi, float scale) {
 	_vPos = _vPosi;
 	_fScale = scale;
 	_collision._fRadius = 300.f * _fScale;
-	_collisionEvent._fRadius = 600.f * _fScale;
+	_collisionEvent._fRadius = 1200.f * _fScale;
 	_collisionSearch._fRadius = _collision._fRadius * 70.f;
 	_vDir = { 0.f, 0.f, -1.f };
-	_iLife = 5000;
-	_iDamage = 500;
+	_iLife = 10000;
+	_iDamage = 5;
 
 	_iEnemyType = 0;
 	_iPossession = pile_num;
@@ -60,6 +60,8 @@ void EnemyAAA::Init(int pile_num, vector4 _vPosi, float scale) {
 	_fAxialY = 0.f;
 	_get = false;
 	_CT = 30;
+
+	SetStateAAA();
 }
 
 bool EnemyAAA::Update() {
@@ -129,9 +131,7 @@ bool EnemyAAA::Update() {
 					_fire = obje->_fire;
 					_fSpeed = obje->_fSpeed;
 					_iType = 2;
-					if (AAA_ID == 2 || AAA_ID == 9) {
-						_iDamage = 500 * 100;
-					}
+					SetDamage();
 				}
 			}
 			if (obje->GetType() == Type::kEnemyAAA) {
@@ -261,7 +261,7 @@ bool EnemyAAA::Update() {
 	}
 
 	_collision._fRadius = 300.f * _fScale;
-	_collisionEvent._fRadius = 600.f * _fScale;
+	_collisionEvent._fRadius = 1200.f * _fScale;
 	_collisionSearch._fRadius = _collision._fRadius * 70.f;
 	UpdateCollision();   // コリジョンアップデート
 
@@ -408,8 +408,6 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 	}
 }
 
-
-
 void EnemyAAA::AddPieces(int min_id, int max_id, int pile_num, float scale) {
 	for (auto i = 0; i < pile_num; ++i) {
 		vector4 vPiece = { _vPos.x, _vPos.y - _collision._fRadius * static_cast<float>(i + 1), _vPos.z };
@@ -418,5 +416,34 @@ void EnemyAAA::AddPieces(int min_id, int max_id, int pile_num, float scale) {
 		piece->_coll = false;
 		piece->_iPart = i + 1;   // それぞれが何個目かを記憶
 		_mode.GetObjectServer3D().Add(piece);
+	}
+}
+
+void EnemyAAA::SetDamage() {
+	switch (AAA_ID) {
+	case 1:
+		_iDamage = 30;
+		break;
+	case 2:
+		_iDamage = 5 * 100;
+		break;
+	case 4:
+		_iDamage = 3;
+		break;
+	case 9:
+		_iDamage = 5 * 100;
+		break;
+	default:
+		break;
+	}
+}
+
+void EnemyAAA::SetStateAAA() {
+	switch (AAA_ID) {
+	case 1:
+		_iLife = 5;
+		break;
+	default:
+		break;
 	}
 }

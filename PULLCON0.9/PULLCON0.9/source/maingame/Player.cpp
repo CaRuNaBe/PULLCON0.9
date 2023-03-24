@@ -11,7 +11,7 @@ namespace
 	const float CAMERADEFAULT_POS_XZ = -4000.f;   // プレイヤーを原点としたときのカメラのXZ座標のベクトルの長さ
 	const float PLAYERLENGTH = 2000.f;   // プレイヤーの奥行きの長さ
 	const float AXIALROTATION = utility::degree_to_radian( 20.f );   // プレイヤーの移動時の傾き
-	const int   LIFEMAX = 10000;   // プレイヤーのライフ最大数
+	const int   LIFEMAX = 100;   // プレイヤーのライフ最大数
 	constexpr int PLAYER_ID = 0;
 	const std::string DELIMITER = ",";
 }
@@ -150,7 +150,7 @@ bool Player::Update()
 					if (!_isHitObject) {
 						ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["player_object_crash"]);
 						PlaySoundMem( gGlobal._se["player_object_crash"],DX_PLAYTYPE_BACK );
-						_iLife -= 500;
+						_iLife -= 5;
 					}
 					_isHit = true;
 					_isHitObject = true;
@@ -616,7 +616,7 @@ void Player::AddBullet( vector4 pos )
 	_mode.AddEffectFirePlayer( pos );
 	bullet->SetDir( _vDir );
 	bullet->SetSpeed( bullet->_fSpeed * 2.f );
-	bullet->_iDamage = 10000;
+	bullet->_iDamage = 1;
 	bullet->_iType = 2;
 	_mode.GetObjectServer3D().Add( bullet );
 }

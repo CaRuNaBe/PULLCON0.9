@@ -31,7 +31,7 @@ void EnemySkyhunter::Init()
 	_collision._fRadius = 1000.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 26.f;
 
-	_iLife = 10000;
+	_iLife = 2;
 
 }
 

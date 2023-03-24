@@ -31,7 +31,7 @@ void ClearObject::Init()
 	_collision._fRadius = 500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 15.f;
 
-	_iLife = 10000;
+	_iLife = 100;
 
 }
 
@@ -174,8 +174,7 @@ void ClearObject::AddBullet()
 	auto bullet = std::make_shared<Bullet>( _game,_mode );
 	bullet->SetPosition( vBullet );
 	bullet->SetDir( _vDir );
-	bullet->SetSpeed(bullet->_fSpeed * 4.f);
-	bullet->_iDamage = 500;
+	bullet->SetSpeed(bullet->_fSpeed * 3.f);
 	bullet->_iType = 1;
 	_mode.GetObjectServer3D().Add( bullet );
 }

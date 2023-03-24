@@ -30,9 +30,10 @@ public:
 
 	virtual void Damage();
 	void AddBullet( const int& theta_split_num,const int& phi_split_num,const int& theta_degree_lower,const int& theta_degree_upper,const int& phi_degree_lower,const int& phi_degree_upper );
-	void AddPieces( int pile_num );
-	void GetSearch();
 	void AddPieces( int min_id,int max_id,int pile_num,float scale );
+	void GetSearch();
+	void SetDamage();
+	void SetStateAAA();   // ID‚É‚æ‚Á‚ÄHP‚â’e‚Ìƒ_ƒ[ƒW‚ğİ’è‚·‚é
 
 	void SetAxialX( float _x_rad )
 	{
