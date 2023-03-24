@@ -134,7 +134,7 @@ void ModeMainGame::Initialize( std::string jsonpath,std::string scriptsname,std:
 {
 	state = ScriptState::PREPARSING;
 	ResourceServer::LoadDivGraph( "res/2D_image/outarea/ui_OutOfArea_Sheet.png",DANGER_ANIME_MAX,5,15,960,540,cg_outobarea );
-	cg_in_supply = ResourceServer::LoadGraph("res/2D_image/Fuelgage/ui_FuelVerTriangle.png");
+	cg_in_supply = ResourceServer::LoadGraph( "res/2D_image/Fuelgage/ui_FuelVerTriangle.png" );
 	start_time = 0;
 	max_line = 0;
 	now_line = 0;
@@ -257,6 +257,7 @@ bool ModeMainGame::Update()
 				{
 					StopSoundMem( se.second );
 				}
+			
 				cnt = 0;
 				is_player_danger = false;
 				game_over_timer = 300;
@@ -400,6 +401,14 @@ void ModeMainGame::Parsing()
 	for ( auto&& se : gGlobal._se )
 	{
 		StopSoundMem( se.second );
+	}
+
+	for ( auto&& mode : _game.GetModeServer()->GetObjects() )
+	{
+		if ( mode.get() != this )
+		{
+			mode->Dead();
+		}
 	}
 	object_main_game.Clear();
 	ui_player.Clear();

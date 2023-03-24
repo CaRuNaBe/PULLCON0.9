@@ -2,12 +2,10 @@
 UIBase::UIBase( ApplicationBase& game,int layer,ModeMainGame& _base )
 	:GameBase( game,layer )
 	,mode_base( _base )
-{
-}
+{}
 
 UIBase::~UIBase()
-{
-};
+{};
 
 bool UIBase::Initialize()
 {
