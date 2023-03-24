@@ -253,10 +253,6 @@ bool ModeMainGame::Update()
 			{
 				StopSoundFile();
 
-				for ( auto&& se : gGlobal._se )
-				{
-					StopSoundMem( se.second );
-				}
 			
 				cnt = 0;
 				is_player_danger = false;
