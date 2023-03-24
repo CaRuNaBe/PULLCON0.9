@@ -260,8 +260,8 @@ bool Player::Update()
 		v.x = cos( rad + camerad ) * distance;
 		v.z = sin( rad + camerad ) * distance;
 		v.y = sin( _fRotatX ) * distance;
-		_vTarget = _vPos + v;
-
+		_vTarget = _vPos + v * v.Lenght() * 4.f;
+		
 		if ( _game.Getinput().XinputEveryOtherRightTrigger( 10 ) )
 		{  // RT
 				// SEÄ¶
@@ -493,9 +493,7 @@ bool Player::Draw()
 	MV1DrawModel( _handleMagnet );
 	MV1DrawModel( _handleBackAirscrew );
 	SetUseLighting( TRUE );
-	// ƒvƒŒƒCƒ„[‚Ì’e‚Ì‹O“¹‚ğ•`‰æ
-	//DrawLine3D( ToDX( _vPos ),ToDX( _vTarget ),GetColor( 255,0,0 ) );
-
+	
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 
 	if ( !((ModeMainGame&)_mode)._dbgCollisionDraw )
