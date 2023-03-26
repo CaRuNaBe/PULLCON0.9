@@ -200,8 +200,6 @@ void ClearObject::AddBullet()
 
 			auto bullet_dir = bullet_dir_pol.ToVector4();
 
-
-
 			MATRIX to_player_dxmatrix = MGetRotVec2( Y_UP,ToDX( _vDir ) );
 			VECTOR bullet_dx_dir = VTransform( ToDX( bullet_dir ),to_player_dxmatrix );
 
@@ -209,7 +207,6 @@ void ClearObject::AddBullet()
 
 
 			bullet->SetDir(bullet_dir);
-			bullet->_iDamage = _iDamage;
 			bullet->_iType = _iType;
 			bullet->_ST = 300;
 			bullet_dir_pol.PhiIncrement( PHI_ADD_NUM );

@@ -182,16 +182,6 @@ bool Player::Update()
 			_finish = false;
 		}
 
-		// スティック押し込みで速度操作
-		if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_RIGHT_THUMB ) )
-		{
-			_fSpeed += 30.f;
-		}
-		if ( _game.Getinput().GetTrgXinput( XINPUT_BUTTON_LEFT_THUMB ) )
-		{
-			_fSpeed -= 30.f;
-		}
-
 		// カメラの向いている角度を取得
 		float sx = _cam._vPos.x - _cam._vTarget.x;
 		float sy = _cam._vPos.y - _cam._vTarget.y;
@@ -270,8 +260,8 @@ bool Player::Update()
 		v.x = cos( rad + camerad ) * distance;
 		v.z = sin( rad + camerad ) * distance;
 		v.y = sin( _fRotatX ) * distance;
-		_vTarget = _vPos + v;
-
+		_vTarget = _vPos + v * v.Lenght() * 4.f;
+		
 		if ( _game.Getinput().XinputEveryOtherRightTrigger( 10 ) )
 		{  // RT
 				// SE再生
@@ -503,9 +493,7 @@ bool Player::Draw()
 	MV1DrawModel( _handleMagnet );
 	MV1DrawModel( _handleBackAirscrew );
 	SetUseLighting( TRUE );
-	// プレイヤーの弾の軌道を描画
-	//DrawLine3D( ToDX( _vPos ),ToDX( _vTarget ),GetColor( 255,0,0 ) );
-
+	
 	// コリジョン描画
 
 	if ( !((ModeMainGame&)_mode)._dbgCollisionDraw )

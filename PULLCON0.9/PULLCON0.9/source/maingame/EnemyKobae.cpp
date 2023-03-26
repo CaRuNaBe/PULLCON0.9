@@ -130,7 +130,7 @@ bool EnemyKobae::Update()
 	{
 		AddBullet();
 		SeGunShotPlay();
-		_CT = 5;
+		_CT = 120;
 	}
 
 	vector4 move = _vVelocity * _fSpeed;
