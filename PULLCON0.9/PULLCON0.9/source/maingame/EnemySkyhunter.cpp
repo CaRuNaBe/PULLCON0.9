@@ -110,7 +110,7 @@ bool EnemySkyhunter::Update()
 	{
 		AddBullet();
 		SeGunShotPlay();
-		_CT = 10;
+		_CT = 120;
 	}
 
 	if ( _column._synchronize != _synchronize )
