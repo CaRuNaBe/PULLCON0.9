@@ -58,6 +58,7 @@ protected:
 
 	int    _handle_body;
 	int    _handle_turret;
+	
 	int AAA_ID;
 	std::vector<int>bullet_state;
 	
