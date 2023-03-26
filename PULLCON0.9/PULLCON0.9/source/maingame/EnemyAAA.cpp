@@ -257,9 +257,6 @@ bool EnemyAAA::Update()
 	}
 	else if ( _stateAAA == State::WEAPON )
 	{
-// ‘Î‹ó–C‚É‚æ‚Á‚Ä‘_‚¤ˆÊ’u‚ğ‰º‚É‚¸‚ç‚·
-		_vTarget.y -= static_cast<float>(_iPieces - 1) * _collision._fRadius;
-
 		// OŸŒ³‹ÉÀ•W(r(length3D),ƒÆ(theta),ƒÓ(rad))
 		float sx = _vTarget.x - _vPos.x;
 		float sy = _vTarget.y - _vPos.y;

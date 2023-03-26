@@ -161,5 +161,7 @@ void ActorBase3D::DrawCollisionObject( vector4 color )
 void ActorBase3D::SeGunShotPlay()
 {
 	ChangeVolumeSoundMem( 255 * 80 / 100,gGlobal._se["se_gunshot"] );
-	PlaySoundMem( gGlobal._se["se_gunshot"],DX_PLAYTYPE_BACK );
+	if (!(CheckSoundMem(gGlobal._se["se_gunshot"]))) {
+		PlaySoundMem(gGlobal._se["se_gunshot"], DX_PLAYTYPE_BACK);
+	}
 };
