@@ -16,17 +16,18 @@ namespace math
 			*this = Matrix3::Identity;
 		}
 		constexpr Matrix3
-		(float m00,float m01,float m02,								
-		 float m10,float m11,float m12,								
-		 float m20,float m21,float m22) noexcept
+		( float m00,float m01,float m02,
+			float m10,float m11,float m12,
+			float m20,float m21,float m22 ) noexcept
 			: m{m00, m01, m02,
 			m10, m11, m12,
 			m20, m21, m22}
-		{}
-		friend static Vector2 Vector2::Transform(const Vector2& vec,const Matrix3& mat,float w);
+		{
+		}
+		friend static Vector2 Vector2::Transform( const Vector2& vec,const Matrix3& mat,float w );
 
 		// çsóÒÇÃèÊéZ
-		friend Matrix3 operator*(const Matrix3& l,const Matrix3& r)
+		friend Matrix3 operator*( const Matrix3& l,const Matrix3& r )
 		{
 			return {
 				// row 0
@@ -43,25 +44,25 @@ namespace math
 				l.m[2][0] * r.m[0][2] + l.m[2][1] * r.m[1][2] + l.m[2][2] * r.m[2][2],
 			};
 		}
-		Matrix3& operator*=(const Matrix3& right)
+		Matrix3& operator*=( const Matrix3& right )
 		{
 			*this = *this * right;
 			return *this;
 		}
 
 		// âÒì]çsóÒÇÃçÏê¨
-		static Matrix3 CreateRotation(float theta)
+		static Matrix3 CreateRotation( float theta )
 		{
 			using std::sin;	using std::cos;
 			return {
-				cos(theta), sin(theta), 0.0f,
-				-sin(theta), cos(theta), 0.0f,
+				cos( theta ), sin( theta ), 0.0f,
+				-sin( theta ), cos( theta ), 0.0f,
 				0.0f, 0.0f, 1.0f,
 			};
 		}
 
 		// ägèkçsóÒÇÃçÏê¨
-		static Matrix3 CreateScale(float xScale,float yScale)
+		static Matrix3 CreateScale( float xScale,float yScale )
 		{
 			return {
 				xScale, 0.0f, 0.0f,
@@ -69,17 +70,17 @@ namespace math
 				0.0f, 0.0f, 1.0f,
 			};
 		}
-		static Matrix3 CreateScale(const Vector2& scaleVector)
+		static Matrix3 CreateScale( const Vector2& scaleVector )
 		{
-			return CreateScale(scaleVector.x,scaleVector.y);
+			return CreateScale( scaleVector.x,scaleVector.y );
 		}
-		static Matrix3 CreateScale(float scale)
+		static Matrix3 CreateScale( float scale )
 		{
-			return CreateScale(scale,scale);
+			return CreateScale( scale,scale );
 		}
 
 		// ïΩçsà⁄ìÆçsóÒÇÃçÏê¨
-		static Matrix3 CreateTranslation(const Vector2& trans)
+		static Matrix3 CreateTranslation( const Vector2& trans )
 		{
 			return {
 				1.0, 0.0, 0.0,

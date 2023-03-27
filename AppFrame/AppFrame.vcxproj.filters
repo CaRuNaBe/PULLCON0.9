@@ -1,135 +1,264 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
+    <Filter Include="source">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\ResourceServer">
+    <Filter Include="source\ResourceServer">
       <UniqueIdentifier>{52d70371-9f08-47a3-b018-e751a2a6bf09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object">
+    <Filter Include="source\Object">
       <UniqueIdentifier>{7422c3fe-f4e2-4f3e-9f55-d6560ee84fba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Application">
+    <Filter Include="source\Application">
       <UniqueIdentifier>{99a84c11-06de-4ec3-b42d-f157ce3f07b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Mode">
-      <UniqueIdentifier>{8531f183-e42e-454f-b085-44278d9c3903}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Math">
+    <Filter Include="source\Math">
       <UniqueIdentifier>{adb50178-8503-4cd3-aa02-1f3d5bc8a761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Sclipt">
+      <UniqueIdentifier>{f7001ca2-cb2e-4783-9ea9-7242b31127b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Base">
+      <UniqueIdentifier>{2404f6f2-a7e2-4d8a-97b4-103e30fc1658}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\ResourceServer\ResourceServer.h">
-      <Filter>ソース ファイル\ResourceServer</Filter>
+      <Filter>source\ResourceServer</Filter>
     </ClInclude>
     <ClInclude Include="source\Application\ApplicationBase.h">
-      <Filter>ソース ファイル\Application</Filter>
+      <Filter>source\Application</Filter>
     </ClInclude>
-    <ClInclude Include="source\Application\input_manager.h">
-      <Filter>ソース ファイル\Application</Filter>
+    <ClInclude Include="source\Application\InputManager.h">
+      <Filter>source\Application</Filter>
     </ClInclude>
-    <ClInclude Include="source\Mode\ModeServer.h">
-      <Filter>ソース ファイル\Mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Mode\ModeBase.h">
-      <Filter>ソース ファイル\Mode</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Application\UtilMacro.h">
-      <Filter>ソース ファイル\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Object\ObjectBase.h">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Object\ObjectServer.h">
-      <Filter>ソース ファイル\Object</Filter>
+    <ClInclude Include="source\Base\ObjectServer.h">
+      <Filter>source\Object</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\2dCollision.h">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\dx_utility.h">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\math.h">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\matrix33.h">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\matrix44.h">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\rect.h">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\vector4.h">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClInclude>
-    <ClInclude Include="source\Math\vector2.h">
-      <Filter>ソース ファイル\Math</Filter>
+    <ClInclude Include="source\Math\Vector2.h">
+      <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\utility.h">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\appframe.h" />
     <ClInclude Include="source\Math\Easing.h">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\ScriptsData.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\ScriptsString.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\3dCollision.h">
+      <Filter>source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandLabel.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandBase.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandCrFeedOut.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandCrFeedIn.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandDrawIn.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandDrawOut.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandImageLoad.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMoviePlay.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMusicBack.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMusicLoop.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMusicStop.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandSeLoad.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandMessage.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Base\GameBase.h">
+      <Filter>source\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Base\GameServerUnique.h">
+      <Filter>source\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\Polar2.h">
+      <Filter>source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Base\GameServerShared.h">
+      <Filter>source\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandDrawTime.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Base\ObjectServer3D.h">
+      <Filter>source\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandDrawString.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Script\CommandDrawRect.h">
+      <Filter>source\Sclipt</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Math\Polar3D.h">
+      <Filter>source\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application\WinMain.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp">
-      <Filter>ソース ファイル\ResourceServer</Filter>
+      <Filter>source\ResourceServer</Filter>
     </ClCompile>
     <ClCompile Include="source\Application\ApplicationBase.cpp">
-      <Filter>ソース ファイル\Application</Filter>
+      <Filter>source\Application</Filter>
     </ClCompile>
-    <ClCompile Include="source\Application\input_manager.cpp">
-      <Filter>ソース ファイル\Application</Filter>
+    <ClCompile Include="source\Application\InputManager.cpp">
+      <Filter>source\Application</Filter>
     </ClCompile>
-    <ClCompile Include="source\Mode\ModeServer.cpp">
-      <Filter>ソース ファイル\Mode</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Mode\ModeBase.cpp">
-      <Filter>ソース ファイル\Mode</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Object\ObjectBase.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Object\ObjectServer.cpp">
-      <Filter>ソース ファイル\Object</Filter>
+    <ClCompile Include="source\Base\ObjectServer.cpp">
+      <Filter>source\Object</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\2dCollision.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\dx_utility.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\math.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\matrix33.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\matrix44.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\rect.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\utility.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="source\Math\vector2.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+    <ClCompile Include="source\Math\Vector2.cpp">
+      <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\vector4.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\Easing.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\ScriptsData.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\ScriptsString.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\3dCollision.cpp">
+      <Filter>source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandLabel.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandCrFeedOut.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandCrFeedIn.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawIn.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawOut.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandImageLoad.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMoviePlay.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMusicBack.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMusicLoop.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMusicStop.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandSeLoad.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandMessage.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Base\GameServerUnique.cpp">
+      <Filter>source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Base\GameBase.cpp">
+      <Filter>source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\Polar2.cpp">
+      <Filter>source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Base\GameServerShared.cpp">
+      <Filter>source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawTime.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Base\ObjectServer3D.cpp">
+      <Filter>source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawString.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Script\CommandDrawRect.cpp">
+      <Filter>source\Sclipt</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Math\Polar3D.cpp">
+      <Filter>source\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

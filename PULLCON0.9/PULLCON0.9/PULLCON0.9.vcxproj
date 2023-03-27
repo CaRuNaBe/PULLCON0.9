@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -75,24 +75,32 @@
     <IntDir>$(Platform)/$(Configuration)/</IntDir>
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)/$(Configuration)/</OutDir>
     <IntDir>$(Platform)/$(Configuration)/</IntDir>
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)/$(Configuration)/</OutDir>
     <IntDir>$(Platform)/$(Configuration)/</IntDir>
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)/$(Configuration)/</OutDir>
     <IntDir>$(Platform)/$(Configuration)/</IntDir>
     <IncludePath>../../AppFrame/source;$(SolutionDir)../DxLib;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Platform)/$(Configuration);$(SolutionDir)../DxLib;$(LibraryPath)</LibraryPath>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -155,12 +163,104 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\maingame\EffectFireGunship.cpp" />
+    <ClCompile Include="source\maingame\EffectHitBlackSmoke.cpp" />
+    <ClCompile Include="source\maingame\EffectSpawnAmmo.cpp" />
+    <ClCompile Include="source\maingame\EffectHitPlayerFrame.cpp" />
+    <ClCompile Include="source\maingame\EffectDeathObject.cpp" />
+    <ClCompile Include="source\maingame\EffectFirePlayer.cpp" />
+    <ClCompile Include="source\maingame\EffectBase.cpp" />
+    <ClCompile Include="source\ApplicationGlobal.cpp" />
+    <ClCompile Include="source\maingame\ActorBase3D.cpp" />
+    <ClCompile Include="source\maingame\EffectDestroyAmmo.cpp" />
+    <ClCompile Include="source\ModeTest.cpp" />
+    <ClCompile Include="source\ObjectBase.cpp" />
+    <ClCompile Include="source\title\ActorTitle.cpp" />
+    <ClCompile Include="source\ui\UIPullGage.cpp" />
+    <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp" />
+    <ClCompile Include="source\ui\UIBase.cpp" />
+    <ClCompile Include="source\maingame\Bullet.cpp" />
+    <ClCompile Include="source\maingame\ClearObject.cpp" />
+    <ClCompile Include="source\maingame\AreaCommunication.cpp" />
+    <ClCompile Include="source\maingame\EnemyAAA.cpp" />
+    <ClCompile Include="source\maingame\EnemyColumn.cpp" />
+    <ClCompile Include="source\maingame\EnemyKobae.cpp" />
+    <ClCompile Include="source\maingame\EnemySkyhunter.cpp" />
+    <ClCompile Include="source\maingame\AreaEnemySpawn.cpp" />
+    <ClCompile Include="source\maingame\GameStage.cpp" />
+    <ClCompile Include="source\maingame\AreaNoEntry.cpp" />
+    <ClCompile Include="source\maingame\SkySphere.cpp" />
+    <ClCompile Include="source\maingame\StageObject.cpp" />
+    <ClCompile Include="source\maingame\AreaSupply.cpp" />
+    <ClCompile Include="source\maingame\Player.cpp" />
+    <ClCompile Include="source\mode\ModeMainGame.cpp" />
+    <ClCompile Include="source\mode\ModeResourceRoad.cpp" />
+    <ClCompile Include="source\mode\ModeSpeakScript.cpp" />
+    <ClCompile Include="source\title\EndGuid.cpp" />
+    <ClCompile Include="source\title\CreditGuid.cpp" />
+    <ClCompile Include="source\title\EndLogo.cpp" />
+    <ClCompile Include="source\title\CreditLogo.cpp" />
+    <ClCompile Include="source\mode\ModeTitle.cpp" />
     <ClCompile Include="source\ApplicationMain.cpp" />
-    <ClCompile Include="source\ModeGame.cpp" />
+    <ClCompile Include="source\title\TitlePlayer.cpp" />
+    <ClCompile Include="source\title\TitleLogo.cpp" />
+    <ClCompile Include="source\title\StartLogo.cpp" />
+    <ClCompile Include="source\title\StartGuid.cpp" />
+    <ClCompile Include="source\speakscript\SpeakScriptObject.cpp" />
+    <ClCompile Include="source\ui\UIFuelGage.cpp" />
+    <ClCompile Include="source\ui\UIHpGage.cpp" />
+    <ClCompile Include="source\ui\UICursor.cpp" />
+    <ClCompile Include="source\ui\UITutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\maingame\EffectFireGunship.h" />
+    <ClInclude Include="source\maingame\EffectHitBlackSmoke.h" />
+    <ClInclude Include="source\maingame\EffectSpawnAmmo.h" />
+    <ClInclude Include="source\maingame\EffectHitPlayerFrame.h" />
+    <ClInclude Include="source\maingame\EffectDeathObject.h" />
+    <ClInclude Include="source\maingame\EffectFirePlayer.h" />
+    <ClInclude Include="source\maingame\EffectBase.h" />
+    <ClInclude Include="source\ApplicationGlobal.h" />
+    <ClInclude Include="source\maingame\ActorBase3D.h" />
+    <ClInclude Include="source\maingame\EffectDestroyAmmo.h" />
+    <ClInclude Include="source\ModeTest.h" />
+    <ClInclude Include="source\ObjectBase.h" />
+    <ClInclude Include="source\title\ActorTitle.h" />
+    <ClInclude Include="source\ui\UIPullGage.h" />
+    <ClInclude Include="source\speakscript\ActorBaseSpeak.h" />
+    <ClInclude Include="source\ui\UIBase.h" />
+    <ClInclude Include="source\maingame\Bullet.h" />
+    <ClInclude Include="source\maingame\ClearObject.h" />
+    <ClInclude Include="source\maingame\AreaCommunication.h" />
+    <ClInclude Include="source\maingame\EnemyAAA.h" />
+    <ClInclude Include="source\maingame\EnemyColumn.h" />
+    <ClInclude Include="source\maingame\EnemyKobae.h" />
+    <ClInclude Include="source\maingame\EnemySkyhunter.h" />
+    <ClInclude Include="source\maingame\AreaEnemySpawn.h" />
+    <ClInclude Include="source\maingame\GameStage.h" />
+    <ClInclude Include="source\maingame\AreaNoEntry.h" />
+    <ClInclude Include="source\maingame\SkySphere.h" />
+    <ClInclude Include="source\maingame\StageObject.h" />
+    <ClInclude Include="source\maingame\AreaSupply.h" />
+    <ClInclude Include="source\maingame\Player.h" />
+    <ClInclude Include="source\mode\ModeMainGame.h" />
+    <ClInclude Include="source\mode\ModeResourceRoad.h" />
+    <ClInclude Include="source\mode\ModeSpeakScript.h" />
+    <ClInclude Include="source\title\EndGuid.h" />
+    <ClInclude Include="source\title\CreditGuid.h" />
+    <ClInclude Include="source\title\EndLogo.h" />
+    <ClInclude Include="source\title\CreditLogo.h" />
+    <ClInclude Include="source\mode\ModeTitle.h" />
     <ClInclude Include="source\ApplicationMain.h" />
-    <ClInclude Include="source\ModeGame.h" />
+    <ClInclude Include="source\title\TitlePlayer.h" />
+    <ClInclude Include="source\title\TitleLogo.h" />
+    <ClInclude Include="source\title\StartLogo.h" />
+    <ClInclude Include="source\title\StartGuid.h" />
+    <ClInclude Include="source\speakscript\SpeakScriptObject.h" />
+    <ClInclude Include="source\ui\UIFuelGage.h" />
+    <ClInclude Include="source\ui\UIHpGage.h" />
+    <ClInclude Include="source\ui\UICursor.h" />
+    <ClInclude Include="source\ui\UITutorial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

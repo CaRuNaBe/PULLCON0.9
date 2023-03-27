@@ -11,11 +11,11 @@ namespace math
 
 namespace math
 {
-	VECTOR ToDX(math::vector4& vector);
+	VECTOR ToDX( math::vector4& vector );
 
-	math::vector4 ToMath(VECTOR& vector);
+	math::vector4 ToMath( VECTOR& vector );
 
-	MATRIX ToDX(math::matrix44& matrix);
+	MATRIX ToDX( math::matrix44& matrix );
 
-	math::matrix44 ToMath(MATRIX& matrix);
+	math::matrix44 ToMath( MATRIX& matrix );
 }

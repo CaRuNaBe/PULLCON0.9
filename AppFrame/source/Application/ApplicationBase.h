@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include<memory>
-#include "../Mode/ModeServer.h"
-#include "../Object/ObjectServer.h"
-#include"input_manager.h"
+#include <memory>
+#include "../Base/GameBase.h"
+#include "../Base/GameServerShared.h"
+#include "InputManager.h"
 
 
 
@@ -16,7 +16,7 @@ public:
 	ApplicationBase();
 	virtual ~ApplicationBase();
 
-	virtual bool Initialize(HINSTANCE hInstance);
+	virtual bool Initialize( HINSTANCE hInstance );
 	virtual bool Terminate();
 	virtual bool Input();
 	virtual bool Update();
@@ -34,25 +34,43 @@ public:
 	{
 		return 480;
 	}
-
+	virtual int DispBasics()
+	{
+		return 0;
+	}
 	static	ApplicationBase* GetInstance()
 	{
 		return _lpInstance;
 	}
 	//ゲームモード管理クラス取得
-	std::shared_ptr<ModeServer> GetModeServer()
+	std::shared_ptr<GameServerShared<GameBase>> GetModeServer()
 	{
-		return _serverMode;
+		return _BaseServer;
 	}
+
 	//入力取得
-	InputManager Getinput()
+	InputManager& Getinput()
 	{
 		return _input;
+	}
+	int& GetFontHandle()
+	{
+		return font_hundle;
+	}
+	int GetFuntSize()
+	{
+		return font_size;
+	}
+	void IsGameEnd()
+	{
+		is_game_end = true;
 	}
 protected:
 	static	ApplicationBase* _lpInstance;
 
-	std::shared_ptr<ModeServer> _serverMode;
-
-	InputManager _input;//inputクラス取得
+	std::shared_ptr<GameServerShared<GameBase>> _BaseServer;
+	InputManager _input;//inputクラスインスタス
+	int font_hundle;
+	int font_size;
+	bool is_game_end;
 };

@@ -15,7 +15,7 @@ namespace math
 	//!	@return  ŒvZŒ‹‰Ê
 	//!
 	const EasingMap Easing::_modes = {
-		{ "Linear",[](float t, float b, float c, float d){return (c - b) * t / d + b;}},
+		{ "Linear",[](float t, float b, float c, float d){return (c - b) * t / d + b;}},//
 
 		{ "InQuad",[](float t, float b, float c, float d){t /= d;return (c - b) * t * t + b;}},
 

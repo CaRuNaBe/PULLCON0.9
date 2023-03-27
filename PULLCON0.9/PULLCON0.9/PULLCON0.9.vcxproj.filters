@@ -1,21 +1,321 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="source">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
+    <ClCompile Include="source\ApplicationGlobal.cpp" />
+    <ClCompile Include="source\ApplicationMain.cpp" />
+    <ClCompile Include="source\ModeTest.cpp" />
+    <ClCompile Include="source\mode\ModeMainGame.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeResourceRoad.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeSpeakScript.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mode\ModeTitle.cpp">
+      <Filter>mode</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\ActorTitle.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\CreditGuid.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\CreditLogo.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\EndGuid.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\EndLogo.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\StartGuid.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\StartLogo.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\TitleLogo.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\title\TitlePlayer.cpp">
+      <Filter>title</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UIPullGage.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UIHpGage.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UIFuelGage.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UICursor.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UIBase.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp">
+      <Filter>speakscript</Filter>
+    </ClCompile>
+    <ClCompile Include="source\speakscript\SpeakScriptObject.cpp">
+      <Filter>speakscript</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectBase.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectDeathObject.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectFirePlayer.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectHitPlayerFrame.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectSpawnAmmo.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectDestroyAmmo.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemySkyhunter.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyKobae.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyColumn.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EnemyAAA.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\ClearObject.cpp">
+      <Filter>maingame\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\GameStage.cpp">
+      <Filter>maingame\stageobject</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\SkySphere.cpp">
+      <Filter>maingame\stageobject</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\StageObject.cpp">
+      <Filter>maingame\stageobject</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaCommunication.cpp">
+      <Filter>maingame\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaEnemySpawn.cpp">
+      <Filter>maingame\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaNoEntry.cpp">
+      <Filter>maingame\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\AreaSupply.cpp">
+      <Filter>maingame\area</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\ActorBase3D.cpp">
+      <Filter>maingame\base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\Player.cpp">
+      <Filter>maingame\player</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\Bullet.cpp">
+      <Filter>maingame\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectHitBlackSmoke.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\maingame\EffectFireGunship.cpp">
+      <Filter>maingame\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ObjectBase.cpp">
+      <Filter>maingame\base</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ui\UITutorial.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\ApplicationMain.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ModeGame.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="source\ApplicationGlobal.h" />
     <ClInclude Include="source\ApplicationMain.h" />
-    <ClInclude Include="source\ModeGame.h" />
+    <ClInclude Include="source\ModeTest.h" />
+    <ClInclude Include="source\mode\ModeMainGame.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeResourceRoad.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeSpeakScript.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mode\ModeTitle.h">
+      <Filter>mode</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\ActorTitle.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\CreditGuid.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\CreditLogo.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\EndGuid.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\EndLogo.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\StartGuid.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\StartLogo.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\TitleLogo.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\title\TitlePlayer.h">
+      <Filter>title</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UIPullGage.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UIHpGage.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UIFuelGage.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UICursor.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UIBase.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="source\speakscript\ActorBaseSpeak.h">
+      <Filter>speakscript</Filter>
+    </ClInclude>
+    <ClInclude Include="source\speakscript\SpeakScriptObject.h">
+      <Filter>speakscript</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectBase.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectDeathObject.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectFirePlayer.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectHitPlayerFrame.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectSpawnAmmo.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectDestroyAmmo.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemySkyhunter.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyKobae.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyColumn.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EnemyAAA.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\ClearObject.h">
+      <Filter>maingame\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\GameStage.h">
+      <Filter>maingame\stageobject</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\SkySphere.h">
+      <Filter>maingame\stageobject</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\StageObject.h">
+      <Filter>maingame\stageobject</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaCommunication.h">
+      <Filter>maingame\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaEnemySpawn.h">
+      <Filter>maingame\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaNoEntry.h">
+      <Filter>maingame\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\AreaSupply.h">
+      <Filter>maingame\area</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\ActorBase3D.h">
+      <Filter>maingame\base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\Player.h">
+      <Filter>maingame\player</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\Bullet.h">
+      <Filter>maingame\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectHitBlackSmoke.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\maingame\EffectFireGunship.h">
+      <Filter>maingame\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ObjectBase.h">
+      <Filter>maingame\base</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ui\UITutorial.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="mode">
+      <UniqueIdentifier>{a2db5df1-b624-4c99-a359-d402e8b26ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame">
+      <UniqueIdentifier>{4cd13da4-4a58-4fd0-9c9d-168088cd8380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="title">
+      <UniqueIdentifier>{4a189cde-503a-4ead-aed9-b1e5285705a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{04228a34-208f-4dbc-9cda-1f53591e1fe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="speakscript">
+      <UniqueIdentifier>{09073051-26f9-427e-b6cc-72392150c292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\effect">
+      <UniqueIdentifier>{fbfb6d93-ff10-45e7-9ef8-8a76d6c7edb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\enemy">
+      <UniqueIdentifier>{1c13089f-d0ea-4632-82d8-40cf5ff624b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\stageobject">
+      <UniqueIdentifier>{60d8fd89-5f54-4fab-a65a-794374b3b1fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\area">
+      <UniqueIdentifier>{4c76b2a7-e728-47cd-b063-b11201e93e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\base">
+      <UniqueIdentifier>{ae07e5ca-a592-4e03-9b25-c17e27238bfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\player">
+      <UniqueIdentifier>{9aeceb63-bd17-4a02-886d-8c251a45f0c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maingame\bullet">
+      <UniqueIdentifier>{0791e436-46f0-4dcf-b134-fc64703cb5ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
