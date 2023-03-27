@@ -73,7 +73,6 @@ bool ClearObject::Update()
 				{
 					if ( obje->_iType == 2 )
 					{
-						_CT = 10;
 						_overlap = true;
 						obje->Damage();
 						_iLife -= obje->_iDamage;
@@ -174,56 +173,11 @@ bool ClearObject::Draw()
 
 void ClearObject::AddBullet()
 {
-	const int theta_split_num = 60;
-	const int phi_split_num = 30;
-	const int theta_degree_lower = 0;
-	const int theta_degree_upper = 30;
-	const int phi_degree_lower = 0;
-	const int phi_degree_upper = 361;
-
-	vector4 vBullet = {_vPos.x, _vPos.y - 500.f, _vPos.z};
-	Polar3D bullet_dir_pol = {{0,0,0},1.0f,0.0f,0.0f};
-	const auto THETA_ADD_NUM = math::utility::PI / theta_split_num;
-	const auto PHI_ADD_NUM = math::utility::TwoPi / phi_split_num;
-	const auto THETA_RADIAN_LOWER = utility::degree_to_radian( static_cast<float>(theta_degree_lower) );
-	const auto THETA_RADIAN_UPPER = utility::degree_to_radian( static_cast<float>(theta_degree_upper) );
-	const auto PHI_RADIAN_LOWER = utility::degree_to_radian( static_cast<float>(phi_degree_lower) );
-	const auto PHI_RADIAN_UPPER = utility::degree_to_radian( static_cast<float>(phi_degree_upper) );
-
-	const auto Y_UP = VGet( 0.f,1.f,0.f );
-	for ( int i = 0; i < theta_split_num; i++ )
-	{
-		for ( int i = 0; i < phi_split_num; i++ )
-		{
-			auto bullet = std::make_shared<Bullet>( _game,_mode );
-			bullet->SetPosition( vBullet );
-
-			auto bullet_dir = bullet_dir_pol.ToVector4();
-
-			MATRIX to_player_dxmatrix = MGetRotVec2( Y_UP,ToDX( _vDir ) );
-			VECTOR bullet_dx_dir = VTransform( ToDX( bullet_dir ),to_player_dxmatrix );
-
-			bullet_dir = ToMath( bullet_dx_dir );
-
-
-			bullet->SetDir(bullet_dir);
-			bullet->_iType = _iType;
-			bullet->_ST = 300;
-			bullet_dir_pol.PhiIncrement( PHI_ADD_NUM );
-
-
-			if ( bullet_dir_pol.GetTheta() < THETA_RADIAN_LOWER ||
-				bullet_dir_pol.GetTheta() >= THETA_RADIAN_UPPER ||
-				bullet_dir_pol.GetPhi() < PHI_RADIAN_LOWER ||
-				bullet_dir_pol.GetPhi() >= PHI_RADIAN_UPPER )
-			{
-				continue;
-			}
-			_mode.GetObjectServer3D().Add( bullet );
-
-		}
-		bullet_dir_pol.SetPhi( 0.0f );
-
-		bullet_dir_pol.ThetaIncrement( THETA_ADD_NUM );
-	}
+	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
+	auto bullet = std::make_shared<Bullet>(_game, _mode);
+	bullet->SetPosition(vBullet);
+	bullet->SetDir(_vDir);
+	bullet->SetSpeed(bullet->_fSpeed * 2.f);
+	bullet->_iType = 1;
+	_mode.GetObjectServer3D().Add(bullet);
 }
