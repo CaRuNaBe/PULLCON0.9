@@ -2,11 +2,10 @@
 #include "appframe.h"
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
-class AreaSupply:public ActorBase3D
-{
+class AreaSupply :public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	AreaSupply( ApplicationBase& game,ModeMainGame& mode , float _radius );
+	AreaSupply(ApplicationBase& game, ModeMainGame& mode, float _radius);
 	virtual ~AreaSupply();
 	virtual Type GetType() { return Type::kAreaSupply; }
 	virtual void Init();
@@ -15,6 +14,5 @@ public:
 
 protected:
 	int    _handle;
-	float radius;
 };
 

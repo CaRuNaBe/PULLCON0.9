@@ -7,7 +7,7 @@ class EnemySkyhunter :
 	public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	EnemySkyhunter(ApplicationBase& game,ModeMainGame& mode, EnemyColumn& skyhunter);
+	EnemySkyhunter(ApplicationBase& game, ModeMainGame& mode, EnemyColumn& skyhunter);
 	virtual ~EnemySkyhunter();
 	virtual Type GetType() { return Type::kEnemySkyhunter; }
 	// スカイハンターの状態

@@ -6,7 +6,7 @@ class EnemyColumn :
 	public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	EnemyColumn(ApplicationBase& game,ModeMainGame& mode, vector4 pos);
+	EnemyColumn(ApplicationBase& game, ModeMainGame& mode, vector4 pos);
 	virtual ~EnemyColumn();
 	virtual Type GetType() { return Type::kEnemySkyhunter; }
 	// スカイハンター隊列の状態

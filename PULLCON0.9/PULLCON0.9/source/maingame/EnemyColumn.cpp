@@ -1,7 +1,7 @@
 #include  "EnemyColumn.h"
 #include  "EnemySkyhunter.h"
 #include  "GameStage.h"
-EnemyColumn::EnemyColumn(ApplicationBase& game,ModeMainGame& mode, vector4 pos)
+EnemyColumn::EnemyColumn(ApplicationBase& game, ModeMainGame& mode, vector4 pos)
 	:base(game, mode) {
 	Init();
 	AddPieces(pos);
@@ -27,7 +27,6 @@ void EnemyColumn::Init() {
 
 bool EnemyColumn::Update() {
 	base::Update();
-
 
 	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
 		if (obje->GetType() == Type::kPlayer) {
@@ -56,9 +55,8 @@ bool EnemyColumn::Update() {
 		}
 	}
 
-	vector4 move = _vVelocity * _fSpeed;
-
 	MV1_COLL_RESULT_POLY hitPoly;
+	vector4 move = _vVelocity * _fSpeed;
 	vector4 posStart = _vPos + move;
 	vector4 posEnd = { posStart.x, posStart.y - 6000.f, posStart.z };
 	hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));

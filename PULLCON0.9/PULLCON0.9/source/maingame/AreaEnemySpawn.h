@@ -2,11 +2,10 @@
 #include "appframe.h"
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
-class AreaEnemySpawn:public ActorBase3D
-{
+class AreaEnemySpawn :public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	AreaEnemySpawn( ApplicationBase& game,ModeMainGame& mode,  int spawnfream,int typeenemy );
+	AreaEnemySpawn(ApplicationBase& game, ModeMainGame& mode, int spawnfream, int typeenemy);
 	virtual ~AreaEnemySpawn();
 	virtual Type GetType() { return Type::kAreaEnemySpawn; }
 	// 空中飛行基地の状態
@@ -24,9 +23,9 @@ public:
 protected:
 	State  _stateEnemySpawn;
 
-	int  _iSpawnFream;
-	int  _iEnemyType;
-	bool _isAddKobae;
+	int  _iSpawnFream;  // 敵をスポーンさせる間隔
+	int  _iEnemyType;   // どの敵スポーンさせるかの設定
+	bool _isAddKobae;   // コバエをスポーンさせるか
 
 	int _handle;
 };

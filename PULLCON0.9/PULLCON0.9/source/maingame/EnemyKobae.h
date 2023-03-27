@@ -6,7 +6,7 @@ class EnemyKobae :
 	public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	EnemyKobae(ApplicationBase& game,ModeMainGame& mode);
+	EnemyKobae(ApplicationBase& game, ModeMainGame& mode);
 	virtual ~EnemyKobae();
 	virtual Type GetType() { return Type::kEnemySkyhunter; }
 	// ƒRƒoƒG‚Ìó‘Ô

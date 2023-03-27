@@ -2,10 +2,10 @@
 #include "appframe.h"
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
-class Bullet : public ActorBase3D{
+class Bullet : public ActorBase3D {
 	typedef ActorBase3D base;
 public:
-	Bullet( ApplicationBase& game,ModeMainGame& mode);
+	Bullet(ApplicationBase& game, ModeMainGame& mode);
 	virtual ~Bullet();
 	virtual Type GetType() { return Type::kBullet; }
 

@@ -15,7 +15,7 @@ public:
 class Player : public ActorBase3D {
 	typedef ActorBase3D base;
 public:
-	Player( ApplicationBase& game,ModeMainGame& mode );
+	Player(ApplicationBase& game, ModeMainGame& mode);
 	virtual ~Player();
 	virtual Type GetType() { return Type::kPlayer; }
 	// プレイヤーの状態
@@ -53,14 +53,13 @@ protected:
 	float  _fTime;                // 線形補間の経過時間
 	float  _fRotateAirscrew;      // プロペラの回転
 	float  _fRotateBackAirscrew;  // バックプロペラの回転
-	float  _fAxialX;
-	float  _fAxialZ;
+	float  _fAxialX;              // ヘリコプターのX軸回転
+	float  _fAxialZ;							// ヘリコプターのZ軸回転
 
 	int    _handleBody;
 	int    _handleAirscrew;
 	int    _handleMagnet;
 	int    _handleBackAirscrew;
-	int    _handlefont;
 	int    _handleStage;
 
 

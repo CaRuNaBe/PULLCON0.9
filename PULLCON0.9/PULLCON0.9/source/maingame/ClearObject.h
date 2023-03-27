@@ -2,12 +2,11 @@
 #include "appframe.h"
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
-class ClearObject:
-	public ActorBase3D
-{
+class ClearObject :
+	public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	ClearObject( ApplicationBase& game,ModeMainGame& mode,float _radius );
+	ClearObject(ApplicationBase& game, ModeMainGame& mode, float _radius);
 	virtual ~ClearObject();
 	virtual Type GetType() { return Type::kClearObject; }
 	// ƒKƒ“ƒVƒbƒv‚Ìó‘Ô
