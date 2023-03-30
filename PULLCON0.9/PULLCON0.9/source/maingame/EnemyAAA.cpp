@@ -331,6 +331,11 @@ void EnemyAAA::GetSearch() {
 			_stateAAA = State::EVENT;
 		}
 	}
+	// ƒvƒŒƒCƒ„[‚ğ‘_‚í‚È‚¢‘Î‹ó–C
+	if (_iEnemyType == 1) {
+		_get = true;
+		_stateAAA = State::PLAY;
+	}
 }
 
 void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, const int& theta_degree_lower, const int& theta_degree_upper, const int& phi_degree_lower, const int& phi_degree_upper) {
