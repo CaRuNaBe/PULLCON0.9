@@ -1306,13 +1306,9 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 		int pile_min_num = 0;
 		/** AAA下に続く最高の数 */
 		int pile_max_num = 0;
-		/** マップにエリア表示する為の赤色の段階番号 */
-		int min_map_draw_red = 0;
-		/** マップにエリア表示する為の緑色の段階番号 */
-		int min_map_draw_green = 0;
-		/** マップにエリア表示する為の青色の段階番号 */
-		int min_map_draw_blue = 0;
-
+		float y_rad = 0.0f;
+		float x_rad = 0.0f;
+		int aim_player = 0;
 		/** scriptsの中に指定のサイズ入っているか確認入ってない場合失敗を返す */
 		if ( scripts.size() != SCRIPTSIZE )
 		{
@@ -1376,19 +1372,18 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 			return result;
 		}
 		/**  */
-		if ( !(string::ToInt( scripts[11],min_map_draw_red )) )
+		if ( !(string::ToFloat( scripts[11],y_rad )) )
 		{
 			return result;
 		}
-		if ( !(string::ToInt( scripts[12],min_map_draw_green )) )
+		if ( !(string::ToFloat( scripts[12],x_rad )) )
 		{
 			return result;
 		}
-		if ( !(string::ToInt( scripts[13],min_map_draw_blue )) )
+		if ( !(string::ToInt( scripts[13],aim_player )) )
 		{
 			return result;
 		}
-		auto color = GetColor( min_map_draw_red,min_map_draw_green,min_map_draw_blue );
 
 		std::vector<std::tuple<math::vector4,int>>posivec;
 		int num_while = 0;
@@ -1439,6 +1434,9 @@ bool ModeMainGame::OnCommandAreaAAA( unsigned int line,std::vector<std::string>&
 		for ( auto&& set_pos : posivec )
 		{
 			auto enemyAAA = std::make_shared<EnemyAAA>( _game,*this,object_min_id,object_max_id,std::get<1>( set_pos ),scale,std::get<0>( set_pos ) );
+			enemyAAA->SetAxialX( x_rad );
+			enemyAAA->SetAxialY( y_rad );
+			enemyAAA->SetType( aim_player );
 			object_main_game.Add( enemyAAA );
 		}
 		result = true;
