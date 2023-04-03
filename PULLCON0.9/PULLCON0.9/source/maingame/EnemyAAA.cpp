@@ -330,11 +330,11 @@ void EnemyAAA::GetSearch() {
 		if (_stateAAA != State::NUM) {
 			_stateAAA = State::EVENT;
 		}
-	}
-	// プレイヤーを狙わない対空砲
-	if (_iEnemyType == 1) {
-		_get = true;
-		_stateAAA = State::PLAY;
+		// プレイヤーを狙わない対空砲
+		if (_iEnemyType == 1) {
+			_get = true;
+			_stateAAA = State::PLAY;
+		}
 	}
 }
 
