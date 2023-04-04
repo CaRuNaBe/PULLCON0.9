@@ -368,21 +368,21 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 
 				auto bullet_dir = bullet_dir_pol.ToVector4();
 
-				if (_iEnemyType == 0) {
-					if (bullet_state[0] == 1) {
-						MATRIX to_player_dxmatrix = MGetRotVec2(Y_UP, ToDX(_vDir));
-						VECTOR bullet_dx_dir = VTransform(ToDX(bullet_dir), to_player_dxmatrix);
 
-						bullet_dir = ToMath(bullet_dx_dir);
-					}
-					else {
-						vector4 player_dir_xz = { _vDir.GetX(),0.0f,_vDir.GetZ() };
-						MATRIX to_player_dxmatrix = MGetRotVec2(VGet(0.0f, 0.0f, -1.0f), ToDX(player_dir_xz));
-						VECTOR bullet_dx_dir = VTransform(ToDX(bullet_dir), to_player_dxmatrix);
+				if (bullet_state[0] == 1) {
+					MATRIX to_player_dxmatrix = MGetRotVec2(Y_UP, ToDX(_vDir));
+					VECTOR bullet_dx_dir = VTransform(ToDX(bullet_dir), to_player_dxmatrix);
 
-						bullet_dir = ToMath(bullet_dx_dir);
-					}
+					bullet_dir = ToMath(bullet_dx_dir);
 				}
+				else {
+					vector4 player_dir_xz = { _vDir.GetX(),0.0f,_vDir.GetZ() };
+					MATRIX to_player_dxmatrix = MGetRotVec2(VGet(0.0f, 0.0f, -1.0f), ToDX(player_dir_xz));
+					VECTOR bullet_dx_dir = VTransform(ToDX(bullet_dir), to_player_dxmatrix);
+
+					bullet_dir = ToMath(bullet_dx_dir);
+				}
+
 
 
 				bullet->SetDir(bullet_dir);
