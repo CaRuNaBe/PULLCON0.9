@@ -335,7 +335,7 @@ bool Player::Update() {
 	_fRotateBackAirscrew += utility::PI / 6.f;
 
 	// ”R—¿Á”ï
-	if (_cnt % 30 == 0) {
+	if (_cnt % 60 == 0) {
 		--_iFuel;
 		if (_iFuel < 0) {
 			_iFuel = 0;

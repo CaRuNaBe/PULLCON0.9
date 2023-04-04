@@ -193,7 +193,7 @@ bool EnemyAAA::Update() {
 			_fSpeed = BULLET_DEFAULT_SPEED;
 			SeGunShotPlay();
 			AddBullet(bullet_state[1], bullet_state[2], bullet_state[3], bullet_state[4], bullet_state[5], bullet_state[6]);
-			_CT = 120;
+			_CT = utility::get_random(100, 150);
 		}
 
 		if (_iEnemyType == 0) {
