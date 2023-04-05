@@ -22,8 +22,9 @@ void Bullet::Init() {
 
 	_iDamage = 5;
 	_fSpeed = 1200.f;
+	_fScale = 3.f;
 
-	_collision._fRadius = 150.f;
+	_collision._fRadius = 150.f * _fScale;
 
 	_ST = 90;
 }
@@ -69,6 +70,7 @@ bool Bullet::Draw() {
 
 	float length3D = sqrt(_vDir.x * _vDir.x + _vDir.y * _vDir.y + _vDir.z * _vDir.z);
 	float theta = acos(_vDir.y / length3D);
+	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	MV1SetRotationZYAxis(_handle, VGet(_vDir.z, 0.f, -(_vDir.x)), VGet(0.f, 1.f, 0.f), theta - utility::PiOver2);
 	MV1SetPosition(_handle, ToDX(_vPos));
 	MV1DrawModel(_handle);

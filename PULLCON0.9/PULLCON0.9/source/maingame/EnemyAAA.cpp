@@ -496,14 +496,8 @@ void EnemyAAA::SetDamage()
 		case 1:
 			_iDamage = 30;
 			break;
-		case 2:
-			_iDamage = 5 * 100;
-			break;
 		case 4:
 			_iDamage = 3;
-			break;
-		case 9:
-			_iDamage = 5 * 100;
 			break;
 		default:
 			break;
