@@ -432,12 +432,12 @@ void EnemyAAA::AddBullet(const int & theta_split_num, const int & phi_split_num,
 				if (bullet_state[0] == 0)
 				{
 					//ê¸èÛ
-					vector4 player_dir_xz = { _vDir.GetX(),bullet_dir.GetY(),_vDir.GetZ()};
+					vector4 player_dir_xz = { _vDir.GetX(),0.0f,_vDir.GetZ() };
 					MATRIX to_player_dxmatrix = MGetRotVec2(VGet(-1.0f, 0.0f, 0.0f), ToDX(player_dir_xz));
 					VECTOR bullet_dx_dir = VTransform(ToDX(bullet_dir), to_player_dxmatrix);
 
 					bullet_dir = ToMath(bullet_dx_dir);
-				
+
 				}
 
 				if (bullet_state[0] == 1)
