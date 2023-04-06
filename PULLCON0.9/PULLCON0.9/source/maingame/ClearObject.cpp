@@ -3,22 +3,26 @@
 #include "Bullet.h"
 #include "../mode/ModeMainGame.h"
 #include "../ApplicationGlobal.h"
-namespace {
+namespace
+{
 	constexpr int GUNSHIP_ID = 12;
 }
-ClearObject::ClearObject(ApplicationBase& game, ModeMainGame& mode, float _radius)
-	:base(game, mode) {
+ClearObject::ClearObject(ApplicationBase & game, ModeMainGame & mode, float _radius)
+	:base(game, mode)
+{
 	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(GUNSHIP_ID));
 
 	Init();
 	radius = _radius;
 }
 
-ClearObject::~ClearObject() {
+ClearObject::~ClearObject()
+{
 	MV1DeleteModel(_handle);
 }
 
-void ClearObject::Init() {
+void ClearObject::Init()
+{
 	base::Init();
 
 	_stateClearObject = State::NUM;
@@ -31,20 +35,26 @@ void ClearObject::Init() {
 
 }
 
-bool ClearObject::Update() {
+bool ClearObject::Update()
+{
 	base::Update();
 
-	if (_stateClearObject == State::NUM) {
+	if (_stateClearObject == State::NUM)
+	{
 		_vObjective = { _vPos.x ,_vPos.y, _vPos.z };
 		_vPos = { _vObjective.x + radius, _vObjective.y, _vObjective.z };
 		_stateClearObject = State::WAIT;
 	}
 
-	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
+	for (auto && obje : _mode.GetObjectServer3D().GetObjects())
+	{
 		if (obje->GetType() == Type::kPlayer
-			|| obje->GetType() == Type::kBullet) {
-			if (obje->GetType() == Type::kPlayer) {
-				if (Intersect(_collisionEvent, obje->_collision)) {
+			|| obje->GetType() == Type::kBullet)
+		{
+			if (obje->GetType() == Type::kPlayer)
+			{
+				if (Intersect(_collisionEvent, obje->_collision))
+				{
 					_fire = true;
 					_vRelation = obje->_vPos;
 					// 弾にバラつきを持たせる
@@ -53,12 +63,16 @@ bool ClearObject::Update() {
 					float randomZ = static_cast<float>(utility::get_random(-700, 700));
 					_vTarget = { _vRelation.x + randomX, _vRelation.y + randomY, _vRelation.z + randomZ };
 				}
-				else {
+				else
+				{
 				}
 			}
-			if (obje->GetType() == Type::kBullet) {
-				if (IsHitObject(*obje)) {
-					if (obje->_iType == 2) {
+			if (obje->GetType() == Type::kBullet)
+			{
+				if (IsHitObject(*obje))
+				{
+					if (obje->_iType == 2)
+					{
 						_overlap = true;
 						obje->Damage();
 						_iLife -= obje->_iDamage;
@@ -84,7 +98,8 @@ bool ClearObject::Update() {
 
 	vector4 effectPos = _vPos + _vDir * _collision._fRadius;
 	// 一定間隔で撃つ
-	if (_fire && _CT == 0) {
+	if (_fire && _CT == 0)
+	{
 		AddBullet();
 		_mode.AddEffectFireGunship(effectPos);
 		SeGunShotPlay();
@@ -108,7 +123,8 @@ bool ClearObject::Update() {
 	_vDir.Normalized();
 
 
-	if (_iLife < 0) {
+	if (_iLife < 0)
+	{
 		Damage();
 	}
 
@@ -120,13 +136,15 @@ bool ClearObject::Update() {
 	return true;
 }
 
-void ClearObject::Damage() {
+void ClearObject::Damage()
+{
 	PlaySoundMem(gGlobal._se["gunship_death"], DX_PLAYTYPE_BACK);
 	_mode.AddEffectDeathObject(_vPos);
 	_mode.GetObjectServer3D().Del(*this);
 }
 
-bool ClearObject::Draw() {
+bool ClearObject::Draw()
+{
 	base::Draw();
 
 	// モデル拡大
@@ -140,10 +158,12 @@ bool ClearObject::Draw() {
 
 	// コリジョン描画
 	vector4 color = { 255,255,255 };
-	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
+	if (!((ModeMainGame &)_mode)._dbgCollisionDraw)
+	{
 		DrawCollision(color);
 		DrawCollisionEvent(color);
-		if (_overlap) {
+		if (_overlap)
+		{
 			color = { 255, 0, 0 };
 			DrawCollision(color);
 		}
@@ -151,12 +171,59 @@ bool ClearObject::Draw() {
 	return true;
 }
 
-void ClearObject::AddBullet() {
+void ClearObject::AddBullet()
+{
 	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
-	auto bullet = std::make_shared<Bullet>(_game, _mode);
-	bullet->SetPosition(vBullet);
-	bullet->SetDir(_vDir);
-	bullet->SetSpeed(bullet->_fSpeed * 2.f);
-	bullet->_iType = 1;
-	_mode.GetObjectServer3D().Add(bullet);
+	int  theta_split_num = 20;
+	int phi_split_num = 20;
+	Polar3D bullet_dir_pol = { {0,0,0},1.0f,0.0f,0.0f };
+	const auto THETA_ADD_NUM = math::utility::PI / theta_split_num;
+	const auto PHI_ADD_NUM = math::utility::TwoPi / phi_split_num;
+	const auto THETA_RADIAN_LOWER = math::utility::RADIANS_ZERO;
+	const auto THETA_RADIAN_UPPER = math::utility::PI / 3.0f;
+	const auto PHI_RADIAN_LOWER = math::utility::RADIANS_ZERO;
+	const auto PHI_RADIAN_UPPER = math::utility::TwoPi;
+
+	const auto Y_UP = VGet(0.f, 1.f, 0.f);
+
+	for (int i = 0; i < theta_split_num; i++)
+	{
+		for (int i = 0; i < phi_split_num; i++)
+		{
+			auto bullet = std::make_shared<Bullet>(_game, _mode);
+			bullet->SetPosition(vBullet);
+
+			auto bullet_dir = bullet_dir_pol.ToVector4();
+
+
+			//ドーナツ状
+			MATRIX to_player_dxmatrix = MGetRotVec2(Y_UP, ToDX(_vDir));
+			VECTOR bullet_dx_dir = VTransform(ToDX(bullet_dir), to_player_dxmatrix);
+			bullet_dir = ToMath(bullet_dx_dir);
+
+
+			bullet->SetDir(bullet_dir);
+			bullet->SetSpeed(bullet->_fSpeed * 2.f);
+			bullet->_iType = 1;
+			bullet->_ST = 300;
+			bullet_dir_pol.PhiIncrement(PHI_ADD_NUM);
+
+
+			if (
+				bullet_dir_pol.GetTheta() < THETA_RADIAN_LOWER ||
+				bullet_dir_pol.GetTheta() >= THETA_RADIAN_UPPER ||
+				bullet_dir_pol.GetPhi() < PHI_RADIAN_LOWER ||
+				bullet_dir_pol.GetPhi() >= PHI_RADIAN_UPPER)
+			{
+				continue;
+			}
+			_mode.GetObjectServer3D().Add(bullet);
+
+		}
+
+		bullet_dir_pol.SetPhi(0.0f);
+
+		bullet_dir_pol.ThetaIncrement(THETA_ADD_NUM);
+	}
+
 }
