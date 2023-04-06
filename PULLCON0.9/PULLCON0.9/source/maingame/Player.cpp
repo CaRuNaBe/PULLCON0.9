@@ -227,15 +227,8 @@ bool Player::Update() {
 		_vTarget = _vPos + v * v.Lenght() * 4.f;
 
 		if (_game.Getinput().XinputEveryOtherRightTrigger(10)) {  // RT
-			// SE再生
-			SeGunShotPlay();
 			// 弾生成
 			_fire = true;
-			vector4 vBullet = { _vPos.x, _vPos.y, _vPos.z };
-			// プレイヤーの少し前方に生成する
-			vBullet.x += cos(rad + camerad) * PLAYERLENGTH / 2.f;
-			vBullet.z += sin(rad + camerad) * PLAYERLENGTH / 2.f;
-			AddBullet(vBullet);
 		}
 
 		float axialX = _fAxialX;

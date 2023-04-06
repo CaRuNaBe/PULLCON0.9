@@ -43,6 +43,9 @@ bool ClearObject::Update()
 	{
 		_vObjective = { _vPos.x ,_vPos.y, _vPos.z };
 		_vPos = { _vObjective.x + radius, _vObjective.y, _vObjective.z };
+		_vEvent = _vPos;
+		_collision._vCenter = _vPos;
+		UpdateCollision();  // コリジョン更新
 		_stateClearObject = State::WAIT;
 	}
 
@@ -205,7 +208,6 @@ void ClearObject::AddBullet()
 			bullet->SetDir(bullet_dir);
 			bullet->SetSpeed(bullet->_fSpeed * 2.f);
 			bullet->_iType = 1;
-			bullet->_ST = 300;
 			bullet_dir_pol.PhiIncrement(PHI_ADD_NUM);
 
 
@@ -225,5 +227,5 @@ void ClearObject::AddBullet()
 
 		bullet_dir_pol.ThetaIncrement(THETA_ADD_NUM);
 	}
-
+	
 }
