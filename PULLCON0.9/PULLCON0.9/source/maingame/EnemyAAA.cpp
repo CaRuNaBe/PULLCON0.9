@@ -57,7 +57,7 @@ void EnemyAAA::Init(int pile_num, vector4 _vPosi, float scale)
 	_collisionSearch._fRadius = _collision._fRadius * 70.f;
 	_vDir = { 0.f, 0.f, -1.f };
 	_iLife = 10000;
-	_iDamage = 5;
+	_iDamage = 25;
 
 	_iEnemyType = 0;
 	_iPossession = pile_num;
@@ -493,13 +493,11 @@ void EnemyAAA::SetDamage()
 {
 	switch (AAA_ID)
 	{
-		case 1:
-			_iDamage = 30;
-			break;
 		case 4:
 			_iDamage = 3;
 			break;
 		default:
+			_iDamage = 5;
 			break;
 	}
 }

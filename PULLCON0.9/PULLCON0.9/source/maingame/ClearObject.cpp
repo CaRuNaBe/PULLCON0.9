@@ -207,6 +207,7 @@ void ClearObject::AddBullet()
 
 			bullet->SetDir(bullet_dir);
 			bullet->SetSpeed(bullet->_fSpeed * 2.f);
+			bullet->_iDamage = 50;
 			bullet->_iType = 1;
 			bullet_dir_pol.PhiIncrement(PHI_ADD_NUM);
 

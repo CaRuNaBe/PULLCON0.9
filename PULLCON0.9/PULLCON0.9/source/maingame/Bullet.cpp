@@ -20,7 +20,7 @@ Bullet::~Bullet() {
 void Bullet::Init() {
 	base::Init();
 
-	_iDamage = 5;
+	_iDamage = 25;
 	_fSpeed = 1200.f;
 	_fScale = 3.f;
 
