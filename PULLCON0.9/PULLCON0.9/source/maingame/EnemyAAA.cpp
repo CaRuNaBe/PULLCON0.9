@@ -54,7 +54,7 @@ void EnemyAAA::Init(int pile_num, vector4 _vPosi, float scale)
 	_fScale = scale;
 	_collision._fRadius = 300.f * _fScale;
 	_collisionEvent._fRadius = 1200.f * _fScale;
-	_collisionSearch._fRadius = _collision._fRadius * 70.f;
+	_collisionSearch._fRadius = _collision._fRadius * 210.f;
 	_vDir = { 0.f, 0.f, -1.f };
 	_iLife = 10000;
 	_iDamage = 25;
@@ -296,7 +296,7 @@ bool EnemyAAA::Update()
 
 	_collision._fRadius = 300.f * _fScale;
 	_collisionEvent._fRadius = 1200.f * _fScale;
-	_collisionSearch._fRadius = _collision._fRadius * 70.f;
+	_collisionSearch._fRadius = _collision._fRadius * 210.f;
 	UpdateCollision();   // コリジョンアップデート
 
 	return true;
