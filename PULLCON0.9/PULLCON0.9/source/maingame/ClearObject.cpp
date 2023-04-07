@@ -106,7 +106,7 @@ bool ClearObject::Update()
 		AddBullet();
 		_mode.AddEffectFireGunship(effectPos);
 		SeGunShotPlay();
-		_CT = 50;
+		_CT = 90;
 	}
 
 	// ã…ç¿ïW(r(length3D),É∆(rad))
