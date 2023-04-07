@@ -44,11 +44,12 @@ public:
 protected:
 	State   _stateAAA;
 
-	int    _iEnemyType;  // タイプ 0,追尾式 1,固定式
-	int    _iPossession; // 対空砲パーツの所有数
-	float  _fAxialY;     // Y軸回転(度数法)	
-	float  _fAxialX;     // X軸回転(度数法)
-	bool   _get;         // プレイヤーを探知したか
+	int    _iEnemyType;    // タイプ 0,追尾式 1,固定式
+	int    _iSurvivalTime; // 射撃する弾の生存時間
+	int    _iPossession;   // 対空砲パーツの所有数
+	float  _fAxialY;       // Y軸回転(度数法)	
+	float  _fAxialX;       // X軸回転(度数法)
+	bool   _get;           // プレイヤーを探知したか
 
 	int    _handle_body;
 	int    _handle_turret;

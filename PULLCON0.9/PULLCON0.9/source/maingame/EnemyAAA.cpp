@@ -60,6 +60,7 @@ void EnemyAAA::Init(int pile_num, vector4 _vPosi, float scale)
 	_iDamage = 25;
 
 	_iEnemyType = 0;
+	_iSurvivalTime = 300;
 	_iPossession = pile_num;
 	_fAxialX = 0.f;
 	_fAxialY = 0.f;
@@ -273,6 +274,7 @@ bool EnemyAAA::Update()
 		// ƒvƒŒƒCƒ„[‚ªŽËŒ‚‚µ‚Ä‚¢‚½‚çˆê’èŠÔŠu‚ÅŒ‚‚Â
 		if (_fire && _CT == 0)
 		{
+			_iSurvivalTime = 150;
 			_fSpeed = 2400.f;
 			AddBullet(bullet_state[1], bullet_state[2], bullet_state[3], bullet_state[4], bullet_state[5], bullet_state[6]);
 			_CT = 30;
@@ -405,7 +407,7 @@ void EnemyAAA::AddBullet(const int & theta_split_num, const int & phi_split_num,
 		bullet->SetSpeed(_fSpeed);
 		bullet->_iDamage = _iDamage;
 		bullet->_iType = _iType;
-		bullet->_ST = 300;
+		bullet->_ST = _iSurvivalTime;
 		_mode.GetObjectServer3D().Add(bullet);
 	}
 	else
@@ -453,7 +455,7 @@ void EnemyAAA::AddBullet(const int & theta_split_num, const int & phi_split_num,
 				bullet->SetSpeed(_fSpeed);
 				bullet->_iDamage = _iDamage;
 				bullet->_iType = _iType;
-				bullet->_ST = 300;
+				bullet->_ST = _iSurvivalTime;
 				bullet_dir_pol.PhiIncrement(PHI_ADD_NUM);
 
 
