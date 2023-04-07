@@ -274,7 +274,7 @@ bool EnemyAAA::Update()
 		// ƒvƒŒƒCƒ„[‚ªËŒ‚‚µ‚Ä‚¢‚½‚çˆê’èŠÔŠu‚ÅŒ‚‚Â
 		if (_fire && _CT == 0)
 		{
-			_iSurvivalTime = 150;
+			_iSurvivalTime = 90;
 			_fSpeed = 2400.f;
 			AddBullet(bullet_state[1], bullet_state[2], bullet_state[3], bullet_state[4], bullet_state[5], bullet_state[6]);
 			_CT = 30;
