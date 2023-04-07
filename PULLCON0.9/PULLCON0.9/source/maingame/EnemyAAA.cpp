@@ -273,7 +273,7 @@ bool EnemyAAA::Update()
 		// ƒvƒŒƒCƒ„[‚ªËŒ‚‚µ‚Ä‚¢‚½‚çˆê’èŠÔŠu‚ÅŒ‚‚Â
 		if (_fire && _CT == 0)
 		{
-			_fSpeed += BULLET_DEFAULT_SPEED;
+			_fSpeed = 2400.f;
 			AddBullet(bullet_state[1], bullet_state[2], bullet_state[3], bullet_state[4], bullet_state[5], bullet_state[6]);
 			_CT = 30;
 		}
@@ -493,8 +493,17 @@ void EnemyAAA::SetDamage()
 {
 	switch (AAA_ID)
 	{
+		case 1:
+			_iDamage = 1;
+			break;
+		case 3:
+			_iDamage = 1;
+			break;
 		case 4:
-			_iDamage = 3;
+			_iDamage = 1;
+			break;
+		case 5:
+			_iDamage = 2;
 			break;
 		default:
 			_iDamage = 5;
@@ -507,9 +516,10 @@ void EnemyAAA::SetStateAAA()
 	switch (AAA_ID)
 	{
 		case 1:
-			_iLife = 5;
+			_iLife = 10000;
 			break;
 		default:
+			_iLife = 5;
 			break;
 	}
 }

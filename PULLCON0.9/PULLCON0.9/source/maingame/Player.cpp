@@ -145,10 +145,6 @@ bool Player::Update() {
 	if (_statePlayer == State::PLAY) {
 
 		if (_finish) {
-			float speed = _fSpeedIint + _iPieces * 5.f;
-			if (_fSpeed < 250.f) {
-				_fSpeed = speed;
-			}
 			_finish = false;
 		}
 
@@ -227,6 +223,10 @@ bool Player::Update() {
 		_vTarget = _vPos + v * v.Lenght() * 4.f;
 
 		if (_game.Getinput().XinputEveryOtherRightTrigger(10)) {  // RT
+			if (_iPieces > 0) {
+				// SEçƒê∂
+				SeGunShotPlay();
+			}
 			// íeê∂ê¨
 			_fire = true;
 		}

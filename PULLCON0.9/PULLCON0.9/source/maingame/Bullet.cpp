@@ -42,7 +42,7 @@ bool Bullet::Update() {
 	_vd *= _fSpeed;
 	_vPos += _vd;
 
-	_collision._fRadius = 150.f;
+	_collision._fRadius = 150.f * _fScale;
 	UpdateCollision();    // コリジョンアップデート
 
 	switch (_iType) {
