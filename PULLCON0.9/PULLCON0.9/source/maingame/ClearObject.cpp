@@ -106,7 +106,7 @@ bool ClearObject::Update()
 		AddBullet();
 		_mode.AddEffectFireGunship(effectPos);
 		SeGunShotPlay();
-		_CT = 60;
+		_CT = 30;
 	}
 
 	// ã…ç¿ïW(r(length3D),É∆(rad))
@@ -177,14 +177,13 @@ bool ClearObject::Draw()
 void ClearObject::AddBullet()
 {
 	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
-	int  theta_split_num = 20;
-	int phi_split_num = 20;
+	int  theta_split_num = 100;
+	int phi_split_num = 50;
 	Polar3D bullet_dir_pol = { {0,0,0},1.0f,0.0f,0.0f };
 	const auto THETA_ADD_NUM = math::utility::PI / theta_split_num;
 	const auto PHI_ADD_NUM = math::utility::TwoPi / phi_split_num;
-	const auto THETA_RADIAN_LOWER = math::utility::RADIANS_ZERO;
-	const auto THETA_RADIAN_UPPER = math::utility::PI / 3.0f;
-	const auto PHI_RADIAN_LOWER = math::utility::RADIANS_ZERO;
+
+	const auto THETA_RADIAN_UPPER = math::utility::PI / 10.0f;
 	const auto PHI_RADIAN_UPPER = math::utility::TwoPi;
 
 	const auto Y_UP = VGet(0.f, 1.f, 0.f);
@@ -213,12 +212,9 @@ void ClearObject::AddBullet()
 
 
 			if (
-				bullet_dir_pol.GetTheta() < THETA_RADIAN_LOWER ||
-				bullet_dir_pol.GetTheta() >= THETA_RADIAN_UPPER ||
-				bullet_dir_pol.GetPhi() < PHI_RADIAN_LOWER ||
 				bullet_dir_pol.GetPhi() >= PHI_RADIAN_UPPER)
 			{
-				continue;
+				break;
 			}
 			_mode.GetObjectServer3D().Add(bullet);
 
@@ -226,7 +222,13 @@ void ClearObject::AddBullet()
 
 		bullet_dir_pol.SetPhi(0.0f);
 
+		if (
+			bullet_dir_pol.GetTheta() >= THETA_RADIAN_UPPER)
+		{
+			break;
+		}
 		bullet_dir_pol.ThetaIncrement(THETA_ADD_NUM);
+
 	}
 	
 }
