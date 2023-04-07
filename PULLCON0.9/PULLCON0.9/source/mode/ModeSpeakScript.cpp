@@ -93,7 +93,7 @@ void ModeSpeakScript::Destroy()
 	max_line = 0;
 	now_line = 0;
 	wait_count = 0;
-
+	speak_object.Clear();
 	image_list.clear();
 	se_list.clear();
 	crfi_list.clear();
