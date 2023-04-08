@@ -22,7 +22,7 @@ void EnemySkyhunter::Init() {
 
 	_stateEnemySkyhunter = State::WAIT;
 
-	_fScale = 2.f;
+	_fScale = 4.f;
 	_fSpeed = 300.f;
 	_collision._fRadius = 1000.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 26.f;

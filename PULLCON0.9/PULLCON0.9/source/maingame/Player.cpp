@@ -10,7 +10,7 @@ namespace {
 	const float CAMERADEFAULT_POS_XZ = -4000.f;   // プレイヤーを原点としたときのカメラのXZ座標のベクトルの長さ
 	const float PLAYERLENGTH = 2000.f;   // プレイヤーの奥行きの長さ
 	const float AXIALROTATION = utility::degree_to_radian(20.f);   // プレイヤーの移動時の傾き
-	const int   LIFEMAX = 100;   // プレイヤーのライフ最大数
+	const int   LIFEMAX = 300;   // プレイヤーのライフ最大数
 	constexpr int PLAYER_ID = 0;
 	const std::string DELIMITER = ",";
 }

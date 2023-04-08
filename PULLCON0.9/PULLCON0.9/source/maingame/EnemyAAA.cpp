@@ -518,7 +518,7 @@ void EnemyAAA::SetStateAAA()
 	switch (AAA_ID)
 	{
 		case 1:
-			_iLife = 10000;
+			_iLife = 2;
 			break;
 		default:
 			_iLife = 5;

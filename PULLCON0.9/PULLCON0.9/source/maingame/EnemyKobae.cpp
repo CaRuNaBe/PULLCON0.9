@@ -22,7 +22,7 @@ void EnemyKobae::Init() {
 	_stateEnemyKobae = State::WAIT;
 
 	_vEvent = _vPos;
-	_fScale = 2.f;
+	_fScale = 4.f;
 	_fSpeed = 400.f;
 	_collision._vCenter = _vPos;
 	_collision._fRadius = 1000.f * _fScale;
