@@ -165,7 +165,7 @@ bool ModeMainGame::Update()
 	object_main_game.Update();
 	ui_player.Update();
 	int dead = 0;
-	int gunship_num = 0;
+	int areaenemyspawn_num = 0;
 	////////////////////////////////////////////////////////////////////
 	if (_game.Getinput().XinputEveryOtherLeftTrigger(30))
 	{
@@ -244,9 +244,9 @@ bool ModeMainGame::Update()
 
 			for (auto& object_3d : object_main_game.GetObjects())
 			{
-				if (object_3d->GetType() == ActorBase3D::Type::kClearObject)
+				if (object_3d->GetType() == ActorBase3D::Type::kAreaEnemySpawn)
 				{
-					gunship_num++;
+					areaenemyspawn_num++;
 				}
 				if (object_3d->GetType() == ActorBase3D::Type::kAreaSupply)
 				{
@@ -256,7 +256,7 @@ bool ModeMainGame::Update()
 					}
 				}
 			}
-			if (gunship_num <= 0)
+			if (areaenemyspawn_num <= 0)
 			{
 				StopSoundFile();
 
