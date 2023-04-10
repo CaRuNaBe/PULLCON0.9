@@ -51,7 +51,7 @@ bool SpeakScriptObject::Update()
 bool SpeakScriptObject::Draw()
 {
 	ActorSpeak::Draw();
-	DrawTurnGraph( _pos.IntX(),_pos.IntY(),cg_ui[(_cnt / 10) % cg_ui.size()],TRUE );
+	DrawGraph( _pos.IntX(),_pos.IntY(),cg_ui[(_cnt / 10) % cg_ui.size()],TRUE );
 	return true;
 }
 
