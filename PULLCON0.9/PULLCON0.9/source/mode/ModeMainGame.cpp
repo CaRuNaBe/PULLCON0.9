@@ -2302,3 +2302,8 @@ void ModeMainGame::AddEffectFireGunship(const math::vector4& pos)
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
+
+void ModeMainGame::AddEffectHitEnemy(const math::vector4& pos)
+{
+	AddEffectSpawnAmmo(pos);
+};

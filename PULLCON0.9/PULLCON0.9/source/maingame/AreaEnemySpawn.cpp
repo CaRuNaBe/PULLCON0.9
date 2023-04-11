@@ -65,6 +65,7 @@ bool AreaEnemySpawn::Update() {
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
 					if (obje->_iType == 2) {
+						_mode.AddEffectHitEnemy(obje->GetPosition());
 						_overlap = true;
 						obje->Damage();
 						_iLife -= obje->_iDamage;
