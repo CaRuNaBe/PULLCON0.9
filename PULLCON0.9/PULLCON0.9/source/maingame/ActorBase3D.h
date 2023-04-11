@@ -128,6 +128,7 @@ public:
 	bool  _finish;     // イベント完了
 	bool  _fire;       // 発砲
 	bool  _synchronize;// 動きを同期させる
+	bool  _takeIn;     // オブジェクトとぶつかったか
 
 	int _cnt;  // 動作カウント
 	int _CT;   // クールタイム

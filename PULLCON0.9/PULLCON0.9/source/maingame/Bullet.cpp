@@ -61,6 +61,14 @@ bool Bullet::Update() {
 }
 
 void Bullet::Damage() {
+	if (_ST > 0) {
+		for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
+			if (obje->GetType() == Type::kPlayer) {
+				obje->_takeIn = true;
+				obje->_ST = 10;
+			}
+		}
+	}
 	_mode.AddEffectDestroyAmmo(_vPos);
 	_mode.GetObjectServer3D().Del(*this);
 }

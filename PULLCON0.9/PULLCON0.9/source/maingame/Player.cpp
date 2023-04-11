@@ -148,6 +148,50 @@ bool Player::Update() {
 			_finish = false;
 		}
 
+		float axialX = _fAxialX;
+		float axialZ = _fAxialZ;
+		if (_game.Getinput().GetLstickY() > 0) {  // 前方向
+			axialX -= AXIALROTATION / 20.f;
+		}
+		else if (_game.Getinput().GetLstickY() < 0) {  // 後方向
+			axialX += AXIALROTATION / 20.f;
+		}
+		else {
+			if (abs(axialX) < utility::degree_to_radian(1.f)) {
+				axialX = 0.f;
+			}
+			else if (axialX < 0.f) {
+				axialX += AXIALROTATION / 20.f;
+			}
+			else {
+				axialX -= AXIALROTATION / 20.f;
+			}
+		}
+		if (_game.Getinput().GetLstickX() < 0) {  // 右方向
+			axialZ -= AXIALROTATION / 20.f;
+		}
+		else if (_game.Getinput().GetLstickX() > 0) {  // 左方向
+			axialZ += AXIALROTATION / 20.f;
+		}
+		else {
+			if (abs(axialZ) < utility::degree_to_radian(1.f)) {
+				axialZ = 0.f;
+			}
+			else if (axialZ < 0.f) {
+				axialZ += AXIALROTATION / 20.f;
+			}
+			else {
+				axialZ -= AXIALROTATION / 20.f;
+			}
+		}
+		// 回転制御
+		if (abs(axialX) < AXIALROTATION) {
+			_fAxialX = axialX;
+		}
+		if (abs(axialZ) < AXIALROTATION) {
+			_fAxialZ = axialZ;
+		}
+
 		// カメラの向いている角度を取得
 		float sx = _cam._vPos.x - _cam._vTarget.x;
 		float sy = _cam._vPos.y - _cam._vTarget.y;
@@ -231,44 +275,6 @@ bool Player::Update() {
 			_fire = true;
 		}
 
-		float axialX = _fAxialX;
-		float axialZ = _fAxialZ;
-		if (_game.Getinput().GetLstickY() > 0) {  // 前方向
-			axialX -= AXIALROTATION / 30.f;
-		}
-		else if (_game.Getinput().GetLstickY() < 0) {  // 後方向
-			axialX += AXIALROTATION / 30.f;
-		}
-		else {
-			if (axialX < 0.f) {
-				axialX += AXIALROTATION / 30.f;
-			}
-			else {
-				axialX -= AXIALROTATION / 30.f;
-			}
-		}
-		if (_game.Getinput().GetLstickX() < 0) {  // 右方向
-			axialZ -= AXIALROTATION / 30.f;
-		}
-		else if (_game.Getinput().GetLstickX() > 0) {  // 左方向
-			axialZ += AXIALROTATION / 30.f;
-		}
-		else {
-			if (axialZ < 0.f) {
-				axialZ += AXIALROTATION / 30.f;
-			}
-			else {
-				axialZ -= AXIALROTATION / 30.f;
-			}
-		}
-		// 回転制御
-		if (abs(axialX) < AXIALROTATION) {
-			_fAxialX = axialX;
-		}
-		if (abs(axialZ) < AXIALROTATION) {
-			_fAxialZ = axialZ;
-		}
-
 		// 引っこ抜き遷移
 		if (_pull && _CT == 0) {
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
@@ -342,6 +348,7 @@ bool Player::Update() {
 	if (_ST == 0) {
 		_isHit = false;
 		_isHitObject = false;
+		_takeIn = false;
 	}
 
 	vector4 v = { 0.f, 0.f, 0.f };
@@ -349,6 +356,11 @@ bool Player::Update() {
 		ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["se_gunlanding"]);
 		PlaySoundMem(gGlobal._se["se_gunlanding"], DX_PLAYTYPE_BACK);
 		float rand = static_cast<float>(utility::get_random(-200, 200));
+		v = { rand,rand,rand };
+		v *= static_cast<float>(_ST) / 20.f;
+	}
+	if (_takeIn) {
+		float rand = static_cast<float>(utility::get_random(-100, 100));
 		v = { rand,rand,rand };
 		v *= static_cast<float>(_ST) / 20.f;
 	}

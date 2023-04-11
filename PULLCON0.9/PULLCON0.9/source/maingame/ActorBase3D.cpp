@@ -40,6 +40,7 @@ void ActorBase3D::Init() {
 	_finish = false;
 	_fire = false;
 	_synchronize = false;
+	_takeIn = false;
 	_cnt = 0;
 	_CT = 0;
 	_ST = 0;
