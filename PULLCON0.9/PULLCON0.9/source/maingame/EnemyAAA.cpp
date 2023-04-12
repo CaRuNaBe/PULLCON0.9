@@ -181,6 +181,7 @@ bool EnemyAAA::Update()
 				{
 					if (obje->_iType != 0)
 					{
+						_mode.AddEffectHitEnemy(obje->GetPosition());
 						_CT = 10;
 						_overlap = true;
 						obje->Damage();

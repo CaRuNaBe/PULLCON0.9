@@ -2,12 +2,12 @@
 #include "appframe.h"
 #include "ActorBase3D.h"
 #include "../mode/ModeMainGame.h"
-class ClearObject :
+class EnemyGunShip :
 	public ActorBase3D {
 	using base = ActorBase3D;
 public:
-	ClearObject(ApplicationBase& game, ModeMainGame& mode, float _radius);
-	virtual ~ClearObject();
+	EnemyGunShip(ApplicationBase& game, ModeMainGame& mode, float _radius);
+	virtual ~EnemyGunShip();
 	virtual Type GetType() { return Type::kClearObject; }
 	// ƒKƒ“ƒVƒbƒv‚Ìó‘Ô
 	enum class State {

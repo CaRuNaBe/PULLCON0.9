@@ -16,7 +16,7 @@
 #include "../maingame/GameStage.h"
 #include "../maingame/SkySphere.h"
 #include "../maingame/AreaSupply.h"
-#include "../maingame/ClearObject.h"
+#include "../maingame/EnemyGunShip.h"
 #include "../maingame/EnemyAAA.h"
 #include "../maingame/StageObject.h"
 #include "../maingame/AreaEnemySpawn.h"
@@ -1142,7 +1142,7 @@ bool ModeMainGame::OnCommandGunShip(unsigned int line, std::vector<std::string>&
 		{
 			return result;
 		}
-		auto clearobject = std::make_shared<ClearObject>(_game, *this, radius);
+		auto clearobject = std::make_shared<EnemyGunShip>(_game, *this, radius);
 		clearobject->SetPosition(posi);
 		clearobject->SetScale(scale);
 		object_main_game.Add(clearobject);

@@ -94,7 +94,7 @@
     <ClCompile Include="source\maingame\EnemyAAA.cpp">
       <Filter>maingame\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="source\maingame\ClearObject.cpp">
+    <ClCompile Include="source\maingame\EnemyGunShip.cpp">
       <Filter>maingame\enemy</Filter>
     </ClCompile>
     <ClCompile Include="source\maingame\GameStage.cpp">
@@ -234,7 +234,7 @@
     <ClInclude Include="source\maingame\EnemyAAA.h">
       <Filter>maingame\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="source\maingame\ClearObject.h">
+    <ClInclude Include="source\maingame\EnemyGunShip.h">
       <Filter>maingame\enemy</Filter>
     </ClInclude>
     <ClInclude Include="source\maingame\GameStage.h">

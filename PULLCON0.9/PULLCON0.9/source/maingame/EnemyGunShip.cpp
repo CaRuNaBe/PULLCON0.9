@@ -1,5 +1,5 @@
 
-#include "ClearObject.h"
+#include "EnemyGunShip.h"
 #include "Bullet.h"
 #include "../mode/ModeMainGame.h"
 #include "../ApplicationGlobal.h"
@@ -7,7 +7,7 @@ namespace
 {
 	constexpr int GUNSHIP_ID = 12;
 }
-ClearObject::ClearObject(ApplicationBase & game, ModeMainGame & mode, float _radius)
+EnemyGunShip::EnemyGunShip(ApplicationBase& game, ModeMainGame& mode, float _radius)
 	:base(game, mode)
 {
 	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(GUNSHIP_ID));
@@ -16,12 +16,12 @@ ClearObject::ClearObject(ApplicationBase & game, ModeMainGame & mode, float _rad
 	radius = _radius;
 }
 
-ClearObject::~ClearObject()
+EnemyGunShip::~EnemyGunShip()
 {
 	MV1DeleteModel(_handle);
 }
 
-void ClearObject::Init()
+void EnemyGunShip::Init()
 {
 	base::Init();
 
@@ -35,7 +35,7 @@ void ClearObject::Init()
 
 }
 
-bool ClearObject::Update()
+bool EnemyGunShip::Update()
 {
 	base::Update();
 
@@ -49,7 +49,7 @@ bool ClearObject::Update()
 		_stateClearObject = State::WAIT;
 	}
 
-	for (auto && obje : _mode.GetObjectServer3D().GetObjects())
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects())
 	{
 		if (obje->GetType() == Type::kPlayer
 			|| obje->GetType() == Type::kBullet)
@@ -140,14 +140,14 @@ bool ClearObject::Update()
 	return true;
 }
 
-void ClearObject::Damage()
+void EnemyGunShip::Damage()
 {
 	PlaySoundMem(gGlobal._se["gunship_death"], DX_PLAYTYPE_BACK);
 	_mode.AddEffectDeathObject(_vPos);
 	_mode.GetObjectServer3D().Del(*this);
 }
 
-bool ClearObject::Draw()
+bool EnemyGunShip::Draw()
 {
 	base::Draw();
 
@@ -162,7 +162,7 @@ bool ClearObject::Draw()
 
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	vector4 color = { 255,255,255 };
-	if (!((ModeMainGame &)_mode)._dbgCollisionDraw)
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
 	{
 		DrawCollision(color);
 		DrawCollisionEvent(color);
@@ -175,7 +175,7 @@ bool ClearObject::Draw()
 	return true;
 }
 
-void ClearObject::AddBullet()
+void EnemyGunShip::AddBullet()
 {
 	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
 	int  theta_split_num = 100;
@@ -185,7 +185,6 @@ void ClearObject::AddBullet()
 	const auto PHI_ADD_NUM = math::utility::TwoPi / phi_split_num;
 
 	const auto THETA_RADIAN_UPPER = math::utility::PI / 10.0f;
-	const auto PHI_RADIAN_UPPER = math::utility::TwoPi;
 
 	const auto Y_UP = VGet(0.f, 1.f, 0.f);
 
@@ -210,26 +209,16 @@ void ClearObject::AddBullet()
 			bullet->_iDamage = 34;
 			bullet->_iType = 1;
 			bullet_dir_pol.PhiIncrement(PHI_ADD_NUM);
-
-
-			if (
-				bullet_dir_pol.GetPhi() >= PHI_RADIAN_UPPER)
-			{
-				break;
-			}
 			_mode.GetObjectServer3D().Add(bullet);
 
 		}
 
 		bullet_dir_pol.SetPhi(0.0f);
-
-		if (
-			bullet_dir_pol.GetTheta() >= THETA_RADIAN_UPPER)
+		bullet_dir_pol.ThetaIncrement(THETA_ADD_NUM);
+		if (bullet_dir_pol.GetTheta() >= THETA_RADIAN_UPPER)
 		{
 			break;
 		}
-		bullet_dir_pol.ThetaIncrement(THETA_ADD_NUM);
-
 	}
-	
+
 }

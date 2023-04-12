@@ -37,7 +37,7 @@ bool EffectSpawnAmmo::Draw()
 {
 	EffectBase::Draw();
 	SetWriteZBuffer3D( false );
-	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,8000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
+	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,10000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
 	SetWriteZBuffer3D( true );
 	return true;
 }

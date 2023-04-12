@@ -64,6 +64,7 @@ bool EnemySkyhunter::Update() {
 			if (obje->GetType() == Type::kBullet) {
 				if (IsHitObject(*obje)) {
 					if (obje->_iType == 2) {
+						_mode.AddEffectHitEnemy(obje->GetPosition());
 						_CT = 10;
 						_overlap = true;
 						obje->Damage();
