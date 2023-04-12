@@ -14,22 +14,22 @@ EffectSpawnAmmo::~EffectSpawnAmmo()
 void EffectSpawnAmmo::Init()
 {
 	EffectBase::Init();
-
-	_animeNo = 0;
-	_animeCnt = 0;
-
 }
 
 bool EffectSpawnAmmo::Update()
 {
 	EffectBase::Update();
-
-	if ( _animeCnt == _animeMax )
+	
+	if ( _animeNo == _animeMax )
 	{
 		_mode.GetObjectServer3D().Del( *this );
 	}
-
+	if (_animeCnt % 10 == 0)
+	{
+		++_animeNo;
+	}
 	_animeCnt++;
+
 	return true;
 }
 
@@ -37,7 +37,7 @@ bool EffectSpawnAmmo::Draw()
 {
 	EffectBase::Draw();
 	SetWriteZBuffer3D( false );
-	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,10000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
+	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,15000.0f,0.f,_grAllHandles[_animeNo],TRUE );
 	SetWriteZBuffer3D( true );
 	return true;
 }

@@ -14,10 +14,6 @@ EffectFirePlayer::~EffectFirePlayer()
 void EffectFirePlayer::Init()
 {
 	EffectBase::Init();
-
-	_animeNo = 0;
-	_animeCnt = 0;
-
 }
 
 bool EffectFirePlayer::Update()
@@ -28,7 +24,7 @@ bool EffectFirePlayer::Update()
 	{
 		_mode.GetObjectServer3D().Del( *this );
 	}
-
+	_animeNo = _animeCnt % _animeMax;
 	_animeCnt++;
 	return true;
 }
@@ -37,7 +33,7 @@ bool EffectFirePlayer::Draw()
 {
 	EffectBase::Draw();
 	SetWriteZBuffer3D( false );
-	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,2500.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
+	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,2500.0f,0.f,_grAllHandles[_animeNo],TRUE );
 	SetWriteZBuffer3D( true );
 	return true;
 }

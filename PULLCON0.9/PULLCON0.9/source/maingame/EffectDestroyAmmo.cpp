@@ -14,10 +14,6 @@ EffectDestroyAmmo::~EffectDestroyAmmo()
 void EffectDestroyAmmo::Init()
 {
 	EffectBase::Init();
-
-	_animeNo = 0;
-	_animeCnt = 0;
-
 }
 
 bool EffectDestroyAmmo::Update()
@@ -28,6 +24,7 @@ bool EffectDestroyAmmo::Update()
 	{
 		_mode.GetObjectServer3D().Del( *this );
 	}
+	_animeNo = _animeCnt % _animeMax;
 	_animeCnt++;
 	return true;
 }
@@ -37,7 +34,7 @@ bool EffectDestroyAmmo::Draw()
 	EffectBase::Draw();
 		// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D( false );
-	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,4000.0f,0.f,_grAllHandles[_animeCnt % _animeMax],TRUE );
+	DrawBillboard3D( ToDX( _vPos ),0.5f,0.5f,4000.0f,0.f,_grAllHandles[_animeNo],TRUE );
 		// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D( true );
 	return true;

@@ -28,6 +28,7 @@ bool EffectDeathObject::Update()
 	{
 		_mode.GetObjectServer3D().Del( *this );
 	}
+	_animeNo = _animeCnt % _animeMax;
 	_animeCnt++;
 	return true;
 }
