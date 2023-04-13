@@ -1,18 +1,18 @@
 #include "dx_utility.h"
-#include "vector4.h"
+#include "Vector4.h"
 #include "matrix44.h"
 #include <utility>
 
 namespace math
 {
-	VECTOR ToDX( math::vector4& vector )
+	VECTOR ToDX( math::Vector4& vector )
 	{
 		return VGet( static_cast<float>(vector.x),static_cast<float>(vector.y),static_cast<float>(vector.z) );
 	}
 
-	math::vector4 ToMath( VECTOR& vector )
+	math::Vector4 ToMath( VECTOR& vector )
 	{
-		return math::vector4( static_cast<float>(vector.x),static_cast<float>(vector.y),static_cast<float>(vector.z) );
+		return math::Vector4( static_cast<float>(vector.x),static_cast<float>(vector.y),static_cast<float>(vector.z) );
 	}
 
 	MATRIX ToDX( math::matrix44& matrix )

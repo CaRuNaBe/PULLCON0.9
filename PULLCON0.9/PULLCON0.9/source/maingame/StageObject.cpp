@@ -52,7 +52,7 @@ bool StageObject::Draw()
 
 	MV1SetPosition(_handle, math::ToDX(_vPos));
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-	vector4 color = { 255, 0, 255 };
+	Vector4 color = { 255, 0, 255 };
 	SetUseLighting(FALSE);
 	// ƒ‚ƒfƒ‹•`‰æ
 	MV1DrawModel(_handle);
@@ -66,7 +66,7 @@ bool StageObject::Draw()
 
 void StageObject::AddCollision()
 {
-	vector4 areaPos = _vPos;
+	Vector4 areaPos = _vPos;
 	for (auto i = 1; i < _iPieces; ++i)
 	{
 		areaPos.y = _vPos.y + _collision._fRadius * 2.f * i;

@@ -42,7 +42,7 @@ bool Bullet::Update()
 	}
 
 	// İ’è‚³‚ê‚½Œü‚«‚Éi‚Ş
-	vector4 _vd = _vDir;
+	Vector4 _vd = _vDir;
 	_vd *= _fSpeed;
 	_vPos += _vd;
 
@@ -93,7 +93,7 @@ bool Bullet::Draw()
 	MV1SetPosition(_handle, ToDX(_vPos));
 	MV1DrawModel(_handle);
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-	vector4 color = { 255, 255, 255 };
+	Vector4 color = { 255, 255, 255 };
 	if (!_mode._dbgCollisionDraw)
 	{
 		if (_CT == 0)

@@ -28,7 +28,7 @@ public:
 protected:
 	State   _stateClearObject;
 
-	vector4 _vObjective;  // ‰~‹O“¹’†SÀ•W
+	Vector4 _vObjective;  // ‰~‹O“¹’†SÀ•W
 
 	int    _handle;
 	float radius;

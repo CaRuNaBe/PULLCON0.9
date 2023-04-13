@@ -1,7 +1,7 @@
 #include <cmath>
 #include "utility.h"
 #include "matrix44.h"
-#include "vector4.h"
+#include "Vector4.h"
 
 namespace math
 {
@@ -103,7 +103,7 @@ namespace math
 	}
 
 	// –{—ˆ‚ÍƒJƒƒ‰‚É‘®‚·‚éˆ—‚¾‚ª•Ö‹XãÀ‘•‚·‚é
-	void matrix44::look_at( const vector4& position,const vector4& target,const vector4& up )
+	void matrix44::look_at( const Vector4& position,const Vector4& target,const Vector4& up )
 	{
 		auto axis_z = target - position;
 		auto axis_x = up.Cross( axis_z );
@@ -184,7 +184,7 @@ namespace math
 		return matrix44( result );
 	}
 
-	const matrix44 matrix44::operator +( const vector4 rhs ) const
+	const matrix44 matrix44::operator +( const Vector4 rhs ) const
 	{
 		matrix_array result = row_column;
 

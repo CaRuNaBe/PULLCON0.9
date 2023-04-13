@@ -127,9 +127,9 @@ bool EnemySkyhunter::Update()
 	}
 
 	MV1_COLL_RESULT_POLY hitPoly;
-	vector4 move = _vVelocity * _fSpeed;
-	vector4 posStart = _vPos + move;
-	vector4 posEnd = { posStart.x, posStart.y - 6000.f, posStart.z };
+	Vector4 move = _vVelocity * _fSpeed;
+	Vector4 posStart = _vPos + move;
+	Vector4 posEnd = { posStart.x, posStart.y - 6000.f, posStart.z };
 	hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));
 	if (hitPoly.HitFlag)
 	{
@@ -170,7 +170,7 @@ bool EnemySkyhunter::Draw()
 	MV1DrawModel(_handle);
 
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-	vector4 color = { 255,255,255 };
+	Vector4 color = { 255,255,255 };
 	if (!_mode._dbgCollisionDraw)
 	{
 		DrawCollision(color);
@@ -186,7 +186,7 @@ bool EnemySkyhunter::Draw()
 
 void EnemySkyhunter::AddBullet()
 {
-	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
+	Vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
 	auto bullet = std::make_shared<Bullet>(_game, static_cast<int>(ActorMainGame::Type::kBullet), _mode);
 	bullet->SetPosition(vBullet);
 	bullet->SetDir(_vDir);

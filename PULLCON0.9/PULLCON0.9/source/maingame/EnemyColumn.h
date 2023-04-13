@@ -5,7 +5,7 @@
 class EnemyColumn :public ActorMainGame
 {
 public:
-	EnemyColumn(ApplicationBase& game, int layer, ModeMainGame& mode, vector4 pos);
+	EnemyColumn(ApplicationBase& game, int layer, ModeMainGame& mode, Vector4 pos);
 	virtual ~EnemyColumn();
 	virtual Type GetType()
 	{
@@ -23,7 +23,7 @@ public:
 
 	virtual void Damage();
 	void SetVelocity();   // 速度ベクトル
-	void AddPieces(vector4 pos);
+	void AddPieces(Vector4 pos);
 
 protected:
 	State   _stateEnemyColumn;

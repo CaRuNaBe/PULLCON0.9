@@ -5,7 +5,7 @@
 
 namespace math
 {
-	class vector4;
+	class Vector4;
 
 	constexpr auto row_max = 4;
 	constexpr auto column_max = 4;
@@ -28,7 +28,7 @@ namespace math
 		matrix44& operator =( matrix44&& ) = default; // ÉÄÅ[Éu
 
 		const matrix44 operator *( const matrix44 rhs ) const;
-		const matrix44 operator +( const vector4 rhs ) const;
+		const matrix44 operator +( const Vector4 rhs ) const;
 
 		const float get_value( const int row,const int column ) const
 		{
@@ -45,7 +45,7 @@ namespace math
 		const float determinant() const;
 		const matrix44 get_inverse() const;
 
-		void look_at( const vector4& position,const vector4& target,const vector4& up );
+		void look_at( const Vector4& position,const Vector4& target,const Vector4& up );
 		void perspective( const float fov_y,const float aspect,const float near_z,const float far_z );
 		void viewport( const float width,const float height );
 

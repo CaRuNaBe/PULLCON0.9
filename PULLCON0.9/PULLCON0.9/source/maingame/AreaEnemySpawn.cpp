@@ -151,7 +151,7 @@ bool AreaEnemySpawn::Draw()
 	MV1DrawModel(_handle);
 
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-	vector4 color = { 255,255,255 };
+	Vector4 color = { 255,255,255 };
 	if (!_mode._dbgCollisionDraw)
 	{
 		DrawCollision(color);

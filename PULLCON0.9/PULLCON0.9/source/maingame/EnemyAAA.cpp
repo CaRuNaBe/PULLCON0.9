@@ -13,7 +13,7 @@ namespace
 	const std::string BULLET_STATE = "bullet_state";
 	const std::string BULLET_STATEJSON = BULLET_STATE + ".json";
 }
-EnemyAAA::EnemyAAA(ApplicationBase& game, int layer, ModeMainGame& mode, int min_id, int max_id, int pile_num, float scale, vector4 _vPosi)
+EnemyAAA::EnemyAAA(ApplicationBase& game, int layer, ModeMainGame& mode, int min_id, int max_id, int pile_num, float scale, Vector4 _vPosi)
 	:ActorMainGame(game, layer, mode)
 	, AAA_ID(utility::get_random(min_id, max_id))
 {
@@ -46,7 +46,7 @@ EnemyAAA::~EnemyAAA()
 	MV1DeleteModel(_handle_turret);
 }
 
-void EnemyAAA::Initialize(int pile_num, vector4 _vPosi, float scale)
+void EnemyAAA::Initialize(int pile_num, Vector4 _vPosi, float scale)
 {
 	ActorMainGame::Initialize();
 	_stateAAA = State::PLAY;
@@ -334,7 +334,7 @@ bool EnemyAAA::Draw()
 	{
 		if (_coll)
 		{
-			vector4 color = { 255, 255, 255 };
+			Vector4 color = { 255, 255, 255 };
 			DrawCollision(color);
 			if (!_finish)
 			{
@@ -355,7 +355,7 @@ bool EnemyAAA::Draw()
 		{
 			if (_stateAAA == State::EVENT)
 			{
-				vector4 color = { 255, 255, 255 };
+				Vector4 color = { 255, 255, 255 };
 				DrawCollisionSearch(color);
 			}
 		}
@@ -398,7 +398,7 @@ void EnemyAAA::GetSearch()
 
 void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, const int& theta_degree_lower, const int& theta_degree_upper, const int& phi_degree_lower, const int& phi_degree_upper)
 {
-	vector4 vBullet = { _vPos.x, _vPos.y + 100.f, _vPos.z };
+	Vector4 vBullet = { _vPos.x, _vPos.y + 100.f, _vPos.z };
 	_mode.AddEffectFirePlayer(vBullet);
 	if (AAA_ID == 1)
 	{
@@ -435,7 +435,7 @@ void EnemyAAA::AddBullet(const int& theta_split_num, const int& phi_split_num, c
 				if (bullet_state[0] == 0)
 				{
 					//ê¸èÛ
-					vector4 player_dir_xz = { _vDir.GetX(),0.0f,_vDir.GetZ() };
+					Vector4 player_dir_xz = { _vDir.GetX(),0.0f,_vDir.GetZ() };
 					MATRIX to_player_dxmatrix = MGetRotVec2(VGet(-1.0f, 0.0f, 0.0f), ToDX(player_dir_xz));
 					VECTOR bullet_dx_dir = VTransform(ToDX(bullet_dir), to_player_dxmatrix);
 
@@ -483,7 +483,7 @@ void EnemyAAA::AddPieces(int min_id, int max_id, int pile_num, float scale)
 {
 	for (auto i = 0; i < pile_num; ++i)
 	{
-		vector4 vPiece = { _vPos.x, _vPos.y - _collision._fRadius * static_cast<float>(i + 1), _vPos.z };
+		Vector4 vPiece = { _vPos.x, _vPos.y - _collision._fRadius * static_cast<float>(i + 1), _vPos.z };
 		auto piece = std::make_shared<EnemyAAA>(_game, static_cast<int>(ActorMainGame::Type::kEnemyAAA), _mode, min_id, max_id, 0, scale, vPiece);
 		piece->_stateAAA = State::NUM;
 		piece->_coll = false;

@@ -8,7 +8,7 @@
 class EnemyAAA : public ActorMainGame
 {
 public:
-	EnemyAAA(ApplicationBase& game, int layer, ModeMainGame& mode, int min_id, int max_id, int pile_num, float scale, vector4 _vPosi);
+	EnemyAAA(ApplicationBase& game, int layer, ModeMainGame& mode, int min_id, int max_id, int pile_num, float scale, Vector4 _vPosi);
 	virtual ~EnemyAAA();
 	virtual Type GetType()
 	{
@@ -23,7 +23,7 @@ public:
 		WEAPON//•ºŠí‰»
 	};
 
-	virtual void Initialize(int pile_num, vector4 _vPosi, float scale);
+	virtual void Initialize(int pile_num, Vector4 _vPosi, float scale);
 	virtual bool Update();
 	virtual bool Draw();
 

@@ -1,7 +1,7 @@
 #include  "EnemyColumn.h"
 #include  "EnemySkyhunter.h"
 #include  "GameStage.h"
-EnemyColumn::EnemyColumn(ApplicationBase& game, int layer, ModeMainGame& mode, vector4 pos)
+EnemyColumn::EnemyColumn(ApplicationBase& game, int layer, ModeMainGame& mode, Vector4 pos)
 	:ActorMainGame(game, layer, mode)
 {
 	Initialize();
@@ -64,9 +64,9 @@ bool EnemyColumn::Update()
 	}
 
 	MV1_COLL_RESULT_POLY hitPoly;
-	vector4 move = _vVelocity * _fSpeed;
-	vector4 posStart = _vPos + move;
-	vector4 posEnd = { posStart.x, posStart.y - 6000.f, posStart.z };
+	Vector4 move = _vVelocity * _fSpeed;
+	Vector4 posStart = _vPos + move;
+	Vector4 posEnd = { posStart.x, posStart.y - 6000.f, posStart.z };
 	hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));
 	if (hitPoly.HitFlag)
 	{
@@ -95,7 +95,7 @@ bool EnemyColumn::Draw()
 	ActorMainGame::Draw();
 
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-	vector4 color = { 255,255,255 };
+	Vector4 color = { 255,255,255 };
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
 	{
 		color = { 255,0,255 };
@@ -123,7 +123,7 @@ void EnemyColumn::SetVelocity()
 	_vVelocity.Normalized();
 }
 
-void EnemyColumn::AddPieces(vector4 pos)
+void EnemyColumn::AddPieces(Vector4 pos)
 {
 	for (auto i = 0; i < _iPieces; ++i)
 	{

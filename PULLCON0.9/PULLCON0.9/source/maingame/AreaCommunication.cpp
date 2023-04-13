@@ -50,7 +50,7 @@ bool AreaCommunication::Draw()
 	ActorMainGame::Draw();
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 #if _DEBUG
-	vector4 color = { 255, 255, 255 };
+	Vector4 color = { 255, 255, 255 };
 	DrawCollision(color);
 #endif
 	return true;

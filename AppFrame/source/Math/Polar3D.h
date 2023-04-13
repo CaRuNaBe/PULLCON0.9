@@ -6,7 +6,7 @@
  * @date   March 2023
  *********************************************************************/
 #pragma once
-#include "vector4.h"
+#include "Vector4.h"
 #include "utility.h"
 namespace math
 {
@@ -15,13 +15,13 @@ namespace math
 	public:
 		Polar3D();
 
-		Polar3D( const vector4& centor = {0,0,0},float radius = 0.0f,float theta = 0.0f,float phi = 0.0f );
+		Polar3D( const Vector4& centor = {0,0,0},float radius = 0.0f,float theta = 0.0f,float phi = 0.0f );
 
-		Polar3D( const vector4& centor = {0,0,0},int radius = 0.0f,int theta = 0.0f,int phi = 0.0f );
+		Polar3D( const Vector4& centor = {0,0,0},int radius = 0.0f,int theta = 0.0f,int phi = 0.0f );
 
-		Polar3D( const vector4& vec2,const vector4& centor = {0,0,0},float theta = 0.0f,float phi = 0.0f );
+		Polar3D( const Vector4& vec2,const Vector4& centor = {0,0,0},float theta = 0.0f,float phi = 0.0f );
 
-		Polar3D( const vector4& vec );
+		Polar3D( const Vector4& vec );
 		Polar3D( const Polar3D& ) = default; // コピー
 		Polar3D( Polar3D&& ) = default; // ムーブ
 
@@ -31,7 +31,7 @@ namespace math
 		Polar3D& operator =( const Polar3D& ) = default; // コピー
 		Polar3D& operator =( Polar3D&& ) = default; // ムーブ
 
-		vector4 ToVector4();
+		Vector4 ToVector4();
 
 		void RadiusIncrement( const float& radius );
 
@@ -84,7 +84,7 @@ namespace math
 		}
 	private:
 		/** 中心点 直交座標に戻すとき必要 */
-		const vector4 centor;
+		const Vector4 centor;
 		float radius;
 		float theta;
 		float phi;

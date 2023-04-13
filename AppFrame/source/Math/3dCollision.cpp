@@ -29,13 +29,13 @@ namespace math
 	// Sphere‚Ì•`‰æ
 	void Sphere::Draw( int red,int green,int blue ) const
 	{
-		vector4 Center = {_vCenter.x, _vCenter.y, _vCenter.z};
+		Vector4 Center = {_vCenter.x, _vCenter.y, _vCenter.z};
 		DrawSphere3D( ToDX( Center ),_fRadius,8,GetColor( red,green,blue ),GetColor( 0,0,0 ),FALSE );
 	}
 	// Sphere‚Ì•`‰æ
 	void Sphere::DrawObject(int red, int green, int blue) const
 	{
-		vector4 Center = { _vCenter.x, _vCenter.y, _vCenter.z };
+		Vector4 Center = { _vCenter.x, _vCenter.y, _vCenter.z };
 		DrawSphere3D(ToDX(Center), _fRadius, 64, GetColor(red, green, blue), GetColor(0, 0, 0), FALSE);
 	}
 

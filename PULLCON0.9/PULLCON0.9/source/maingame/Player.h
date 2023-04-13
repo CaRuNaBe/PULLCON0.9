@@ -6,10 +6,10 @@
 class Camera
 {
 public:
-	vector4	_vPos;					// 位置
-	vector4	_vPosEvent;			// 引っこ抜きカメラ位置
-	vector4	_vTarget;				// 注視点
-	vector4	_vMemory;				// ベクトル保存用
+	Vector4	_vPos;					// 位置
+	Vector4	_vPosEvent;			// 引っこ抜きカメラ位置
+	Vector4	_vTarget;				// 注視点
+	Vector4	_vMemory;				// ベクトル保存用
 	float	_clipNear, _clipFar;	// クリップ
 };
 
@@ -36,7 +36,7 @@ public:
 
 	void CameraUpdate();    // カメラ更新
 	void EventCamera();    // カメラ
-	void AddBullet(vector4 pos);
+	void AddBullet(Vector4 pos);
 	State GetPlayerState()
 	{
 		return _statePlayer;
@@ -51,7 +51,7 @@ protected:
 
 	State  _statePlayer;
 
-	vector4 _vMoveDir;
+	Vector4 _vMoveDir;
 	int    _push;                 // ボタン連打回数
 	bool   _isLerp;               // 線形補間するか
 	bool   _isHit;                // 当たったか

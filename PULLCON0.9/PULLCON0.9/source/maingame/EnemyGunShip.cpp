@@ -101,7 +101,7 @@ bool EnemyGunShip::Update()
 	_vDir.y = cos(theta);
 	_vDir.Normalized();
 
-	vector4 effectPos = _vPos + _vDir * _collision._fRadius;
+	Vector4 effectPos = _vPos + _vDir * _collision._fRadius;
 	// ˆê’èŠÔŠu‚ÅŒ‚‚Â
 	if (_fire && _CT == 0)
 	{
@@ -162,7 +162,7 @@ bool EnemyGunShip::Draw()
 	MV1DrawModel(_handle);
 
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-	vector4 color = { 255,255,255 };
+	Vector4 color = { 255,255,255 };
 	if (!_mode._dbgCollisionDraw)
 	{
 		DrawCollision(color);
@@ -178,7 +178,7 @@ bool EnemyGunShip::Draw()
 
 void EnemyGunShip::AddBullet()
 {
-	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
+	Vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
 	int  theta_split_num = 100;
 	int phi_split_num = 50;
 	Polar3D bullet_dir_pol = { {0,0,0},1.0f,0.0f,0.0f };

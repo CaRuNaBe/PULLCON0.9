@@ -352,7 +352,7 @@ bool ModeMainGame::Draw()
 
 bool ModeMainGame::DebugDraw()
 {
-	math::vector4 posi;
+	math::Vector4 posi;
 
 	for (auto&& obj : object_main_game.GetObjects())
 	{
@@ -1044,7 +1044,7 @@ bool ModeMainGame::OnCommandPLayer(unsigned int line, std::vector<std::string>& 
 	bool result = false;
 	if (state != ScriptState::EDIT)
 	{
-		vector4 posi;
+		Vector4 posi;
 		float scale = 1.0f;
 		float speed = 30.0f;
 		const size_t SCRIPTSIZE = 6;
@@ -1121,7 +1121,7 @@ bool ModeMainGame::OnCommandGunShip(unsigned int line, std::vector<std::string>&
 	bool result = false;
 	if (state != ScriptState::EDIT)
 	{
-		vector4 posi;
+		Vector4 posi;
 		float radius = 0.0f;
 		float scale = 1.0f;
 		const size_t SCRIPTSIZE = 6;
@@ -1181,7 +1181,7 @@ bool ModeMainGame::OnCommandEnemyAAA(unsigned int line, std::vector<std::string>
 	bool result = false;
 	if (state != ScriptState::EDIT)
 	{
-		vector4 posi;
+		Vector4 posi;
 		int object_min_id = 0;
 		int object_max_id = 0;
 		float scale = 1.0f;
@@ -1296,7 +1296,7 @@ bool ModeMainGame::OnCommandAreaAAA(unsigned int line, std::vector<std::string>&
 	if (state != ScriptState::EDIT)
 	{
 		/** エリアのポジション */
-		vector4 posi;
+		Vector4 posi;
 		/** scriptsの中の想定している数値や文字列の数 */
 		const size_t SCRIPTSIZE = 14;
 		/** ポジションからの最大の距離 */
@@ -1392,7 +1392,7 @@ bool ModeMainGame::OnCommandAreaAAA(unsigned int line, std::vector<std::string>&
 			return result;
 		}
 
-		std::vector<std::tuple<math::vector4, int>>posivec;
+		std::vector<std::tuple<math::Vector4, int>>posivec;
 		int num_while = 0;
 		auto x_posi_max = posi.x + std::abs(range);
 		auto x_posi_min = posi.x - std::abs(range);
@@ -1403,7 +1403,7 @@ bool ModeMainGame::OnCommandAreaAAA(unsigned int line, std::vector<std::string>&
 			auto posi_rand_x = static_cast<float>(utility::get_random(static_cast<int>(x_posi_min), static_cast<int>(x_posi_max)));
 			auto posi_rand_z = static_cast<float>(utility::get_random(static_cast<int>(z_posi_min), static_cast<int>(z_posi_max)));
 			int pile_num = utility::get_random(pile_min_num, pile_max_num);
-			vector4 rand_posi = { posi_rand_x,posi.y,posi_rand_z };
+			Vector4 rand_posi = { posi_rand_x,posi.y,posi_rand_z };
 
 			int in_range_nim = 0;
 
@@ -1489,7 +1489,7 @@ bool ModeMainGame::OnCommandObject(unsigned int line, std::vector<std::string>& 
 	bool result = false;
 	if (state != ScriptState::EDIT)
 	{
-		vector4 posi;
+		Vector4 posi;
 		float scale = 1.0f;
 		int object_id = 0;
 		int collision_id = 1;
@@ -1576,7 +1576,7 @@ bool ModeMainGame::OnCommandAreaObj(unsigned int line, std::vector<std::string>&
 	if (state != ScriptState::EDIT)
 	{
 		/** エリアのポジション */
-		vector4 posi;
+		Vector4 posi;
 		/** scriptsの中にある数値や文字列の数 */
 		const size_t SCRIPTSIZE = 12;
 		/** 大きさ */
@@ -1640,7 +1640,7 @@ bool ModeMainGame::OnCommandAreaObj(unsigned int line, std::vector<std::string>&
 		{
 			return result;
 		};
-		std::vector<math::vector4>posivec;
+		std::vector<math::Vector4>posivec;
 		int num_while = 0;
 		auto x_posi_max = posi.x + std::abs(range);
 		auto x_posi_min = posi.x - std::abs(range);
@@ -1651,7 +1651,7 @@ bool ModeMainGame::OnCommandAreaObj(unsigned int line, std::vector<std::string>&
 			auto posi_rand_x = static_cast<float>(utility::get_random(static_cast<int>(x_posi_min), static_cast<int>(x_posi_max)));
 			auto posi_rand_z = static_cast<float>(utility::get_random(static_cast<int>(z_posi_min), static_cast<int>(z_posi_max)));
 
-			vector4 rand_posi = { posi_rand_x,posi.y,posi_rand_z };
+			Vector4 rand_posi = { posi_rand_x,posi.y,posi_rand_z };
 
 			int in_range_nim = 0;
 
@@ -1735,7 +1735,7 @@ bool ModeMainGame::OnCommandAreaSpawn(unsigned int line, std::vector<std::string
 	bool result = false;
 	if (state != ScriptState::EDIT)
 	{
-		vector4 posi;
+		Vector4 posi;
 		int spawn_id = 0;
 		int spawn_fream = 0;
 		/** 大きさ */
@@ -1803,7 +1803,7 @@ bool ModeMainGame::OnCommandSupply(unsigned int line, std::vector<std::string>& 
 	bool result = false;
 	if (state != ScriptState::EDIT)
 	{
-		vector4 posi;
+		Vector4 posi;
 		float radius = 0.0f;
 		/** 大きさ */
 		float scale = 1.0f;
@@ -1865,7 +1865,7 @@ bool ModeMainGame::OnCommandCommunication(unsigned int line, std::vector<std::st
 	bool result = false;
 	if (state != ScriptState::EDIT)
 	{
-		vector4 posi;
+		Vector4 posi;
 		float radius = 0.0f;
 
 		const size_t SCRIPTSIZE = 6;
@@ -1922,7 +1922,7 @@ bool ModeMainGame::OnCommandNoEntry(unsigned int line, std::vector<std::string>&
 	bool result = false;
 	if (state != ScriptState::EDIT)
 	{
-		vector4 posi;
+		Vector4 posi;
 		float radius = 0.0f;
 		const size_t SCRIPTSIZE = 5;
 		if (scripts.size() != SCRIPTSIZE)
@@ -1973,7 +1973,7 @@ bool ModeMainGame::OnCommandNoEntry(unsigned int line, std::vector<std::string>&
 	return result;
 };
 
-bool ModeMainGame::IsSetVrctor4(math::vector4& set, std::vector<std::string>& scripts)
+bool ModeMainGame::IsSetVrctor4(math::Vector4& set, std::vector<std::string>& scripts)
 {
 	if (!(string::ToFloat(scripts[1], set.x)))
 	{
@@ -2254,56 +2254,56 @@ bool ModeMainGame::CommandInputString(int posix, int posiy, std::string inputnam
 	return result;
 }
 
-void ModeMainGame::AddEffectHitPlayerFrame(const math::vector4& pos)
+void ModeMainGame::AddEffectHitPlayerFrame(const math::Vector4& pos)
 {
 	auto effect = std::make_shared<EffectHitPlayerFrame>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
-void ModeMainGame::AddEffectSpawnAmmo(const math::vector4& pos)
+void ModeMainGame::AddEffectSpawnAmmo(const math::Vector4& pos)
 {
 	auto effect = std::make_shared<EffectSpawnAmmo>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
-void ModeMainGame::AddEffectDestroyAmmo(const math::vector4& pos)
+void ModeMainGame::AddEffectDestroyAmmo(const math::Vector4& pos)
 {
 	auto effect = std::make_shared<EffectDestroyAmmo>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
-void ModeMainGame::AddEffectHitBlackSmoke(const math::vector4& pos)
+void ModeMainGame::AddEffectHitBlackSmoke(const math::Vector4& pos)
 {
 	auto effect = std::make_shared<EffectHitBlackSmoke>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
-void ModeMainGame::AddEffectDeathObject(const math::vector4& pos)
+void ModeMainGame::AddEffectDeathObject(const math::Vector4& pos)
 {
 	auto effect = std::make_shared<EffectDeathObject>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
-void ModeMainGame::AddEffectFirePlayer(const math::vector4& pos)
+void ModeMainGame::AddEffectFirePlayer(const math::Vector4& pos)
 {
 	auto effect = std::make_shared<EffectFirePlayer>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
-void ModeMainGame::AddEffectFireGunship(const math::vector4& pos)
+void ModeMainGame::AddEffectFireGunship(const math::Vector4& pos)
 {
 	auto effect = std::make_shared<EffectFireGunship>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
-void ModeMainGame::AddEffectHitEnemy(const math::vector4& pos)
+void ModeMainGame::AddEffectHitEnemy(const math::Vector4& pos)
 {
 	AddEffectSpawnAmmo(pos);
 };

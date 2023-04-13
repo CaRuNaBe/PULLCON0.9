@@ -75,7 +75,7 @@ bool AreaSupply::Draw()
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	if (!_mode._dbgCollisionDraw)
 	{
-		vector4 color = { 255, 255, 255 };
+		Vector4 color = { 255, 255, 255 };
 		DrawCollisionEvent(color);
 		if (_event)
 		{

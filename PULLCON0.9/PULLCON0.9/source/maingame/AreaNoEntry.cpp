@@ -27,7 +27,7 @@ bool AreaNoEntry::Draw()
 	if (!_mode._dbgCollisionDraw)
 	{
 		// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-		vector4 color = { 255, 0, 255 };
+		Vector4 color = { 255, 0, 255 };
 		DrawCollisionObject(color);
 	}
 	return true;

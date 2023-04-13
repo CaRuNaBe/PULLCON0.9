@@ -5,19 +5,19 @@
 //! @brief Õ“ËŒŸ’m
 //!
 #include "Math.h"
-#include "vector4.h"
+#include "Vector4.h"
 namespace math
 {
 	// ‹…
 	class Sphere
 	{
 	public:
-		void SetSphere( vector4 pos,float r )
+		void SetSphere(Vector4 pos,float r )
 		{
 			_vCenter = pos,_fRadius = r;
 		}
 
-		vector4 _vCenter;
+		Vector4 _vCenter;
 		float   _fRadius;
 		void Draw(int red, int green, int blue) const;
 		void DrawObject(int red, int green, int blue) const;

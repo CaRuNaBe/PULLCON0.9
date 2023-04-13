@@ -15,6 +15,6 @@ public:
 private:
 	int handle_cursor;
 	bool is_hide;
-	math::vector4  posi_cursor;
+	math::Vector4  posi_cursor;
 };
 

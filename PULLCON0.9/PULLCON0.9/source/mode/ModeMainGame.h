@@ -44,14 +44,14 @@ public:
 		return object_main_game;
 	}
 
-	void AddEffectHitPlayerFrame(const math::vector4& pos);
-	void AddEffectSpawnAmmo(const math::vector4& pos);
-	void AddEffectDestroyAmmo(const math::vector4& pos);
-	void AddEffectHitBlackSmoke(const math::vector4& pos);
-	void AddEffectDeathObject(const math::vector4& pos);
-	void AddEffectFirePlayer(const math::vector4& pos);
-	void AddEffectFireGunship(const math::vector4& pos);
-	void AddEffectHitEnemy(const math::vector4& pos);
+	void AddEffectHitPlayerFrame(const math::Vector4& pos);
+	void AddEffectSpawnAmmo(const math::Vector4& pos);
+	void AddEffectDestroyAmmo(const math::Vector4& pos);
+	void AddEffectHitBlackSmoke(const math::Vector4& pos);
+	void AddEffectDeathObject(const math::Vector4& pos);
+	void AddEffectFirePlayer(const math::Vector4& pos);
+	void AddEffectFireGunship(const math::Vector4& pos);
+	void AddEffectHitEnemy(const math::Vector4& pos);
 private:
 	enum class ScriptState
 	{
@@ -98,7 +98,7 @@ private:
 	bool OnCommandCommunication(unsigned int line, std::vector<std::string>& scripts);
 	bool OnCommandNoEntry(unsigned int line, std::vector<std::string>& scripts);
 
-	bool IsSetVrctor4(math::vector4& set, std::vector<std::string>& scripts);
+	bool IsSetVrctor4(math::Vector4& set, std::vector<std::string>& scripts);
 
 
 	/** エディットモードの時に入る関数 */

@@ -92,10 +92,10 @@ bool Player::Update()
 				if (obje->_pull == true && _pull)
 				{
 					// オブジェクトまで移動する
-					vector4 objective = obje->_vPos;
+					Vector4 objective = obje->_vPos;
 					// 対空砲パーツの個数で変動させる
 					objective.y += _collision._fRadius + static_cast<float>(_iPieces + 1) * obje->_collision._fRadius;
-					vector4 dir = objective - _vPos;
+					Vector4 dir = objective - _vPos;
 					dir.Normalized();
 					_vPos += dir * static_cast<float>(_CT);
 					if (_CT == 0)
@@ -252,7 +252,7 @@ bool Player::Update()
 		}
 
 		//キャラの移動
-		vector4 dir = { -(_game.Getinput().GetLstickY()),0,_game.Getinput().GetLstickX() };   // int値が入る
+		Vector4 dir = { -(_game.Getinput().GetLstickY()),0,_game.Getinput().GetLstickX() };   // int値が入る
 
 		float length = 0.f;
 		dir.Normalized();
@@ -274,8 +274,8 @@ bool Player::Update()
 		}
 
 		MV1_COLL_RESULT_POLY hitPoly;
-		vector4 posStart = _vPos + dir;
-		vector4 posEnd = { posStart.x, posStart.y - 3000.f, posStart.z };
+		Vector4 posStart = _vPos + dir;
+		Vector4 posEnd = { posStart.x, posStart.y - 3000.f, posStart.z };
 		hitPoly = MV1CollCheck_Line(_handleStage, -1, ToDX(posStart), ToDX(posEnd));
 		if (hitPoly.HitFlag)
 		{
@@ -288,7 +288,7 @@ bool Player::Update()
 		_cam._vTarget += dir;
 
 		// 弾丸の向きベクトル設定
-		vector4 v = { -1.f, 0.f, 0.f };
+		Vector4 v = { -1.f, 0.f, 0.f };
 		rad = atan2(v.z, v.x);
 		// 弾にバラつきを持たせる
 		float randomDeg = static_cast<float>(utility::get_random(-1, 1));
@@ -337,7 +337,7 @@ bool Player::Update()
 	}
 	else if (_statePlayer == State::EVENT && !_isLerp)
 	{
-		vector4 move = { 0.f, 2.f, 0.f };
+		Vector4 move = { 0.f, 2.f, 0.f };
 		if (_pull && _CT > 0)
 		{
 			// 注視点の移動
@@ -409,7 +409,7 @@ bool Player::Update()
 		_takeIn = false;
 	}
 
-	vector4 v = { 0.f, 0.f, 0.f };
+	Vector4 v = { 0.f, 0.f, 0.f };
 	if (_isHit)
 	{
 		ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["se_gunlanding"]);
@@ -425,15 +425,15 @@ bool Player::Update()
 		v *= static_cast<float>(_ST) / 20.f;
 	}
 	// カメラ設定更新
-	vector4 camPos = _cam._vPos + v;
-	vector4 camPosEvent = _cam._vPosEvent + v;
-	vector4 camTarget = _cam._vTarget + v;
+	Vector4 camPos = _cam._vPos + v;
+	Vector4 camPosEvent = _cam._vPosEvent + v;
+	Vector4 camTarget = _cam._vTarget + v;
 	if (_isLerp)
 	{
-		vector4 posStart = _cam._vTarget + _cam._vMemory;
-		vector4 posEnd = _cam._vPosEvent;
+		Vector4 posStart = _cam._vTarget + _cam._vMemory;
+		Vector4 posEnd = _cam._vPosEvent;
 		_fTime += 0.02f;
-		vector4 camPosNow = posStart * (1.0f - _fTime) + posEnd * _fTime;
+		Vector4 camPosNow = posStart * (1.0f - _fTime) + posEnd * _fTime;
 		camPosEvent = camPosNow + v;
 		if (_fTime > 1.0f)
 		{
@@ -482,8 +482,8 @@ bool Player::Draw()
 	rotaMatrix.rotate_x(rX, false);
 	rotaMatrix.rotate_y(_fRotatY, false);
 	// 位置
-	vector4 posAirscrew = { 0.f, 0.f, -200.f };
-	vector4 posBackAirscrew = { 40.f, 450.f, 860.f };
+	Vector4 posAirscrew = { 0.f, 0.f, -200.f };
+	Vector4 posBackAirscrew = { 40.f, 450.f, 860.f };
 	posMatrix.transfer(_vPos.x, _vPos.y, _vPos.z, false);
 	posAirscrewMatrix.transfer(posAirscrew.x, posAirscrew.y, posAirscrew.z, false);
 	posBackAirscrewMatrix.transfer(posBackAirscrew.x, posBackAirscrew.y, posBackAirscrew.z, false);
@@ -507,7 +507,7 @@ bool Player::Draw()
 	// コリジョン描画
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
 	{
-		vector4 color = { 255, 255, 255 };
+		Vector4 color = { 255, 255, 255 };
 		if (_isHit)
 		{
 			color = { 255, 0, 0 };
@@ -605,7 +605,7 @@ void Player::EventCamera()
 	_cam._vPosEvent.y += 4000.f + transformY * static_cast<float>(_iPieces);
 }
 
-void Player::AddBullet(vector4 pos)
+void Player::AddBullet(Vector4 pos)
 {
 	auto bullet = std::make_shared<Bullet>(_game, static_cast<int>(ActorMainGame::Type::kBullet), _mode);
 	bullet->SetPosition(pos);

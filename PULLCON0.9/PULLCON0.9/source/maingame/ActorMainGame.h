@@ -32,10 +32,10 @@ public:
   virtual bool Update();
   virtual void UpdateCollision();
   virtual bool Draw();
-  virtual void DrawCollision(vector4 color);
-  virtual void DrawCollisionEvent(vector4 color);
-  virtual void DrawCollisionSearch(vector4 color);
-  virtual void DrawCollisionObject(vector4 color);
+  virtual void DrawCollision(Vector4 color);
+  virtual void DrawCollisionEvent(Vector4 color);
+  virtual void DrawCollisionSearch(Vector4 color);
+  virtual void DrawCollisionObject(Vector4 color);
   virtual bool DebugDraw();
   virtual bool IsHitObject(ActorMainGame& object);// 指定のオブジェクトと当たっているか
   virtual bool IsHitEvent(ActorMainGame& object);// イベントスフィアと当たっているか
@@ -60,7 +60,7 @@ public:
 
   virtual void SeGunShotPlay();
   // 座標の設定
-  void SetPosition(const vector4& pos)
+  void SetPosition(const Vector4& pos)
   {
     _vPos = pos;
   }
@@ -68,12 +68,12 @@ public:
   {
     _vPos.x = x; _vPos.y = y; _vPos.z = z;
   }
-  virtual vector4& GetPosition()
+  virtual Vector4& GetPosition()
   {
     return _vPos;
   }
   // 向きベクトルの設定
-  void SetDir(const vector4& dir)
+  void SetDir(const Vector4& dir)
   {
     _vDir = dir;
   }
@@ -86,7 +86,7 @@ public:
   {
     _fScale = _scale;
   };
-  void SetCollision(const vector4& pos, float _radius)
+  void SetCollision(const Vector4& pos, float _radius)
   {
     _collision._vCenter = pos;
     _fRadius = _radius;
@@ -107,7 +107,7 @@ public:
   {
     return _iLife;
   }
-  vector4 GetTarget()
+  Vector4 GetTarget()
   {
     return _vTarget;
   }
@@ -117,12 +117,12 @@ public:
   }
 public:
   ModeMainGame& _mode;
-  vector4 _vPos;       // 位置
-  vector4 _vEvent;     // イベント位置
-  vector4 _vRelation;  // 位置関係
-  vector4 _vTarget;    // 目標位置
-  vector4 _vDir;       // 向き
-  vector4 _vVelocity;  // 速度ベクトル
+  Vector4 _vPos;       // 位置
+  Vector4 _vEvent;     // イベント位置
+  Vector4 _vRelation;  // 位置関係
+  Vector4 _vTarget;    // 目標位置
+  Vector4 _vDir;       // 向き
+  Vector4 _vVelocity;  // 速度ベクトル
 
   Sphere  _collision;        // 球判定
   Sphere  _collisionEvent;   // イベント判定

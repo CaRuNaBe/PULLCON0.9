@@ -52,7 +52,7 @@
     <ClInclude Include="source\Math\rect.h">
       <Filter>source\Math</Filter>
     </ClInclude>
-    <ClInclude Include="source\Math\vector4.h">
+    <ClInclude Include="source\Math\Vector4.h">
       <Filter>source\Math</Filter>
     </ClInclude>
     <ClInclude Include="source\Math\Vector2.h">
@@ -173,7 +173,7 @@
     <ClCompile Include="source\Math\Vector2.cpp">
       <Filter>source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="source\Math\vector4.cpp">
+    <ClCompile Include="source\Math\Vector4.cpp">
       <Filter>source\Math</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\Easing.cpp">

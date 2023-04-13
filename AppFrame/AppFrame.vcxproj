@@ -187,7 +187,7 @@
     <ClInclude Include="source\Math\math.h" />
     <ClInclude Include="source\Math\matrix44.h" />
     <ClInclude Include="source\Math\utility.h" />
-    <ClInclude Include="source\Math\vector4.h" />
+    <ClInclude Include="source\Math\Vector4.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
     <ClInclude Include="source\Math\Vector2.h" />
     <ClInclude Include="source\Script\CommandBase.h" />
@@ -227,7 +227,7 @@
     <ClCompile Include="source\Math\math.cpp" />
     <ClCompile Include="source\Math\matrix44.cpp" />
     <ClCompile Include="source\Math\utility.cpp" />
-    <ClCompile Include="source\Math\vector4.cpp" />
+    <ClCompile Include="source\Math\Vector4.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
     <ClCompile Include="source\Math\Vector2.cpp" />
     <ClCompile Include="source\Script\CommandLabel.cpp" />

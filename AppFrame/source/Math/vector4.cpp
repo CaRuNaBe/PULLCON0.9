@@ -1,21 +1,21 @@
 #include <cmath>
-#include "vector4.h"
+#include "Vector4.h"
 #include "matrix44.h"
 
 namespace math
 {
-	vector4::vector4()
+	Vector4::Vector4()
 	{
 		x = 0.0; y = 0.0; z = 0.0; w = 1.0;
 	}
 
-	const float vector4::Lenght( const vector4& second ) const
+	const float Vector4::Lenght( const Vector4& second ) const
 	{
 		return sqrt( (x - second.GetX()) * (x - second.GetX()) + (y - second.GetY()) * (y - second.GetY()) + (z - second.GetZ()) * (z - second.GetZ()) );
 	}
 
 	//正規化
-	void vector4::Normalized()
+	void Vector4::Normalized()
 	{
 		auto len = Lenght();
 		// 誤差未満ならゼロとみなす。
@@ -32,7 +32,7 @@ namespace math
 			z /= len;
 		}
 	}
-	const vector4 vector4::GetNormalize() const
+	const Vector4 Vector4::GetNormalize() const
 	{
 		auto len = Lenght();
 		auto nx = 0.0f;
@@ -51,49 +51,49 @@ namespace math
 			ny = y / len;
 			nz = z / len;
 		}
-		return vector4( nx,ny,nz );
+		return Vector4( nx,ny,nz );
 	}
 
-	const float vector4::Dot( const vector4& rhs ) const
+	const float Vector4::Dot( const Vector4& rhs ) const
 	{
 		return x * rhs.x + y * rhs.y + z * rhs.z;
 	}
 
-	const vector4 vector4::Cross( const vector4& rhs ) const
+	const Vector4 Vector4::Cross( const Vector4& rhs ) const
 	{
 		auto cx = y * rhs.z - z * rhs.y;
 		auto cy = z * rhs.x - x * rhs.z;
 		auto cz = x * rhs.y - y * rhs.x;
 
-		return vector4( cx,cy,cz );
+		return Vector4( cx,cy,cz );
 	}
 
-	const vector4 vector4::operator+( const vector4& rhs ) const
+	const Vector4 Vector4::operator+( const Vector4& rhs ) const
 	{
-		return vector4( x + rhs.x,y + rhs.y,z + rhs.z );
+		return Vector4( x + rhs.x,y + rhs.y,z + rhs.z );
 	}
 
-	const vector4 vector4::operator-( const vector4& rhs ) const
+	const Vector4 Vector4::operator-( const Vector4& rhs ) const
 	{
-		return vector4( x - rhs.x,y - rhs.y,z - rhs.z );
+		return Vector4( x - rhs.x,y - rhs.y,z - rhs.z );
 	}
 
-	const vector4 vector4::operator*( const vector4& rhs ) const
+	const Vector4 Vector4::operator*( const Vector4& rhs ) const
 	{
-		return vector4( x * rhs.x,y * rhs.y,z * rhs.z );
+		return Vector4( x * rhs.x,y * rhs.y,z * rhs.z );
 	}
 	
-	const vector4 vector4::operator*( const float rhs ) const
+	const Vector4 Vector4::operator*( const float rhs ) const
 	{
-		return vector4( x * rhs,y * rhs,z * rhs );
+		return Vector4( x * rhs,y * rhs,z * rhs );
 	}
 
-	const vector4 vector4::operator/( const float rhs ) const
+	const Vector4 Vector4::operator/( const float rhs ) const
 	{
-		return vector4( x / rhs,y / rhs,z / rhs );
+		return Vector4( x / rhs,y / rhs,z / rhs );
 	}
 	// ベクトル加算代入
-	vector4& vector4::operator+=( const vector4& right )
+	Vector4& Vector4::operator+=( const Vector4& right )
 	{
 		x += right.x;
 		y += right.y;
@@ -101,7 +101,7 @@ namespace math
 		return *this;
 	};
 	// ベクトル減算代入
-	vector4& vector4::operator-=( const vector4& right )
+	Vector4& Vector4::operator-=( const Vector4& right )
 	{
 		x -= right.x;
 		y -= right.y;
@@ -109,7 +109,7 @@ namespace math
 		return *this;
 	}
 	// ベクトルのスカラ乗算代入
-	vector4& vector4::operator*=( float scalar )
+	Vector4& Vector4::operator*=( float scalar )
 	{
 		x *= scalar;
 		y *= scalar;
@@ -117,7 +117,7 @@ namespace math
 		return *this;
 	}
 
-	const vector4 vector4::operator *( const matrix44 rhs ) const
+	const Vector4 Vector4::operator *( const matrix44 rhs ) const
 	{
 		auto mx = x * rhs.get_value( 0,0 )
 			+ y * rhs.get_value( 1,0 )
@@ -139,7 +139,7 @@ namespace math
 			+ z * rhs.get_value( 2,3 )
 			+ rhs.get_value( 3,3 );
 
-		return vector4( mx,my,mz,mw );
+		return Vector4( mx,my,mz,mw );
 	}
 
 } // math

@@ -120,7 +120,7 @@ bool ActorMainGame::DebugDraw()
   return true;
 }
 
-void ActorMainGame::DrawCollision(vector4 color)
+void ActorMainGame::DrawCollision(Vector4 color)
 {
 #if _DEBUG
   // ライティング計算
@@ -130,7 +130,7 @@ void ActorMainGame::DrawCollision(vector4 color)
 #endif
 }
 
-void ActorMainGame::DrawCollisionEvent(vector4 color)
+void ActorMainGame::DrawCollisionEvent(Vector4 color)
 {
 #if _DEBUG
   // ライティング計算
@@ -140,7 +140,7 @@ void ActorMainGame::DrawCollisionEvent(vector4 color)
 #endif
 }
 
-void ActorMainGame::DrawCollisionSearch(vector4 color)
+void ActorMainGame::DrawCollisionSearch(Vector4 color)
 {
 #if _DEBUG
   // ライティング計算
@@ -150,7 +150,7 @@ void ActorMainGame::DrawCollisionSearch(vector4 color)
 #endif
 }
 
-void ActorMainGame::DrawCollisionObject(vector4 color)
+void ActorMainGame::DrawCollisionObject(Vector4 color)
 {
 #if _DEBUG
   // ライティング計算
