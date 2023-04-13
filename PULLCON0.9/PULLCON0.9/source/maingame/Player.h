@@ -1,9 +1,10 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase3D.h"
+#include "ActorMainGame.h"
 #include "../mode/ModeMainGame.h"
 // カメラ
-class Camera {
+class Camera
+{
 public:
 	vector4	_vPos;					// 位置
 	vector4	_vPosEvent;			// 引っこ抜きカメラ位置
@@ -12,30 +13,36 @@ public:
 	float	_clipNear, _clipFar;	// クリップ
 };
 
-class Player : public ActorBase3D {
-	typedef ActorBase3D base;
+class Player : public ActorMainGame
+{
 public:
-	Player(ApplicationBase& game, ModeMainGame& mode);
+	Player(ApplicationBase& game, int layer, ModeMainGame& mode);
 	virtual ~Player();
-	virtual Type GetType() { return Type::kPlayer; }
+	virtual Type GetType()
+	{
+		return Type::kPlayer;
+	}
 	// プレイヤーの状態
-	enum class State {
+	enum class State
+	{
 		NUM, //初期状態
 		PLAY,//プレイアブル状態
 		EVENT//イベント状態
 	};
 
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 
 	void CameraUpdate();    // カメラ更新
 	void EventCamera();    // カメラ
 	void AddBullet(vector4 pos);
-	State GetPlayerState() {
+	State GetPlayerState()
+	{
 		return _statePlayer;
 	}
-	int GetPush() {
+	int GetPush()
+	{
 		return _push;
 	}
 protected:

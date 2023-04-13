@@ -1,22 +1,24 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase3D.h"
+#include "ActorMainGame.h"
 #include "../mode/ModeMainGame.h"
-class StageObject:
-    public ActorBase3D
+class StageObject :public ActorMainGame
 {
-	using base = ActorBase3D;
 public:
-	StageObject( ApplicationBase& game,ModeMainGame& mode,int objectid,int collision ,int pieces_coll);
+	StageObject(ApplicationBase& game, int layer, ModeMainGame& mode, int objectid, int collision, int pieces_coll);
 	virtual ~StageObject();
-	virtual Type GetType() { return Type::kStageObject; }
+	virtual Type GetType()
+	{
+		return Type::kStageObject;
+	}
 	// ステージオブジェクトの状態
-	enum class State {
+	enum class State
+	{
 		NUM, //初期状態
 		STATE,//プレイアブル状態
 	};
 
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 

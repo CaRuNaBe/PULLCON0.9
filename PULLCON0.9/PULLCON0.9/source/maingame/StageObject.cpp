@@ -1,15 +1,15 @@
 #include "StageObject.h"
 #include "AreaNoEntry.h"
 #include "../ApplicationGlobal.h"
-StageObject::StageObject( ApplicationBase& game,ModeMainGame& mode,int objectid,int collision,int pieces_coll )
-	:base( game,mode )
+StageObject::StageObject(ApplicationBase& game, int layer, ModeMainGame& mode, int objectid, int collision, int pieces_coll)
+	:ActorMainGame(game, layer, mode)
 {
 
-	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( objectid ).c_str() );
+	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(objectid).c_str());
 	_iPiecesColl = pieces_coll;
 
-	Init();
-	if ( collision == 1 )
+	Initialize();
+	if (collision == 1)
 	{
 		_coll = true;
 	}
@@ -21,22 +21,22 @@ StageObject::StageObject( ApplicationBase& game,ModeMainGame& mode,int objectid,
 
 StageObject::~StageObject()
 {
-	MV1DeleteModel( _handle );
+	MV1DeleteModel(_handle);
 }
 
-void StageObject::Init()
+void StageObject::Initialize()
 {
-	base::Init();
+	ActorMainGame::Initialize();
 	_stateStageObject = State::NUM;
 	_iPieces = _iPiecesColl;
 }
 
 bool StageObject::Update()
 {
-	base::Update();
+	ActorMainGame::Update();
 	_collision._fRadius = _fRadius * _fScale;
 	UpdateCollision();
-	if ( _stateStageObject == State::NUM )
+	if (_stateStageObject == State::NUM)
 	{
 		AddCollision();
 		_stateStageObject = State::STATE;
@@ -46,17 +46,17 @@ bool StageObject::Update()
 
 bool StageObject::Draw()
 {
-	base::Draw();
+	ActorMainGame::Draw();
 	// ƒ‚ƒfƒ‹Šg‘å
-	MV1SetScale( _handle,VGet( _fScale,_fScale,_fScale ) );
+	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 
-	MV1SetPosition( _handle,math::ToDX( _vPos ) );
+	MV1SetPosition(_handle, math::ToDX(_vPos));
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
-	vector4 color = {255, 0, 255};
-	SetUseLighting( FALSE );
+	vector4 color = { 255, 0, 255 };
+	SetUseLighting(FALSE);
 	// ƒ‚ƒfƒ‹•`‰æ
-	MV1DrawModel( _handle );
-	SetUseLighting( TRUE );
+	MV1DrawModel(_handle);
+	SetUseLighting(TRUE);
 	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
 	{
 		DrawCollisionObject(color);
@@ -67,12 +67,12 @@ bool StageObject::Draw()
 void StageObject::AddCollision()
 {
 	vector4 areaPos = _vPos;
-	for ( auto i = 1; i < _iPieces; ++i )
+	for (auto i = 1; i < _iPieces; ++i)
 	{
 		areaPos.y = _vPos.y + _collision._fRadius * 2.f * i;
-		auto area = std::make_shared<AreaNoEntry>( _game,_mode );
-		area->SetPosition( areaPos );
-		area->SetCollisionRadius( _collision._fRadius );
-		_mode.GetObjectServer3D().Add( area );
+		auto area = std::make_shared<AreaNoEntry>(_game, static_cast<int>(ActorMainGame::Type::kAreaNoEntry), _mode);
+		area->SetPosition(areaPos);
+		area->SetCollisionRadius(_collision._fRadius);
+		_mode.GetObjectServer3D().Add(area);
 	}
 }

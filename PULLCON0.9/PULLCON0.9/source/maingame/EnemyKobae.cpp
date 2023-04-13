@@ -2,20 +2,25 @@
 #include  "Bullet.h"
 #include  "GameStage.h"
 #include "../ApplicationGlobal.h"
-namespace {
+namespace
+{
 	constexpr int KOBAE_ID = 11;
 }
-EnemyKobae::EnemyKobae(ApplicationBase& game, ModeMainGame& mode)
-	:base(game, mode) {
-	Init();
+
+EnemyKobae::EnemyKobae(ApplicationBase& game, int layer, ModeMainGame& mode)
+	:ActorMainGame(game, layer, mode)
+{
+	Initialize();
 }
 
-EnemyKobae::~EnemyKobae() {
+EnemyKobae::~EnemyKobae()
+{
 	MV1DeleteModel(_handle);
 }
 
-void EnemyKobae::Init() {
-	base::Init();
+void EnemyKobae::Initialize()
+{
+	ActorMainGame::Initialize();
 
 	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(KOBAE_ID));
 
@@ -33,10 +38,12 @@ void EnemyKobae::Init() {
 
 }
 
-bool EnemyKobae::Update() {
-	base::Update();
+bool EnemyKobae::Update()
+{
+	ActorMainGame::Update();
 
-	if (_stateEnemyKobae == State::WAIT) {
+	if (_stateEnemyKobae == State::WAIT)
+	{
 		_collision._vCenter = _vPos;
 		_collisionEvent._vCenter = _vPos;
 	}
@@ -47,27 +54,35 @@ bool EnemyKobae::Update() {
 	float rad = 0.f;
 	float theta = 0.f;
 
-	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects())
+	{
 		if (obje->GetType() == Type::kPlayer
-			|| obje->GetType() == Type::kBullet
-			|| obje->GetType() == Type::kGameStage) {
-			if (obje->GetType() == Type::kPlayer) {
-				if (IsSearch(*obje)) {
-					if (_stateEnemyKobae == State::WAIT) {
+				|| obje->GetType() == Type::kBullet
+				|| obje->GetType() == Type::kGameStage)
+		{
+			if (obje->GetType() == Type::kPlayer)
+			{
+				if (IsSearch(*obje))
+				{
+					if (_stateEnemyKobae == State::WAIT)
+					{
 						_vRelation = obje->_vPos;
 						SetVelocity();
 						_stateEnemyKobae = State::PLAY;
 					}
 				}
-				else {
-					if (_ST == 0) {
+				else
+				{
+					if (_ST == 0)
+					{
 						_vRelation = obje->_vPos;
 						SetVelocity();
 						_stateEnemyKobae = State::PLAY;
 						_ST = 300;
 					}
 				}
-				if (Intersect(_collisionEvent, obje->_collision)) {
+				if (Intersect(_collisionEvent, obje->_collision))
+				{
 					_fire = true;
 					_vTarget = obje->_vPos;
 					// ’e‚Éƒoƒ‰‚Â‚«‚ðŽ‚½‚¹‚é
@@ -77,9 +92,12 @@ bool EnemyKobae::Update() {
 					_vTarget = { _vTarget.x + randomX, _vTarget.y + randomY, _vTarget.z + randomZ };
 				}
 			}
-			if (obje->GetType() == Type::kBullet) {
-				if (IsHitObject(*obje)) {
-					if (obje->_iType == 2) {
+			if (obje->GetType() == Type::kBullet)
+			{
+				if (IsHitObject(*obje))
+				{
+					if (obje->_iType == 2)
+					{
 						_mode.AddEffectHitEnemy(obje->GetPosition());
 						_CT = 10;
 						_overlap = true;
@@ -88,7 +106,8 @@ bool EnemyKobae::Update() {
 					}
 				}
 			}
-			if ((obje->GetType() == Type::kGameStage)) {
+			if ((obje->GetType() == Type::kGameStage))
+			{
 				auto stage = std::static_pointer_cast<GameStage>(obje);
 				_handleStage = stage->GetHandle();
 				MV1RefreshCollInfo(_handleStage, 0);
@@ -111,7 +130,8 @@ bool EnemyKobae::Update() {
 	_vDir.Normalized();
 
 	// ˆê’èŠÔŠu‚Å’e‚ðŒ‚‚Â
-	if (_fire && _CT == 0) {
+	if (_fire && _CT == 0)
+	{
 		AddBullet();
 		SeGunShotPlay();
 		_CT = 120;
@@ -122,12 +142,14 @@ bool EnemyKobae::Update() {
 	vector4 posStart = _vPos + move;
 	vector4 posEnd = { posStart.x, posStart.y - 6000.f, posStart.z };
 	hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));
-	if (hitPoly.HitFlag) {
+	if (hitPoly.HitFlag)
+	{
 		move += ToMath(hitPoly.HitPosition) - posEnd;
 	}
 	_vPos += move;
 
-	if (_iLife < 0) {
+	if (_iLife < 0)
+	{
 		Damage();
 	}
 
@@ -140,12 +162,14 @@ bool EnemyKobae::Update() {
 	return true;
 }
 
-void EnemyKobae::Damage() {
+void EnemyKobae::Damage()
+{
 	_mode.GetObjectServer3D().Del(*this);
 }
 
-bool EnemyKobae::Draw() {
-	base::Draw();
+bool EnemyKobae::Draw()
+{
+	ActorMainGame::Draw();
 
 	// ƒ‚ƒfƒ‹Šg‘å
 	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
@@ -158,11 +182,13 @@ bool EnemyKobae::Draw() {
 
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	vector4 color = { 255,255,255 };
-	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
+	{
 		DrawCollision(color);
 		DrawCollisionEvent(color);
 		DrawCollisionSearch(color);
-		if (_overlap) {
+		if (_overlap)
+		{
 			color = { 255, 0, 0 };
 			DrawCollision(color);
 		}
@@ -170,7 +196,8 @@ bool EnemyKobae::Draw() {
 	return true;
 }
 
-void EnemyKobae::SetVelocity() {
+void EnemyKobae::SetVelocity()
+{
 	// ŽOŽŸŒ³‹ÉÀ•W
 	float sx = _vRelation.x - _vPos.x;
 	float sz = _vRelation.z - _vPos.z;
@@ -189,9 +216,10 @@ void EnemyKobae::SetVelocity() {
 }
 
 
-void EnemyKobae::AddBullet() {
+void EnemyKobae::AddBullet()
+{
 	vector4 vBullet = { _vPos.x, _vPos.y - 500.f, _vPos.z };
-	auto bullet = std::make_shared<Bullet>(_game, _mode);
+	auto bullet = std::make_shared<Bullet>(_game, static_cast<int>(ActorMainGame::Type::kBullet), _mode);
 	bullet->SetPosition(vBullet);
 	bullet->SetDir(_vDir);
 	bullet->_iType = 1;

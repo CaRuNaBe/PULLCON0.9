@@ -34,9 +34,6 @@
     <ClInclude Include="source\Application\InputManager.h">
       <Filter>source\Application</Filter>
     </ClInclude>
-    <ClInclude Include="source\Base\ObjectServer.h">
-      <Filter>source\Object</Filter>
-    </ClInclude>
     <ClInclude Include="source\Math\2dCollision.h">
       <Filter>source\Math</Filter>
     </ClInclude>
@@ -131,9 +128,6 @@
     <ClInclude Include="source\Script\CommandDrawTime.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
-    <ClInclude Include="source\Base\ObjectServer3D.h">
-      <Filter>source\Base</Filter>
-    </ClInclude>
     <ClInclude Include="source\Script\CommandDrawString.h">
       <Filter>source\Sclipt</Filter>
     </ClInclude>
@@ -154,9 +148,6 @@
     </ClCompile>
     <ClCompile Include="source\Application\InputManager.cpp">
       <Filter>source\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Base\ObjectServer.cpp">
-      <Filter>source\Object</Filter>
     </ClCompile>
     <ClCompile Include="source\Math\2dCollision.cpp">
       <Filter>source\Math</Filter>
@@ -247,9 +238,6 @@
     </ClCompile>
     <ClCompile Include="source\Script\CommandDrawTime.cpp">
       <Filter>source\Sclipt</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Base\ObjectServer3D.cpp">
-      <Filter>source\Base</Filter>
     </ClCompile>
     <ClCompile Include="source\Script\CommandDrawString.cpp">
       <Filter>source\Sclipt</Filter>

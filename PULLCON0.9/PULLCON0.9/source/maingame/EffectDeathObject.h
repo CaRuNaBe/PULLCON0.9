@@ -1,12 +1,12 @@
 #pragma once
 #include "EffectBase.h"
-class EffectDeathObject:public EffectBase
+class EffectDeathObject :public EffectBase
 {
 public:
-	EffectDeathObject( ApplicationBase& game,ModeMainGame& mode );
+	EffectDeathObject(ApplicationBase& game, int layer, ModeMainGame& mode);
 	virtual ~EffectDeathObject();
 
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 };

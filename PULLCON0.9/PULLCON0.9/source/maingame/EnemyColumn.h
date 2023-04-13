@@ -1,20 +1,23 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase3D.h"
+#include "ActorMainGame.h"
 #include "../mode/ModeMainGame.h"
-class EnemyColumn :
-	public ActorBase3D {
-	using base = ActorBase3D;
+class EnemyColumn :public ActorMainGame
+{
 public:
-	EnemyColumn(ApplicationBase& game, ModeMainGame& mode, vector4 pos);
+	EnemyColumn(ApplicationBase& game, int layer, ModeMainGame& mode, vector4 pos);
 	virtual ~EnemyColumn();
-	virtual Type GetType() { return Type::kEnemySkyhunter; }
+	virtual Type GetType()
+	{
+		return Type::kEnemySkyhunter;
+	}
 	// スカイハンター隊列の状態
-	enum class State {
+	enum class State
+	{
 		WAIT,//待機状態
 		PLAY,//隊列
 	};
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 

@@ -1,19 +1,18 @@
 #pragma once
-#include "ActorBase3D.h"
+#include "ActorMainGame.h"
 #include "appframe.h"
 #include "../mode/ModeMainGame.h"
-class EffectBase:public ActorBase3D
+class EffectBase :public ActorMainGame
 {
-	using  base = ActorBase3D;
 public:
-	EffectBase( ApplicationBase& game,ModeMainGame& mode );
+	EffectBase(ApplicationBase& game, int layer, ModeMainGame& mode);
 	virtual ~EffectBase();
 	virtual Type GetType()
 	{
 		return Type::kEffect;
 	}
 
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 

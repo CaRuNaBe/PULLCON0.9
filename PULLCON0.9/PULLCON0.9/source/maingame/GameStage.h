@@ -1,20 +1,25 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase3D.h"
+#include "ActorMainGame.h"
 #include "../mode/ModeMainGame.h"
-class GameStage:public ActorBase3D
+class GameStage :public ActorMainGame
 {
-	using base = ActorBase3D;
 public:
-	GameStage( ApplicationBase& game,ModeMainGame& mode,int stageid );
+	GameStage(ApplicationBase& game, int layer, ModeMainGame& mode, int stageid);
 	virtual ~GameStage();
 
-	virtual Type GetType() { return Type::kGameStage; }
-	virtual void Init();
+	virtual Type GetType()
+	{
+		return Type::kGameStage;
+	}
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 
-	virtual int& GetHandle() { return _handle; }
+	virtual int& GetHandle()
+	{
+		return _handle;
+	}
 
 protected:
 	int    _handle;

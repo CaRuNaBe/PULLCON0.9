@@ -31,7 +31,7 @@ bool UIFuelGage::Initialize()
 	UIBase::Initialize();
 	for ( auto&& game_object : mode_base.GetObjectServer3D().GetObjects() )
 	{
-		if ( game_object->GetType() == ActorBase3D::Type::kPlayer )
+		if ( game_object->GetType() == ActorMainGame::Type::kPlayer )
 		{
 			player_max_fuel = game_object->GetFuel();
 			break;
@@ -49,7 +49,7 @@ bool UIFuelGage::Update()
 
 	for ( auto&& game_object : mode_base.GetObjectServer3D().GetObjects() )
 	{
-		if ( game_object->GetType() == ActorBase3D::Type::kPlayer )
+		if ( game_object->GetType() == ActorMainGame::Type::kPlayer )
 		{
 			player_now_fuel = game_object->GetFuel();
 			break;

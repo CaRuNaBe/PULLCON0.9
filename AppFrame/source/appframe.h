@@ -12,7 +12,6 @@
 #include "Base/GameBase.h"
 #include "Base/GameServerUnique.h"
 #include "Base/GameServerShared.h"
-#include "base/ObjectServer.h"
 
 #include "Script/ScriptsData.h"
 #include "Script/ScriptsString.h"

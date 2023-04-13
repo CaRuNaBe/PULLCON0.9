@@ -3,10 +3,10 @@
 class EffectSpawnAmmo:public EffectBase
 {
 public:
-	EffectSpawnAmmo( ApplicationBase& game,ModeMainGame& mode );
+	EffectSpawnAmmo( ApplicationBase& game, int layer, ModeMainGame& mode );
 	virtual ~EffectSpawnAmmo();
 
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 private:

@@ -1,16 +1,17 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase3D.h"
+#include "ActorMainGame.h"
 #include "../mode/ModeMainGame.h"
-class AreaNoEntry:
-	public ActorBase3D
+class AreaNoEntry :public ActorMainGame
 {
-	using base = ActorBase3D;
 public:
-	AreaNoEntry( ApplicationBase& game,ModeMainGame& mode );
+	AreaNoEntry(ApplicationBase& game, int layer, ModeMainGame& mode);
 	virtual ~AreaNoEntry();
-	virtual Type GetType() { return Type::kStageObject; }
-	virtual void Init();
+	virtual Type GetType()
+	{
+		return Type::kStageObject;
+	}
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 

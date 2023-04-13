@@ -4,7 +4,8 @@
 #include "Bullet.h"
 #include "GameStage.h"
 
-namespace {
+namespace
+{
 	const float CAMERATARGET_Y = 1000.f;  // カメラの注視点の基本位置プレイヤーの座標＋プレイヤーのY座標＋CAMERATARGET_Y
 	const float CAMERADEFAULT_POS_Y = 2500.f;   // プレイヤーを原点としたときのカメラのY座標
 	const float CAMERADEFAULT_POS_XZ = -4000.f;   // プレイヤーを原点としたときのカメラのXZ座標のベクトルの長さ
@@ -15,26 +16,29 @@ namespace {
 	const std::string DELIMITER = ",";
 }
 
-Player::Player(ApplicationBase& game, ModeMainGame& mode)
-	:base(game, mode) {
+Player::Player(ApplicationBase& game, int layer, ModeMainGame& mode)
+	:ActorMainGame(game, layer, mode)
+{
 	auto file_pass = string::Split(gGlobal.object_pass_date->GetScriptLine(PLAYER_ID), DELIMITER);
 	_handleBody = ResourceServer::LoadMV1Model(file_pass[0].c_str());
 	_handleAirscrew = ResourceServer::LoadMV1Model(file_pass[1].c_str());
 	_handleMagnet = ResourceServer::LoadMV1Model(file_pass[2].c_str());
 	_handleBackAirscrew = ResourceServer::LoadMV1Model(file_pass[3].c_str());
 
-	Init();
+	Initialize();
 }
 
-Player::~Player() {
+Player::~Player()
+{
 	MV1DeleteModel(_handleBody);
 	MV1DeleteModel(_handleAirscrew);
 	MV1DeleteModel(_handleMagnet);
 	MV1DeleteModel(_handleBackAirscrew);
 }
 
-void Player::Init() {
-	base::Init();
+void Player::Initialize()
+{
+	ActorMainGame::Initialize();
 	_statePlayer = State::NUM;
 
 	_vMoveDir = { 0.f, 0.f, -100.f };
@@ -57,10 +61,12 @@ void Player::Init() {
 	_cam._clipFar = 30000000.f;
 }
 
-bool Player::Update() {
-	base::Update();
+bool Player::Update()
+{
+	ActorMainGame::Update();
 	// NUM状態ならPLAY状態に移行する
-	if (_statePlayer == State::NUM) {
+	if (_statePlayer == State::NUM)
+	{
 		ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["player_hovering"]);
 		PlaySoundMem(gGlobal._se["player_hovering"], DX_PLAYTYPE_LOOP);
 		// カメラの設定
@@ -74,13 +80,17 @@ bool Player::Update() {
 		_statePlayer = State::PLAY;
 	}
 
-	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects())
+	{
 		if (obje->GetType() == Type::kEnemyAAA
-			|| obje->GetType() == Type::kBullet
-			|| obje->GetType() == Type::kStageObject
-			|| obje->GetType() == Type::kGameStage) {
-			if (obje->GetType() == Type::kEnemyAAA) {
-				if (obje->_pull == true && _pull) {
+				|| obje->GetType() == Type::kBullet
+				|| obje->GetType() == Type::kStageObject
+				|| obje->GetType() == Type::kGameStage)
+		{
+			if (obje->GetType() == Type::kEnemyAAA)
+			{
+				if (obje->_pull == true && _pull)
+				{
 					// オブジェクトまで移動する
 					vector4 objective = obje->_vPos;
 					// 対空砲パーツの個数で変動させる
@@ -88,17 +98,21 @@ bool Player::Update() {
 					vector4 dir = objective - _vPos;
 					dir.Normalized();
 					_vPos += dir * static_cast<float>(_CT);
-					if (_CT == 0) {
+					if (_CT == 0)
+					{
 						_vPos = objective;
 					}
 				}
-				if (obje->_finish == true) {
+				if (obje->_finish == true)
+				{
 					// 対空砲に指定位置を狙わせる
 					obje->_vTarget = _vTarget;
 				}
-				if (IsHitEvent(*obje)) {
+				if (IsHitEvent(*obje))
+				{
 					_event = true;
-					if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X) && !_pull) {
+					if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X) && !_pull)
+					{
 						_push = 0;
 						_event = false;
 						_pull = true;
@@ -108,9 +122,12 @@ bool Player::Update() {
 					}
 				}
 			}
-			if (obje->GetType() == Type::kBullet) {
-				if (IsHitObject(*obje)) {
-					if (obje->_iType != 2 && !_isHit) {
+			if (obje->GetType() == Type::kBullet)
+			{
+				if (IsHitObject(*obje))
+				{
+					if (obje->_iType != 2 && !_isHit)
+					{
 						_mode.AddEffectHitPlayerFrame(_vPos);
 						_iLife -= obje->_iDamage;
 						obje->Damage();
@@ -119,9 +136,12 @@ bool Player::Update() {
 					}
 				}
 			}
-			if ((obje->GetType() == Type::kStageObject)) {
-				if (IsHitObject(*obje)) {
-					if (!_isHitObject) {
+			if ((obje->GetType() == Type::kStageObject))
+			{
+				if (IsHitObject(*obje))
+				{
+					if (!_isHitObject)
+					{
 						ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["player_object_crash"]);
 						PlaySoundMem(gGlobal._se["player_object_crash"], DX_PLAYTYPE_BACK);
 						_iLife -= 5;
@@ -131,7 +151,8 @@ bool Player::Update() {
 					_ST = 10;
 				}
 			}
-			if ((obje->GetType() == Type::kGameStage)) {
+			if ((obje->GetType() == Type::kGameStage))
+			{
 				auto stage = std::static_pointer_cast<GameStage>(obje);
 				_handleStage = stage->GetHandle();
 				MV1RefreshCollInfo(_handleStage, -1);
@@ -142,53 +163,69 @@ bool Player::Update() {
 	// カメラ更新	
 	CameraUpdate();
 
-	if (_statePlayer == State::PLAY) {
+	if (_statePlayer == State::PLAY)
+	{
 
-		if (_finish) {
+		if (_finish)
+		{
 			_finish = false;
 		}
 
 		float axialX = _fAxialX;
 		float axialZ = _fAxialZ;
-		if (_game.Getinput().GetLstickY() > 0) {  // 前方向
+		if (_game.Getinput().GetLstickY() > 0)
+		{  // 前方向
 			axialX -= AXIALROTATION / 20.f;
 		}
-		else if (_game.Getinput().GetLstickY() < 0) {  // 後方向
+		else if (_game.Getinput().GetLstickY() < 0)
+		{  // 後方向
 			axialX += AXIALROTATION / 20.f;
 		}
-		else {
-			if (abs(axialX) < utility::degree_to_radian(1.f)) {
+		else
+		{
+			if (abs(axialX) < utility::degree_to_radian(1.f))
+			{
 				axialX = 0.f;
 			}
-			else if (axialX < 0.f) {
+			else if (axialX < 0.f)
+			{
 				axialX += AXIALROTATION / 20.f;
 			}
-			else {
+			else
+			{
 				axialX -= AXIALROTATION / 20.f;
 			}
 		}
-		if (_game.Getinput().GetLstickX() < 0) {  // 右方向
+		if (_game.Getinput().GetLstickX() < 0)
+		{  // 右方向
 			axialZ -= AXIALROTATION / 20.f;
 		}
-		else if (_game.Getinput().GetLstickX() > 0) {  // 左方向
+		else if (_game.Getinput().GetLstickX() > 0)
+		{  // 左方向
 			axialZ += AXIALROTATION / 20.f;
 		}
-		else {
-			if (abs(axialZ) < utility::degree_to_radian(1.f)) {
+		else
+		{
+			if (abs(axialZ) < utility::degree_to_radian(1.f))
+			{
 				axialZ = 0.f;
 			}
-			else if (axialZ < 0.f) {
+			else if (axialZ < 0.f)
+			{
 				axialZ += AXIALROTATION / 20.f;
 			}
-			else {
+			else
+			{
 				axialZ -= AXIALROTATION / 20.f;
 			}
 		}
 		// 回転制御
-		if (abs(axialX) < AXIALROTATION) {
+		if (abs(axialX) < AXIALROTATION)
+		{
 			_fAxialX = axialX;
 		}
-		if (abs(axialZ) < AXIALROTATION) {
+		if (abs(axialZ) < AXIALROTATION)
+		{
 			_fAxialZ = axialZ;
 		}
 
@@ -203,11 +240,13 @@ bool Player::Update() {
 
 		//キャラの上昇下降
 		int diry = 0;
-		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_A)) {
+		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_A))
+		{
 			diry += 1;
 			_fRotateAirscrew += 3.f * utility::PI / 10.f;
 		}
-		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_B)) {
+		if (_game.Getinput().GetKeyXinput(XINPUT_BUTTON_B))
+		{
 			diry += -1;
 			_fRotateAirscrew -= utility::PI / 18.f;
 		}
@@ -217,17 +256,20 @@ bool Player::Update() {
 
 		float length = 0.f;
 		dir.Normalized();
-		if (dir.Lenght() > 0.f) {
+		if (dir.Lenght() > 0.f)
+		{
 			length = _fSpeed;
 		}
 		rad = atan2(dir.z, dir.x);
 		dir.y += diry * _fSpeed;
 		dir.x = cos(rad + camerad) * length;
 		dir.z = sin(rad + camerad) * length;
-		if (!_isHitObject) {
+		if (!_isHitObject)
+		{
 			_vMoveDir = dir * -1.f;
 		}
-		else {
+		else
+		{
 			dir = _vMoveDir;
 		}
 
@@ -235,7 +277,8 @@ bool Player::Update() {
 		vector4 posStart = _vPos + dir;
 		vector4 posEnd = { posStart.x, posStart.y - 3000.f, posStart.z };
 		hitPoly = MV1CollCheck_Line(_handleStage, -1, ToDX(posStart), ToDX(posEnd));
-		if (hitPoly.HitFlag) {
+		if (hitPoly.HitFlag)
+		{
 			dir += ToMath(hitPoly.HitPosition) - posEnd;
 		}
 
@@ -266,8 +309,10 @@ bool Player::Update() {
 		v.y = sin(_fRotatX) * distance;
 		_vTarget = _vPos + v * v.Lenght() * 4.f;
 
-		if (_game.Getinput().XinputEveryOtherRightTrigger(10)) {  // RT
-			if (_iPieces > 0) {
+		if (_game.Getinput().XinputEveryOtherRightTrigger(10))
+		{  // RT
+			if (_iPieces > 0)
+			{
 				// SE再生
 				SeGunShotPlay();
 			}
@@ -276,7 +321,8 @@ bool Player::Update() {
 		}
 
 		// 引っこ抜き遷移
-		if (_pull && _CT == 0) {
+		if (_pull && _CT == 0)
+		{
 			_cam._vMemory = _cam._vPos - _cam._vTarget;
 			_cam._vTarget = _vPos;
 			_cam._vPosEvent.y = _cam._vTarget.y + cos(theta) * length3D;
@@ -289,16 +335,20 @@ bool Player::Update() {
 			_statePlayer = State::EVENT;
 		}
 	}
-	else if (_statePlayer == State::EVENT && !_isLerp) {
+	else if (_statePlayer == State::EVENT && !_isLerp)
+	{
 		vector4 move = { 0.f, 2.f, 0.f };
-		if (_pull && _CT > 0) {
+		if (_pull && _CT > 0)
+		{
 			// 注視点の移動
 			_cam._vTarget -= move;
-			if (_finish) {
+			if (_finish)
+			{
 				// 上昇させる
 				_vPos.y += _fSpeed / 2.f;
 				_cam._vTarget.y += _fSpeed / 3.f;
-				if (_CT == 1) {
+				if (_CT == 1)
+				{
 					// PLAY状態に遷移
 					_pull = false;
 					++_iPieces;
@@ -309,11 +359,14 @@ bool Player::Update() {
 			}
 		}
 
-		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X)) {
-			if (_pull && _CT == 0) {
+		if (_game.Getinput().GetTrgXinput(XINPUT_BUTTON_X))
+		{
+			if (_pull && _CT == 0)
+			{
 				_CT = 10;
 				++_push;
-				if (_push >= 12) {
+				if (_push >= 12)
+				{
 					// 引っこ抜き完了
 					ChangeVolumeSoundMem(255 * 90 / 100, gGlobal._se["pull"]);
 					PlaySoundMem(gGlobal._se["pull"], DX_PLAYTYPE_BACK);
@@ -334,32 +387,39 @@ bool Player::Update() {
 	_fRotateBackAirscrew += utility::PI / 6.f;
 
 	// 燃料消費
-	if (_cnt % 60 == 0) {
+	if (_cnt % 60 == 0)
+	{
 		--_iFuel;
-		if (_iFuel < 0) {
+		if (_iFuel < 0)
+		{
 			_iFuel = 0;
 		}
 	}
-	if (_iLife < LIFEMAX / 3) {
-		if (_cnt % 10 == 0) {
+	if (_iLife < LIFEMAX / 3)
+	{
+		if (_cnt % 10 == 0)
+		{
 			_mode.AddEffectHitBlackSmoke(_vPos);
 		}
 	}
-	if (_ST == 0) {
+	if (_ST == 0)
+	{
 		_isHit = false;
 		_isHitObject = false;
 		_takeIn = false;
 	}
 
 	vector4 v = { 0.f, 0.f, 0.f };
-	if (_isHit) {
+	if (_isHit)
+	{
 		ChangeVolumeSoundMem(255 * 80 / 100, gGlobal._se["se_gunlanding"]);
 		PlaySoundMem(gGlobal._se["se_gunlanding"], DX_PLAYTYPE_BACK);
 		float rand = static_cast<float>(utility::get_random(-200, 200));
 		v = { rand,rand,rand };
 		v *= static_cast<float>(_ST) / 20.f;
 	}
-	if (_takeIn) {
+	if (_takeIn)
+	{
 		float rand = static_cast<float>(utility::get_random(-100, 100));
 		v = { rand,rand,rand };
 		v *= static_cast<float>(_ST) / 20.f;
@@ -368,20 +428,24 @@ bool Player::Update() {
 	vector4 camPos = _cam._vPos + v;
 	vector4 camPosEvent = _cam._vPosEvent + v;
 	vector4 camTarget = _cam._vTarget + v;
-	if (_isLerp) {
+	if (_isLerp)
+	{
 		vector4 posStart = _cam._vTarget + _cam._vMemory;
 		vector4 posEnd = _cam._vPosEvent;
 		_fTime += 0.02f;
 		vector4 camPosNow = posStart * (1.0f - _fTime) + posEnd * _fTime;
 		camPosEvent = camPosNow + v;
-		if (_fTime > 1.0f) {
+		if (_fTime > 1.0f)
+		{
 			_isLerp = false;
 		}
 	}
-	if (_statePlayer == State::EVENT) {
+	if (_statePlayer == State::EVENT)
+	{
 		SetCameraPositionAndTarget_UpVecY(ToDX(camPosEvent), ToDX(camTarget));
 	}
-	else {
+	else
+	{
 		SetCameraPositionAndTarget_UpVecY(ToDX(camPos), ToDX(camTarget));
 	}
 	SetCameraNearFar(_cam._clipNear, _cam._clipFar);
@@ -389,8 +453,9 @@ bool Player::Update() {
 	return true;
 }
 
-bool Player::Draw() {
-	base::Draw();
+bool Player::Draw()
+{
+	ActorMainGame::Draw();
 	// フォグ設定
 	SetFogEnable(TRUE);
 	SetFogColor(255, 255, 205);
@@ -407,7 +472,8 @@ bool Player::Draw() {
 	matrix44 backAirscrewMatrix = matrix44();
 	// モデルの回転値
 	float rX = utility::degree_to_radian(5.f);   // 少し上向きに
-	if (_statePlayer == State::PLAY) {
+	if (_statePlayer == State::PLAY)
+	{
 		rX += _fRotatX + _fAxialX;   // カメラを動かした分プラス
 	}
 	rotaAirscrewMatrix.rotate_y(_fRotateAirscrew, false);
@@ -439,9 +505,11 @@ bool Player::Draw() {
 	SetUseLighting(TRUE);
 
 	// コリジョン描画
-	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
+	{
 		vector4 color = { 255, 255, 255 };
-		if (_isHit) {
+		if (_isHit)
+		{
 			color = { 255, 0, 0 };
 		}
 		DrawCollision(color);
@@ -450,9 +518,11 @@ bool Player::Draw() {
 	return true;
 }
 
-void Player::CameraUpdate() {
+void Player::CameraUpdate()
+{
 
-	if (_statePlayer == State::EVENT) {
+	if (_statePlayer == State::EVENT)
+	{
 		// 引っこ抜き状態のカメラ
 		EventCamera();
 		return;
@@ -469,25 +539,31 @@ void Player::CameraUpdate() {
 
 	// 角度変更  モデルも同期させる
 	// Y軸回転
-	if (_game.Getinput().GetRstickX() < -1000) {
+	if (_game.Getinput().GetRstickX() < -1000)
+	{
 		camerad += 0.02f;
 		_fRotatY += -0.02f;
 	}
-	else if (_game.Getinput().GetRstickX() > 1000) {
+	else if (_game.Getinput().GetRstickX() > 1000)
+	{
 		camerad += -0.02f;
 		_fRotatY += 0.02f;
 	}
 
 	float limitrad = utility::radian_to_degree(theta);  // 度数法に変換
 	// X軸回転
-	if (_game.Getinput().GetRstickY() < -1000) {
-		if (limitrad > 40.f) {
+	if (_game.Getinput().GetRstickY() < -1000)
+	{
+		if (limitrad > 40.f)
+		{
 			theta += -0.02f;
 			_fRotatX += -0.02f;
 		}
 	}
-	else if (_game.Getinput().GetRstickY() > 1000) {
-		if (limitrad < 100.f) {
+	else if (_game.Getinput().GetRstickY() > 1000)
+	{
+		if (limitrad < 100.f)
+		{
 			theta += 0.02f;
 			_fRotatX += 0.02f;
 		}
@@ -500,7 +576,8 @@ void Player::CameraUpdate() {
 
 }
 
-void Player::EventCamera() {
+void Player::EventCamera()
+{
 	// 三次元極座標(r(length3D),θ(theta),φ(camerad))
 	float sx = _cam._vPos.x - _cam._vTarget.x;
 	float sy = _cam._vPos.y - _cam._vTarget.y;
@@ -528,8 +605,9 @@ void Player::EventCamera() {
 	_cam._vPosEvent.y += 4000.f + transformY * static_cast<float>(_iPieces);
 }
 
-void Player::AddBullet(vector4 pos) {
-	auto bullet = std::make_shared<Bullet>(_game, _mode);
+void Player::AddBullet(vector4 pos)
+{
+	auto bullet = std::make_shared<Bullet>(_game, static_cast<int>(ActorMainGame::Type::kBullet), _mode);
 	bullet->SetPosition(pos);
 	_mode.AddEffectFirePlayer(pos);
 	bullet->SetDir(_vDir);

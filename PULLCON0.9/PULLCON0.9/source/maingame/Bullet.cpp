@@ -1,24 +1,26 @@
-
 #include "Bullet.h"
 
 
-Bullet::Bullet(ApplicationBase& game, ModeMainGame& mode)
-	:base(game, mode) {
+Bullet::Bullet(ApplicationBase& game, int layer, ModeMainGame& mode)
+	:ActorMainGame(game, layer, mode)
+{
 	_handleYellow = ResourceServer::LoadMV1Model("res/3D_model/ammo/AmmoModel_Ver1/Ammo.mv1");
 	_handleBlue = ResourceServer::LoadMV1Model("res/3D_model/ammo/AmmoModel_Ver1/Ammo_Blue.mv1");
 	_handlePurple = ResourceServer::LoadMV1Model("res/3D_model/ammo/AmmoModel_Ver1/Ammo_Purple.mv1");
 	_handle = 0;
-	Init();
+	Initialize();
 }
 
-Bullet::~Bullet() {
+Bullet::~Bullet()
+{
 	MV1DeleteModel(_handleBlue);
 	MV1DeleteModel(_handlePurple);
 	MV1DeleteModel(_handleYellow);
 }
 
-void Bullet::Init() {
-	base::Init();
+void Bullet::Initialize()
+{
+	ActorMainGame::Initialize();
 
 	_iDamage = 25;
 	_fSpeed = 1200.f;
@@ -29,11 +31,13 @@ void Bullet::Init() {
 	_ST = 90;
 }
 
-bool Bullet::Update() {
-	base::Update();
+bool Bullet::Update()
+{
+	ActorMainGame::Update();
 
 	// 生存時間
-	if (_ST == 0) {
+	if (_ST == 0)
+	{
 		Damage();
 	}
 
@@ -45,25 +49,30 @@ bool Bullet::Update() {
 	_collision._fRadius = 150.f * _fScale;
 	UpdateCollision();    // コリジョンアップデート
 
-	switch (_iType) {
-	case 1:
-		_handle = _handleBlue;
-		break;
-	case 2:
-		_handle = _handlePurple;
-		break;
-	default:
-		_handle = _handleYellow;
-		break;
+	switch (_iType)
+	{
+		case 1:
+			_handle = _handleBlue;
+			break;
+		case 2:
+			_handle = _handlePurple;
+			break;
+		default:
+			_handle = _handleYellow;
+			break;
 	}
 
 	return true;
 }
 
-void Bullet::Damage() {
-	if (_ST > 0) {
-		for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
-			if (obje->GetType() == Type::kPlayer) {
+void Bullet::Damage()
+{
+	if (_ST > 0)
+	{
+		for (auto&& obje : _mode.GetObjectServer3D().GetObjects())
+		{
+			if (obje->GetType() == Type::kPlayer)
+			{
 				obje->_takeIn = true;
 				obje->_ST = 10;
 			}
@@ -73,8 +82,9 @@ void Bullet::Damage() {
 	_mode.GetObjectServer3D().Del(*this);
 }
 
-bool Bullet::Draw() {
-	base::Draw();
+bool Bullet::Draw()
+{
+	ActorMainGame::Draw();
 
 	float length3D = sqrt(_vDir.x * _vDir.x + _vDir.y * _vDir.y + _vDir.z * _vDir.z);
 	float theta = acos(_vDir.y / length3D);
@@ -84,8 +94,10 @@ bool Bullet::Draw() {
 	MV1DrawModel(_handle);
 	// コリジョン描画
 	vector4 color = { 255, 255, 255 };
-	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
-		if (_CT == 0) {
+	if (!_mode._dbgCollisionDraw)
+	{
+		if (_CT == 0)
+		{
 			DrawCollision(color);
 		}
 	}

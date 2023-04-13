@@ -171,7 +171,6 @@
     <ClInclude Include="source\Script\CommandDrawRect.h" />
     <ClInclude Include="source\Script\CommandDrawString.h" />
     <ClInclude Include="source\Script\CommandDrawTime.h" />
-    <ClInclude Include="source\Base\ObjectServer3D.h" />
     <ClInclude Include="source\Base\GameServerShared.h" />
     <ClInclude Include="source\Base\GameServerUnique.h" />
     <ClInclude Include="source\Base\GameBase.h" />
@@ -189,7 +188,6 @@
     <ClInclude Include="source\Math\matrix44.h" />
     <ClInclude Include="source\Math\utility.h" />
     <ClInclude Include="source\Math\vector4.h" />
-    <ClInclude Include="source\Base\ObjectServer.h" />
     <ClInclude Include="source\ResourceServer\ResourceServer.h" />
     <ClInclude Include="source\Math\Vector2.h" />
     <ClInclude Include="source\Script\CommandBase.h" />
@@ -213,7 +211,6 @@
     <ClCompile Include="source\Script\CommandDrawRect.cpp" />
     <ClCompile Include="source\Script\CommandDrawString.cpp" />
     <ClCompile Include="source\Script\CommandDrawTime.cpp" />
-    <ClCompile Include="source\Base\ObjectServer3D.cpp" />
     <ClCompile Include="source\Base\GameServerShared.cpp" />
     <ClCompile Include="source\Base\GameServerUnique.cpp" />
     <ClCompile Include="source\Base\GameBase.cpp" />
@@ -231,7 +228,6 @@
     <ClCompile Include="source\Math\matrix44.cpp" />
     <ClCompile Include="source\Math\utility.cpp" />
     <ClCompile Include="source\Math\vector4.cpp" />
-    <ClCompile Include="source\Base\ObjectServer.cpp" />
     <ClCompile Include="source\ResourceServer\ResourceServer.cpp" />
     <ClCompile Include="source\Math\Vector2.cpp" />
     <ClCompile Include="source\Script\CommandLabel.cpp" />

@@ -190,15 +190,15 @@ bool ModeMainGame::Update()
 		case ScriptState::GAME:
 			for (auto& object_3d : object_main_game.GetObjects())
 			{
-				if (object_3d->GetType() == ActorBase3D::Type::kPlayer)
+				if (object_3d->GetType() == ActorMainGame::Type::kPlayer)
 				{
 					auto& playerposi = object_3d->GetPosition();
 
 					if (playerposi.x > world_range_x
-						|| playerposi.x < (-world_range_x)
-						|| (playerposi.y > world_range_y)
-						|| playerposi.z > world_range_z
-						|| playerposi.z < (-world_range_z))
+							|| playerposi.x < (-world_range_x)
+							|| (playerposi.y > world_range_y)
+							|| playerposi.z > world_range_z
+							|| playerposi.z < (-world_range_z))
 					{
 						game_over_timer--;
 						is_player_danger = true;
@@ -244,11 +244,11 @@ bool ModeMainGame::Update()
 
 			for (auto& object_3d : object_main_game.GetObjects())
 			{
-				if (object_3d->GetType() == ActorBase3D::Type::kAreaEnemySpawn)
+				if (object_3d->GetType() == ActorMainGame::Type::kAreaEnemySpawn)
 				{
 					areaenemyspawn_num++;
 				}
-				if (object_3d->GetType() == ActorBase3D::Type::kAreaSupply)
+				if (object_3d->GetType() == ActorMainGame::Type::kAreaSupply)
 				{
 					if (object_3d->GetEvent())
 					{
@@ -356,7 +356,7 @@ bool ModeMainGame::DebugDraw()
 
 	for (auto&& obj : object_main_game.GetObjects())
 	{
-		if (obj->GetType() == ActorBase3D::Type::kPlayer)
+		if (obj->GetType() == ActorMainGame::Type::kPlayer)
 		{
 			posi = obj->GetPosition();
 			break;
@@ -460,11 +460,11 @@ void ModeMainGame::Parsing()
 		else
 		{
 			if (string_comand == COMMAND_LOADING ||
-				string_comand == COMMAND_GAMESTART ||
-				string_comand == COMMAND_FEEDIN ||
-				string_comand == COMMAND_FEEDOUT ||
-				string_comand == COMMAND_TIMEWAIT ||
-				string_comand == COMMAND_STORY)
+					string_comand == COMMAND_GAMESTART ||
+					string_comand == COMMAND_FEEDIN ||
+					string_comand == COMMAND_FEEDOUT ||
+					string_comand == COMMAND_TIMEWAIT ||
+					string_comand == COMMAND_STORY)
 			{
 				stop_parsing = (this->*comand_funcs[string_comand])(now_line, script);
 			}
@@ -960,7 +960,7 @@ bool ModeMainGame::OnCommandStage(unsigned int line, std::vector<std::string>& s
 		}
 		PlaySoundFile(gGlobal.music_pass_date->GetScriptLine(music_id).c_str(), DX_PLAYTYPE_LOOP);
 
-		auto stage = std::make_shared<GameStage>(_game, *this, object_id);
+		auto stage = std::make_shared<GameStage>(_game, static_cast<int>(ActorMainGame::Type::kGameStage), *this, object_id);
 		object_main_game.Add(stage);
 		result = true;
 
@@ -1011,7 +1011,7 @@ bool ModeMainGame::OnCommandSkySphere(unsigned int line, std::vector<std::string
 			return result;
 		};
 
-		auto skysphere = std::make_shared<SkySphere>(_game, *this, object_id);
+		auto skysphere = std::make_shared<SkySphere>(_game, static_cast<int>(ActorMainGame::Type::kSkySphere), *this, object_id);
 		object_main_game.Add(skysphere);
 		result = true;
 	}
@@ -1068,7 +1068,7 @@ bool ModeMainGame::OnCommandPLayer(unsigned int line, std::vector<std::string>& 
 		{
 			return result;
 		}
-		auto player = std::make_shared<Player>(_game, *this);
+		auto player = std::make_shared<Player>(_game, static_cast<int>(ActorMainGame::Type::kPlayer), *this);
 		player->SetPosition(posi);
 		player->SetScale(scale);
 		player->SetSpeed(speed);
@@ -1142,7 +1142,7 @@ bool ModeMainGame::OnCommandGunShip(unsigned int line, std::vector<std::string>&
 		{
 			return result;
 		}
-		auto clearobject = std::make_shared<EnemyGunShip>(_game, *this, radius);
+		auto clearobject = std::make_shared<EnemyGunShip>(_game, static_cast<int>(ActorMainGame::Type::kEnemyGunShip), *this, radius);
 		clearobject->SetPosition(posi);
 		clearobject->SetScale(scale);
 		object_main_game.Add(clearobject);
@@ -1248,7 +1248,7 @@ bool ModeMainGame::OnCommandEnemyAAA(unsigned int line, std::vector<std::string>
 		{
 			return result;
 		}
-		auto enemyAAA = std::make_shared<EnemyAAA>(_game, *this, object_min_id, object_max_id, pile_num, scale, posi);
+		auto enemyAAA = std::make_shared<EnemyAAA>(_game, static_cast<int>(ActorMainGame::Type::kEnemyAAA), *this, object_min_id, object_max_id, pile_num, scale, posi);
 
 		enemyAAA->SetAxialX(x_rad);
 		enemyAAA->SetAxialY(y_rad);
@@ -1440,7 +1440,7 @@ bool ModeMainGame::OnCommandAreaAAA(unsigned int line, std::vector<std::string>&
 
 		for (auto&& set_pos : posivec)
 		{
-			auto enemyAAA = std::make_shared<EnemyAAA>(_game, *this, object_min_id, object_max_id, std::get<1>(set_pos), scale, std::get<0>(set_pos));
+			auto enemyAAA = std::make_shared<EnemyAAA>(_game, static_cast<int>(ActorMainGame::Type::kEnemyAAA), *this, object_min_id, object_max_id, std::get<1>(set_pos), scale, std::get<0>(set_pos));
 			enemyAAA->SetAxialX(x_rad);
 			enemyAAA->SetAxialY(y_rad);
 			enemyAAA->SetType(aim_player);
@@ -1530,7 +1530,7 @@ bool ModeMainGame::OnCommandObject(unsigned int line, std::vector<std::string>& 
 		{
 			return result;
 		};
-		auto object = std::make_shared<StageObject>(_game, *this, object_id, collision_id, pieces_coll);
+		auto object = std::make_shared<StageObject>(_game, static_cast<int>(ActorMainGame::Type::kStageObject), *this, object_id, collision_id, pieces_coll);
 		object->SetPosition(posi);
 		object->SetScale(scale);
 		object->SetCollisionRadius(radius);
@@ -1687,7 +1687,7 @@ bool ModeMainGame::OnCommandAreaObj(unsigned int line, std::vector<std::string>&
 
 		for (auto&& set_pos : posivec)
 		{
-			auto object = std::make_shared<StageObject>(_game, *this, object_id, collision_id, pieces_coll);
+			auto object = std::make_shared<StageObject>(_game, static_cast<int>(ActorMainGame::Type::kStageObject), *this, object_id, collision_id, pieces_coll);
 			object->SetPosition(set_pos);
 			object->SetScale(scale);
 			object->SetCollision(set_pos, radius);
@@ -1763,7 +1763,7 @@ bool ModeMainGame::OnCommandAreaSpawn(unsigned int line, std::vector<std::string
 		{
 			return result;
 		}
-		auto spawn_eria = std::make_shared<AreaEnemySpawn>(_game, *this, spawn_fream, spawn_id);
+		auto spawn_eria = std::make_shared<AreaEnemySpawn>(_game, static_cast<int>(ActorMainGame::Type::kAreaEnemySpawn), *this, spawn_fream, spawn_id);
 		spawn_eria->SetPosition(posi);
 		spawn_eria->SetScale(scale);
 		object_main_game.Add(spawn_eria);
@@ -1826,7 +1826,7 @@ bool ModeMainGame::OnCommandSupply(unsigned int line, std::vector<std::string>& 
 		{
 			return result;
 		}
-		auto supplyeria = std::make_shared<AreaSupply>(_game, *this, radius);
+		auto supplyeria = std::make_shared<AreaSupply>(_game, static_cast<int>(ActorMainGame::Type::kAreaSupply), *this, radius);
 		supplyeria->SetScale(scale);
 		supplyeria->SetPosition(posi);
 		object_main_game.Add(supplyeria);
@@ -1883,7 +1883,7 @@ bool ModeMainGame::OnCommandCommunication(unsigned int line, std::vector<std::st
 			return result;
 		}
 
-		auto commu_aria = std::make_shared<AreaCommunication>(_game, *this, scripts[5]);
+		auto commu_aria = std::make_shared<AreaCommunication>(_game, static_cast<int>(ActorMainGame::Type::kAreaCommunication), *this, scripts[5]);
 		commu_aria->SetPosition(posi);
 		commu_aria->SetCollision(posi, radius);
 		object_main_game.Add(commu_aria);
@@ -1940,7 +1940,7 @@ bool ModeMainGame::OnCommandNoEntry(unsigned int line, std::vector<std::string>&
 			return result;
 		}
 
-		auto no_entry = std::make_shared<AreaNoEntry>(_game, *this);
+		auto no_entry = std::make_shared<AreaNoEntry>(_game, static_cast<int>(ActorMainGame::Type::kAreaNoEntry), *this);
 		no_entry->SetPosition(posi);
 		no_entry->SetCollisionRadius(radius);
 		object_main_game.Add(no_entry);
@@ -2256,49 +2256,49 @@ bool ModeMainGame::CommandInputString(int posix, int posiy, std::string inputnam
 
 void ModeMainGame::AddEffectHitPlayerFrame(const math::vector4& pos)
 {
-	auto effect = std::make_shared<EffectHitPlayerFrame>(_game, *this);
+	auto effect = std::make_shared<EffectHitPlayerFrame>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
 void ModeMainGame::AddEffectSpawnAmmo(const math::vector4& pos)
 {
-	auto effect = std::make_shared<EffectSpawnAmmo>(_game, *this);
+	auto effect = std::make_shared<EffectSpawnAmmo>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
 void ModeMainGame::AddEffectDestroyAmmo(const math::vector4& pos)
 {
-	auto effect = std::make_shared<EffectDestroyAmmo>(_game, *this);
+	auto effect = std::make_shared<EffectDestroyAmmo>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
 void ModeMainGame::AddEffectHitBlackSmoke(const math::vector4& pos)
 {
-	auto effect = std::make_shared<EffectHitBlackSmoke>(_game, *this);
+	auto effect = std::make_shared<EffectHitBlackSmoke>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
 void ModeMainGame::AddEffectDeathObject(const math::vector4& pos)
 {
-	auto effect = std::make_shared<EffectDeathObject>(_game, *this);
+	auto effect = std::make_shared<EffectDeathObject>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
 void ModeMainGame::AddEffectFirePlayer(const math::vector4& pos)
 {
-	auto effect = std::make_shared<EffectFirePlayer>(_game, *this);
+	auto effect = std::make_shared<EffectFirePlayer>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };
 
 void ModeMainGame::AddEffectFireGunship(const math::vector4& pos)
 {
-	auto effect = std::make_shared<EffectFireGunship>(_game, *this);
+	auto effect = std::make_shared<EffectFireGunship>(_game, static_cast<int>(ActorMainGame::Type::kEffect), *this);
 	effect->SetPosition(pos);
 	object_main_game.Add(effect);
 };

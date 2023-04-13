@@ -3,10 +3,10 @@
 class EffectFirePlayer: public EffectBase
 {
 public:
-	EffectFirePlayer( ApplicationBase& game,ModeMainGame& mode );
+	EffectFirePlayer( ApplicationBase& game, int layer, ModeMainGame& mode );
 	virtual ~EffectFirePlayer();
 
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 };

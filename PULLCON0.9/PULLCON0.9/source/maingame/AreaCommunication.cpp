@@ -1,46 +1,41 @@
 #include "AreaCommunication.h"
 #include "../mode/ModeSpeakScript.h"
-
 #include "../ApplicationGlobal.h"
-AreaCommunication::AreaCommunication( ApplicationBase& game,ModeMainGame& mode,std::string storyname )
-	:base( game,mode )
+
+AreaCommunication::AreaCommunication(ApplicationBase& game, int layer, ModeMainGame& mode, const std::string& storyname)
+	:ActorMainGame(game, layer, mode)
+	,storyname(storyname)
 {
-	story_name = storyname;
-
-	Init();
-
+	Initialize();
 }
 
 AreaCommunication::~AreaCommunication()
+{}
+
+void AreaCommunication::Initialize()
 {
-
-}
-
-void AreaCommunication::Init()
-{
-	base::Init();
-
+	ActorMainGame::Initialize();
 }
 
 bool AreaCommunication::Update()
 {
-	base::Update();
+	ActorMainGame::Update();
 
 	_collision._fRadius = _fRadius * _fScale;
-	for ( auto&& obje : _mode.GetObjectServer3D().GetObjects() )
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects())
 	{
-		if ( (obje->GetType() == ActorBase3D::Type::kPlayer) )
+		if ((obje->GetType() == ActorMainGame::Type::kPlayer))
 		{
-			if ( IsHitObject( *obje ) )
+			if (IsHitObject(*obje))
 			{
-				if ( gGlobal.GetIsEndSpeakScript() )
+				if (gGlobal.GetIsEndSpeakScript())
 				{
 					gGlobal.IsNotEndSpeakScript();
-					PlaySoundMem( gGlobal._se["comm_start"],DX_PLAYTYPE_BACK );
-					auto story = std::make_shared<ModeSpeakScript>( _game,30,story_name );
-					_game.GetModeServer()->Add( story );
+					PlaySoundMem(gGlobal._se["comm_start"], DX_PLAYTYPE_BACK);
+					auto story = std::make_shared<ModeSpeakScript>(_game, 30, storyname);
+					_game.GetModeServer()->Add(story);
 
-					_mode.GetObjectServer3D().Del( *this );
+					_mode.GetObjectServer3D().Del(*this);
 				}
 				break;
 			}
@@ -52,11 +47,11 @@ bool AreaCommunication::Update()
 
 bool AreaCommunication::Draw()
 {
-	base::Draw();
+	ActorMainGame::Draw();
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 #if _DEBUG
-	vector4 color = {255, 255, 255};
-	DrawCollision( color );
+	vector4 color = { 255, 255, 255 };
+	DrawCollision(color);
 #endif
 	return true;
 }

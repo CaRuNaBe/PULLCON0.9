@@ -1,25 +1,30 @@
 #include "AreaNoEntry.h"
-AreaNoEntry::AreaNoEntry( ApplicationBase& game,ModeMainGame& mode )
-	:base(game,mode)
+AreaNoEntry::AreaNoEntry(ApplicationBase& game, int layer, ModeMainGame& mode)
+	:ActorMainGame(game, layer, mode)
 {
-	Init();
-};
-AreaNoEntry::~AreaNoEntry()
-{
+	Initialize();
 };
 
-void AreaNoEntry::Init()
+AreaNoEntry::~AreaNoEntry()
+{};
+
+void AreaNoEntry::Initialize()
 {
+	ActorMainGame::Initialize();
 };
+
 bool AreaNoEntry::Update()
 {
+	ActorMainGame::Update();
 	_collision._fRadius = _fRadius;
 	UpdateCollision();
 	return true;
 };
+
 bool AreaNoEntry::Draw()
 {
-	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
+	ActorMainGame::Draw();
+	if (!_mode._dbgCollisionDraw)
 	{
 		// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 		vector4 color = { 255, 0, 255 };

@@ -1,18 +1,19 @@
 #include  "EnemyColumn.h"
 #include  "EnemySkyhunter.h"
 #include  "GameStage.h"
-EnemyColumn::EnemyColumn(ApplicationBase& game, ModeMainGame& mode, vector4 pos)
-	:base(game, mode) {
-	Init();
+EnemyColumn::EnemyColumn(ApplicationBase& game, int layer, ModeMainGame& mode, vector4 pos)
+	:ActorMainGame(game, layer, mode)
+{
+	Initialize();
 	AddPieces(pos);
 }
 
-EnemyColumn::~EnemyColumn() {
+EnemyColumn::~EnemyColumn()
+{}
 
-}
-
-void EnemyColumn::Init() {
-	base::Init();
+void EnemyColumn::Initialize()
+{
+	ActorMainGame::Initialize();
 	_stateEnemyColumn = State::WAIT;
 
 	_iPieces = 3;
@@ -22,24 +23,30 @@ void EnemyColumn::Init() {
 	_collision._fRadius = 500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 13.f * _fScale;
 	_collisionSearch._fRadius = _collisionEvent._fRadius * 2.f;
-
 }
 
-bool EnemyColumn::Update() {
-	base::Update();
+bool EnemyColumn::Update()
+{
+	ActorMainGame::Update();
 
-	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
-		if (obje->GetType() == Type::kPlayer) {
-			if (IsSearch(*obje)) {
-				if (_stateEnemyColumn == State::WAIT) {
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects())
+	{
+		if (obje->GetType() == Type::kPlayer)
+		{
+			if (IsSearch(*obje))
+			{
+				if (_stateEnemyColumn == State::WAIT)
+				{
 					_vRelation = obje->_vPos;
 					SetVelocity();
 					_stateEnemyColumn = State::PLAY;
 					_synchronize = !_synchronize;
 				}
 			}
-			else {
-				if (_ST == 0) {
+			else
+			{
+				if (_ST == 0)
+				{
 					_vRelation = obje->_vPos;
 					SetVelocity();
 					_stateEnemyColumn = State::PLAY;
@@ -48,7 +55,8 @@ bool EnemyColumn::Update() {
 				}
 			}
 		}
-		if ((obje->GetType() == Type::kGameStage)) {
+		if ((obje->GetType() == Type::kGameStage))
+		{
 			auto stage = std::static_pointer_cast<GameStage>(obje);
 			_handleStage = stage->GetHandle();
 			MV1RefreshCollInfo(_handleStage, 0);
@@ -60,12 +68,14 @@ bool EnemyColumn::Update() {
 	vector4 posStart = _vPos + move;
 	vector4 posEnd = { posStart.x, posStart.y - 6000.f, posStart.z };
 	hitPoly = MV1CollCheck_Line(_handleStage, 0, ToDX(posStart), ToDX(posEnd));
-	if (hitPoly.HitFlag) {
+	if (hitPoly.HitFlag)
+	{
 		move += ToMath(hitPoly.HitPosition) - posEnd;
 	}
 	_vPos += move;
 
-	if (_iPieces == 0) {
+	if (_iPieces == 0)
+	{
 		Damage();
 	}
 
@@ -75,23 +85,27 @@ bool EnemyColumn::Update() {
 	return true;
 }
 
-void EnemyColumn::Damage() {
+void EnemyColumn::Damage()
+{
 	_mode.GetObjectServer3D().Del(*this);
 }
 
-bool EnemyColumn::Draw() {
-	base::Draw();
+bool EnemyColumn::Draw()
+{
+	ActorMainGame::Draw();
 
 	// コリジョン描画
 	vector4 color = { 255,255,255 };
-	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
+	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
+	{
 		color = { 255,0,255 };
 		DrawCollisionSearch(color);
 	}
 	return true;
 }
 
-void EnemyColumn::SetVelocity() {
+void EnemyColumn::SetVelocity()
+{
 	// 三次元極座標
 	float sx = _vRelation.x - _vPos.x;
 	float sz = _vRelation.z - _vPos.z;
@@ -109,9 +123,11 @@ void EnemyColumn::SetVelocity() {
 	_vVelocity.Normalized();
 }
 
-void EnemyColumn::AddPieces(vector4 pos) {
-	for (auto i = 0; i < _iPieces; ++i) {
-		auto skyhunter = std::make_shared<EnemySkyhunter>(_game, _mode, *this);
+void EnemyColumn::AddPieces(vector4 pos)
+{
+	for (auto i = 0; i < _iPieces; ++i)
+	{
+		auto skyhunter = std::make_shared<EnemySkyhunter>(_game, static_cast<int>(ActorMainGame::Type::kEnemySkyhunter), _mode, *this);
 		skyhunter->SetPosition(pos);
 		skyhunter->_iPart = i;
 		skyhunter->_ST = 30 * i + 1;

@@ -3,10 +3,10 @@
 class EffectHitBlackSmoke:public EffectBase
 {
 public:
-	EffectHitBlackSmoke( ApplicationBase& game,ModeMainGame& mode );
+	EffectHitBlackSmoke( ApplicationBase& game, int layer, ModeMainGame& mode );
 	virtual ~EffectHitBlackSmoke();
 
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 };

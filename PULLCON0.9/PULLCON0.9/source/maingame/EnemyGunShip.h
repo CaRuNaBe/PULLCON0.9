@@ -1,21 +1,24 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase3D.h"
+#include "ActorMainGame.h"
 #include "../mode/ModeMainGame.h"
-class EnemyGunShip :
-	public ActorBase3D {
-	using base = ActorBase3D;
+class EnemyGunShip :public ActorMainGame
+{
 public:
-	EnemyGunShip(ApplicationBase& game, ModeMainGame& mode, float _radius);
+	EnemyGunShip(ApplicationBase& game, int layer, ModeMainGame& mode, float _radius);
 	virtual ~EnemyGunShip();
-	virtual Type GetType() { return Type::kClearObject; }
+	virtual Type GetType()
+	{
+		return Type::kEnemyGunShip;
+	}
 	// ガンシップの状態
-	enum class State {
+	enum class State
+	{
 		NUM, //初期状態
 		WAIT,//待機状態
 		PLAY,//迎撃体制
 	};
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 

@@ -1,18 +1,19 @@
-
 #include "EnemyGunShip.h"
 #include "Bullet.h"
 #include "../mode/ModeMainGame.h"
 #include "../ApplicationGlobal.h"
+
 namespace
 {
 	constexpr int GUNSHIP_ID = 12;
 }
-EnemyGunShip::EnemyGunShip(ApplicationBase& game, ModeMainGame& mode, float _radius)
-	:base(game, mode)
+
+EnemyGunShip::EnemyGunShip(ApplicationBase& game, int layer, ModeMainGame& mode, float _radius)
+	:ActorMainGame(game, layer, mode)
 {
 	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(GUNSHIP_ID));
 
-	Init();
+	Initialize();
 	radius = _radius;
 }
 
@@ -21,9 +22,9 @@ EnemyGunShip::~EnemyGunShip()
 	MV1DeleteModel(_handle);
 }
 
-void EnemyGunShip::Init()
+void EnemyGunShip::Initialize()
 {
-	base::Init();
+	ActorMainGame::Initialize();
 
 	_stateClearObject = State::NUM;
 
@@ -37,7 +38,7 @@ void EnemyGunShip::Init()
 
 bool EnemyGunShip::Update()
 {
-	base::Update();
+	ActorMainGame::Update();
 
 	if (_stateClearObject == State::NUM)
 	{
@@ -52,7 +53,7 @@ bool EnemyGunShip::Update()
 	for (auto&& obje : _mode.GetObjectServer3D().GetObjects())
 	{
 		if (obje->GetType() == Type::kPlayer
-			|| obje->GetType() == Type::kBullet)
+				|| obje->GetType() == Type::kBullet)
 		{
 			if (obje->GetType() == Type::kPlayer)
 			{
@@ -149,7 +150,7 @@ void EnemyGunShip::Damage()
 
 bool EnemyGunShip::Draw()
 {
-	base::Draw();
+	ActorMainGame::Draw();
 
 	// ƒ‚ƒfƒ‹Šg‘å
 	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
@@ -162,7 +163,7 @@ bool EnemyGunShip::Draw()
 
 	// ƒRƒŠƒWƒ‡ƒ“•`‰æ
 	vector4 color = { 255,255,255 };
-	if (!((ModeMainGame&)_mode)._dbgCollisionDraw)
+	if (!_mode._dbgCollisionDraw)
 	{
 		DrawCollision(color);
 		DrawCollisionEvent(color);
@@ -192,7 +193,7 @@ void EnemyGunShip::AddBullet()
 	{
 		for (int i = 0; i < phi_split_num; i++)
 		{
-			auto bullet = std::make_shared<Bullet>(_game, _mode);
+			auto bullet = std::make_shared<Bullet>(_game,static_cast<int>(ActorMainGame::Type::kBullet), _mode);
 			bullet->SetPosition(vBullet);
 
 			auto bullet_dir = bullet_dir_pol.ToVector4();

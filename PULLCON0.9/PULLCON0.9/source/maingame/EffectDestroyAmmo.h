@@ -1,13 +1,13 @@
 #pragma once
 #include "appframe.h"
 #include "EffectBase.h"
-class EffectDestroyAmmo: public EffectBase
+class EffectDestroyAmmo : public EffectBase
 {
 public:
-	EffectDestroyAmmo( ApplicationBase& game,ModeMainGame& mode );
+	EffectDestroyAmmo(ApplicationBase& game, int layer, ModeMainGame& mode);
 	virtual ~EffectDestroyAmmo();
 
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 };

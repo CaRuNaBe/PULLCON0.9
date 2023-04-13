@@ -1,8 +1,8 @@
 #include "EffectDeathObject.h"
-EffectDeathObject::EffectDeathObject( ApplicationBase& game,ModeMainGame& mode )
-	:EffectBase( game,mode )
+EffectDeathObject::EffectDeathObject( ApplicationBase& game, int layer, ModeMainGame& mode )
+	:EffectBase( game, layer,mode )
 {
-	Init();
+	Initialize();
 	// リソースサーバーからハンドルを取得する
 	ResourceServer::GetHandles( "effect_death_object",_grAllHandles );
 	_animeMax = static_cast<int>(_grAllHandles.size());
@@ -11,9 +11,9 @@ EffectDeathObject::EffectDeathObject( ApplicationBase& game,ModeMainGame& mode )
 EffectDeathObject::~EffectDeathObject()
 {}
 
-void EffectDeathObject::Init()
+void EffectDeathObject::Initialize()
 {
-	EffectBase::Init();
+	EffectBase::Initialize();
 
 	_animeNo = 0;
 	_animeCnt = 0;

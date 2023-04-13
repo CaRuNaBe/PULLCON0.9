@@ -52,7 +52,7 @@ bool UIPullGage::Update()
 	button_on_count = 0;
 	for ( auto&& game_object : mode_base.GetObjectServer3D().GetObjects() )
 	{
-		if ( game_object->GetType() == ActorBase3D::Type::kPlayer )
+		if ( game_object->GetType() == ActorMainGame::Type::kPlayer )
 		{
 			if ( game_object->GetEvent() == true )
 			{

@@ -1,34 +1,34 @@
 #include "GameStage.h"
 #include "../ApplicationGlobal.h"
-GameStage::GameStage( ApplicationBase& game,ModeMainGame& mode,int stageid )
-	:base( game,mode )
+GameStage::GameStage(ApplicationBase& game, int layer, ModeMainGame& mode, int stageid)
+	:ActorMainGame(game, layer, mode)
 {
-	Init();
-	_handle = ResourceServer::LoadMV1Model( gGlobal.object_pass_date->GetScriptLine( stageid ).c_str() );
+	Initialize();
+	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(stageid).c_str());
 	MV1SetupCollInfo(_handle, -1, 16, 16, 16);
 }
 
 GameStage::~GameStage()
 {
-	MV1DeleteModel( _handle );
+	MV1DeleteModel(_handle);
 }
 
-void GameStage::Init()
+void GameStage::Initialize()
 {
-	base::Init();
+	ActorMainGame::Initialize();
 }
 
 bool GameStage::Update()
 {
-	base::Update();
+	ActorMainGame::Update();
 	return true;
 }
 
 bool GameStage::Draw()
 {
-	base::Draw();
+	ActorMainGame::Draw();
 	SetUseLighting(TRUE);
-	MV1DrawModel( _handle );
+	MV1DrawModel(_handle);
 	SetUseLighting(TRUE);
 	return true;
 }

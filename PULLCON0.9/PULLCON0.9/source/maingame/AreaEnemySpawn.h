@@ -1,19 +1,23 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase3D.h"
+#include "ActorMainGame.h"
 #include "../mode/ModeMainGame.h"
-class AreaEnemySpawn :public ActorBase3D {
-	using base = ActorBase3D;
+class AreaEnemySpawn :public ActorMainGame
+{
 public:
-	AreaEnemySpawn(ApplicationBase& game, ModeMainGame& mode, int spawnfream, int typeenemy);
+	AreaEnemySpawn(ApplicationBase& game, int layer, ModeMainGame& mode, int spawnfream, int typeenemy);
 	virtual ~AreaEnemySpawn();
-	virtual Type GetType() { return Type::kAreaEnemySpawn; }
+	virtual Type GetType()
+	{
+		return Type::kAreaEnemySpawn;
+	}
 	// ‹ó’†”òsŠî’n‚Ìó‘Ô
-	enum class State {
+	enum class State
+	{
 		NUM, //‰Šúó‘Ô
 		WAIT,//‘Ò‹@ó‘Ô
 	};
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 

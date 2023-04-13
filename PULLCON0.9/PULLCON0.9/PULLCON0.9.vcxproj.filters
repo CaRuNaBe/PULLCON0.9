@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="source\ApplicationGlobal.cpp" />
     <ClCompile Include="source\ApplicationMain.cpp" />
-    <ClCompile Include="source\ModeTest.cpp" />
     <ClCompile Include="source\mode\ModeMainGame.cpp">
       <Filter>mode</Filter>
     </ClCompile>
@@ -118,7 +117,7 @@
     <ClCompile Include="source\maingame\AreaSupply.cpp">
       <Filter>maingame\area</Filter>
     </ClCompile>
-    <ClCompile Include="source\maingame\ActorBase3D.cpp">
+    <ClCompile Include="source\maingame\ActorMainGame.cpp">
       <Filter>maingame\base</Filter>
     </ClCompile>
     <ClCompile Include="source\maingame\Player.cpp">
@@ -133,9 +132,6 @@
     <ClCompile Include="source\maingame\EffectFireGunship.cpp">
       <Filter>maingame\effect</Filter>
     </ClCompile>
-    <ClCompile Include="source\ObjectBase.cpp">
-      <Filter>maingame\base</Filter>
-    </ClCompile>
     <ClCompile Include="source\ui\UITutorial.cpp">
       <Filter>ui</Filter>
     </ClCompile>
@@ -143,7 +139,6 @@
   <ItemGroup>
     <ClInclude Include="source\ApplicationGlobal.h" />
     <ClInclude Include="source\ApplicationMain.h" />
-    <ClInclude Include="source\ModeTest.h" />
     <ClInclude Include="source\mode\ModeMainGame.h">
       <Filter>mode</Filter>
     </ClInclude>
@@ -258,7 +253,7 @@
     <ClInclude Include="source\maingame\AreaSupply.h">
       <Filter>maingame\area</Filter>
     </ClInclude>
-    <ClInclude Include="source\maingame\ActorBase3D.h">
+    <ClInclude Include="source\maingame\ActorMainGame.h">
       <Filter>maingame\base</Filter>
     </ClInclude>
     <ClInclude Include="source\maingame\Player.h">
@@ -272,9 +267,6 @@
     </ClInclude>
     <ClInclude Include="source\maingame\EffectFireGunship.h">
       <Filter>maingame\effect</Filter>
-    </ClInclude>
-    <ClInclude Include="source\ObjectBase.h">
-      <Filter>maingame\base</Filter>
     </ClInclude>
     <ClInclude Include="source\ui\UITutorial.h">
       <Filter>ui</Filter>

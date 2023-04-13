@@ -3,10 +3,10 @@
 class EffectFireGunship:public EffectBase
 {
 public:
-	EffectFireGunship( ApplicationBase& game,ModeMainGame& mode );
+	EffectFireGunship( ApplicationBase& game, int layer, ModeMainGame& mode );
 	virtual ~EffectFireGunship();
 
-	virtual void Init();
+	virtual void Initialize();
 	virtual bool Update();
 	virtual bool Draw();
 };

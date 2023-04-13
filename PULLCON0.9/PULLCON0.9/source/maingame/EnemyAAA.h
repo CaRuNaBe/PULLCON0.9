@@ -1,27 +1,29 @@
 #pragma once
 #include "appframe.h"
-#include "ActorBase3D.h"
+#include "ActorMainGame.h"
 #include "../mode/ModeMainGame.h"
 #include <string>
 #include <sstream>
 #include <array>
-class EnemyAAA : public ActorBase3D {
-	typedef ActorBase3D base;
+class EnemyAAA : public ActorMainGame
+{
 public:
-	EnemyAAA(ApplicationBase& game, ModeMainGame& mode, int min_id, int max_id, int pile_num, float scale, vector4 _vPosi);
+	EnemyAAA(ApplicationBase& game, int layer, ModeMainGame& mode, int min_id, int max_id, int pile_num, float scale, vector4 _vPosi);
 	virtual ~EnemyAAA();
-	virtual Type GetType() {
+	virtual Type GetType()
+	{
 		return Type::kEnemyAAA;
 	}
 	// 対空砲の状態
-	enum class State {
+	enum class State
+	{
 		NUM,//地下の対空砲
 		PLAY,//プレイアブル状態
 		EVENT,//イベント状態
 		WEAPON//兵器化
 	};
 
-	virtual void Init(int pile_num, vector4 _vPosi, float scale);
+	virtual void Initialize(int pile_num, vector4 _vPosi, float scale);
 	virtual bool Update();
 	virtual bool Draw();
 
@@ -32,13 +34,16 @@ public:
 	void SetDamage();
 	void SetStateAAA();
 
-	void SetAxialX(float _x_rad) {
+	void SetAxialX(float _x_rad)
+	{
 		_fAxialX = _x_rad;
 	}
-	void SetAxialY(float _y_rad) {
+	void SetAxialY(float _y_rad)
+	{
 		_fAxialY = _y_rad;
 	}
-	void SetType(int _aim_player) {
+	void SetType(int _aim_player)
+	{
 		_iEnemyType = _aim_player;
 	}
 protected:

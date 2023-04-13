@@ -1,32 +1,30 @@
 #include "EffectBase.h"
 #include "../ApplicationGlobal.h"
 
-EffectBase::EffectBase( ApplicationBase& game,ModeMainGame& mode )
-	:base( game,mode )
+EffectBase::EffectBase(ApplicationBase& game, int layer, ModeMainGame& mode)
+	:ActorMainGame(game, layer, mode)
 {
-	Init();
+	Initialize();
 }
 
 EffectBase::~EffectBase()
-{
+{}
 
-}
-
-void EffectBase::Init()
+void EffectBase::Initialize()
 {
-	base::Init();
+	ActorMainGame::Initialize();
 	_animeNo = 0;
 	_animeCnt = 0;
 }
 
 bool EffectBase::Update()
 {
-	base::Update();
+	ActorMainGame::Update();
 	return true;
 }
 
 bool EffectBase::Draw()
 {
-	base::Draw();
+	ActorMainGame::Draw();
 	return true;
 }

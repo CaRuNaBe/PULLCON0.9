@@ -171,10 +171,8 @@
     <ClCompile Include="source\maingame\EffectFirePlayer.cpp" />
     <ClCompile Include="source\maingame\EffectBase.cpp" />
     <ClCompile Include="source\ApplicationGlobal.cpp" />
-    <ClCompile Include="source\maingame\ActorBase3D.cpp" />
+    <ClCompile Include="source\maingame\ActorMainGame.cpp" />
     <ClCompile Include="source\maingame\EffectDestroyAmmo.cpp" />
-    <ClCompile Include="source\ModeTest.cpp" />
-    <ClCompile Include="source\ObjectBase.cpp" />
     <ClCompile Include="source\title\ActorTitle.cpp" />
     <ClCompile Include="source\ui\UIPullGage.cpp" />
     <ClCompile Include="source\speakscript\ActorBaseSpeak.cpp" />
@@ -221,10 +219,8 @@
     <ClInclude Include="source\maingame\EffectFirePlayer.h" />
     <ClInclude Include="source\maingame\EffectBase.h" />
     <ClInclude Include="source\ApplicationGlobal.h" />
-    <ClInclude Include="source\maingame\ActorBase3D.h" />
+    <ClInclude Include="source\maingame\ActorMainGame.h" />
     <ClInclude Include="source\maingame\EffectDestroyAmmo.h" />
-    <ClInclude Include="source\ModeTest.h" />
-    <ClInclude Include="source\ObjectBase.h" />
     <ClInclude Include="source\title\ActorTitle.h" />
     <ClInclude Include="source\ui\UIPullGage.h" />
     <ClInclude Include="source\speakscript\ActorBaseSpeak.h" />

@@ -1,7 +1,7 @@
 #include "GameBase.h"
-GameBase::GameBase( ApplicationBase& _game,int _layer )
+GameBase::GameBase( ApplicationBase& _game,int layer )
 	: _game( _game )
-	,layer( _layer )
+	,layer( layer )
 	,is_dead( false )
 	,is_update_skip( false )
 	,is_draw_skip( false )

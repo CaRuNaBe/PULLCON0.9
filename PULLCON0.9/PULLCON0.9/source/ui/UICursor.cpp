@@ -24,7 +24,7 @@ bool UICursor::Update()
 	is_hide = false;
 	for ( auto&& game_object : mode_base.GetObjectServer3D().GetObjects() )
 	{
-		if ( game_object->GetType() == ActorBase3D::Type::kPlayer )
+		if ( game_object->GetType() == ActorMainGame::Type::kPlayer )
 		{
 			posi_cursor = game_object->GetTarget();
 			auto player = std::static_pointer_cast<Player>(game_object);

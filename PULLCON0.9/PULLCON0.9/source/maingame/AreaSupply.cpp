@@ -1,47 +1,55 @@
 #include "AreaSupply.h"
 #include "../ApplicationGlobal.h"
 #include "../mode/ModeMainGame.h"
-namespace {
+namespace
+{
 	constexpr int SUPPLY_ID = 37;
 }
-AreaSupply::AreaSupply(ApplicationBase& game, ModeMainGame& mode, float _radius)
-	:base(game, mode) {
+AreaSupply::AreaSupply(ApplicationBase& game, int layer, ModeMainGame& mode, float _radius)
+	:ActorMainGame(game, layer, mode)
+{
 	_handle = ResourceServer::LoadMV1Model(gGlobal.object_pass_date->GetScriptLine(SUPPLY_ID));
-	Init();
+	Initialize();
 	_fRadius = _radius;
 }
 
-AreaSupply::~AreaSupply() {
+AreaSupply::~AreaSupply()
+{
 	MV1DeleteModel(_handle);
 }
 
-void AreaSupply::Init() {
-	base::Init();
+void AreaSupply::Initialize()
+{
+	ActorMainGame::Initialize();
 }
 
-bool AreaSupply::Update() {
-	base::Update();
+bool AreaSupply::Update()
+{
+	ActorMainGame::Update();
 
-	for (auto&& obje : _mode.GetObjectServer3D().GetObjects()) {
-		if (obje->GetType() == Type::kPlayer) {
-			if (Intersect(obje->_collision, _collisionEvent)) {
-				if (!(CheckSoundMem(gGlobal._se["se_supply"]))) {
+	for (auto&& obje : _mode.GetObjectServer3D().GetObjects())
+	{
+		if (obje->GetType() == Type::kPlayer)
+		{
+			if (Intersect(obje->_collision, _collisionEvent))
+			{
+				if (!(CheckSoundMem(gGlobal._se["se_supply"])))
+				{
 					PlaySoundMem(gGlobal._se["se_supply"], DX_PLAYTYPE_BACK);
 				}
 
 				_event = true;
-				if (_cnt % 10 == 0) {
+				if (_cnt % 10 == 0)
+				{
 					obje->_iFuel++;
-					if (obje->_iFuel > 100) {
+					if (obje->_iFuel > 100)
+					{
 						obje->_iFuel = 100;
 					}
 				}
 			}
-
-
 			break;
 		}
-
 	}
 
 	_collisionEvent._fRadius = _fRadius * _fScale;
@@ -51,8 +59,9 @@ bool AreaSupply::Update() {
 	return true;
 }
 
-bool AreaSupply::Draw() {
-	base::Draw();
+bool AreaSupply::Draw()
+{
+	ActorMainGame::Draw();
 	// モデル拡大
 	MV1SetScale(_handle, VGet(_fScale, _fScale, _fScale));
 	// モデル移動
@@ -64,10 +73,12 @@ bool AreaSupply::Draw() {
 	SetUseLighting(TRUE);
 
 	// コリジョン描画
-	if (!((ModeMainGame&)_mode)._dbgCollisionDraw) {
+	if (!_mode._dbgCollisionDraw)
+	{
 		vector4 color = { 255, 255, 255 };
 		DrawCollisionEvent(color);
-		if (_event) {
+		if (_event)
+		{
 			color = { 0, 255, 0 };
 			DrawCollisionEvent(color);
 		}
