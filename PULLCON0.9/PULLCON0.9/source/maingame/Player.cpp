@@ -44,7 +44,7 @@ void Player::Initialize()
 	_vMoveDir = { 0.f, 0.f, -100.f };
 	_fSpeed = 90.f;
 	_fRotatY = utility::PI;
-	_iFuel = 100;
+	_iFuel = 400;
 	_iLife = LIFEMAX;
 	_push = 0;
 	_isLerp = false;

@@ -37,7 +37,7 @@ void AreaEnemySpawn::Initialize()
 	_collision._fRadius = 1500.f * _fScale;
 	_collisionEvent._fRadius = _collision._fRadius * 20.f;
 
-	_iLife = 200;
+	_iLife = 150;
 }
 
 bool AreaEnemySpawn::Update()
