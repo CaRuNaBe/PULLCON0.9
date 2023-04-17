@@ -38,8 +38,9 @@ bool EffectHitPlayerFrame::Draw()
 {
 	EffectBase::Draw();
 	SetWriteZBuffer3D(false);
-	VECTOR ScreenPos = ConvWorldPosToScreenPos(ToDX(_vPos));
-	DrawRotaGraph(static_cast<int>(ScreenPos.x), static_cast<int>(ScreenPos.y), 1.f, 0, _grAllHandles[_animeCnt % _animeMax], TRUE);
+	//VECTOR ScreenPos = ConvWorldPosToScreenPos(ToDX(_vPos));
+	DrawBillboard3D(ToDX(_vPos), 0.5f, 0.5f, 15000.0f, 0.f, _grAllHandles[_animeCnt % _animeMax], TRUE);
+	/*DrawRotaGraph(static_cast<int>(ScreenPos.x), static_cast<int>(ScreenPos.y), 1.f, 0, _grAllHandles[_animeCnt % _animeMax], TRUE);*/
 	SetWriteZBuffer3D(true);
 	return true;
 }

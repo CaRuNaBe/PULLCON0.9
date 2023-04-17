@@ -2305,5 +2305,5 @@ void ModeMainGame::AddEffectFireGunship(const math::Vector4& pos)
 
 void ModeMainGame::AddEffectHitEnemy(const math::Vector4& pos)
 {
-	AddEffectSpawnAmmo(pos);
+	AddEffectHitPlayerFrame(pos);
 };

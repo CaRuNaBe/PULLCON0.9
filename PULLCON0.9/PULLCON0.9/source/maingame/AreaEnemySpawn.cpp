@@ -79,6 +79,7 @@ bool AreaEnemySpawn::Update()
 				{
 					if (obje->_iType == 2)
 					{
+						PlaySoundMem(gGlobal._se["se_gunlanding"], DX_PLAYTYPE_BACK);
 						_mode.AddEffectHitEnemy(obje->GetPosition());
 						_overlap = true;
 						obje->Damage();
@@ -167,6 +168,7 @@ bool AreaEnemySpawn::Draw()
 
 void AreaEnemySpawn::Damage()
 {
+	PlaySoundMem(gGlobal._se["gunship_death"], DX_PLAYTYPE_BACK);
 	_mode.AddEffectDeathObject(_vPos);
 	_mode.GetObjectServer3D().Del(*this);
 }

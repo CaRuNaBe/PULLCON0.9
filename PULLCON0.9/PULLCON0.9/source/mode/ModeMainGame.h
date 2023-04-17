@@ -32,12 +32,12 @@ public:
 	virtual bool Draw();
 	/** 後処理 デストラクタ時呼ぶ */
 	void Destroy();
+	/** デバッグモード時描画 */
 	virtual bool DebugDraw();
 
 
-	///////////////////////////////////////
-	bool	_dbgCollisionDraw;		// コリジョン表示/非表示
-	/////////////////////////////////////////////
+	bool	_dbgCollisionDraw;		
+
 
 	GameServerShared<ActorMainGame>& GetObjectServer3D()
 	{

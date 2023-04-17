@@ -77,6 +77,7 @@ bool EnemySkyhunter::Update()
 				{
 					if (obje->_iType == 2)
 					{
+						PlaySoundMem(gGlobal._se["se_gunlanding"], DX_PLAYTYPE_BACK);//’¼Œ‚‰¹‚ð–Â‚ç‚·
 						_mode.AddEffectHitEnemy(obje->GetPosition());
 						_CT = 10;
 						_overlap = true;
