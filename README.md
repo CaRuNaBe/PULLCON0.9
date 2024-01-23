@@ -41,7 +41,7 @@ ___
 最終的にステージにあるすべてのを飛行艇倒したらクリアです。
 
 ___
-# ディレクトリツリー/ファイル説明
+# ディレクトリツリー/作成者/ファイル説明
 [DIRECTORY.md](https://github.com/CaRuNaBe/Portfolio_PULLCON0.9/blob/main/DIRECTORY.md)
 ___
 
