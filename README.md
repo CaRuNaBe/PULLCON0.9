@@ -42,7 +42,7 @@ ___
 
 ___
 # ディレクトリツリー/作成者/ファイル説明
-[DIRECTORY.md](https://github.com/CaRuNaBe/Portfolio_PULLCON0.9/blob/main/DIRECTORY.md)
+[DIRECTORY.md](https://github.com/CaRuNaBe/PULLCON0.9/blob/master/DIRECTORY.md)
 ___
 
 # 起動方法 
