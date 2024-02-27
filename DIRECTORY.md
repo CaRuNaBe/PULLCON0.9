@@ -106,49 +106,49 @@ Portfolio_PULLCON0.9
 　　　　　　│　　ActorMainGame.cpp  
 　　　　　　│　　ActorMainGame.h 作:中田瑞希(ModeMainGameで使われるオブジェクトの基底クラス)  
 　　　　　　│　　AreaCommunication.cpp  
-　　　　　　│　　AreaCommunication.h 作:中田瑞希(コミュニケーションエリア)  
+　　　　　　│　　AreaCommunication.h 作:中田瑞希(ボイスを発生させるクラス)  
 　　　　　　│　　AreaEnemySpawn.cpp  
-　　　　　　│　　AreaEnemySpawn.h 作:中田瑞希(エネミースポーンエリア)  
+　　　　　　│　　AreaEnemySpawn.h 作:中田瑞希(敵を生成するクラス)  
 　　　　　　│　　AreaNoEntry.cpp  
-　　　　　　│　　AreaNoEntry.h 作:中田瑞希(侵入不能エリア)  
+　　　　　　│　　AreaNoEntry.h 作:中田瑞希(自由配置できるオブジェクトの当たり判定のクラス)  
 　　　　　　│　　AreaSupply.cpp  
-　　　　　　│　　AreaSupply.h 作:中田瑞希(燃料回復エリア)  
+　　　　　　│　　AreaSupply.h 作:中田瑞希(燃料回復オブジェクトのクラス)  
 　　　　　　│　　Bullet.cpp  
-　　　　　　│　　Bullet.h 作:中田瑞希(弾丸)  
+　　　　　　│　　Bullet.h 作:中田瑞希(弾丸クラス)  
 　　　　　　│　　EffectBase.cpp  
 　　　　　　│　　EffectBase.h 作:中田瑞希(エフェクトの基底クラス)  
 　　　　　　│　　EffectDeathObject.cpp  
-　　　　　　│　　EffectDeathObject.h 作:中田瑞希(しんだときのエフェクト)  
+　　　　　　│　　EffectDeathObject.h 作:中田瑞希(敵を倒したときのエフェクトクラス)  
 　　　　　　│　　EffectDestroyAmmo.cpp  
-　　　　　　│　　EffectDestroyAmmo.h 作:中田瑞希(球が死んだときのエフェクト)  
+　　　　　　│　　EffectDestroyAmmo.h 作:中田瑞希(弾丸が消滅したときのエフェクトクラス)  
 　　　　　　│　　EffectFireGunship.cpp  
-　　　　　　│　　EffectFireGunship.h 作:中田瑞希(ガンシップが球を発射したときのエフェクト)  
+　　　　　　│　　EffectFireGunship.h 作:中田瑞希(ガンシップが球を発射したときのエフェクトクラス)  
 　　　　　　│　　EffectFirePlayer.cpp  
-　　　　　　│　　EffectFirePlayer.h 作:中田瑞希(プレイヤーが球を発射したときのエフェクト)  
+　　　　　　│　　EffectFirePlayer.h 作:中田瑞希(プレイヤーが球を発射したときのエフェクトクラス)  
 　　　　　　│　　EffectHitBlackSmoke.cpp  
-　　　　　　│　　EffectHitBlackSmoke.h 作:中田瑞希(黒煙エフェクト)  
+　　　　　　│　　EffectHitBlackSmoke.h 作:中田瑞希(プレイヤーのHPが少ない時に出るエフェクトクラス)  
 　　　　　　│　　EffectHitPlayerFrame.cpp  
-　　　　　　│　　EffectHitPlayerFrame.h 作:中田瑞希(炎エフェクト)  
+　　　　　　│　　EffectHitPlayerFrame.h 作:中田瑞希(弾丸がヒットした時のエフェクトクラス)  
 　　　　　　│　　EffectSpawnAmmo.cpp  
 　　　　　　│　　EffectSpawnAmmo.h 作:中田瑞希(弾丸が生まれるときのエフェクト)  
 　　　　　　│　　EnemyAAA.cpp  
-　　　　　　│　　EnemyAAA.h 作:中田瑞希(敵対空砲)  
+　　　　　　│　　EnemyAAA.h 作:中田瑞希(敵対空砲クラス)  
 　　　　　　│　　EnemyColumn.cpp  
 　　　　　　│　　EnemyColumn.h 作:中田瑞希(敵の隊列クラス)  
 　　　　　　│　　EnemyGunShip.cpp  
-　　　　　　│　　EnemyGunShip.h作:中田瑞希(敵ガンシップ)  
+　　　　　　│　　EnemyGunShip.h作:中田瑞希(敵ガンシップクラス)  
 　　　　　　│　　EnemyKobae.cpp  
-　　　　　　│　　EnemyKobae.h 作:中田瑞希(敵コバエー)  
+　　　　　　│　　EnemyKobae.h 作:中田瑞希(敵コバエークラス)  
 　　　　　　│　　EnemySkyhunter.cpp  
-　　　　　　│　　EnemySkyhunter.h 作:中田瑞希(敵スカイハンター)  
+　　　　　　│　　EnemySkyhunter.h 作:中田瑞希(敵スカイハンタークラス)  
 　　　　　　│　　GameStage.cpp  
-　　　　　　│　　GameStage.h 作:中田瑞希(ゲーム上の土台)  
+　　　　　　│　　GameStage.h 作:中田瑞希(ゲーム上の土台のクラス)  
 　　　　　　│　　Player.cpp  
-　　　　　　│　　Player.h 作:中田瑞希(プレイヤー)  
+　　　　　　│　　Player.h 作:中田瑞希(プレイヤークラス)  
 　　　　　　│　　SkySphere.cpp  
-　　　　　　│　　SkySphere.h 作:中田瑞希(スカイスフェア)  
+　　　　　　│　　SkySphere.h 作:中田瑞希(スカイスフェアクラス)  
 　　　　　　│　　StageObject.cpp  
-　　　　　　│　　StageObject.h 作:中田瑞希(ステージ上のビルなどのオブジェクト)  
+　　　　　　│　　StageObject.h 作:中田瑞希(ステージ上のビルなどのオブジェクトクラス)  
 　　　　　　│  
 　　　　　　├─ mode(画面モードをまとめたファイル)  
 　　　　　　│　　ModeMainGame.cpp  
